@@ -1,0 +1,125 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
+    id 'com.google.gms.google-services'
+}
+
+android {
+    namespace 'com.example.comusenias'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.example.comusenias"
+        minSdk 24
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary true
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.3.2'
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
+}
+
+dependencies {
+    testImplementation 'junit:junit:'
+    testImplementation "androidx.arch.core:core-testing:2.2.0"
+    implementation libs.core.ktx
+    implementation libs.activityCompose
+    implementation platform(libs.composeBom)
+    androidTestImplementation platform(libs.composeBom)
+    implementation platform(libs.kotlinBom)
+    implementation libs.ui
+    implementation libs.uiGraphics
+    implementation libs.uiToolingPreview
+    implementation libs.material3
+
+    androidTestImplementation libs.junitExt
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.compose.ui:ui-test-junit4'
+    androidTestImplementation libs.espresso
+    androidTestImplementation libs.mockkAndroid
+    testImplementation libs.mockkAndroid
+
+    debugImplementation libs.composeUiTooling
+
+    debugImplementation libs.composeUiTestManifest
+
+    implementation libs.firebaseAuth
+    implementation(platform(libs.firebaseBom))
+    implementation libs.firebaseAnalytics
+
+    implementation libs.retrofit
+    implementation libs.retrofitGson
+    implementation libs.retrofitLoggingInterceptor
+
+    implementation libs.kotlinXCoroutines
+    testImplementation libs.kotlinXCoroutines
+
+    implementation libs.lifeCycle
+    implementation libs.lifeCycleLiveData
+    implementation libs.lifeCycleViewModel
+
+    implementation libs.glide
+    kapt libs.glideCompiler
+
+    implementation libs.navigationCompose
+
+/*
+    implementation libs.daggerHilt
+    kapt libs.daggerHiltCompiler
+ */
+
+    implementation libs.hiltNavigationCompose
+
+    implementation libs.robolectric
+
+    implementation 'com.google.dagger:hilt-android:2.44'
+    kapt 'com.google.dagger:hilt-compiler:2.44'
+
+    // For instrumentation tests
+    androidTestImplementation  'com.google.dagger:hilt-android-testing:2.44'
+    androidTestAnnotationProcessor 'com.google.dagger:hilt-compiler:2.44'
+
+    // For local unit tests
+    testImplementation 'com.google.dagger:hilt-android-testing:2.44'
+    testAnnotationProcessor 'com.google.dagger:hilt-compiler:2.44'
+
+    //Firebase
+    implementation 'com.google.firebase:firebase-auth-ktx:22.1.0'
+    implementation(platform("com.google.firebase:firebase-bom:32.2.0"))
+    implementation("com.google.firebase:firebase-analytics-ktx")
+
+}
+
+kapt {
+    correctErrorTypes true
+}

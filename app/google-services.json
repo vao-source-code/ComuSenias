@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "220008974660",
+    "project_id": "comusenias",
+    "storage_bucket": "comusenias.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:220008974660:android:e53f5f700213372e272f11",
+        "android_client_info": {
+          "package_name": "com.example.comusenias"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "220008974660-b3o7a4q7r3fb2aof3ldsk479in1gptdh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.comusenias",
+            "certificate_hash": "097370cd5c1c3886d5b3ea7b261e8568c8cec370"
+          }
+        },
+        {
+          "client_id": "220008974660-sn2ot69d3p1k2f4pmjf3nc9cnvchlh85.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyRHMLJkzLrkyVhiwAe6raK_0w49wAKj8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "220008974660-sn2ot69d3p1k2f4pmjf3nc9cnvchlh85.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
