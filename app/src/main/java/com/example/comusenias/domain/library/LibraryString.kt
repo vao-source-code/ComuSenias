@@ -1,4 +1,4 @@
-package com.example.comusenias.domain
+package com.example.comusenias.domain.library
 
 object LibraryString {
 

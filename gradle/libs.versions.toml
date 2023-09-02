@@ -23,6 +23,7 @@ kotlinBom = "1.8.0"
 androidApplication = "8.0.2"
 kotlinAndroid = "1.7.20"
 kotlinJvm = "1.6.10"
+googleServices = "4.3.15"
 
 [libraries]
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "core" }
@@ -55,6 +56,7 @@ glideCompiler = { module = "com.github.bumptech.glide:compiler", version.ref = "
 navigationCompose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }
 daggerHilt = { module = "com.google.dagger:hilt-android", version.ref = "daggerHilt" }
 daggerHiltCompiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "daggerHilt" }
+daggerHiltTesting = { module = "com.google.dagger:hilt-android-testing", version.ref = "daggerHilt" }
 hiltNavigationCompose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "navigationHilt" }
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 
@@ -65,3 +67,4 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinAnd
 navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigation" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlinJvm" }
 dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "daggerHilt" }
+google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }

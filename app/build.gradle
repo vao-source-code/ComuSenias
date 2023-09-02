@@ -73,6 +73,7 @@ dependencies {
 
     debugImplementation libs.composeUiTestManifest
 
+    implementation("com.google.firebase:firebase-analytics-ktx")
     implementation libs.firebaseAuth
     implementation(platform(libs.firebaseBom))
     implementation libs.firebaseAnalytics
@@ -92,31 +93,15 @@ dependencies {
     kapt libs.glideCompiler
 
     implementation libs.navigationCompose
-
-/*
-    implementation libs.daggerHilt
-    kapt libs.daggerHiltCompiler
- */
-
-    implementation libs.hiltNavigationCompose
-
     implementation libs.robolectric
 
-    implementation 'com.google.dagger:hilt-android:2.44'
-    kapt 'com.google.dagger:hilt-compiler:2.44'
-
-    // For instrumentation tests
-    androidTestImplementation  'com.google.dagger:hilt-android-testing:2.44'
-    androidTestAnnotationProcessor 'com.google.dagger:hilt-compiler:2.44'
-
-    // For local unit tests
-    testImplementation 'com.google.dagger:hilt-android-testing:2.44'
-    testAnnotationProcessor 'com.google.dagger:hilt-compiler:2.44'
-
-    //Firebase
-    implementation 'com.google.firebase:firebase-auth-ktx:22.1.0'
-    implementation(platform("com.google.firebase:firebase-bom:32.2.0"))
-    implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation libs.daggerHilt
+    kapt libs.daggerHiltCompiler
+    implementation libs.hiltNavigationCompose
+    androidTestImplementation libs.daggerHiltTesting
+    androidTestAnnotationProcessor libs.daggerHiltCompiler
+    testImplementation libs.daggerHiltTesting
+    testAnnotationProcessor libs.daggerHiltCompiler
 
 }
 
