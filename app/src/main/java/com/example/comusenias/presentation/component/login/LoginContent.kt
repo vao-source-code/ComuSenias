@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.comusenias.domain.models.Response
+import com.example.comusenias.presentation.component.defaults.ButtonApp
 import com.example.comusenias.presentation.component.defaults.ButtonDefault
 import com.example.comusenias.presentation.component.defaults.TextFieldDefault
 import com.example.comusenias.presentation.navigation.AppScreen
@@ -122,11 +123,16 @@ fun CardFormLogin(navController: NavHostController, viewModel: LoginViewModel) {
             )
 
 
-            ButtonDefault(
+//            ButtonDefault(
+//                text = "Iniciar sesión",
+//                icon = Icons.Default.ArrowForward,
+//                onClick = { viewModel.login() },
+//                errorMsg = viewModel.errorEmail.value,
+//                enabled = viewModel.isLoginEnabled
+//            )
+            ButtonApp(
                 text = "Iniciar sesión",
-                icon = Icons.Default.ArrowForward,
                 onClick = { viewModel.login() },
-                errorMsg = viewModel.errorEmail.value,
                 enabled = viewModel.isLoginEnabled
             )
 
