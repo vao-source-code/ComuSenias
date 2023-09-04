@@ -54,7 +54,7 @@ fun LoginContent(
         Text(
             text = "INICIAR SESION",
             fontSize = 30.sp,
-            fontWeight = FontWeight.Bold,
+            fontWeight = FontWeight.Normal,
             color = MaterialTheme.colorScheme.primary
         )
         CardFormLogin(navController = navController, viewModel = viewModel)
