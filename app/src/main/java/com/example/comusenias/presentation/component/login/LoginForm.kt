@@ -35,7 +35,7 @@ fun LoginForm(
 
     Column(
         modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(10.dp)
+        verticalArrangement = Arrangement.spacedBy(2.dp)
     ) {
         TextFieldApp(
             value = viewModel.email.value,
@@ -53,9 +53,9 @@ fun LoginForm(
             label = "Contraseña",
             icon = Icons.Default.Lock,
             keyboardType = KeyboardType.Password,
-            hideText = true,
-            errorMsg = viewModel.errorPassword.value,
+            hideText = true
         )
+        RememberMeAndForgetMyPass()
     }
 
 
