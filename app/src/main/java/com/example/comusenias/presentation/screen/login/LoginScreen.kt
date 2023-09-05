@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.comusenias.presentation.component.defaults.AuthenticationFooterContent
 import com.example.comusenias.presentation.component.defaults.AuthenticationHeaderContent
+import com.example.comusenias.presentation.component.login.LoginForm
 import com.example.comusenias.presentation.navigation.AppScreen
 
 @Composable
@@ -25,6 +26,7 @@ fun LoginScreen(navController: NavHostController) {
             verticalArrangement = Arrangement.SpaceBetween
             ) {
             AuthenticationHeaderContent()
+            LoginForm(navController = navController)
             AuthenticationFooterContent(
                 onClickText = { navController.navigate(route = AppScreen.RegisterScreen.route) }
             )
