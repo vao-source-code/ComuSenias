@@ -93,7 +93,6 @@ dependencies {
     kapt libs.glideCompiler
 
     implementation libs.navigationCompose
-    implementation libs.robolectric
 
     implementation libs.daggerHilt
     kapt libs.daggerHiltCompiler
