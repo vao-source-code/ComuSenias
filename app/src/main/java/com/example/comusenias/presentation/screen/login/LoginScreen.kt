@@ -34,7 +34,5 @@ fun LoginScreen(modifier: Modifier?, navController: NavHostController) {
             )
         }
     )
-
-
 }
 
