@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun ButtonDefault(
+    modifier: Modifier = Modifier,
     text: String,
     icon: ImageVector?,
     onClick: () -> Unit,
@@ -26,7 +27,7 @@ fun ButtonDefault(
 
     Column() {
         Button(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
                 .padding(vertical = 10.dp),
             shape = RoundedCornerShape(2.dp),

@@ -6,6 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.*
 import androidx.navigation.NavHostController
 import com.example.comusenias.presentation.screen.login.LoginScreen
+import com.example.comusenias.presentation.screen.profile.ChangeProfilePasswordScreen
 import com.example.comusenias.presentation.screen.profile.ProfileScreen
 import com.example.comusenias.presentation.screen.register.RegisterScreen
 
@@ -19,8 +20,16 @@ fun AppNavigation(navController: NavHostController) {
         composable(AppScreen.RegisterScreen.route) {
            RegisterScreen(navController = navController , modifier = Modifier.fillMaxSize())
         }
+
+        /* Profile */
+
+
         composable(AppScreen.ProfileScreen.route) {
             ProfileScreen(navController = navController , modifier = Modifier.fillMaxSize())
+        }
+
+        composable(AppScreen.ChangeProfilePasswordScreen.route) {
+            ChangeProfilePasswordScreen(navController = navController , modifier = Modifier.fillMaxSize())
         }
 
     }
