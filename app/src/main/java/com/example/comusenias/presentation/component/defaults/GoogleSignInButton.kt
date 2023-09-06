@@ -19,18 +19,20 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.comusenias.R
 
-@Preview(showBackground = false)
+@Preview(showBackground = true)
 @Composable
 fun GoogleSignInButton() {
     Button(
         onClick = {
         },
         modifier = Modifier
-            .shadow(elevation = 3.dp, spotColor = Color(0x2B000000), ambientColor = Color(0x2B000000))
-            .shadow(elevation = 3.dp, spotColor = Color(0x15000000), ambientColor = Color(0x15000000))
+            .shadow(elevation = 3.dp,
+                shape = RoundedCornerShape(10.dp),
+                spotColor = Color(0x2B000000),
+                ambientColor = Color(0x2B000000)
+            )
             .fillMaxWidth()
-            .height(56.dp)
-            .padding(start = 16.dp, end = 16.dp),
+            .height(56.dp),
         shape = RoundedCornerShape(10.dp),
         colors = ButtonDefaults.buttonColors(
             Color.White

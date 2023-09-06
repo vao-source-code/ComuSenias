@@ -20,6 +20,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.comusenias.domain.models.Response
+import com.example.comusenias.presentation.component.defaults.ButtonApp
+import com.example.comusenias.presentation.component.defaults.GoogleSignInButton
 import com.example.comusenias.presentation.component.defaults.TextFieldApp
 import com.example.comusenias.presentation.component.defaults.TextFieldAppPassword
 import com.example.comusenias.presentation.navigation.AppScreen
@@ -35,25 +37,43 @@ fun LoginForm(
 
     Column(
         modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(2.dp)
-    ) {
-        TextFieldApp(
-            value = viewModel.email.value,
-            onValueChange = { viewModel.email.value = it },
-            validateField = { viewModel.validateEmail() },
-            label = "Correo electrónico",
-            keyboardType = KeyboardType.Email,
-            icon = Icons.Default.Email,
-            errorMsg = viewModel.errorEmail.value
-        )
-        TextFieldAppPassword(
-            value = viewModel.password.value,
-            onValueChange = { viewModel.password.value = it },
-            validateField = { viewModel.validatePassword() },
-            label = "Contraseña"
-        )
-        RememberMeAndForgetMyPass()
+        verticalArrangement = Arrangement.spacedBy(50.dp)
+    ){
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(2.dp)
+        ) {
+            TextFieldApp(
+                value = viewModel.email.value,
+                onValueChange = { viewModel.email.value = it },
+                validateField = { viewModel.validateEmail() },
+                label = "Correo electrónico",
+                keyboardType = KeyboardType.Email,
+                icon = Icons.Default.Email,
+                errorMsg = viewModel.errorEmail.value
+            )
+            TextFieldAppPassword(
+                value = viewModel.password.value,
+                onValueChange = { viewModel.password.value = it },
+                validateField = { viewModel.validatePassword() },
+                label = "Contraseña"
+            )
+            RememberMeAndForgetMyPass()
+        }
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            ButtonApp(
+                titleButton = "Iniciar sesión",
+                onClickButton = {  }
+            )
+            LineDivisorLogin()
+            GoogleSignInButton()
+        }
+
     }
+
 
 
 

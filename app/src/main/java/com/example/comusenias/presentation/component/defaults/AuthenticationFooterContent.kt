@@ -21,20 +21,13 @@ import com.example.comusenias.presentation.ui.theme.primaryColorApp
 fun AuthenticationFooterContent(
     text1: String = "¿No tienes una cuenta?",
     text2: String = "Regístrate",
-    onClickText: () -> Unit = {},
-    titleButtonApp: String = "Iniciar sesión",
-    onClickButton: () -> Unit = {},
-
+    onClickText: () -> Unit = {}
 ){
 
     Column(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
-        ButtonApp(
-            titleButton = titleButtonApp,
-            onClickButton = onClickButton
-        )
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
