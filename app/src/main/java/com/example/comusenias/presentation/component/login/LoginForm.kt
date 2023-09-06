@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -22,6 +21,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.comusenias.domain.models.Response
 import com.example.comusenias.presentation.component.defaults.TextFieldApp
+import com.example.comusenias.presentation.component.defaults.TextFieldAppPassword
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.ComuSeniasTheme
 import com.example.comusenias.presentation.view_model.LoginViewModel
@@ -46,14 +46,11 @@ fun LoginForm(
             icon = Icons.Default.Email,
             errorMsg = viewModel.errorEmail.value
         )
-        TextFieldApp(
+        TextFieldAppPassword(
             value = viewModel.password.value,
             onValueChange = { viewModel.password.value = it },
             validateField = { viewModel.validatePassword() },
-            label = "Contraseña",
-            icon = Icons.Default.Lock,
-            keyboardType = KeyboardType.Password,
-            hideText = true
+            label = "Contraseña"
         )
         RememberMeAndForgetMyPass()
     }
