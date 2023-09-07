@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -40,7 +41,8 @@ fun AuthenticationFooterContent(
             )
             Spacer(modifier = Modifier.width(5.dp))
             Text(
-                modifier = Modifier.clickable { onClickText() },
+                modifier = Modifier.testTag("text click action")
+                    .clickable { onClickText() },
                 text = text2,
                 color = primaryColorApp,
                 fontSize = 14.sp,
