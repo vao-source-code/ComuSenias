@@ -2,7 +2,6 @@ package com.example.comusenias.presentation.component.defaults
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,11 +23,6 @@ fun AuthenticationFooterContent(
     text2: String = "Regístrate",
     onClickText: () -> Unit = {}
 ){
-
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(10.dp),
-    ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
@@ -49,7 +43,6 @@ fun AuthenticationFooterContent(
                 fontWeight = FontWeight.Bold
             )
         }
-    }
 }
 
 @Preview(showBackground = true)

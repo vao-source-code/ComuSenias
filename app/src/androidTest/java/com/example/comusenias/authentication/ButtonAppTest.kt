@@ -50,7 +50,7 @@ class ButtonAppTest {
                 titleButton = "Iniciar sesión"
             )
         }
-        composeTestRule.onNodeWithTag("button").assertHeightIsEqualTo(56.dp)
+        composeTestRule.onNodeWithTag("button").assertHeightIsEqualTo(50.dp)
     }
 
     @Test

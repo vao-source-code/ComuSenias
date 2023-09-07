@@ -28,7 +28,7 @@ fun ButtonApp(
         onClick = { onClickButton },
         modifier = Modifier
             .fillMaxWidth()
-            .height(56.dp)
+            .height(50.dp)
             .testTag("button")
     ) {
         Text(
