@@ -58,7 +58,6 @@ daggerHilt = { module = "com.google.dagger:hilt-android", version.ref = "daggerH
 daggerHiltCompiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "daggerHilt" }
 daggerHiltTesting = { module = "com.google.dagger:hilt-android-testing", version.ref = "daggerHilt" }
 hiltNavigationCompose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "navigationHilt" }
-robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "androidApplication" }
