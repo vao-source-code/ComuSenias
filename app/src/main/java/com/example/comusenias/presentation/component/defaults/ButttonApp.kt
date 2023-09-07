@@ -32,7 +32,7 @@ fun ButtonApp(
         Text(
             color = Color.White,
             text = titleButton,
-            fontSize = 20.sp,
+            fontSize = 17.sp,
             fontWeight = FontWeight.SemiBold
         )
     }

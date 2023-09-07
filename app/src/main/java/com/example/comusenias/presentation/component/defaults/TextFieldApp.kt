@@ -55,6 +55,7 @@ fun TextFieldApp(
                     focusedBorderColor = backgroundColorTextField,
                     unfocusedBorderColor = backgroundColorTextField,
                 ),
+                singleLine = true,
                 placeholder = {
                     Text(
                         text = label,
