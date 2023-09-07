@@ -16,7 +16,7 @@ import com.example.comusenias.presentation.ui.theme.primaryColorApp
 fun CheckBoxApp(isChecked: MutableState<Boolean>) {
     Checkbox(
         modifier = Modifier
-            .testTag("check login")
+            .testTag("checkboxApp")
             .height(12.dp)
             .width(12.dp),
         checked = isChecked.value,
