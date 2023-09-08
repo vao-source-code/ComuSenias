@@ -54,7 +54,7 @@ fun LoginContent(
         Text(
             text = "INICIAR SESION",
             fontSize = 30.sp,
-            fontWeight = FontWeight.Bold,
+            fontWeight = FontWeight.Normal,
             color = MaterialTheme.colorScheme.primary
         )
         CardFormLogin(navController = navController, viewModel = viewModel)
@@ -99,7 +99,7 @@ fun CardFormLogin(navController: NavHostController, viewModel: LoginViewModel) {
                 modifier = Modifier
                     .fillMaxWidth(),
                 value = viewModel.email.value,
-                onValueChange = { it -> viewModel.email.value = it },
+                onValueChange = { viewModel.email.value = it },
                 validateField = { viewModel.validateEmail() },
                 label = "Email",
                 keyboardType = KeyboardType.Email,
@@ -129,6 +129,7 @@ fun CardFormLogin(navController: NavHostController, viewModel: LoginViewModel) {
                 errorMsg = viewModel.errorEmail.value,
                 enabled = viewModel.isLoginEnabled
             )
+
 
 
         }

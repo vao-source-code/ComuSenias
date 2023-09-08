@@ -15,7 +15,7 @@ fun AppNavigation(navController: NavHostController) {
 
     NavHost(navController = navController, startDestination = AppScreen.LoginScreen.route) {
         composable(AppScreen.LoginScreen.route) {
-            LoginScreen(navController = navController , modifier = Modifier.fillMaxSize())
+            LoginScreen(navController = navController)
         }
         composable(AppScreen.RegisterScreen.route) {
            RegisterScreen(navController = navController , modifier = Modifier.fillMaxSize())
