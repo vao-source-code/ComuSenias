@@ -53,7 +53,7 @@ fun GreetingPreview() {
             color = MaterialTheme.colorScheme.background
         ) {
             val navController = rememberNavController()
-            LoginScreen(modifier = null, navController = navController)
+            LoginScreen(navController = navController)
         }
     }
 }
