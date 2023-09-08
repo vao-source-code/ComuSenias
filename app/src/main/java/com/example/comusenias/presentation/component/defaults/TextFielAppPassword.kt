@@ -37,6 +37,8 @@ fun TextFieldAppPassword(
     errorMsg: String = ""
 ) {
     val isHideText = remember { mutableStateOf(true) }
+    val maxChar = 32
+
 
     Column {
         OutlinedTextField(
@@ -45,8 +47,10 @@ fun TextFieldAppPassword(
                 .height(56.dp)
                 .background(backgroundColorTextField, shape = RoundedCornerShape(10.dp)),
             onValueChange = {
-                onValueChange(it)
-                validateField() },
+                if (it.length <= maxChar) {
+                    onValueChange(it)
+                    validateField()
+                }},
             value = value,
             shape = RoundedCornerShape(10.dp),
             colors = TextFieldDefaults.outlinedTextFieldColors(

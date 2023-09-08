@@ -17,6 +17,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -40,15 +41,22 @@ fun TextFieldApp(
         hideText: Boolean = false,
         errorMsg: String = ""
     ) {
+
+    val maxChar = 32
+
         Column {
             OutlinedTextField(
                 modifier = Modifier
+                    .testTag("textFieldApp")
                     .fillMaxWidth()
                     .height(56.dp)
                     .background(backgroundColorTextField, shape = RoundedCornerShape(10.dp) ),
                 onValueChange = {
-                    onValueChange(it)
-                    validateField() },
+                    if (it.length <= maxChar) {
+                        onValueChange(it)
+                        validateField()
+                    }
+                                },
                 value = value,
                 shape = RoundedCornerShape(10.dp),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
