@@ -3,8 +3,6 @@ package com.example.comusenias.presentation.screen.profile
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -38,10 +36,10 @@ fun ProfileScreen(
     }, bottomBar = {
         ButtonDefault(
             modifier = Modifier.fillMaxWidth().padding(20.dp),
-            text = "Cambiar contraseña",
+            text = "Cambiar Datos",
             icon = null,
             onClick = {
-                navController?.navigate(route = AppScreen.ChangeProfilePasswordScreen.route) {
+                navController?.navigate(route = AppScreen.ChangeProfileScreen.route) {
                     popUpTo(AppScreen.ProfileScreen.route) {}
                 }
             }

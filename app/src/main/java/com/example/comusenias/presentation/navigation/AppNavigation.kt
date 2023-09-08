@@ -28,7 +28,7 @@ fun AppNavigation(navController: NavHostController) {
             ProfileScreen(navController = navController , modifier = Modifier.fillMaxSize())
         }
 
-        composable(AppScreen.ChangeProfilePasswordScreen.route) {
+        composable(AppScreen.ChangeProfileScreen.route) {
             ChangeProfilePasswordScreen(navController = navController , modifier = Modifier.fillMaxSize())
         }
 

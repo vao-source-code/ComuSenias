@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -14,6 +15,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -31,6 +34,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.comusenias.R
 import com.example.comusenias.presentation.component.defaults.ButtonDefault
+import com.example.comusenias.presentation.component.defaults.InputTextFieldDefault
 import com.example.comusenias.presentation.component.defaults.TextFieldDefault
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.ComuSeniasTheme
@@ -49,22 +53,39 @@ fun ProfileContent(
 
         Column(
             modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(55.dp))
-            Image(
+            Box(
                 modifier = Modifier
-                    .size(130.dp)
+                    .size(140.dp)
                     .clip(CircleShape),
-                painter = painterResource(id = R.drawable.ic_launcher_background),
-                contentDescription = ""
-            )
+            ) {
+                Image(
+                    modifier= Modifier.size(140.dp),
+                    contentScale = ContentScale.Crop,
+                    painter = painterResource(id = R.drawable.profile_avatar),
+                    contentDescription = "image avatar",
 
+                )
+
+                IconButton(
+                    onClick = { /* Acción al hacer clic en el botón */ },
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .offset(y = (-10).dp),
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Edit,
+                        contentDescription = "image edit button",
+                    )
+                }
+            }
 
 
 
             Spacer(modifier = Modifier.height(55.dp))
-            TextFieldDefault(
+            InputTextFieldDefault(
                 modifier = Modifier
                     .fillMaxWidth(),
                 label = "Nombre del usuario",
@@ -74,9 +95,10 @@ fun ProfileContent(
                 icon = Icons.Default.Edit,
                 keyboardType = KeyboardType.Text,
                 hideText = false,
+                readOnly = true
             )
             Spacer(modifier = Modifier.height(20.dp))
-            TextFieldDefault(
+            InputTextFieldDefault(
                 modifier = Modifier
                     .fillMaxWidth(),
                 label = "Correo electrónico",
@@ -86,6 +108,7 @@ fun ProfileContent(
                 icon = Icons.Default.Edit,
                 keyboardType = KeyboardType.Text,
                 hideText = false,
+                readOnly = true
             )
             Spacer(modifier = Modifier.height(10.dp))
 

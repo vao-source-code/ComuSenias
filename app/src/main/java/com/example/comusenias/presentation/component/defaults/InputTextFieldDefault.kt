@@ -44,8 +44,10 @@ fun InputTextFieldDefault(
     icon: ImageVector,
     keyboardType: KeyboardType = KeyboardType.Text,
     hideText: Boolean = false,
-    errorMsg: String = ""
-) {
+    errorMsg: String = "",
+    readOnly : Boolean= false,
+
+    ) {
 
     Column() {
         TextField(
@@ -64,7 +66,7 @@ fun InputTextFieldDefault(
                 )
             },
             visualTransformation = if (hideText) PasswordVisualTransformation() else VisualTransformation.None,
-
+            readOnly = readOnly,
             )
         TextErrorDefault(errorMsg = errorMsg)
     }

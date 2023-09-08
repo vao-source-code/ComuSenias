@@ -12,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -29,14 +30,15 @@ fun ButtonDefault(
         Button(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(vertical = 10.dp),
-            shape = RoundedCornerShape(2.dp),
+                .padding(vertical = 10.dp)
+                .testTag("ttt"),
+            shape = RoundedCornerShape(10.dp),
             enabled = enabled,
             onClick = { onClick() }) {
             Text(text = text)
             Spacer(modifier = Modifier.width(10.dp))
             if (icon != null) {
-                Icon(imageVector = icon, contentDescription = "Arrow Forward")
+                Icon(imageVector = icon, contentDescription = "Icons button")
             }
         }
         TextErrorDefault(errorMsg = errorMsg)

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
@@ -20,7 +21,7 @@ import com.example.comusenias.presentation.view_model.ProfileViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ChangeProfilePasswordContent(
+fun ChangeProfileContent(
     navController: NavHostController? = null,
     modifier: Modifier? = Modifier,
     viewModel: ProfileViewModel? = null
@@ -33,7 +34,20 @@ fun ChangeProfilePasswordContent(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Spacer(modifier = Modifier.height(55.dp))
 
+            Spacer(modifier = Modifier.height(55.dp))
+
+            InputTextFieldDefault(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                label = "Usuario",
+                value = "test_user",
+                onValueChange = {},
+                validateField = {},
+                icon = Icons.Default.Edit,
+                keyboardType = KeyboardType.Text,
+            )
 
 
             Spacer(modifier = Modifier.height(55.dp))
@@ -48,7 +62,7 @@ fun ChangeProfilePasswordContent(
                 keyboardType = KeyboardType.Password,
                 hideText = true,
             )
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(55.dp))
             InputTextFieldDefault(
                 modifier = Modifier
                     .fillMaxWidth(),
@@ -58,7 +72,7 @@ fun ChangeProfilePasswordContent(
                 validateField = {},
                 icon = Icons.Default.Lock,
                 keyboardType = KeyboardType.Password,
-                hideText = false,
+                hideText = true,
             )
             Spacer(modifier = Modifier.height(10.dp))
 

@@ -7,6 +7,6 @@ sealed class AppScreen(val route : String) {
 
     object ProfileScreen : AppScreen("profile_screen")
 
-    object ChangeProfilePasswordScreen : AppScreen("change_profile_password_screen")
+    object ChangeProfileScreen : AppScreen("change_profile_screen")
 
 }
