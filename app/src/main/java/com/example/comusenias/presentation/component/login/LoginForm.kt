@@ -19,10 +19,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.comusenias.domain.models.Response
-import com.example.comusenias.presentation.component.defaults.ButtonApp
-import com.example.comusenias.presentation.component.defaults.GoogleSignInButton
-import com.example.comusenias.presentation.component.defaults.TextFieldApp
-import com.example.comusenias.presentation.component.defaults.TextFieldAppPassword
+import com.example.comusenias.presentation.component.defaults.app.ButtonApp
+import com.example.comusenias.presentation.component.defaults.app.GoogleSignInButton
+import com.example.comusenias.presentation.component.defaults.app.TextFieldApp
+import com.example.comusenias.presentation.component.defaults.app.TextFieldAppPassword
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.view_model.LoginViewModel
 

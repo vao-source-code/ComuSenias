@@ -1,4 +1,4 @@
-package com.example.comusenias.presentation.component.defaults
+package com.example.comusenias.presentation.component.defaults.app
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement

@@ -11,7 +11,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import com.example.comusenias.constants.TestTag
-import com.example.comusenias.presentation.component.defaults.CheckBoxApp
+import com.example.comusenias.presentation.component.defaults.app.CheckBoxApp
 import com.example.comusenias.presentation.component.login.ForgetMyPass
 import org.junit.Rule
 import org.junit.Test

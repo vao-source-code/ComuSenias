@@ -17,7 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.comusenias.constants.TestTag
-import com.example.comusenias.presentation.component.defaults.CheckBoxApp
+import com.example.comusenias.presentation.component.defaults.app.CheckBoxApp
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
 

@@ -9,7 +9,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.unit.dp
 import com.example.comusenias.constants.TestTag
-import com.example.comusenias.presentation.component.defaults.ButtonApp
+import com.example.comusenias.presentation.component.defaults.app.ButtonApp
 import org.junit.Rule
 import org.junit.Test
 

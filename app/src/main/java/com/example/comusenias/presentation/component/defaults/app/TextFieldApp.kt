@@ -1,4 +1,4 @@
-package com.example.comusenias.presentation.component.defaults
+package com.example.comusenias.presentation.component.defaults.app
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background

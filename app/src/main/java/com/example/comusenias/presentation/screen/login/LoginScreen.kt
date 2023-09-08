@@ -9,8 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.comusenias.presentation.component.defaults.AuthenticationFooterContent
-import com.example.comusenias.presentation.component.defaults.AuthenticationHeaderContent
+import com.example.comusenias.presentation.component.defaults.app.AuthenticationFooterContent
+import com.example.comusenias.presentation.component.defaults.app.AuthenticationHeaderContent
 import com.example.comusenias.presentation.component.login.LoginForm
 import com.example.comusenias.presentation.navigation.AppScreen
 

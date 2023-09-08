@@ -8,7 +8,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.unit.dp
 import com.example.comusenias.constants.TestTag
-import com.example.comusenias.presentation.component.defaults.TextFieldApp
+import com.example.comusenias.presentation.component.defaults.app.TextFieldApp
 import org.junit.Rule
 import org.junit.Test
 

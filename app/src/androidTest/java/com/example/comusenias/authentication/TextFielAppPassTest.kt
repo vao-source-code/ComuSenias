@@ -8,7 +8,7 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.unit.dp
 import com.example.comusenias.constants.TestTag
-import com.example.comusenias.presentation.component.defaults.TextFieldAppPassword
+import com.example.comusenias.presentation.component.defaults.app.TextFieldAppPassword
 import org.junit.Rule
 import org.junit.Test
 

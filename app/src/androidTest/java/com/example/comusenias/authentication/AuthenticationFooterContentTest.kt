@@ -5,7 +5,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import com.example.comusenias.constants.TestTag
-import com.example.comusenias.presentation.component.defaults.AuthenticationFooterContent
+import com.example.comusenias.presentation.component.defaults.app.AuthenticationFooterContent
 import org.junit.Rule
 import org.junit.Test
 

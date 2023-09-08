@@ -13,7 +13,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import com.example.comusenias.presentation.component.defaults.TextErrorDefault
+import com.example.comusenias.presentation.component.defaults.app.TextErrorDefault
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
