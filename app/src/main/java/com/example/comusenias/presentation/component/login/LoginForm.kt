@@ -15,7 +15,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -25,7 +24,6 @@ import com.example.comusenias.presentation.component.defaults.GoogleSignInButton
 import com.example.comusenias.presentation.component.defaults.TextFieldApp
 import com.example.comusenias.presentation.component.defaults.TextFieldAppPassword
 import com.example.comusenias.presentation.navigation.AppScreen
-import com.example.comusenias.presentation.ui.theme.ComuSeniasTheme
 import com.example.comusenias.presentation.view_model.LoginViewModel
 
 @Composable
@@ -66,7 +64,8 @@ fun LoginForm(
         ) {
             ButtonApp(
                 titleButton = "Iniciar sesión",
-                onClickButton = {  }
+                onClickButton = { viewModel.login() },
+                enabledButton = viewModel.isLoginEnabled
             )
             LineDivisorLogin()
             GoogleSignInButton()
@@ -113,15 +112,5 @@ fun LoginForm(
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun PreviewLoginForm() {
-    ComuSeniasTheme() {
-        LoginForm(
-            navController = NavHostController(LocalContext.current),
-            viewModel = hiltViewModel()
-        )
-    }
-}
 
 

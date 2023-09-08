@@ -1,5 +1,6 @@
 package com.example.comusenias.presentation.component.defaults
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -24,11 +25,13 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.comusenias.constants.TestTag
 import com.example.comusenias.presentation.ui.theme.backgroundColorTextField
 import com.example.comusenias.presentation.ui.theme.iconColorTextField
 import com.example.comusenias.presentation.ui.theme.placeholderTextColor
 
 
+@SuppressLint("SuspiciousIndentation")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TextFieldApp(
@@ -47,9 +50,9 @@ fun TextFieldApp(
         Column {
             OutlinedTextField(
                 modifier = Modifier
-                    .testTag("textFieldApp")
+                    .testTag(TestTag.TAG_TEXT_FIELD_APP)
                     .fillMaxWidth()
-                    .height(56.dp)
+                    .height(50.dp)
                     .background(backgroundColorTextField, shape = RoundedCornerShape(10.dp) ),
                 onValueChange = {
                     if (it.length <= maxChar) {

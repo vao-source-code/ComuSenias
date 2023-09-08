@@ -8,6 +8,7 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.unit.dp
+import com.example.comusenias.constants.TestTag
 import com.example.comusenias.presentation.component.defaults.ButtonApp
 import org.junit.Rule
 import org.junit.Test
@@ -21,7 +22,7 @@ class ButtonAppTest {
         composeTestRule.setContent {
             ButtonApp(titleButton = "Iniciar sesión")
         }
-        composeTestRule.onNodeWithTag("button").assertIsDisplayed()
+        composeTestRule.onNodeWithTag(TestTag.TAG_BUTTON_APP).assertIsDisplayed()
     }
 
     @Test
@@ -31,7 +32,7 @@ class ButtonAppTest {
                 titleButton = "Iniciar sesión",
             )
         }
-        composeTestRule.onNodeWithTag("button").assertHasClickAction()
+        composeTestRule.onNodeWithTag(TestTag.TAG_BUTTON_APP).assertHasClickAction()
     }
     @Test
     fun testButtonAppPerfomClick(){
@@ -40,7 +41,7 @@ class ButtonAppTest {
                 titleButton = "Iniciar sesión"
             )
         }
-        composeTestRule.onNodeWithTag("button").performClick()
+        composeTestRule.onNodeWithTag(TestTag.TAG_BUTTON_APP).performClick()
     }
 
     @Test
@@ -50,7 +51,7 @@ class ButtonAppTest {
                 titleButton = "Iniciar sesión"
             )
         }
-        composeTestRule.onNodeWithTag("button").assertHeightIsEqualTo(50.dp)
+        composeTestRule.onNodeWithTag(TestTag.TAG_BUTTON_APP).assertHeightIsEqualTo(50.dp)
     }
 
     @Test

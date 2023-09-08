@@ -10,6 +10,7 @@ import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
+import com.example.comusenias.constants.TestTag
 import com.example.comusenias.presentation.component.defaults.CheckBoxApp
 import com.example.comusenias.presentation.component.login.ForgetMyPass
 import org.junit.Rule
@@ -32,7 +33,7 @@ class RemembermeAndForgetMyPasswordTest {
         composeTestRule.setContent {
             ForgetMyPass()
         }
-        composeTestRule.onNodeWithTag("ForgetMyPass").assertTextEquals("Olvide mi contraseña")
+        composeTestRule.onNodeWithTag(TestTag.TAG_FORGET_MY_PASS).assertTextEquals("Olvide mi contraseña")
     }
 
     @Test
@@ -40,7 +41,7 @@ class RemembermeAndForgetMyPasswordTest {
         composeTestRule.setContent {
             ForgetMyPass()
         }
-        composeTestRule.onNodeWithTag("ForgetMyPass").assertHasClickAction()
+        composeTestRule.onNodeWithTag(TestTag.TAG_FORGET_MY_PASS).assertHasClickAction()
     }
 
     @Test
@@ -49,7 +50,7 @@ class RemembermeAndForgetMyPasswordTest {
             val isChecked = remember { mutableStateOf(false) }
             CheckBoxApp(isChecked = isChecked)
         }
-        composeTestRule.onNodeWithTag("checkboxApp").assertIsOff()
+        composeTestRule.onNodeWithTag(TestTag.TAG_CHECKBOX_APP).assertIsOff()
     }
 
     @Test
@@ -58,6 +59,6 @@ class RemembermeAndForgetMyPasswordTest {
             val isChecked = remember { mutableStateOf(true) }
             CheckBoxApp(isChecked = isChecked)
         }
-        composeTestRule.onNodeWithTag("checkboxApp").assertIsOn()
+        composeTestRule.onNodeWithTag(TestTag.TAG_CHECKBOX_APP).assertIsOn()
     }
 }

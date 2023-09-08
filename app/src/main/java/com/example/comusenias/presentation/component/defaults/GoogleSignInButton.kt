@@ -34,7 +34,7 @@ fun GoogleSignInButton() {
             .shadow(elevation = 3.dp, shape = RoundedCornerShape(10.dp),spotColor = Color(0x33000000), ambientColor = Color(0x33000000))
             .shadow(elevation = 3.dp, shape = RoundedCornerShape(10.dp), spotColor = Color(0x21000000), ambientColor = Color(0x21000000))
             .fillMaxWidth()
-            .height(56.dp)
+            .height(50.dp)
             .background(Color.White, shape = RoundedCornerShape(10.dp))
             .padding(start = 19.dp, end = 20.dp),
         shape = RoundedCornerShape(10.dp),

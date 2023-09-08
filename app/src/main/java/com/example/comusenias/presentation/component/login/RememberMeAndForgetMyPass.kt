@@ -16,6 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.comusenias.constants.TestTag
 import com.example.comusenias.presentation.component.defaults.CheckBoxApp
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
@@ -38,7 +39,7 @@ fun RememberMeAndForgetMyPass() {
 fun ForgetMyPass(onClickText: () -> Unit = {}){
     Text(
         modifier = Modifier
-            .testTag("ForgetMyPass")
+            .testTag(TestTag.TAG_FORGET_MY_PASS)
             .clickable { onClickText() },
         text = "Olvide mi contraseña",
         color = primaryColorApp,

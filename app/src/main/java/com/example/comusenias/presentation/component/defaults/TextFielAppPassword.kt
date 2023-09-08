@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -23,6 +24,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.comusenias.R
+import com.example.comusenias.constants.TestTag
 import com.example.comusenias.presentation.ui.theme.backgroundColorTextField
 import com.example.comusenias.presentation.ui.theme.iconColorTextField
 import com.example.comusenias.presentation.ui.theme.placeholderTextColor
@@ -44,8 +46,9 @@ fun TextFieldAppPassword(
         OutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(56.dp)
-                .background(backgroundColorTextField, shape = RoundedCornerShape(10.dp)),
+                .height(50.dp)
+                .background(backgroundColorTextField, shape = RoundedCornerShape(10.dp))
+                .testTag(TestTag.TAG_TEXT_FIELD_APP_PASS),
             onValueChange = {
                 if (it.length <= maxChar) {
                     onValueChange(it)
@@ -68,7 +71,9 @@ fun TextFieldAppPassword(
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             trailingIcon = {
                 Icon(
-                    modifier = Modifier.clickable { isHideText.value = !isHideText.value },
+                    modifier = Modifier
+                        .testTag( TestTag.TAG_ICON_IS_HIDEN + isHideText.value.toString())
+                        .clickable { isHideText.value = !isHideText.value },
                     painter = if (isHideText.value) (painterResource(id = R.drawable.visibility_off)) else
                         (painterResource(id = R.drawable.visibility)) ,
                     contentDescription = label,

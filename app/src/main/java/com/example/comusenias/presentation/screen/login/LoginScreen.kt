@@ -28,35 +28,10 @@ fun LoginScreen(navController: NavHostController) {
             AuthenticationHeaderContent()
             LoginForm(navController = navController)
             AuthenticationFooterContent(
+                text1 = "No tienes una cuenta",
+                text2 = "Regístrate",
                 onClickText = { navController.navigate(route = AppScreen.RegisterScreen.route) }
             )
         }
-
-        }
-
+    }
 }
-
-
-        //Coordinator Layaout
-//        Scaffold(
-//            modifier = modifier!!,
-//            topBar = {},
-//            content = { padding ->
-//                LoginContent(
-//                    navController = navController, modifier = modifier
-//                        .padding(padding)
-//                        .fillMaxWidth()
-//                )
-//            },
-//            bottomBar = {
-//                AuthenticationFooterContent(
-//                    modifier = Modifier
-//                        .fillMaxWidth()
-//                        .padding(bottom = 16.dp, start = 16.dp, end = 16.dp),
-//                    onClickText = { navController.navigate(route = AppScreen.RegisterScreen.route) })
-//            }
-//        )
-//
-
-
-

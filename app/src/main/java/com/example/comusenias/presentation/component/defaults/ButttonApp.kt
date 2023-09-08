@@ -14,6 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.comusenias.constants.TestTag
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
 @Composable
 fun ButtonApp(
@@ -29,7 +30,7 @@ fun ButtonApp(
         modifier = Modifier
             .fillMaxWidth()
             .height(50.dp)
-            .testTag("button")
+            .testTag(TestTag.TAG_BUTTON_APP)
     ) {
         Text(
             modifier = Modifier.testTag("titleButton"),

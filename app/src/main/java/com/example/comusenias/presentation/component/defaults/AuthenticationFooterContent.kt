@@ -11,16 +11,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.comusenias.constants.TestTag
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
 
 @Composable
 fun AuthenticationFooterContent(
-    text1: String = "¿No tienes una cuenta?",
-    text2: String = "Regístrate",
+    text1: String,
+    text2: String,
     onClickText: () -> Unit = {}
 ){
         Row(
@@ -35,7 +35,7 @@ fun AuthenticationFooterContent(
             )
             Spacer(modifier = Modifier.width(5.dp))
             Text(
-                modifier = Modifier.testTag("text click action")
+                modifier = Modifier.testTag(TestTag.TAG_TEXT_CLICK_FOOTER)
                     .clickable { onClickText() },
                 text = text2,
                 color = primaryColorApp,
@@ -45,8 +45,4 @@ fun AuthenticationFooterContent(
         }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PreviewAuthenticationFooterContent() {
-        AuthenticationFooterContent()
-}
+

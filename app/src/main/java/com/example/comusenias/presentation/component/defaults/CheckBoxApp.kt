@@ -9,6 +9,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
+import com.example.comusenias.constants.TestTag
 import com.example.comusenias.presentation.ui.theme.iconColorTextField
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
 
@@ -16,7 +17,7 @@ import com.example.comusenias.presentation.ui.theme.primaryColorApp
 fun CheckBoxApp(isChecked: MutableState<Boolean>) {
     Checkbox(
         modifier = Modifier
-            .testTag("checkboxApp")
+            .testTag(TestTag.TAG_CHECKBOX_APP)
             .height(12.dp)
             .width(12.dp),
         checked = isChecked.value,
