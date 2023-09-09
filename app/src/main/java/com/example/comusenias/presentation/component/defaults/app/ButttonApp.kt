@@ -1,9 +1,7 @@
 package com.example.comusenias.presentation.component.defaults.app
 
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -20,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.comusenias.constants.TestTag
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
+
 @Composable
 fun ButtonApp(
     titleButton: String,
@@ -38,13 +37,16 @@ fun ButtonApp(
             .testTag(TestTag.TAG_BUTTON_APP)
     ) {
         Text(
-            modifier = Modifier.testTag("titleButton"),
+            modifier = Modifier
+                .testTag("titleButton"),
             color = Color.White,
             text = titleButton,
             fontSize = 17.sp,
             fontWeight = FontWeight.SemiBold
         )
-        Spacer(modifier = Modifier.width(10.dp))
+        //Comente el spacer porque por mas que no se vea el elemento
+        // ocupa un lugar en el boton que no permite centrar el titulo
+//        Spacer(modifier = Modifier.width(10.dp))
         if (icon != null) {
             Icon(imageVector = icon, contentDescription = "Icons button")
         }

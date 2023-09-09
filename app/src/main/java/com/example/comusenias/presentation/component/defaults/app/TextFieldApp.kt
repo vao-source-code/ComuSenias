@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -53,6 +54,7 @@ fun TextFieldApp(
                 modifier = Modifier
                     .testTag(TestTag.TAG_TEXT_FIELD_APP)
                     .fillMaxWidth()
+                    .height(50.dp)
                     .background(backgroundColorTextField, shape = RoundedCornerShape(10.dp) ),
                 onValueChange = {
                     if (it.length <= maxChar) {

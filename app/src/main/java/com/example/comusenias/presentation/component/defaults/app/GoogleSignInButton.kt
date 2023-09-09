@@ -28,8 +28,7 @@ import com.example.comusenias.R
 @Composable
 fun GoogleSignInButton() {
     Button(
-        onClick = {
-        },
+        onClick = {},
         modifier = Modifier
             .shadow(elevation = 3.dp, shape = RoundedCornerShape(10.dp),spotColor = Color(0x33000000), ambientColor = Color(0x33000000))
             .shadow(elevation = 3.dp, shape = RoundedCornerShape(10.dp), spotColor = Color(0x21000000), ambientColor = Color(0x21000000))
