@@ -1,14 +1,23 @@
 package com.example.comusenias.presentation.screen.profile
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.comusenias.presentation.component.defaults.ButtonDefault
+import com.example.comusenias.presentation.component.defaults.DefaultTopBar
+import com.example.comusenias.presentation.component.defaults.app.ButtonApp
+import com.example.comusenias.presentation.component.profile.ProfileContent
+import com.example.comusenias.presentation.component.profile.ProfileFooterContent
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.view_model.ProfileViewModel
 
@@ -20,20 +29,29 @@ fun ProfileScreen(
     viewModel: ProfileViewModel = hiltViewModel()
 ) {
 
-    Scaffold(topBar = {}, content = { it ->
+    Scaffold(topBar = { DefaultTopBar(title = "Perfil" , true , navController ) }, content = { it ->
         it.calculateBottomPadding()
-        ButtonDefault(
-            text = "Cerrar Sesion",
-            icon = Icons.Default.ArrowForward,
-            onClick = {
-                viewModel.logout()
-                navController.navigate(route = AppScreen.LoginScreen.route) {
-                    //es el TOPFLAG de la pila de navegacion
-                    popUpTo(AppScreen.LoginScreen.route) {
-                        inclusive = true
-                    }
-                }
-            })
-    }, bottomBar = {})
+        ProfileContent(
+            navController = navController,
+            modifier = modifier,
+            viewModel = viewModel
+        )
+    }, bottomBar = {
 
+        ProfileFooterContent {
+            navController?.navigate(route = AppScreen.ChangeProfileScreen.route) {
+                popUpTo(AppScreen.ProfileScreen.route) {}
+            }
+        }
+
+
+    })
+
+}
+
+
+@Preview
+@Composable
+fun ProfileScreenPreview() {
+    ProfileScreen(navController = NavHostController(LocalContext.current), modifier = Modifier.fillMaxSize() , viewModel = hiltViewModel())
 }

@@ -42,7 +42,9 @@ fun TextFieldApp(
         icon: ImageVector,
         keyboardType: KeyboardType = KeyboardType.Text,
         hideText: Boolean = false,
-        errorMsg: String = ""
+        errorMsg: String = "",
+        readOnly: Boolean = false,
+
     ) {
 
     val maxChar = 32
@@ -52,7 +54,6 @@ fun TextFieldApp(
                 modifier = Modifier
                     .testTag(TestTag.TAG_TEXT_FIELD_APP)
                     .fillMaxWidth()
-                    .height(50.dp)
                     .background(backgroundColorTextField, shape = RoundedCornerShape(10.dp) ),
                 onValueChange = {
                     if (it.length <= maxChar) {
@@ -83,6 +84,7 @@ fun TextFieldApp(
                         tint = iconColorTextField,
                     )
                 },
+                readOnly= readOnly,
                 visualTransformation = if (hideText) PasswordVisualTransformation() else VisualTransformation.None,
             )
             TextErrorDefault(errorMsg = errorMsg)

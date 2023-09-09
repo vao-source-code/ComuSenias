@@ -10,10 +10,13 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.comusenias.presentation.ui.theme.ComuSeniasTheme
+import com.example.comusenias.presentation.ui.theme.backgroundColorApp
+import com.example.comusenias.presentation.ui.theme.primaryColorApp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -25,13 +28,20 @@ fun DefaultTopBar(
 
     TopAppBar(
         title = {
-            Text(text = title, fontSize = 19.sp)
+            Text(text = title, fontSize = 19.sp, color = backgroundColorApp)
         },
-        colors = TopAppBarDefaults.smallTopAppBarColors(titleContentColor=MaterialTheme.colorScheme.primary , containerColor =MaterialTheme.colorScheme.primaryContainer),
+        colors = TopAppBarDefaults.smallTopAppBarColors(
+            titleContentColor = Color.White,
+            containerColor = primaryColorApp
+        ),
         navigationIcon = {
             if (upAvailable) {
                 IconButton(onClick = { navHostController?.popBackStack() }) {
-                    Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Arrow Back" , tint = MaterialTheme.colorScheme.primary)
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = "Arrow Back",
+                        tint = backgroundColorApp
+                    )
 
                 }
             }

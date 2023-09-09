@@ -41,19 +41,17 @@ class MainActivity : ComponentActivity() {
 }
 
 
-
-
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    ComuSeniasTheme (){
+    ComuSeniasTheme() {
         // A surface container using the 'background' color from the theme
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
             val navController = rememberNavController()
-            LoginScreen(navController = navController)
+            AppNavigation(navController = navController)
         }
     }
 }

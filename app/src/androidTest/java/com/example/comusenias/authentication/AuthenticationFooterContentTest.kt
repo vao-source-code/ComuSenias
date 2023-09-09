@@ -1,5 +1,6 @@
 package com.example.comusenias.authentication
 
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.assertHasClickAction
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -18,7 +19,7 @@ class AuthenticationFooterContentTest {
         composeTestRule.setContent {
             AuthenticationFooterContent(
                 text1 = "No tienes una cuenta",
-                text2 = "Regístrate"
+                text2 = "Regístrate",
             )
         }
         composeTestRule.onNodeWithTag(TestTag.TAG_TEXT_CLICK_FOOTER).assertIsDisplayed()
@@ -28,7 +29,8 @@ class AuthenticationFooterContentTest {
         composeTestRule.setContent {
             AuthenticationFooterContent(
                 text1 = "No tienes una cuenta",
-                text2 = "Regístrate"
+                text2 = "Regístrate",
+
             )
         }
         composeTestRule.onNodeWithTag(TestTag.TAG_TEXT_CLICK_FOOTER).assertHasClickAction()
