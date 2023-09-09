@@ -19,7 +19,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.comusenias.R
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
-
 @Preview(showBackground = true)
 @Composable
 fun AuthenticationHeaderContent(){

@@ -5,9 +5,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.comusenias.domain.models.Response
+import com.example.comusenias.presentation.component.defaults.DefaultLoadingProgressIndicator
 import com.example.comusenias.presentation.component.defaults.app.ButtonApp
 import com.example.comusenias.presentation.component.defaults.app.GoogleSignInButton
 import com.example.comusenias.presentation.component.defaults.app.TextFieldApp
@@ -36,7 +37,43 @@ fun LoginForm(
     Column(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(50.dp)
-    ){
+    ) {
+        loginFlow.value.let { state ->
+            when (state) {
+                Response.Loading -> {
+                    Box(
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        DefaultLoadingProgressIndicator()
+                    }
+                }
+
+                is Response.Success -> {
+                    LaunchedEffect(Unit) {
+                        navController.navigate(route = AppScreen.ProfileScreen.route) {
+                            popUpTo(AppScreen.LoginScreen.route) {
+                                inclusive = true
+                            }
+                        }
+
+                    }
+                    Toast.makeText(LocalContext.current, "Login Success", Toast.LENGTH_SHORT)
+                        .show()
+                }
+
+                is Response.Error -> {
+                    Toast.makeText(
+                        LocalContext.current,
+                        state.exception?.message + "Login Error",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                }
+
+                else -> {}
+            }
+        }
+
         Column(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(2.dp)
@@ -54,7 +91,8 @@ fun LoginForm(
                 value = viewModel.password.value,
                 onValueChange = { viewModel.password.value = it },
                 validateField = { viewModel.validatePassword() },
-                label = "Contraseña"
+                label = "Contraseña",
+                errorMsg = viewModel.errorPassword.value
             )
             RememberMeAndForgetMyPass()
         }
@@ -71,46 +109,11 @@ fun LoginForm(
             GoogleSignInButton()
         }
 
-    }
 
-
-
-
-    loginFlow.value.let { state ->
-        when (state) {
-            //Mostrar que se esta realizando la peticion
-            Response.Loading -> {
-                Box(contentAlignment = Alignment.Center) {
-                    CircularProgressIndicator()
-
-                }
-            }
-
-            is Response.Success -> {
-                LaunchedEffect(Unit) {
-                    navController.navigate(route = AppScreen.ProfileScreen.route){
-                        popUpTo(AppScreen.LoginScreen.route) {
-                            inclusive = true
-                        }
-                    }
-
-                }
-                Toast.makeText(LocalContext.current, "Login Success", Toast.LENGTH_SHORT).show()
-            }
-
-            is Response.Error -> {
-                Toast.makeText(
-                    LocalContext.current,
-                    state.exception?.message + "Login Error",
-                    Toast.LENGTH_SHORT
-                ).show()
-
-            }
-
-            else -> {}
-        }
     }
 }
+
+
 
 
 

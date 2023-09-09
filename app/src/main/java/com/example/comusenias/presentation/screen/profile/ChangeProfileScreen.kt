@@ -12,6 +12,7 @@ import androidx.navigation.NavHostController
 import com.example.comusenias.presentation.component.defaults.ButtonDefault
 import com.example.comusenias.presentation.component.defaults.DefaultTopBar
 import com.example.comusenias.presentation.component.profile.ChangeProfileContent
+import com.example.comusenias.presentation.component.profile.ProfileFooterContent
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.view_model.ProfileViewModel
 
@@ -36,18 +37,11 @@ fun ChangeProfilePasswordScreen(
             )
         },
         bottomBar = {
-            ButtonDefault(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(20.dp),
-                text = "Confirmar Cambios",
-                icon = null,
-                onClick = {
-                    navController?.navigate(route = AppScreen.ChangeProfileScreen.route) {
-                        popUpTo(AppScreen.ProfileScreen.route) {}
-                    }
+            ProfileFooterContent {
+                navController?.navigate(route = AppScreen.ProfileScreen.route) {
                 }
-            )
+            }
+
         })
 
 }

@@ -20,10 +20,6 @@ class AuthenticationFooterContentTest {
             AuthenticationFooterContent(
                 text1 = "No tienes una cuenta",
                 text2 = "Regístrate",
-                navController = navController,
-                modifier = Modifier.Companion
-                    .fillMaxWidth()
-                    .padding(bottom = 20.dp)
             )
         }
         composeTestRule.onNodeWithTag(TestTag.TAG_TEXT_CLICK_FOOTER).assertIsDisplayed()
@@ -34,10 +30,7 @@ class AuthenticationFooterContentTest {
             AuthenticationFooterContent(
                 text1 = "No tienes una cuenta",
                 text2 = "Regístrate",
-                navController = navController,
-                modifier = Modifier.Companion
-                    .fillMaxWidth()
-                    .padding(bottom = 20.dp)
+
             )
         }
         composeTestRule.onNodeWithTag(TestTag.TAG_TEXT_CLICK_FOOTER).assertHasClickAction()

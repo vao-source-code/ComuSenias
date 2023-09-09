@@ -17,6 +17,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.comusenias.presentation.component.defaults.InputTextFieldDefault
+import com.example.comusenias.presentation.component.defaults.app.TextFieldApp
+import com.example.comusenias.presentation.component.defaults.app.TextFieldAppPassword
 import com.example.comusenias.presentation.view_model.ProfileViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -38,9 +40,7 @@ fun ChangeProfileContent(
 
             Spacer(modifier = Modifier.height(55.dp))
 
-            InputTextFieldDefault(
-                modifier = Modifier
-                    .fillMaxWidth(),
+            TextFieldApp(
                 label = "Usuario",
                 value = "test_user",
                 onValueChange = {},
@@ -51,28 +51,20 @@ fun ChangeProfileContent(
 
 
             Spacer(modifier = Modifier.height(55.dp))
-            InputTextFieldDefault(
-                modifier = Modifier
-                    .fillMaxWidth(),
+            TextFieldAppPassword(
                 label = "Nueva contraseña",
                 value = "New Password",
                 onValueChange = {},
                 validateField = {},
-                icon = Icons.Default.Lock,
-                keyboardType = KeyboardType.Password,
-                hideText = true,
+
             )
             Spacer(modifier = Modifier.height(55.dp))
-            InputTextFieldDefault(
-                modifier = Modifier
-                    .fillMaxWidth(),
+            TextFieldAppPassword(
                 label = "Repita contraseña",
                 value = "New Password",
                 onValueChange = {},
                 validateField = {},
-                icon = Icons.Default.Lock,
-                keyboardType = KeyboardType.Password,
-                hideText = true,
+
             )
             Spacer(modifier = Modifier.height(10.dp))
 

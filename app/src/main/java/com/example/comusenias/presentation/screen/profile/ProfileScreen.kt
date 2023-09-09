@@ -1,5 +1,7 @@
 package com.example.comusenias.presentation.screen.profile
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -12,9 +14,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.comusenias.presentation.component.defaults.ButtonDefault
 import com.example.comusenias.presentation.component.defaults.DefaultTopBar
+import com.example.comusenias.presentation.component.defaults.app.ButtonApp
 import com.example.comusenias.presentation.component.profile.ProfileContent
+import com.example.comusenias.presentation.component.profile.ProfileFooterContent
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.view_model.ProfileViewModel
 
@@ -29,21 +32,19 @@ fun ProfileScreen(
     Scaffold(topBar = { DefaultTopBar(title = "Perfil" , true , navController ) }, content = { it ->
         it.calculateBottomPadding()
         ProfileContent(
-            modifier = modifier,
             navController = navController,
+            modifier = modifier,
             viewModel = viewModel
         )
     }, bottomBar = {
-        ButtonDefault(
-            modifier = Modifier.fillMaxWidth().padding(20.dp),
-            text = "Cambiar Datos",
-            icon = null,
-            onClick = {
-                navController?.navigate(route = AppScreen.ChangeProfileScreen.route) {
-                    popUpTo(AppScreen.ProfileScreen.route) {}
-                }
+
+        ProfileFooterContent {
+            navController?.navigate(route = AppScreen.ChangeProfileScreen.route) {
+                popUpTo(AppScreen.ProfileScreen.route) {}
             }
-        )
+        }
+
+
     })
 
 }
