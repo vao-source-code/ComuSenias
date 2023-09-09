@@ -65,13 +65,15 @@ dependencies {
     androidTestImplementation libs.junitExt
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.compose.ui:ui-test-junit4'
-    androidTestImplementation libs.espresso
+    //androidTestImplementation libs.espresso
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     androidTestImplementation libs.mockkAndroid
     testImplementation libs.mockkAndroid
 
     debugImplementation libs.composeUiTooling
 
-    debugImplementation libs.composeUiTestManifest
+    //debugImplementation libs.composeUiTestManifest
+    debugImplementation 'androidx.compose.ui:ui-test-manifest'
 
     implementation("com.google.firebase:firebase-analytics-ktx")
     implementation libs.firebaseAuth
@@ -101,9 +103,7 @@ dependencies {
     androidTestAnnotationProcessor libs.daggerHiltCompiler
     testImplementation libs.daggerHiltTesting
     testAnnotationProcessor libs.daggerHiltCompiler
-
 }
-
 kapt {
     correctErrorTypes true
 }

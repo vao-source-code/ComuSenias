@@ -27,9 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.comusenias.R
-import com.example.comusenias.presentation.component.defaults.TextFieldDefault
 import com.example.comusenias.presentation.component.defaults.app.TextFieldApp
-import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.ComuSeniasTheme
 import com.example.comusenias.presentation.view_model.ProfileViewModel
 

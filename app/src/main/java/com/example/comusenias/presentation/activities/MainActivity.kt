@@ -1,5 +1,6 @@
 package com.example.comusenias.presentation.activities
 
+
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -12,7 +13,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.comusenias.presentation.navigation.AppNavigation
-import com.example.comusenias.presentation.screen.login.LoginScreen
 import com.example.comusenias.presentation.ui.theme.ComuSeniasTheme
 import dagger.hilt.android.AndroidEntryPoint
 

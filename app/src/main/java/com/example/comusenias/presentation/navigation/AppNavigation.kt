@@ -3,27 +3,28 @@ package com.example.comusenias.presentation.navigation
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.compose.*
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import com.example.comusenias.presentation.screen.login.LoginScreen
 import com.example.comusenias.presentation.screen.profile.ChangeProfilePasswordScreen
 import com.example.comusenias.presentation.screen.profile.ProfileScreen
 import com.example.comusenias.presentation.screen.register.RegisterScreen
+import com.example.comusenias.presentation.splashScreen.SplashScreen
 
 @Composable
 fun AppNavigation(navController: NavHostController) {
 
-    NavHost(navController = navController, startDestination = AppScreen.LoginScreen.route) {
-        composable(AppScreen.LoginScreen.route) {
+    NavHost(navController = navController, startDestination = AppScreen.SplashScreen.route) {
+        composable(AppScreen.SplashScreen.route) {
+            SplashScreen(navController)
+        }
+        composable(AppScreen.MainActivity.route) {
             LoginScreen(navController = navController)
         }
         composable(AppScreen.RegisterScreen.route) {
-           RegisterScreen(navController = navController , modifier = Modifier.fillMaxSize())
+            RegisterScreen(navController = navController , modifier = Modifier.fillMaxSize())
         }
-
-        /* Profile */
-
-
         composable(AppScreen.ProfileScreen.route) {
             ProfileScreen(navController = navController , modifier = Modifier.fillMaxSize())
         }
@@ -31,6 +32,6 @@ fun AppNavigation(navController: NavHostController) {
         composable(AppScreen.ChangeProfileScreen.route) {
             ChangeProfilePasswordScreen(navController = navController , modifier = Modifier.fillMaxSize())
         }
-
     }
+
 }
