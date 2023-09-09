@@ -4,11 +4,12 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.auth.FirebaseUser
 import com.example.comusenias.domain.library.LibraryString
 import com.example.comusenias.domain.models.Response
 import com.example.comusenias.domain.models.User
 import com.example.comusenias.domain.use_cases.auth.AuthUseCases
+import com.example.comusenias.domain.use_cases.users.UsersUseCase
+import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,7 +17,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RegisterViewModel @Inject constructor(private val authUseCases: AuthUseCases) : ViewModel() {
+class RegisterViewModel @Inject constructor(private val authUseCases: AuthUseCases , private val usersUseCase: UsersUseCase) : ViewModel() {
 
 
     var userName: MutableState<String> = mutableStateOf("")
@@ -40,6 +41,8 @@ class RegisterViewModel @Inject constructor(private val authUseCases: AuthUseCas
 
     var isRegisterEnabled = false
 
+    var user = User()
+
 
     private val _registerFlow = MutableStateFlow<Response<FirebaseUser>?>(null)
     val registerFlow : StateFlow<Response<FirebaseUser>?> =_registerFlow
@@ -50,7 +53,8 @@ class RegisterViewModel @Inject constructor(private val authUseCases: AuthUseCas
     }
 
     fun onRegister() {
-        val user = User(
+
+         user = User(
             userName = userName.value,
             email = email.value,
             password = password.value
@@ -107,5 +111,10 @@ class RegisterViewModel @Inject constructor(private val authUseCases: AuthUseCas
             errorConfirmPassword.value = "Las contraseñas no coinciden"
         }
         enabledRegisterButton()
+    }
+
+    fun createUser() = viewModelScope.launch {
+        user.id = authUseCases.getCurrentUser()?.uid!!
+        usersUseCase.createUser(user)
     }
 }

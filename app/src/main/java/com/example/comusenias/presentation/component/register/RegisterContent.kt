@@ -167,6 +167,7 @@ fun CardFormRegister(navController : NavHostController, viewModel: RegisterViewM
             }
             is Response.Success -> {
                 LaunchedEffect(Unit) {
+                    viewModel.createUser()
                     //Elimino asi el total del historial de atras
                     navController.popBackStack(AppScreen.LoginScreen.route, inclusive = true)
                     navController.navigate(route = AppScreen.ProfileScreen.route)
