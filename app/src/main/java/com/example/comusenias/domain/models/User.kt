@@ -1,8 +1,8 @@
 package com.example.comusenias.domain.models
 
 data class User(
-    val userName : String  = "",
-    val email : String = "",
-    val password : String = "",
-
+    var id : String = "",
+    var userName : String  = "",
+    var email : String = "",
+    var password : String = "",
 )

@@ -76,6 +76,8 @@ dependencies {
     debugImplementation 'androidx.compose.ui:ui-test-manifest'
 
     implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation("com.google.firebase:firebase-firestore-ktx")
+
     implementation libs.firebaseAuth
     implementation(platform(libs.firebaseBom))
     implementation libs.firebaseAnalytics
@@ -103,6 +105,8 @@ dependencies {
     androidTestAnnotationProcessor libs.daggerHiltCompiler
     testImplementation libs.daggerHiltTesting
     testAnnotationProcessor libs.daggerHiltCompiler
+
+
 }
 kapt {
     correctErrorTypes true
