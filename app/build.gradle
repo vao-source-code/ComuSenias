@@ -62,6 +62,10 @@ dependencies {
     implementation libs.uiToolingPreview
     implementation libs.material3
 
+    // indicators
+    implementation libs.accompanist.pager
+    implementation libs.accompanist.pager.indicators
+
     androidTestImplementation libs.junitExt
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.compose.ui:ui-test-junit4'
