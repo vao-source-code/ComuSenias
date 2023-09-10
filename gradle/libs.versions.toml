@@ -38,7 +38,7 @@ jUnit-extend = { module = "junit:junit", version.ref = "jUnit" }
 junitExt = { module = "androidx.test.ext:junit", version.ref = "junitExt" }
 espresso = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockK" }
-mockkAndroid = { module = "io.mockk:mockk-android", version.ref = "mockK" }
+mockkAndroid = { module = "io.mockk:mockk", version.ref = "mockK" }
 composeUiTooling = { module = "androidx.compose.ui:ui-tooling" }
 composeUiTestManifest = { module = "androidx.compose.ui:ui-test-manifest" }
 firebaseAuth = { module = "com.google.firebase:firebase-auth", version.ref = "firebaseAuth" }

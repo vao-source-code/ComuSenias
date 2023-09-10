@@ -4,6 +4,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.comusenias.domain.library.LibraryPassword
 import com.example.comusenias.domain.library.LibraryString
 import com.example.comusenias.domain.models.Response
 import com.example.comusenias.domain.models.User
@@ -115,6 +116,7 @@ class RegisterViewModel @Inject constructor(private val authUseCases: AuthUseCas
 
     fun createUser() = viewModelScope.launch {
         user.id = authUseCases.getCurrentUser()?.uid!!
+        user.password = LibraryPassword.hashPassword(user.password)
         usersUseCase.createUser(user)
     }
 }
