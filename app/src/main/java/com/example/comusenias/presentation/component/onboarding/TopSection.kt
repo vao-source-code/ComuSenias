@@ -25,7 +25,6 @@ fun TopSection() {
             .padding(12.dp)
     ){
 
-        //back button
         IconButton(
             onClick = { },
             modifier=Modifier.align(Alignment.CenterStart)
@@ -33,12 +32,11 @@ fun TopSection() {
             Icon(Icons.Outlined.KeyboardArrowLeft,null)
         }
 
-        //skip button
         TextButton(
             onClick = {},
             modifier=Modifier.align(Alignment.CenterEnd)
         ) {
-            Text("Skip",color= primaryColorApp)
+            Text("Saltar",color= primaryColorApp)
         }
 
     }

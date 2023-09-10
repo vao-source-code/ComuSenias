@@ -1,4 +1,93 @@
 package com.example.comusenias.presentation.component.onboarding
 
-class OnBoarding {
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.comusenias.domain.models.OnBoardingItem
+import com.example.comusenias.presentation.ui.theme.blackColorApp
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.rememberPagerState
+import kotlinx.coroutines.launch
+
+@ExperimentalPagerApi
+@Composable
+fun OnBoarding() {
+
+    val scope= rememberCoroutineScope()
+
+    Column(Modifier.fillMaxSize()) {
+        TopSection()
+
+        val items = OnBoardingItem.get()
+        val state = rememberPagerState(pageCount = items.size)
+
+        HorizontalPager(
+            state = state,
+            modifier= Modifier
+                .fillMaxSize()
+                .weight(0.8f)
+        ) {page->
+
+            OnBoardingItem(items[page])
+
+        }
+
+        BottomSection(size = items.size, index = state.currentPage) {
+            if (state.currentPage+1 <items.size)
+                scope.launch {
+                    state.scrollToPage(state.currentPage+1)
+                }
+        }
+
+    }
+
 }
+
+@Composable
+fun OnBoardingItem(
+    item: OnBoardingItem
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 20.dp)
+    ) {
+        Image(
+            modifier = Modifier
+                .height(250.dp)
+                .fillMaxWidth(),
+            painter = painterResource(item.image),
+            contentScale = ContentScale.Fit,
+            contentDescription = null)
+        Spacer(modifier = Modifier.width(95.dp))
+        Text(
+            text = stringResource(item.text),
+            textAlign = TextAlign.Center,
+            fontSize = 24.sp,
+            color= blackColorApp,
+            fontWeight = FontWeight.Bold
+        )
+    }
+}
+

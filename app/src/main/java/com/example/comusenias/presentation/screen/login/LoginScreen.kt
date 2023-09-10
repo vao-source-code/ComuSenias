@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -15,7 +14,6 @@ import com.example.comusenias.presentation.component.defaults.app.Authentication
 import com.example.comusenias.presentation.component.login.LoginForm
 import com.example.comusenias.presentation.navigation.AppScreen
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(navController: NavHostController) {
     Box(
@@ -37,7 +35,4 @@ fun LoginScreen(navController: NavHostController) {
             )
         }
     }
-
-
-
 }
