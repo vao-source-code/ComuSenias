@@ -9,7 +9,9 @@ sealed class AppScreen(val route : String) {
     object SplashScreen : AppScreen("splash_screen")
     object MainActivity : AppScreen("main_screen")
 
-
     object ChangeProfileScreen : AppScreen("change_profile_screen")
+
+    object CameraScreenPermission :AppScreen("camera_screen_permission")
+    object CameraScreen :AppScreen("camera_screen")
 
 }

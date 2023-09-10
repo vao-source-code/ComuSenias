@@ -103,6 +103,15 @@ dependencies {
     androidTestAnnotationProcessor libs.daggerHiltCompiler
     testImplementation libs.daggerHiltTesting
     testAnnotationProcessor libs.daggerHiltCompiler
+
+    implementation libs.camerax.core
+    implementation libs.camera.camera2
+    implementation libs.camera.lifecycle
+    implementation libs.camera.view
+    implementation libs.camera.video
+   // implementation libs.permission
+
+
 }
 kapt {
     correctErrorTypes true

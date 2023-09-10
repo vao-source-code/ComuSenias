@@ -24,6 +24,8 @@ androidApplication = "8.0.2"
 kotlinAndroid = "1.7.20"
 kotlinJvm = "1.6.10"
 googleServices = "4.3.15"
+camerax_version = "1.2.1"
+permission_version="0.33.1-alpha"
 
 [libraries]
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "core" }
@@ -59,6 +61,16 @@ daggerHiltCompiler = { module = "com.google.dagger:hilt-android-compiler", versi
 daggerHiltTesting = { module = "com.google.dagger:hilt-android-testing", version.ref = "daggerHilt" }
 hiltNavigationCompose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "navigationHilt" }
 
+camerax_core = {module = "androidx.camera:camera-core" , version.ref = "camerax_version" }
+camera-camera2 = {module = "androidx.camera:camera-camera2" , version.ref = "camerax_version" }
+camera-lifecycle = {module = "androidx.camera:camera-lifecycle",version.ref = "camerax_version"}
+camera-video = {module = "androidx.camera:camera-video",version.ref = "camerax_version"}
+camera-view = {module = "androidx.camera:camera-view",version.ref = "camerax_version"}
+camera-mlkit-vision = {module = "androidx.camera:camera-mlkit-vision",version.ref = "camerax_version"}
+camera-extensions = {module = "androidx.camera:camera-extensions",version.ref = "camerax_version"}
+permission={module =  "com.google.accompanist:accompanist-permissions" , version.ref = "permission_version"}
+
+
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "androidApplication" }
 android-library = { id = "com.android.library", version.ref = "androidApplication" }
@@ -67,3 +79,6 @@ navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref 
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlinJvm" }
 dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "daggerHilt" }
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
+
+
+
