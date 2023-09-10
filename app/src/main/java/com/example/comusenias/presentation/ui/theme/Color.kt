@@ -1,6 +1,12 @@
 package com.example.comusenias.presentation.ui.theme
 import androidx.compose.ui.graphics.Color
 
+val primaryColorApp = Color(0xFF7584F2)
+val backgroundColorApp = Color(0xFFFFFFFF)
+val blackColorApp = Color(0xFF252525)
+val placeholderTextColor = Color(0x99000000)
+val backgroundColorTextField = Color(0x33C4C4C4)
+val iconColorTextField = Color(0x4D000000)
 val md_theme_light_primary = Color(0xFF1A5ABD)
 val md_theme_light_onPrimary = Color(0xFFFFFFFF)
 val md_theme_light_primaryContainer = Color(0xFFD8E2FF)
@@ -61,7 +67,6 @@ val md_theme_dark_shadow = Color(0xFF000000)
 val md_theme_dark_surfaceTint = Color(0xFFAEC6FF)
 val md_theme_dark_outlineVariant = Color(0xFF44474F)
 val md_theme_dark_scrim = Color(0xFF000000)
-val primaryColorApp = Color(0xFF7584F2)
 
 
 val seed = Color(0xFF6699FF)
