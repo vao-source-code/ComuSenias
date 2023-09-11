@@ -9,6 +9,11 @@ import com.example.comusenias.domain.library.LibraryString
 import com.example.comusenias.domain.models.Response
 import com.example.comusenias.domain.models.User
 import com.example.comusenias.domain.use_cases.auth.AuthUseCases
+import com.example.comusenias.presentation.ui.theme.emptyString
+import com.example.comusenias.presentation.ui.theme.invalidEmail
+import com.example.comusenias.presentation.ui.theme.passwordDoNotMatch
+import com.example.comusenias.presentation.ui.theme.restrictionNameUserAccount
+import com.example.comusenias.presentation.ui.theme.restrictionPasswordUserAccount
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,7 +23,6 @@ import javax.inject.Inject
 @HiltViewModel
 class RegisterViewModel @Inject constructor(private val authUseCases: AuthUseCases) : ViewModel() {
 
-
     var userName: MutableState<String> = mutableStateOf("")
     var isUserNameValid: MutableState<Boolean> = mutableStateOf(false)
     var errorUserName: MutableState<String> = mutableStateOf("")
@@ -27,22 +31,19 @@ class RegisterViewModel @Inject constructor(private val authUseCases: AuthUseCas
     var isEmailValid: MutableState<Boolean> = mutableStateOf(false)
     var errorEmail: MutableState<String> = mutableStateOf("")
 
-
     var password: MutableState<String> = mutableStateOf("")
     var isPasswordValid: MutableState<Boolean> = mutableStateOf(false)
     var errorPassword: MutableState<String> = mutableStateOf("")
-
 
     var confirmPassword: MutableState<String> = mutableStateOf("")
     var isConfirmPasswordValid: MutableState<Boolean> = mutableStateOf(false)
     var errorConfirmPassword: MutableState<String> = mutableStateOf("")
 
-
     var isRegisterEnabled = false
 
-
     private val _registerFlow = MutableStateFlow<Response<FirebaseUser>?>(null)
-    val registerFlow : StateFlow<Response<FirebaseUser>?> =_registerFlow
+    val registerFlow: StateFlow<Response<FirebaseUser>?> = _registerFlow
+
     fun register(user: User) = viewModelScope.launch {
         _registerFlow.value = Response.Loading
         val result = authUseCases.register(user)
@@ -56,56 +57,39 @@ class RegisterViewModel @Inject constructor(private val authUseCases: AuthUseCas
             password = password.value
         )
         register(user)
-
     }
 
-    fun enabledRegisterButton() {
+    private fun enabledRegisterButton() {
         isRegisterEnabled =
             isUserNameValid.value && isEmailValid.value && isPasswordValid.value && isConfirmPasswordValid.value
     }
 
     fun validateUserName() {
-        if (LibraryString.validUserName(userName.value)) {
-            isUserNameValid.value = true
-            errorUserName.value = ""
-        } else {
-            isUserNameValid.value = false
-            errorUserName.value = "El nombre de usuario debe tener al menos 3 caracteres"
-        }
+        val isValid = LibraryString.validUserName(userName.value)
+        isUserNameValid.value = isValid
+        errorUserName.value =
+            if (isValid) emptyString else restrictionNameUserAccount
         enabledRegisterButton()
     }
 
     fun validateEmail() {
-        if (LibraryString.validEmail(email.value)) {
-            isEmailValid.value = true
-            errorEmail.value = ""
-        } else {
-            isEmailValid.value = false
-            errorEmail.value = "El email no es valido"
-        }
+        val isValid = LibraryString.validEmail(email.value)
+        isEmailValid.value = isValid
+        errorEmail.value = if (isValid) emptyString else invalidEmail
         enabledRegisterButton()
     }
 
-
     fun validatePassword() {
-        if (LibraryString.validPassword(password.value)) {
-            isPasswordValid.value = true
-            errorPassword.value = ""
-        } else {
-            isPasswordValid.value = false
-            errorPassword.value = "La contraseña debe tener al menos 8 caracteres"
-        }
+        val isValid = LibraryString.validPassword(password.value)
+        isPasswordValid.value = isValid
+        errorPassword.value = if (isValid) emptyString else restrictionPasswordUserAccount
         enabledRegisterButton()
     }
 
     fun validateConfirmPassword() {
-        if (password.value == confirmPassword.value) {
-            isConfirmPasswordValid.value = true
-            errorConfirmPassword.value = ""
-        } else {
-            isConfirmPasswordValid.value = false
-            errorConfirmPassword.value = "Las contraseñas no coinciden"
-        }
+        val isValid = password.value == confirmPassword.value
+        isConfirmPasswordValid.value = isValid
+        errorConfirmPassword.value = if (isValid) emptyString else passwordDoNotMatch
         enabledRegisterButton()
     }
 }
