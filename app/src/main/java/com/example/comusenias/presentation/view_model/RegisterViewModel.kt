@@ -1,43 +1,48 @@
 package com.example.comusenias.presentation.view_model
 
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.comusenias.domain.library.LibraryPassword
 import com.example.comusenias.domain.library.LibraryString
+import com.example.comusenias.domain.models.RegisterState
 import com.example.comusenias.domain.models.Response
 import com.example.comusenias.domain.models.User
 import com.example.comusenias.domain.use_cases.auth.AuthUseCases
 import com.example.comusenias.domain.use_cases.users.UsersUseCase
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RegisterViewModel @Inject constructor(private val authUseCases: AuthUseCases , private val usersUseCase: UsersUseCase) : ViewModel() {
+class RegisterViewModel @Inject constructor(
+    private val authUseCases: AuthUseCases,
+    private val usersUseCase: UsersUseCase
+) : ViewModel() {
 
 
-    var userName: MutableState<String> = mutableStateOf("")
-    var isUserNameValid: MutableState<Boolean> = mutableStateOf(false)
-    var errorUserName: MutableState<String> = mutableStateOf("")
+    var registerResponse by mutableStateOf<Response<FirebaseUser>?>(null)
+        private set
 
-    var email: MutableState<String> = mutableStateOf("")
-    var isEmailValid: MutableState<Boolean> = mutableStateOf(false)
-    var errorEmail: MutableState<String> = mutableStateOf("")
+    var state by mutableStateOf(RegisterState())
+        private set
+
+    var isUserNameValid: Boolean by mutableStateOf(false)
+    var errorUserName: String by mutableStateOf("")
+
+    var isEmailValid: Boolean by mutableStateOf(false)
+    var errorEmail: String by mutableStateOf("")
 
 
-    var password: MutableState<String> = mutableStateOf("")
-    var isPasswordValid: MutableState<Boolean> = mutableStateOf(false)
-    var errorPassword: MutableState<String> = mutableStateOf("")
+    var isPasswordValid: Boolean by mutableStateOf(false)
+    var errorPassword: String by  mutableStateOf("")
 
 
-    var confirmPassword: MutableState<String> = mutableStateOf("")
-    var isConfirmPasswordValid: MutableState<Boolean> = mutableStateOf(false)
-    var errorConfirmPassword: MutableState<String> = mutableStateOf("")
+    var isConfirmPasswordValid: Boolean by mutableStateOf(false)
+    var errorConfirmPassword: String by mutableStateOf("")
 
 
     var isRegisterEnabled = false
@@ -45,20 +50,18 @@ class RegisterViewModel @Inject constructor(private val authUseCases: AuthUseCas
     var user = User()
 
 
-    private val _registerFlow = MutableStateFlow<Response<FirebaseUser>?>(null)
-    val registerFlow : StateFlow<Response<FirebaseUser>?> =_registerFlow
     fun register(user: User) = viewModelScope.launch {
-        _registerFlow.value = Response.Loading
+        registerResponse = Response.Loading
         val result = authUseCases.register(user)
-        _registerFlow.value = result
+        registerResponse = result
     }
 
     fun onRegister() {
 
-         user = User(
-            userName = userName.value,
-            email = email.value,
-            password = password.value
+        user = User(
+            userName = state.userName,
+            email = state.email,
+            password = state.password
         )
         register(user)
 
@@ -66,50 +69,50 @@ class RegisterViewModel @Inject constructor(private val authUseCases: AuthUseCas
 
     fun enabledRegisterButton() {
         isRegisterEnabled =
-            isUserNameValid.value && isEmailValid.value && isPasswordValid.value && isConfirmPasswordValid.value
+            isUserNameValid && isEmailValid && isPasswordValid && isConfirmPasswordValid
     }
 
     fun validateUserName() {
-        if (LibraryString.validUserName(userName.value)) {
-            isUserNameValid.value = true
-            errorUserName.value = ""
+        if (LibraryString.validUserName(state.userName)) {
+            isUserNameValid = true
+            errorUserName = ""
         } else {
-            isUserNameValid.value = false
-            errorUserName.value = "El nombre de usuario debe tener al menos 3 caracteres"
+            isUserNameValid = false
+            errorUserName = "El nombre de usuario debe tener al menos 3 caracteres"
         }
         enabledRegisterButton()
     }
 
     fun validateEmail() {
-        if (LibraryString.validEmail(email.value)) {
-            isEmailValid.value = true
-            errorEmail.value = ""
+        if (LibraryString.validEmail(state.email)) {
+            isEmailValid = true
+            errorEmail = ""
         } else {
-            isEmailValid.value = false
-            errorEmail.value = "El email no es valido"
+            isEmailValid = false
+            errorEmail = "El email no es valido"
         }
         enabledRegisterButton()
     }
 
 
     fun validatePassword() {
-        if (LibraryString.validPassword(password.value)) {
-            isPasswordValid.value = true
-            errorPassword.value = ""
+        if (LibraryString.validPassword(state.password)) {
+            isPasswordValid = true
+            errorPassword = ""
         } else {
-            isPasswordValid.value = false
-            errorPassword.value = "La contraseña debe tener al menos 8 caracteres"
+            isPasswordValid = false
+            errorPassword = "La contraseña debe tener al menos 8 caracteres, una mayúscula y un número"
         }
         enabledRegisterButton()
     }
 
     fun validateConfirmPassword() {
-        if (password.value == confirmPassword.value) {
-            isConfirmPasswordValid.value = true
-            errorConfirmPassword.value = ""
+        if (state.password == state.confirmPassword) {
+            isConfirmPasswordValid = true
+            errorConfirmPassword = ""
         } else {
-            isConfirmPasswordValid.value = false
-            errorConfirmPassword.value = "Las contraseñas no coinciden"
+            isConfirmPasswordValid = false
+            errorConfirmPassword = "Las contraseñas no coinciden"
         }
         enabledRegisterButton()
     }
@@ -119,4 +122,23 @@ class RegisterViewModel @Inject constructor(private val authUseCases: AuthUseCas
         user.password = LibraryPassword.hashPassword(user.password)
         usersUseCase.createUser(user)
     }
+
+    fun onEmailInput(email: String) {
+        state = state.copy(email = email)
+    }
+
+    fun onUserNameInput(userName: String) {
+        state = state.copy(userName = userName)
+    }
+
+    fun onPasswordInput(password: String) {
+        state = state.copy(password = password)
+    }
+
+    fun onConfirmPasswordInput(confirmPassword: String) {
+        state = state.copy(confirmPassword = confirmPassword)
+    }
+
+
+
 }

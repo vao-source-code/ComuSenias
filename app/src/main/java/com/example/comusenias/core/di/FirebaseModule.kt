@@ -11,6 +11,7 @@ import com.example.comusenias.domain.use_cases.auth.Login
 import com.example.comusenias.domain.use_cases.auth.Logout
 import com.example.comusenias.domain.use_cases.auth.Register
 import com.example.comusenias.domain.use_cases.users.CreateUser
+import com.example.comusenias.domain.use_cases.users.GetUserById
 import com.example.comusenias.domain.use_cases.users.UsersUseCase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
@@ -49,17 +50,21 @@ object FirebaseModule {
     /*----------------------------- Firestore --------------------------------------------------- */
 
     @Provides
-    fun providerFirebaseFirestore() : FirebaseFirestore = Firebase.firestore
+    fun providerFirebaseFirestore(): FirebaseFirestore = Firebase.firestore
 
     @Provides
-    fun providerUserRef(db: FirebaseFirestore) : CollectionReference = db.collection(USERS_COLLECTION)
+    fun providerUserRef(db: FirebaseFirestore): CollectionReference =
+        db.collection(USERS_COLLECTION)
 
 
     @Provides
-    fun providerUsersRepository(impl: UsersRepositoryImpl) : UsersRepository {
+    fun providerUsersRepository(impl: UsersRepositoryImpl): UsersRepository {
         return impl
     }
 
     @Provides
-    fun providerUsersUseCases(usersRepository: UsersRepository) = UsersUseCase(createUser = CreateUser(usersRepository))
+    fun providerUsersUseCases(usersRepository: UsersRepository) = UsersUseCase(
+        createUser = CreateUser(usersRepository),
+        getUserById = GetUserById(usersRepository)
+    )
 }

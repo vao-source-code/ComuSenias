@@ -25,6 +25,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.comusenias.R
 import com.example.comusenias.presentation.component.defaults.app.TextFieldApp
@@ -36,7 +37,7 @@ import com.example.comusenias.presentation.view_model.ProfileViewModel
 fun ProfileContent(
     navController: NavHostController? = null,
     modifier: Modifier? = null,
-    viewModel: ProfileViewModel? = null
+    viewModel: ProfileViewModel = hiltViewModel()
 ) {
 
 
@@ -79,7 +80,7 @@ fun ProfileContent(
             TextFieldApp(
 
                 label = "Nombre del usuario",
-                value = "Test name",
+                value = viewModel.userData.userName,
                 onValueChange = {},
                 validateField = {},
                 icon = Icons.Default.Edit,
@@ -91,7 +92,7 @@ fun ProfileContent(
             TextFieldApp(
 
                 label = "Correo electrónico",
-                value = "Test@correo.com",
+                value = viewModel.userData.email,
                 onValueChange = {},
                 validateField = {},
                 icon = Icons.Default.Edit,

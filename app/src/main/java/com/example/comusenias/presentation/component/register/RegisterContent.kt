@@ -1,6 +1,5 @@
 package com.example.comusenias.presentation.component.register
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -22,7 +21,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,11 +29,9 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.comusenias.domain.models.Response
+import com.example.comusenias.domain.models.RegisterState
 import com.example.comusenias.presentation.component.defaults.ButtonDefault
-import com.example.comusenias.presentation.component.defaults.DefaultLoadingProgressIndicator
 import com.example.comusenias.presentation.component.defaults.TextFieldDefault
-import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.ComuSeniasTheme
 import com.example.comusenias.presentation.view_model.RegisterViewModel
 
@@ -44,6 +40,7 @@ import com.example.comusenias.presentation.view_model.RegisterViewModel
 fun RegisterContent(navController : NavHostController , modifier: Modifier , viewModel: RegisterViewModel = hiltViewModel()) {
 
 
+    val state = viewModel.state
     Column(
         modifier = modifier.padding(20.dp),
         horizontalAlignment = CenterHorizontally,
@@ -55,16 +52,19 @@ fun RegisterContent(navController : NavHostController , modifier: Modifier , vie
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.primary
         )
-        CardFormRegister(navController = navController, viewModel = viewModel)
+        CardFormRegister(navController = navController, viewModel = viewModel , state = viewModel.state)
     }
 }
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CardFormRegister(navController : NavHostController, viewModel: RegisterViewModel) {
+fun CardFormRegister(
+    navController: NavHostController,
+    viewModel: RegisterViewModel,
+    state: RegisterState
+) {
 
-    val singFlow = viewModel.registerFlow.collectAsState()
 
     Card(
         modifier = Modifier
@@ -96,12 +96,12 @@ fun CardFormRegister(navController : NavHostController, viewModel: RegisterViewM
                 modifier = Modifier
                     .padding(top = 20.dp)
                     .fillMaxWidth(),
-                value = viewModel.userName.value,
-                onValueChange = { it -> viewModel.userName.value = it },
+                value = state.userName,
+                onValueChange = { viewModel.onUserNameInput(it)},
                 label = "Nombre de usuario",
                 keyboardType = KeyboardType.Text,
                 icon = Icons.Default.Person,
-                errorMsg = viewModel.errorUserName.value,
+                errorMsg = viewModel.errorUserName,
                 validateField = {viewModel.validateUserName()}
 
                 )
@@ -109,12 +109,12 @@ fun CardFormRegister(navController : NavHostController, viewModel: RegisterViewM
             TextFieldDefault(
                 modifier = Modifier
                     .fillMaxWidth(),
-                value = viewModel.email.value,
-                onValueChange = { it -> viewModel.email.value = it },
+                value = state.email,
+                onValueChange = { viewModel.onEmailInput(it)},
                 label = "Email",
                 keyboardType = KeyboardType.Email,
                 icon = Icons.Default.Email,
-                errorMsg = viewModel.errorEmail.value,
+                errorMsg = viewModel.errorEmail,
                 validateField = {viewModel.validateEmail()}
 
                 )
@@ -123,26 +123,26 @@ fun CardFormRegister(navController : NavHostController, viewModel: RegisterViewM
             TextFieldDefault(
                 modifier = Modifier
                     .fillMaxWidth(),
-                value = viewModel.password.value,
-                onValueChange = { it -> viewModel.password.value = it },
+                value = state.password,
+                onValueChange = { viewModel.onPasswordInput(it)},
                 label = "Contraseña",
                 icon = Icons.Default.Lock,
                 keyboardType = KeyboardType.Password,
                 hideText = true,
-                errorMsg = viewModel.errorPassword.value,
+                errorMsg = viewModel.errorPassword,
                 validateField = {viewModel.validatePassword()}
             )
 
             TextFieldDefault(
                 modifier = Modifier
                     .fillMaxWidth(),
-                value = viewModel.confirmPassword.value,
-                onValueChange = { it -> viewModel.confirmPassword.value = it },
+                value = state.confirmPassword,
+                onValueChange = { viewModel.onConfirmPasswordInput(it) },
                 label = "Confirmar contraseña",
                 icon = Icons.Outlined.Lock,
                 keyboardType = KeyboardType.Password,
                 hideText = true,
-                errorMsg = viewModel.errorConfirmPassword.value,
+                errorMsg = viewModel.errorConfirmPassword,
                 validateField = {viewModel.validateConfirmPassword()}
             )
             Spacer(modifier = Modifier.height(10.dp))
@@ -159,30 +159,7 @@ fun CardFormRegister(navController : NavHostController, viewModel: RegisterViewM
         }
 
     }
-
-    singFlow.value.let {
-        when(it){
-            is Response.Loading -> {
-                DefaultLoadingProgressIndicator()
-            }
-            is Response.Success -> {
-                LaunchedEffect(Unit) {
-                    viewModel.createUser()
-                    //Elimino asi el total del historial de atras
-                    navController.popBackStack(AppScreen.LoginScreen.route, inclusive = true)
-                    navController.navigate(route = AppScreen.ProfileScreen.route)
-                }
-            }
-            is Response.Error -> {
-                Toast.makeText(LocalContext.current, it.exception!!.message, Toast.LENGTH_SHORT).show()
-            }
-
-            else -> {}
-        }
-    }
-
-
-
+    ResponseStatusRegister(navController = navController)
 }
 
 @Preview(showBackground = true, showSystemUi = true)
