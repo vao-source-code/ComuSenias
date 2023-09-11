@@ -23,7 +23,16 @@ import com.example.comusenias.presentation.component.defaults.app.ButtonApp
 import com.example.comusenias.presentation.component.defaults.app.GoogleSignInButton
 import com.example.comusenias.presentation.component.defaults.app.TextFieldApp
 import com.example.comusenias.presentation.component.defaults.app.TextFieldAppPassword
+import com.example.comusenias.presentation.component.defaults.app.showToast
 import com.example.comusenias.presentation.navigation.AppScreen
+import com.example.comusenias.presentation.ui.theme.emailText
+import com.example.comusenias.presentation.ui.theme.logIn
+import com.example.comusenias.presentation.ui.theme.loginError
+import com.example.comusenias.presentation.ui.theme.loginSuccess
+import com.example.comusenias.presentation.ui.theme.password
+import com.example.comusenias.presentation.ui.theme.size10
+import com.example.comusenias.presentation.ui.theme.size2
+import com.example.comusenias.presentation.ui.theme.size50
 import com.example.comusenias.presentation.view_model.LoginViewModel
 
 @Composable
@@ -32,10 +41,10 @@ fun LoginForm(
     viewModel: LoginViewModel = hiltViewModel()
 ) {
     val loginFlow = viewModel.loginFlow.collectAsState()
-
+    val context = LocalContext.current
     Column(
         modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(50.dp)
+        verticalArrangement = Arrangement.spacedBy(size50.dp)
     ) {
         loginFlow.value.let { state ->
             when (state) {
@@ -54,19 +63,14 @@ fun LoginForm(
                                 inclusive = true
                             }
                         }
-
                     }
-                    Toast.makeText(LocalContext.current, "Login Success", Toast.LENGTH_SHORT)
-                        .show()
+                    showToast(context, text = loginSuccess, Toast.LENGTH_SHORT)
                 }
 
                 is Response.Error -> {
-                    Toast.makeText(
-                        LocalContext.current,
-                        state.exception?.message + "Login Error",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
+                    showToast(
+                        context, text = state.exception?.message + loginError, Toast.LENGTH_SHORT
+                    )
                 }
 
                 else -> {}
@@ -75,13 +79,13 @@ fun LoginForm(
 
         Column(
             modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(2.dp)
+            verticalArrangement = Arrangement.spacedBy(size2.dp)
         ) {
             TextFieldApp(
                 value = viewModel.email.value,
                 onValueChange = { viewModel.email.value = it },
                 validateField = { viewModel.validateEmail() },
-                label = "Correo electrónico",
+                label = emailText,
                 keyboardType = KeyboardType.Email,
                 icon = Icons.Default.Email,
                 errorMsg = viewModel.errorEmail.value
@@ -90,25 +94,23 @@ fun LoginForm(
                 value = viewModel.password.value,
                 onValueChange = { viewModel.password.value = it },
                 validateField = { viewModel.validatePassword() },
-                label = "Contraseña",
+                label = password,
                 errorMsg = viewModel.errorPassword.value
             )
             RememberMeAndForgetMyPass()
         }
         Column(
             modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(10.dp)
+            verticalArrangement = Arrangement.spacedBy(size10.dp)
         ) {
             ButtonApp(
-                titleButton = "Iniciar sesión",
+                titleButton = logIn,
                 onClickButton = { viewModel.login() },
                 enabledButton = viewModel.isLoginEnabled
             )
             LineDivisorLogin()
             GoogleSignInButton()
         }
-
-
     }
 }
 

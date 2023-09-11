@@ -12,7 +12,8 @@ import androidx.navigation.NavHostController
 import com.example.comusenias.presentation.component.defaults.app.AuthenticationFooterContent
 import com.example.comusenias.presentation.component.defaults.app.AuthenticationHeaderContent
 import com.example.comusenias.presentation.component.register.RegisterContent
-import com.example.comusenias.presentation.navigation.AppScreen
+import com.example.comusenias.presentation.component.register.RegisterFooterContent
+import com.example.comusenias.presentation.ui.theme.size20
 
 @Composable
 fun RegisterScreen(navController: NavHostController) {
@@ -36,4 +37,3 @@ fun RegisterScreen(navController: NavHostController) {
             )
         }
     }
-}

@@ -23,6 +23,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.comusenias.R
+import com.example.comusenias.presentation.ui.theme.signInWithGoogle
+import com.example.comusenias.presentation.ui.theme.size10
+import com.example.comusenias.presentation.ui.theme.size17
+import com.example.comusenias.presentation.ui.theme.size19
+import com.example.comusenias.presentation.ui.theme.size20
+import com.example.comusenias.presentation.ui.theme.size24
+import com.example.comusenias.presentation.ui.theme.size3
+import com.example.comusenias.presentation.ui.theme.size50
 
 @Preview(showBackground = true)
 @Composable
@@ -30,30 +38,40 @@ fun GoogleSignInButton() {
     Button(
         onClick = {},
         modifier = Modifier
-            .shadow(elevation = 3.dp, shape = RoundedCornerShape(10.dp),spotColor = Color(0x33000000), ambientColor = Color(0x33000000))
-            .shadow(elevation = 3.dp, shape = RoundedCornerShape(10.dp), spotColor = Color(0x21000000), ambientColor = Color(0x21000000))
+            .shadow(
+                elevation = size3.dp,
+                shape = RoundedCornerShape(size10.dp),
+                spotColor = Color(0x33000000),
+                ambientColor = Color(0x33000000)
+            )
+            .shadow(
+                elevation = size3.dp,
+                shape = RoundedCornerShape(size10.dp),
+                spotColor = Color(0x21000000),
+                ambientColor = Color(0x21000000)
+            )
             .fillMaxWidth()
-            .height(50.dp)
-            .background(Color.White, shape = RoundedCornerShape(10.dp))
-            .padding(start = 19.dp, end = 20.dp),
-        shape = RoundedCornerShape(10.dp),
+            .height(size50.dp)
+            .background(Color.White, shape = RoundedCornerShape(size10.dp))
+            .padding(start = size19.dp, end = size20.dp),
+        shape = RoundedCornerShape(size10.dp),
         colors = ButtonDefaults.buttonColors(
             Color.White
         )
     ) {
         Image(
             modifier = Modifier
-                .width(24.dp)
-                .height(24.dp),
+                .width(size24.dp)
+                .height(size24.dp),
             contentScale = ContentScale.Fit,
             painter = painterResource(id = R.drawable.buscar),
-            contentDescription = "sign in with Google"
+            contentDescription = signInWithGoogle
         )
-        Spacer(modifier = Modifier.width(24.dp))
+        Spacer(modifier = Modifier.width(size24.dp))
         Text(
-            text = "Continue with Google",
+            text = signInWithGoogle,
             style = TextStyle(
-                fontSize = 17.sp,
+                fontSize = size17.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = Color(0xA3000000),
             )
