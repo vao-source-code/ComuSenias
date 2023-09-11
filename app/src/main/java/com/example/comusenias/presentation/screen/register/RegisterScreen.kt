@@ -12,8 +12,7 @@ import androidx.navigation.NavHostController
 import com.example.comusenias.presentation.component.defaults.app.AuthenticationFooterContent
 import com.example.comusenias.presentation.component.defaults.app.AuthenticationHeaderContent
 import com.example.comusenias.presentation.component.register.RegisterContent
-import com.example.comusenias.presentation.component.register.RegisterFooterContent
-import com.example.comusenias.presentation.ui.theme.size20
+import com.example.comusenias.presentation.navigation.AppScreen
 
 @Composable
 fun RegisterScreen(navController: NavHostController) {
@@ -29,11 +28,10 @@ fun RegisterScreen(navController: NavHostController) {
             AuthenticationHeaderContent()
             RegisterContent(navController = navController)
             AuthenticationFooterContent(
-                text1 = "¿Ya tienes una cuenta?",
-                text2 = "Inicia Sesión",
-
-
-                        onClickText = { navController.navigate(route = AppScreen.MainActivity.route) }
+                textOne = "¿Ya tienes una cuenta?",
+                textTwo = "Inicia Sesión",
+                onClickText = { navController.navigate(AppScreen.LoginScreen.route)}
             )
         }
     }
+}
