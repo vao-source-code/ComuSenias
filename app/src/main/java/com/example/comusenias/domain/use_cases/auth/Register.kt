@@ -5,6 +5,5 @@ import com.example.comusenias.domain.repositories.AuthRepository
 import javax.inject.Inject
 
 class Register @Inject constructor(private val authUseCases: AuthRepository) {
-
-    suspend operator fun  invoke(user : User) = authUseCases.register(user)
+    suspend operator fun invoke(user: User) = authUseCases.register(user)
 }

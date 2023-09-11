@@ -52,6 +52,7 @@ android {
 dependencies {
     testImplementation 'junit:junit:'
     testImplementation "androidx.arch.core:core-testing:2.2.0"
+    testImplementation 'androidx.test:core:1.5.0'
     implementation libs.core.ktx
     implementation libs.activityCompose
     implementation platform(libs.composeBom)
@@ -103,10 +104,14 @@ dependencies {
     implementation libs.daggerHilt
     kapt libs.daggerHiltCompiler
     implementation libs.hiltNavigationCompose
+    implementation libs.mockitoCore
+    androidTestImplementation libs.mockitoAndroid
     androidTestImplementation libs.daggerHiltTesting
     androidTestAnnotationProcessor libs.daggerHiltCompiler
     testImplementation libs.daggerHiltTesting
     testAnnotationProcessor libs.daggerHiltCompiler
+    implementation libs.mockitoCore
+    androidTestImplementation libs.mockitoAndroid
 }
 kapt {
     correctErrorTypes true

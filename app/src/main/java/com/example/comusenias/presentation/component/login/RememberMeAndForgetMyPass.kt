@@ -19,7 +19,11 @@ import androidx.compose.ui.unit.sp
 import com.example.comusenias.constants.TestTag
 import com.example.comusenias.presentation.component.defaults.app.CheckBoxApp
 import com.example.comusenias.presentation.ui.theme.blackColorApp
+import com.example.comusenias.presentation.ui.theme.forgotPassword
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
+import com.example.comusenias.presentation.ui.theme.rememberMe
+import com.example.comusenias.presentation.ui.theme.size10
+import com.example.comusenias.presentation.ui.theme.size14
 
 @Preview(showBackground = true)
 @Composable
@@ -27,27 +31,25 @@ fun RememberMeAndForgetMyPass() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 10.dp),
+            .padding(horizontal = size10.dp),
         horizontalArrangement = Arrangement.SpaceBetween
-        ) {
+    ) {
         LabelledCheckbox()
-        ForgetMyPass()
+        ForgetMyPass { }
     }
 }
-
 @Composable
-fun ForgetMyPass(onClickText: () -> Unit = {}){
+fun ForgetMyPass(onClickText: () -> Unit = {}) {
     Text(
         modifier = Modifier
             .testTag(TestTag.TAG_FORGET_MY_PASS)
             .clickable { onClickText() },
-        text = "Olvide mi contraseña",
+        text = forgotPassword,
         color = primaryColorApp,
-        fontSize = 14.sp,
+        fontSize = size14.sp,
         fontWeight = FontWeight.Bold
     )
 }
-
 @Composable
 fun LabelledCheckbox() {
     Row(
@@ -55,11 +57,11 @@ fun LabelledCheckbox() {
         verticalAlignment = Alignment.CenterVertically
     ) {
         val isChecked = remember { mutableStateOf(false) }
-        
+
         CheckBoxApp(isChecked = isChecked)
         Text(
-            text = "Recuerdame",
-            fontSize = 14.sp,
+            text = rememberMe,
+            fontSize = size14.sp,
             fontWeight = FontWeight.Medium,
             color = blackColorApp
         )
