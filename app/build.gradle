@@ -110,6 +110,8 @@ dependencies {
     testImplementation libs.daggerHiltTesting
     testAnnotationProcessor libs.daggerHiltCompiler
 
+    //GSON
+    implementation "com.google.code.gson:gson:2.9.0"
 
 }
 kapt {

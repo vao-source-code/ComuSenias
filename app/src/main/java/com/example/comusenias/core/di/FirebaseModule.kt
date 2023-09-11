@@ -12,6 +12,7 @@ import com.example.comusenias.domain.use_cases.auth.Logout
 import com.example.comusenias.domain.use_cases.auth.Register
 import com.example.comusenias.domain.use_cases.users.CreateUser
 import com.example.comusenias.domain.use_cases.users.GetUserById
+import com.example.comusenias.domain.use_cases.users.UpdateUser
 import com.example.comusenias.domain.use_cases.users.UsersUseCase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
@@ -65,6 +66,8 @@ object FirebaseModule {
     @Provides
     fun providerUsersUseCases(usersRepository: UsersRepository) = UsersUseCase(
         createUser = CreateUser(usersRepository),
-        getUserById = GetUserById(usersRepository)
+        getUserById = GetUserById(usersRepository),
+        updateUser = UpdateUser(usersRepository)
     )
+
 }

@@ -10,15 +10,16 @@ import com.example.comusenias.presentation.component.defaults.DefaultTopBar
 import com.example.comusenias.presentation.component.profile.ChangeProfileContent
 import com.example.comusenias.presentation.component.profile.ProfileFooterContent
 import com.example.comusenias.presentation.navigation.AppScreen
-import com.example.comusenias.presentation.view_model.ProfileViewModel
+import com.example.comusenias.presentation.view_model.ChangeProfileViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ChangeProfilePasswordScreen(
+fun ChangeProfileScreen(
     navController: NavHostController,
     modifier: Modifier?,
-    viewModel: ProfileViewModel = hiltViewModel()
+    changeViewModel: ChangeProfileViewModel = hiltViewModel(),
+    user : String
 ) {
 
     Scaffold(
@@ -29,14 +30,16 @@ fun ChangeProfilePasswordScreen(
             ChangeProfileContent(
                 modifier = modifier,
                 navController = navController,
-                viewModel = viewModel
             )
         },
         bottomBar = {
-            ProfileFooterContent {
-                navController?.navigate(route = AppScreen.ProfileScreen.route) {
+            val onClick =
+                {
+                    changeViewModel.onUpdate()
+                    navController.navigate(route = AppScreen.ProfileScreen.route)
                 }
-            }
+
+            ProfileFooterContent(onClick)
 
         })
 

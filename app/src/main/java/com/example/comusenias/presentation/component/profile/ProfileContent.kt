@@ -26,7 +26,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
 import com.example.comusenias.R
 import com.example.comusenias.presentation.component.defaults.app.TextFieldApp
 import com.example.comusenias.presentation.ui.theme.ComuSeniasTheme
@@ -35,13 +34,11 @@ import com.example.comusenias.presentation.view_model.ProfileViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileContent(
-    navController: NavHostController? = null,
-    modifier: Modifier? = null,
     viewModel: ProfileViewModel = hiltViewModel()
 ) {
 
 
-    Box(modifier = modifier!!.padding(20.dp)) {
+    Box(modifier = Modifier.padding(20.dp)) {
 
         Column(
             modifier = Modifier.fillMaxWidth(),

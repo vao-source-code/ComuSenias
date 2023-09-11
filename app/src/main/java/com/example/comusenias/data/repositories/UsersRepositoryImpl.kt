@@ -32,4 +32,17 @@ class UsersRepositoryImpl @Inject constructor(private val userRef: CollectionRef
 
         awaitClose { snap.remove() }
     }
+
+    override suspend fun updateUser(user: User): Response<Boolean> {
+        return try {
+            val mapImage : MutableMap<String , Any > = HashMap()
+            mapImage["userName"] = user.userName
+            mapImage["image"] = user.image
+            userRef.document(user.id).update(mapImage).await()
+            Response.Success(true)
+        }catch (e : Exception){
+            e.printStackTrace()
+            Response.Error(e)
+        }
+    }
 }

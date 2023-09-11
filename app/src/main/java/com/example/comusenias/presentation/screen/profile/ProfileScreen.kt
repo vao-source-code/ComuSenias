@@ -7,33 +7,35 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.comusenias.presentation.component.defaults.DefaultTopBar
 import com.example.comusenias.presentation.component.profile.ProfileContent
 import com.example.comusenias.presentation.component.profile.ProfileFooterContent
 import com.example.comusenias.presentation.navigation.AppScreen
+import com.example.comusenias.presentation.view_model.ProfileViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen(
     navController: NavHostController,
     modifier: Modifier?,
+    viewModel: ProfileViewModel = hiltViewModel(),
 ) {
 
-    Scaffold(topBar = { DefaultTopBar(title = "Perfil" , true , navController ) }, content = { it ->
+    Scaffold(topBar = { DefaultTopBar(title = "Perfil", true, navController) }, content = { it ->
         it.calculateBottomPadding()
-        ProfileContent(
-            navController = navController,
-            modifier = modifier,
-        )
+        ProfileContent()
     }, bottomBar = {
-
-        ProfileFooterContent {
-            navController?.navigate(route = AppScreen.ChangeProfileScreen.route) {
-                popUpTo(AppScreen.ProfileScreen.route) {}
-            }
+        val onClick = {
+            navController.navigate(
+                route = AppScreen.ChangeProfileScreen.passUser(viewModel.userData.toJson())
+            )
         }
 
+        ProfileFooterContent(
+            onClickButton = onClick
+        )
 
     })
 
@@ -43,5 +45,8 @@ fun ProfileScreen(
 @Preview
 @Composable
 fun ProfileScreenPreview() {
-    ProfileScreen(navController = NavHostController(LocalContext.current), modifier = Modifier.fillMaxSize() )
+    ProfileScreen(
+        navController = NavHostController(LocalContext.current),
+        modifier = Modifier.fillMaxSize()
+    )
 }

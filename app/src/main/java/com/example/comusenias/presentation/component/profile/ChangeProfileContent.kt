@@ -14,19 +14,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.comusenias.presentation.component.defaults.app.TextFieldApp
 import com.example.comusenias.presentation.component.defaults.app.TextFieldAppPassword
-import com.example.comusenias.presentation.view_model.ProfileViewModel
+import com.example.comusenias.presentation.view_model.ChangeProfileViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ChangeProfileContent(
     navController: NavHostController? = null,
     modifier: Modifier? = Modifier,
-    viewModel: ProfileViewModel? = null
+    viewModel: ChangeProfileViewModel = hiltViewModel()
 ) {
 
+    val state = viewModel.state
+    ResponseStatusProfile()
 
     Box(modifier = modifier!!.padding(20.dp)) {
 
@@ -40,11 +43,12 @@ fun ChangeProfileContent(
 
             TextFieldApp(
                 label = "Usuario",
-                value = "test_user",
-                onValueChange = {},
-                validateField = {},
+                value = state.userName,
+                onValueChange = { viewModel.onUserNameChange(it) },
+                validateField = { viewModel.validateUserName() },
                 icon = Icons.Default.Edit,
                 keyboardType = KeyboardType.Text,
+                errorMsg =  viewModel.errorUserName,
             )
 
 
@@ -67,5 +71,6 @@ fun ChangeProfileContent(
             Spacer(modifier = Modifier.height(10.dp))
 
         }
+
     }
 }
