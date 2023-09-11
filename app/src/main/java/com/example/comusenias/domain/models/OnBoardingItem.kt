@@ -6,7 +6,6 @@ class OnBoardingItem(
         val text:Int,
         val image:Int,
     ) {
-
     companion object{
             fun get():List<OnBoardingItem>{
                 return listOf(

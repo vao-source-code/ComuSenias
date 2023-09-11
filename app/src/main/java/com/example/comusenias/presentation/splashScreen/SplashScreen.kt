@@ -28,7 +28,7 @@ fun SplashScreen(navController: NavController) {
     LaunchedEffect(key1 = true) {
         delay(5000)
         navController.popBackStack()
-        navController.navigate(AppScreen.MainActivity.route)
+        navController.navigate(AppScreen.OnBoardingScreen.route)
     }
     SplashScreenContent()
 }
@@ -58,7 +58,6 @@ fun GetImage() {
             .fillMaxWidth()
             .fillMaxSize(),
         contentScale = ContentScale.Crop
-
     )
 }
 

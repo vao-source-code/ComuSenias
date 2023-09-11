@@ -23,8 +23,9 @@ import androidx.compose.ui.Alignment.Companion.CenterEnd
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
+import com.example.comusenias.constants.TestTag
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
 
 @Composable
@@ -39,9 +40,12 @@ fun BottomSection(
             .padding(12.dp)
     ){
         Indicators(size = size, index = index)
+
         FloatingActionButton(
             onClick =onNextClicked,
-            modifier=Modifier.align(CenterEnd),
+            modifier=Modifier
+                .align(CenterEnd)
+                .testTag(TestTag.TAG_BUTTON_NEXT),
             backgroundColor = Color.Black,
             contentColor = Color.White
         ) {
@@ -69,7 +73,6 @@ fun Indicator(isSelected:Boolean){
         targetValue = if (isSelected) 16.dp else 13.dp,
         animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy), label = ""
     )
-
     Box(
         modifier = Modifier
             .height(10.dp)
@@ -79,12 +82,7 @@ fun Indicator(isSelected:Boolean){
                 if (isSelected) Color.Black
                 else primaryColorApp
             )
+            .testTag(TestTag.TAG_INDICATOR+ isSelected)
     ){
     }
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun PreviewBottomSection(){
-    BottomSection(size = 3, index = 0){}
 }

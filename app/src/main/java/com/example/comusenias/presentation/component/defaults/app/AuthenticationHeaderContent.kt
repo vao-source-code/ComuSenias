@@ -36,7 +36,7 @@ fun AuthenticationHeaderContent(){
 @Composable
 fun HeaderImage(){
     Image(
-        painter = painterResource(id = R.drawable.icon_seniass),
+        painter = painterResource(id = R.drawable.lenguaje),
         contentDescription = "icon",
         contentScale = ContentScale.Fit,
         modifier = Modifier

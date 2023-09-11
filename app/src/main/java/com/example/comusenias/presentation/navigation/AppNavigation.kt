@@ -7,6 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.comusenias.presentation.screen.login.LoginScreen
+import com.example.comusenias.presentation.screen.onboarding.OnBoardingScreen
 import com.example.comusenias.presentation.screen.profile.ChangeProfilePasswordScreen
 import com.example.comusenias.presentation.screen.profile.ProfileScreen
 import com.example.comusenias.presentation.screen.register.RegisterScreen
@@ -19,6 +20,9 @@ fun AppNavigation(navController: NavHostController) {
         composable(AppScreen.SplashScreen.route) {
             SplashScreen(navController)
         }
+        composable(AppScreen.OnBoardingScreen.route) {
+            OnBoardingScreen(navController = navController)
+        }
         composable(AppScreen.MainActivity.route) {
             LoginScreen(navController = navController)
         }
@@ -28,7 +32,6 @@ fun AppNavigation(navController: NavHostController) {
         composable(AppScreen.ProfileScreen.route) {
             ProfileScreen(navController = navController , modifier = Modifier.fillMaxSize())
         }
-
         composable(AppScreen.ChangeProfileScreen.route) {
             ChangeProfilePasswordScreen(navController = navController , modifier = Modifier.fillMaxSize())
         }
