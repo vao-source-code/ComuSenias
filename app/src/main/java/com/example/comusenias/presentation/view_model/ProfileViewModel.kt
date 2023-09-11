@@ -9,6 +9,7 @@ import com.example.comusenias.domain.models.User
 import com.example.comusenias.domain.use_cases.auth.AuthUseCases
 import com.example.comusenias.domain.use_cases.users.UsersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,7 +29,7 @@ class ProfileViewModel @Inject constructor(
         getUserData()
     }
 
-    private fun getUserData() = viewModelScope.launch{
+    private fun getUserData() = viewModelScope.launch(Dispatchers.IO){
         useCases.getUserById(currentUser!!.uid).collect() {
             userData = it
         }

@@ -25,6 +25,10 @@ object LibraryPassword {
         return hash.contentEquals(Base64.decode(hashedPassword.substring(24), Base64.NO_WRAP))
     }
 
+    fun encodePassword(password: String): String {
+        return Base64.encodeToString(password.toByteArray(), Base64.DEFAULT)
+    }
+
     private fun generateSalt(): ByteArray {
         val bytes = ByteArray(16)
         SecureRandom().nextBytes(bytes)
