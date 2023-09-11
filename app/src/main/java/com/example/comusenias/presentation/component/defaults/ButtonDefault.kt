@@ -14,7 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
+import com.example.comusenias.constants.TestTag.Companion.TAG_BUTTON_DEFAULT
 import com.example.comusenias.presentation.component.defaults.app.TextErrorDefault
+import com.example.comusenias.presentation.ui.theme.iconButtonDescription
+import com.example.comusenias.presentation.ui.theme.size10
 
 @Composable
 fun ButtonDefault(
@@ -23,27 +26,23 @@ fun ButtonDefault(
     icon: ImageVector?,
     onClick: () -> Unit,
     errorMsg: String = "",
-    enabled : Boolean = true
+    enabled: Boolean = true
 ) {
-
-
     Column() {
         Button(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(vertical = 10.dp)
-                .testTag("ttt"),
-            shape = RoundedCornerShape(10.dp),
+                .padding(vertical = size10.dp)
+                .testTag(TAG_BUTTON_DEFAULT),
+            shape = RoundedCornerShape(size10.dp),
             enabled = enabled,
             onClick = { onClick() }) {
             Text(text = text)
             Spacer(modifier = Modifier.width(10.dp))
             if (icon != null) {
-                Icon(imageVector = icon, contentDescription = "Icons button")
+                Icon(imageVector = icon, contentDescription = iconButtonDescription)
             }
         }
         TextErrorDefault(errorMsg = errorMsg)
-
     }
-
 }

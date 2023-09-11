@@ -13,6 +13,7 @@ import com.example.comusenias.presentation.component.defaults.DefaultTopBar
 import com.example.comusenias.presentation.component.profile.ProfileContent
 import com.example.comusenias.presentation.component.profile.ProfileFooterContent
 import com.example.comusenias.presentation.navigation.AppScreen
+import com.example.comusenias.presentation.ui.theme.profile
 import com.example.comusenias.presentation.view_model.ProfileViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -22,30 +23,32 @@ fun ProfileScreen(
     modifier: Modifier?,
     viewModel: ProfileViewModel = hiltViewModel()
 ) {
-
-    Scaffold(topBar = { DefaultTopBar(title = "Perfil" , true , navController ) }, content = { it ->
-        it.calculateBottomPadding()
-        ProfileContent(
-            navController = navController,
-            modifier = modifier,
-            viewModel = viewModel
-        )
-    }, bottomBar = {
-
-        ProfileFooterContent {
-            navController?.navigate(route = AppScreen.ChangeProfileScreen.route) {
-                popUpTo(AppScreen.ProfileScreen.route) {}
+    Scaffold(
+        topBar = { DefaultTopBar(title = profile, true, navController) },
+        content = { paddingValues ->
+            paddingValues.calculateBottomPadding()
+            ProfileContent(
+                navController = navController,
+                modifier = modifier,
+                viewModel = viewModel
+            )
+        },
+        bottomBar = {
+            ProfileFooterContent {
+                navController.navigate(route = AppScreen.ChangeProfileScreen.route) {
+                    popUpTo(AppScreen.ProfileScreen.route) {}
+                }
             }
         }
-
-
-    })
-
+    )
 }
-
 
 @Preview
 @Composable
 fun ProfileScreenPreview() {
-    ProfileScreen(navController = NavHostController(LocalContext.current), modifier = Modifier.fillMaxSize() , viewModel = hiltViewModel())
+    ProfileScreen(
+        navController = NavHostController(LocalContext.current),
+        modifier = Modifier.fillMaxSize(),
+        viewModel = hiltViewModel()
+    )
 }

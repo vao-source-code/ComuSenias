@@ -16,33 +16,34 @@ import androidx.compose.ui.unit.sp
 import com.example.comusenias.constants.TestTag
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
+import com.example.comusenias.presentation.ui.theme.size14
+import com.example.comusenias.presentation.ui.theme.size5
 
 @Composable
 fun AuthenticationFooterContent(
-    text1: String,
-    text2: String,
+    textOne: String,
+    textTwo: String,
     onClickText: () -> Unit = {},
-){
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = text1,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Medium,
-                color = blackColorApp
-            )
-            Spacer(modifier = Modifier.width(5.dp))
-            Text(
-                modifier = Modifier.testTag(TestTag.TAG_TEXT_CLICK_FOOTER)
-                    .clickable { onClickText() },
-                text = text2,
-                color = primaryColorApp,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Bold
-            )
-        }
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.Center
+    ) {
+        Text(
+            text = textOne,
+            fontSize = size14.sp,
+            fontWeight = FontWeight.Medium,
+            color = blackColorApp
+        )
+        Spacer(modifier = Modifier.width(size5.dp))
+        Text(
+            modifier = Modifier
+                .testTag(TestTag.TAG_TEXT_CLICK_FOOTER)
+                .clickable { onClickText() },
+            text = textTwo,
+            color = primaryColorApp,
+            fontSize = size14.sp,
+            fontWeight = FontWeight.Bold
+        )
+    }
 }
-
-

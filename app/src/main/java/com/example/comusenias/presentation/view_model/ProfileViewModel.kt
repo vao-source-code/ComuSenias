@@ -7,7 +7,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(private val authUsesCases : AuthUseCases): ViewModel() {
-
     fun logout() {
         authUsesCases.logout()
     }

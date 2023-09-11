@@ -14,6 +14,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.comusenias.presentation.ui.theme.blackColorApp
+import com.example.comusenias.presentation.ui.theme.orLoginWith
+import com.example.comusenias.presentation.ui.theme.size1
+import com.example.comusenias.presentation.ui.theme.size14
+import com.example.comusenias.presentation.ui.theme.size48
 
 @Preview(showBackground = true)
 @Composable
@@ -23,23 +27,22 @@ fun LineDivisorLogin() {
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
-        ) {
+    ) {
         Divider(
-            modifier = Modifier.width(48.dp),
+            modifier = Modifier.width(size48.dp),
             color = blackColorApp,
-            thickness = 1.dp
+            thickness = size1.dp
         )
         Text(
-            text = " o inicie sesión con ",
-            fontSize = 14.sp,
+            text = orLoginWith,
+            fontSize = size14.sp,
             fontWeight = FontWeight.Medium,
             color = blackColorApp
         )
         Divider(
-            modifier = Modifier.width(48.dp),
+            modifier = Modifier.width(size48.dp),
             color = blackColorApp,
-            thickness = 1.dp
+            thickness = size1.dp
         )
-
     }
 }
