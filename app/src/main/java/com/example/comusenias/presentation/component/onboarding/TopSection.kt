@@ -22,7 +22,7 @@ fun TopSection(navController: NavController) {
             .padding(12.dp)
     ){
         TextButton(
-            onClick = {},
+            onClick = { },
             modifier=Modifier.align(Alignment.CenterEnd)
         ) {
             Text(

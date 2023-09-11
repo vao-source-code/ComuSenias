@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.comusenias.constants.TestTag
 import com.example.comusenias.domain.models.OnBoardingItem
+import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -52,7 +53,6 @@ fun OnBoarding(navController: NavController) {
                 scope.launch {
                     state.scrollToPage(state.currentPage+1)
                 }else {
-                    // Navega al LoginScreen
                 }
         }
     }
