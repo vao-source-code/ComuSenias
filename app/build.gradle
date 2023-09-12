@@ -104,6 +104,8 @@ dependencies {
     implementation libs.daggerHilt
     kapt libs.daggerHiltCompiler
     implementation libs.hiltNavigationCompose
+    implementation libs.mockitoCore
+    androidTestImplementation libs.mockitoAndroid
     androidTestImplementation libs.daggerHiltTesting
     androidTestAnnotationProcessor libs.daggerHiltCompiler
     testImplementation libs.daggerHiltTesting

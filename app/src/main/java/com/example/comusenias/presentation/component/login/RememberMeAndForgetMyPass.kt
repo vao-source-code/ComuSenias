@@ -11,7 +11,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,7 +28,6 @@ import com.example.comusenias.presentation.ui.theme.size14
 @Preview(showBackground = true)
 @Composable
 fun RememberMeAndForgetMyPass() {
-    val context = LocalContext.current
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -40,7 +38,6 @@ fun RememberMeAndForgetMyPass() {
         ForgetMyPass { }
     }
 }
-
 @Composable
 fun ForgetMyPass(onClickText: () -> Unit = {}) {
     Text(
@@ -53,8 +50,6 @@ fun ForgetMyPass(onClickText: () -> Unit = {}) {
         fontWeight = FontWeight.Bold
     )
 }
-
-
 @Composable
 fun LabelledCheckbox() {
     Row(

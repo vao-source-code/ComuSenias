@@ -32,4 +32,3 @@ fun TopSection(navController: NavController) {
         }
     }
 }
-
