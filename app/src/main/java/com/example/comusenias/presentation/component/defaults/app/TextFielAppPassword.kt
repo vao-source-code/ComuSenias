@@ -28,6 +28,9 @@ import com.example.comusenias.constants.TestTag
 import com.example.comusenias.presentation.ui.theme.backgroundColorTextField
 import com.example.comusenias.presentation.ui.theme.iconColorTextField
 import com.example.comusenias.presentation.ui.theme.placeholderTextColor
+import com.example.comusenias.presentation.ui.theme.size10
+import com.example.comusenias.presentation.ui.theme.size14
+import com.example.comusenias.presentation.ui.theme.size50
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -39,23 +42,22 @@ fun TextFieldAppPassword(
     errorMsg: String = ""
 ) {
     val isHideText = remember { mutableStateOf(true) }
-    val maxChar = 32
-
+    val  MAX_CHAR = 32
 
     Column {
         OutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(50.dp)
+                .height(size50.dp)
                 .background(backgroundColorTextField, shape = RoundedCornerShape(10.dp))
                 .testTag(TestTag.TAG_TEXT_FIELD_APP_PASS),
             onValueChange = {
-                if (it.length <= maxChar) {
+                if (it.length <= MAX_CHAR) {
                     onValueChange(it)
                     validateField()
                 }},
             value = value,
-            shape = RoundedCornerShape(10.dp),
+            shape = RoundedCornerShape(size10.dp),
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 focusedBorderColor = backgroundColorTextField,
                 unfocusedBorderColor = backgroundColorTextField,
@@ -65,17 +67,17 @@ fun TextFieldAppPassword(
                 Text(
                     text = label,
                     color = placeholderTextColor,
-                    fontSize = 14.sp
+                    fontSize = size14.sp
                 )
             },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             trailingIcon = {
                 Icon(
                     modifier = Modifier
-                        .testTag( TestTag.TAG_ICON_IS_HIDEN + isHideText.value.toString())
+                        .testTag(TestTag.TAG_ICON_IS_HIDEN + isHideText.value.toString())
                         .clickable { isHideText.value = !isHideText.value },
                     painter = if (isHideText.value) (painterResource(id = R.drawable.visibility_off)) else
-                        (painterResource(id = R.drawable.visibility)) ,
+                        (painterResource(id = R.drawable.visibility)),
                     contentDescription = label,
                     tint = iconColorTextField,
                 )

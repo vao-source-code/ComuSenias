@@ -18,6 +18,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.comusenias.constants.TestTag
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
+import com.example.comusenias.presentation.ui.theme.size10
+import com.example.comusenias.presentation.ui.theme.size17
+import com.example.comusenias.presentation.ui.theme.size50
 
 @Composable
 fun ButtonApp(
@@ -28,12 +31,12 @@ fun ButtonApp(
 ) {
     Button(
         colors = ButtonDefaults.buttonColors(primaryColorApp),
-        shape = RoundedCornerShape(10.dp),
+        shape = RoundedCornerShape(size10.dp),
         enabled = enabledButton,
         onClick = { onClickButton() },
         modifier = Modifier
             .fillMaxWidth()
-            .height(50.dp)
+            .height(size50.dp)
             .testTag(TestTag.TAG_BUTTON_APP)
     ) {
         Text(
@@ -41,7 +44,7 @@ fun ButtonApp(
                 .testTag("titleButton"),
             color = Color.White,
             text = titleButton,
-            fontSize = 17.sp,
+            fontSize = size17.sp,
             fontWeight = FontWeight.SemiBold
         )
         //Comente el spacer porque por mas que no se vea el elemento

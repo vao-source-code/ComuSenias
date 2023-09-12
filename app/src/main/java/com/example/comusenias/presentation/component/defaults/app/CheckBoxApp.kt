@@ -12,14 +12,15 @@ import androidx.compose.ui.unit.dp
 import com.example.comusenias.constants.TestTag
 import com.example.comusenias.presentation.ui.theme.iconColorTextField
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
+import com.example.comusenias.presentation.ui.theme.size12
 
 @Composable
 fun CheckBoxApp(isChecked: MutableState<Boolean>) {
     Checkbox(
         modifier = Modifier
             .testTag(TestTag.TAG_CHECKBOX_APP)
-            .height(12.dp)
-            .width(12.dp),
+            .height(size12.dp)
+            .width(size12.dp),
         checked = isChecked.value,
         onCheckedChange = { isChecked.value = it },
         enabled = true,

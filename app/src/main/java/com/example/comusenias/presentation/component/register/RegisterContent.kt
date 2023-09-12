@@ -22,11 +22,11 @@ import com.example.comusenias.presentation.component.defaults.app.ButtonApp
 import com.example.comusenias.presentation.component.defaults.app.TextFieldApp
 import com.example.comusenias.presentation.component.defaults.app.TextFieldAppPassword
 import com.example.comusenias.presentation.navigation.AppScreen
+import com.example.comusenias.presentation.ui.theme.size40
 import com.example.comusenias.presentation.view_model.RegisterViewModel
 
 @Composable
 fun RegisterContent(navController : NavHostController, viewModel: RegisterViewModel = hiltViewModel()) {
-
     val singFlow = viewModel.registerFlow.collectAsState()
 
     Column(
@@ -43,7 +43,6 @@ fun RegisterContent(navController : NavHostController, viewModel: RegisterViewMo
             errorMsg = viewModel.errorUserName.value,
             validateField = {viewModel.validateUserName()}
         )
-
         TextFieldApp(
             value = viewModel.email.value,
             onValueChange = {viewModel.email.value = it },
@@ -53,7 +52,6 @@ fun RegisterContent(navController : NavHostController, viewModel: RegisterViewMo
             errorMsg = viewModel.errorEmail.value,
             validateField = {viewModel.validateEmail()}
         )
-
         TextFieldAppPassword(
             value = viewModel.password.value,
             onValueChange = { viewModel.password.value = it },
@@ -61,7 +59,6 @@ fun RegisterContent(navController : NavHostController, viewModel: RegisterViewMo
             errorMsg = viewModel.errorPassword.value,
             validateField = {viewModel.validatePassword()}
         )
-
         TextFieldAppPassword(
             value = viewModel.confirmPassword.value,
             onValueChange = { it -> viewModel.confirmPassword.value = it },
@@ -70,8 +67,7 @@ fun RegisterContent(navController : NavHostController, viewModel: RegisterViewMo
             validateField = {viewModel.validateConfirmPassword()}
         )
         TermsAndConditionsContent()
-        Spacer(modifier = Modifier.height(40.dp))
-
+        Spacer(modifier = Modifier.height(size40.dp))
         ButtonApp(
             titleButton = "Registrarse",
             onClickButton = { viewModel.onRegister() },
@@ -83,7 +79,6 @@ fun RegisterContent(navController : NavHostController, viewModel: RegisterViewMo
                 is Response.Loading -> {
                     DefaultLoadingProgressIndicator()
                 }
-
                 is Response.Success -> {
                     LaunchedEffect(Unit) {
                         //Elimino asi el total del historial de atras
@@ -91,12 +86,10 @@ fun RegisterContent(navController : NavHostController, viewModel: RegisterViewMo
 //                    navController.navigate(route = AppScreen.ProfileScreen.route)
                     }
                 }
-
                 is Response.Error -> {
                     Toast.makeText(LocalContext.current, it.exception!!.message, Toast.LENGTH_SHORT)
                         .show()
                 }
-
                 else -> {}
             }
         }

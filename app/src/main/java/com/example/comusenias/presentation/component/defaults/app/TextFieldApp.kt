@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -29,7 +28,8 @@ import com.example.comusenias.constants.TestTag
 import com.example.comusenias.presentation.ui.theme.backgroundColorTextField
 import com.example.comusenias.presentation.ui.theme.iconColorTextField
 import com.example.comusenias.presentation.ui.theme.placeholderTextColor
-
+import com.example.comusenias.presentation.ui.theme.size10
+import com.example.comusenias.presentation.ui.theme.size14
 
 @SuppressLint("SuspiciousIndentation")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -44,26 +44,23 @@ fun TextFieldApp(
         hideText: Boolean = false,
         errorMsg: String = "",
         readOnly: Boolean = false,
-
     ) {
-
-    val maxChar = 32
+    val MAX_CHAR = 32
 
         Column {
             OutlinedTextField(
                 modifier = Modifier
                     .testTag(TestTag.TAG_TEXT_FIELD_APP)
                     .fillMaxWidth()
-                    .height(50.dp)
-                    .background(backgroundColorTextField, shape = RoundedCornerShape(10.dp) ),
+                    .background(backgroundColorTextField, shape = RoundedCornerShape(size10.dp)),
                 onValueChange = {
-                    if (it.length <= maxChar) {
+                    if (it.length <= MAX_CHAR) {
                         onValueChange(it)
                         validateField()
                     }
                                 },
                 value = value,
-                shape = RoundedCornerShape(10.dp),
+                shape = RoundedCornerShape(size10.dp),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     focusedBorderColor = backgroundColorTextField,
                     unfocusedBorderColor = backgroundColorTextField,
@@ -73,7 +70,7 @@ fun TextFieldApp(
                     Text(
                         text = label,
                         color = placeholderTextColor,
-                        fontSize = 14.sp
+                        fontSize = size14.sp
                     )
                               },
                 keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
@@ -94,5 +91,5 @@ fun TextFieldApp(
 @Preview(showBackground = true)
 @Composable
 fun PrevieTextField(){
-    TextFieldApp(value = "", onValueChange = {}, label = "Corre electrónico", icon = Icons.Default.Email)
+    TextFieldApp(value = "gmail", onValueChange = {}, label = "Corre electrónico", icon = Icons.Default.Email)
 }

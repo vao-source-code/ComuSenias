@@ -17,48 +17,55 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.comusenias.presentation.component.defaults.app.CheckBoxApp
+import com.example.comusenias.presentation.ui.theme.accept
 import com.example.comusenias.presentation.ui.theme.blackColorApp
+import com.example.comusenias.presentation.ui.theme.conditions
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
+import com.example.comusenias.presentation.ui.theme.size10
+import com.example.comusenias.presentation.ui.theme.size14
+import com.example.comusenias.presentation.ui.theme.size3
+import com.example.comusenias.presentation.ui.theme.size6
+import com.example.comusenias.presentation.ui.theme.terms
 
 @Composable
 fun TermsAndConditionsContent(onClickTerms: () -> Unit = {},onClickConditions: () -> Unit = {}) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 10.dp),
-        horizontalArrangement = Arrangement.spacedBy(3.dp),
+            .padding(horizontal = size10.dp),
+        horizontalArrangement = Arrangement.spacedBy(size3.dp),
         verticalAlignment = Alignment.CenterVertically
         ){
         val isChecked = remember { mutableStateOf(false) }
 
         CheckBoxApp(isChecked = isChecked )
-        Spacer(modifier = Modifier.width(6.dp))
+        Spacer(modifier = Modifier.width(size6.dp))
         Text(
-            text = "Acepto",
-            fontSize = 14.sp,
+            text = accept,
+            fontSize = size14.sp,
             fontWeight = FontWeight.Medium,
             color = blackColorApp
         )
         Text(
                 modifier = Modifier
                     .clickable { onClickTerms() },
-                text = "Términos",
+                text = terms,
                 color = primaryColorApp,
-                fontSize = 14.sp,
+                fontSize = size14.sp,
                 fontWeight = FontWeight.Bold
         )
         Text(
             text = "y",
-            fontSize = 14.sp,
+            fontSize = size14.sp,
             fontWeight = FontWeight.Medium,
             color = blackColorApp
         )
         Text(
             modifier = Modifier
                 .clickable { onClickConditions() },
-            text = "Condiciones",
+            text = conditions,
             color = primaryColorApp,
-            fontSize = 14.sp,
+            fontSize = size14.sp,
             fontWeight = FontWeight.Bold
         )
     }
