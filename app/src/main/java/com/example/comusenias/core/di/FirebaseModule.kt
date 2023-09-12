@@ -35,6 +35,4 @@ object FirebaseModule {
             logout = Logout(authRepository),
             register = Register(authRepository)
         )
-
-
 }

@@ -10,8 +10,8 @@ import com.example.comusenias.presentation.component.defaults.DefaultTopBar
 import com.example.comusenias.presentation.component.profile.ChangeProfileContent
 import com.example.comusenias.presentation.component.profile.ProfileFooterContent
 import com.example.comusenias.presentation.navigation.AppScreen
+import com.example.comusenias.presentation.ui.theme.editData
 import com.example.comusenias.presentation.view_model.ProfileViewModel
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -22,9 +22,8 @@ fun ChangeProfilePasswordScreen(
 ) {
 
     Scaffold(
-        topBar = { DefaultTopBar(title = "Editar Datos", true, navController) },
-        content = { it ->
-
+        topBar = { DefaultTopBar(title = editData, true, navController) },
+        content = {
             it.calculateBottomPadding()
             ChangeProfileContent(
                 modifier = modifier,
@@ -34,11 +33,10 @@ fun ChangeProfilePasswordScreen(
         },
         bottomBar = {
             ProfileFooterContent {
-                navController?.navigate(route = AppScreen.ProfileScreen.route) {
+                navController.navigate(route = AppScreen.ProfileScreen.route) {
                 }
             }
-
-        })
-
+        }
+    )
 }
 

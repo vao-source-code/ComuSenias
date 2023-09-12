@@ -12,33 +12,32 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.comusenias.presentation.component.register.RegisterContent
 import com.example.comusenias.presentation.component.register.RegisterFooterContent
+import com.example.comusenias.presentation.ui.theme.size20
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegisterScreen(modifier: Modifier?, navController: NavHostController) {
-
-
-    //Coordinator Layaout
-    Scaffold(
-        modifier = modifier!!,
-
-        content = { padding ->
-            RegisterContent(
-                navController = navController,
-                modifier = modifier
-                    .padding(padding)
-                    .fillMaxWidth()
-            )
-        },
-        bottomBar = {
-            RegisterFooterContent(
-                navController = navController,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 20.dp)
-            )
-        }
-    )
+    modifier?.let {
+        Scaffold(
+            modifier = it,
+            content = { padding ->
+                RegisterContent(
+                    navController = navController,
+                    modifier = modifier
+                        .padding(padding)
+                        .fillMaxWidth()
+                )
+            },
+            bottomBar = {
+                RegisterFooterContent(
+                    navController = navController,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = size20.dp)
+                )
+            }
+        )
+    }
 }
 
 @Composable
@@ -47,6 +46,6 @@ fun PreviewRegisterScreen() {
     RegisterScreen(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(20.dp), navController = NavHostController(LocalContext.current)
+            .padding(size20.dp), navController = NavHostController(LocalContext.current)
     )
 }
