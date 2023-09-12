@@ -10,12 +10,12 @@ class TestTag {
         const val TAG_TEXT_FIELD_APP_PASS = "textFieldAppPass"
         const val TAG_ICON_IS_HIDEN = "iconIsHiden"
         const val TAG_MESSAGE_ERROR = "messageError"
-        const val TAG_BOX_SPLASH_SCREEN = "boxSplashScreen"
-        const val TAG_COLUMN_SPLASH_SCREEN = "columnSplashScreen"
-        const val TAG_BUTTON_DEFAULT = "columnSplashScreen"
         const val TAG_ONBOARDING_ITEM = "onboardingitem"
         const val TAG_BUTTON_NEXT = "buttonNext"
         const val TAG_LOGIN_SCREEN = "loginScreen"
         const val TAG_INDICATOR = "indicator"
+        const val TAG_BOX_SPLASH_SCREEN = "boxSplashScreen"
+        const val TAG_COLUMN_SPLASH_SCREEN = "columnSplashScreen"
+        const val TAG_BUTTON_DEFAULT = "columnSplashScreen"
     }
 }
