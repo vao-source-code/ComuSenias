@@ -13,7 +13,7 @@ data class BottomBarItem(
     val unselectedIcon: Int,
 )
 
-fun getBottomBarItem(): List<BottomBarItem> {
+fun getBottomBarItems(): List<BottomBarItem> {
     return listOf(
         BottomBarItem(
             route = AppScreen.LoginScreen.route,
@@ -32,5 +32,4 @@ fun getBottomBarItem(): List<BottomBarItem> {
             unselectedIcon = R.drawable.children,
         )
     )
-
 }
