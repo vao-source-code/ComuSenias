@@ -26,8 +26,7 @@ class ChangeProfileViewModel @Inject constructor(
     private var savedStateHandle: SavedStateHandle,
     private val usersUseCase: UsersUseCase,
     @ApplicationContext private val context: Context
-) :
-    ViewModel() {
+) : ViewModel() {
 
     var state by mutableStateOf(ChangeProfileState())
         private set
@@ -52,7 +51,6 @@ class ChangeProfileViewModel @Inject constructor(
 
     fun save() = viewModelScope.launch(Dispatchers.IO) {
         saveImage()
-        onUpdate(state.image)
     }
 
     fun saveImage() = viewModelScope.launch(Dispatchers.IO) {
@@ -60,11 +58,14 @@ class ChangeProfileViewModel @Inject constructor(
             saveImageResponse = Response.Loading
             val result = usersUseCase.saveImageUser(file!!)
             saveImageResponse = result
+            if(saveImageResponse is Response.Success){
+                onUpdate((saveImageResponse as Response.Success).data)
+            }
         }
 
     }
 
-    fun pickImage() = viewModelScope.launch (Dispatchers.IO){
+    fun pickImage() = viewModelScope.launch(Dispatchers.IO) {
         val result = resultingActivityHandler.getContent("image/*")
         if (result != null) {
             file = ComposeFileProvider.createFileFromUri(context, result)
@@ -82,7 +83,7 @@ class ChangeProfileViewModel @Inject constructor(
 
     }
 
-    fun updateUser(user: User) = viewModelScope.launch (Dispatchers.IO){
+    fun updateUser(user: User) = viewModelScope.launch(Dispatchers.IO) {
         updateResponse = Response.Loading
         val result = usersUseCase.updateUser(user)
         updateResponse = result

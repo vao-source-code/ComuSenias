@@ -1,6 +1,5 @@
 package com.example.comusenias.presentation.view_model
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -10,6 +9,9 @@ import com.example.comusenias.domain.library.LibraryString
 import com.example.comusenias.domain.models.LoginState
 import com.example.comusenias.domain.models.Response
 import com.example.comusenias.domain.use_cases.auth.AuthUseCases
+import com.example.comusenias.presentation.ui.theme.emptyString
+import com.example.comusenias.presentation.ui.theme.invalidEmail
+import com.example.comusenias.presentation.ui.theme.invalidPassword
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
@@ -43,34 +45,21 @@ class LoginViewModel @Inject constructor(private val authUseCases: AuthUseCases)
             loginResponse = Response.Success(currentUser)
         }
     }
-
-
-
     fun enabledLoginButton() {
         isLoginEnabled =  isEmailValid && isPasswordValid
     }
     fun validateEmail() {
-        if (LibraryString.validEmail(state.email)) {
-            isEmailValid = true
-            errorEmail = ""
-            Log.d("LoginViewModel", "validateEmail: ${isEmailValid}")
-        }else{
-            isEmailValid = false
-            errorEmail = "Email no es valido"
-            Log.d("LoginViewModel", "validateEmail: ${isEmailValid}")
-        }
+        val isValid = LibraryString.validEmail(state.email)
+        isEmailValid = isValid
+        errorEmail = if (isValid) emptyString else invalidEmail
         enabledLoginButton()
 
     }
 
-    fun validatePassword(){
-        if (LibraryString.validPassword(state.password)) {
-            isPasswordValid = true
-            errorPassword = ""
-        }else{
-            isPasswordValid = false
-            errorPassword = "Password no es valido"
-        }
+    fun validatePassword() {
+        val isValid = LibraryString.validPassword(state.password)
+        isPasswordValid = isValid
+        errorPassword = if (isValid) emptyString else invalidPassword
         enabledLoginButton()
     }
 

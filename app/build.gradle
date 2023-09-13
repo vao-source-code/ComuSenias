@@ -55,6 +55,7 @@ android {
 dependencies {
     testImplementation 'junit:junit:'
     testImplementation "androidx.arch.core:core-testing:2.2.0"
+    testImplementation 'androidx.test:core:1.5.0'
     implementation libs.core.ktx
     implementation libs.activityCompose
     implementation platform(libs.composeBom)
@@ -72,15 +73,16 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     androidTestImplementation libs.mockkAndroid
     testImplementation libs.mockkAndroid
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3'
+
 
     debugImplementation libs.composeUiTooling
 
     //debugImplementation libs.composeUiTestManifest
     debugImplementation 'androidx.compose.ui:ui-test-manifest'
-    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3'
 
-    implementation("com.google.firebase:firebase-analytics-ktx")
-    implementation("com.google.firebase:firebase-firestore-ktx")
+    implementation "com.google.firebase:firebase-analytics-ktx"
+    implementation "com.google.firebase:firebase-storage-ktx"
 
     implementation libs.firebaseAuth
     implementation(platform(libs.firebaseBom))
@@ -109,15 +111,17 @@ dependencies {
     androidTestAnnotationProcessor libs.daggerHiltCompiler
     testImplementation libs.daggerHiltTesting
     testAnnotationProcessor libs.daggerHiltCompiler
+    implementation libs.mockitoCore
+    androidTestImplementation libs.mockitoAndroid
+
 
     //GSON
-    implementation "com.google.code.gson:gson:2.9.0"
 
-    implementation"io.coil-kt:coil-compose:2.4.0"
-    implementation "com.google.accompanist:accompanist-permissions:0.30.0"
-    implementation "com.google.firebase:firebase-storage-ktx"
-    implementation "commons-io:commons-io:2.8.0"
-
+    implementation libs.firebaseStorage
+    implementation libs.gson
+    implementation libs.coil
+    implementation libs.accompanist
+    implementation libs.commons
 
 }
 kapt {

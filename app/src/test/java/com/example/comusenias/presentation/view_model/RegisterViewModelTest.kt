@@ -41,9 +41,8 @@ class RegisterViewModelTest {
     }
 
 
-
     @Test
-    fun `register is successful`() = runBlocking {
+    fun registerIsSuccessful() = runBlocking {
 
         val user = User(
             id = "1",
@@ -53,15 +52,29 @@ class RegisterViewModelTest {
         )
 
         val result = Response.Success(mockk<FirebaseUser>())
-
         coEvery { authUseCases.register(user) } returns result
-
         viewModel.register(user)
-
-        assertEquals(viewModel.registerFlow.value, result)
-
+        assertEquals(viewModel.registerResponse, result)
 
     }
+
+
+    @Test
+    fun registerIsError() = runBlocking {
+
+        val user = User(
+            id = "1",
+            userName = "test",
+            email = "",
+        )
+
+        val result = Response.Error(Exception("Error"))
+        coEvery { authUseCases.register(user) } returns result
+        viewModel.register(user)
+        assertEquals(viewModel.registerResponse, result)
+
+    }
+
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @After

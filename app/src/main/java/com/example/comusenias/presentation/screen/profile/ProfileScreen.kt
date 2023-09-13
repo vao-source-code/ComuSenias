@@ -13,6 +13,7 @@ import com.example.comusenias.presentation.component.defaults.DefaultTopBar
 import com.example.comusenias.presentation.component.profile.ProfileContent
 import com.example.comusenias.presentation.component.profile.ProfileFooterContent
 import com.example.comusenias.presentation.navigation.AppScreen
+import com.example.comusenias.presentation.ui.theme.profile
 import com.example.comusenias.presentation.view_model.ProfileViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -20,15 +21,14 @@ import com.example.comusenias.presentation.view_model.ProfileViewModel
 fun ProfileScreen(
     navController: NavHostController,
     modifier: Modifier?,
-    viewModel: ProfileViewModel = hiltViewModel(),
+    viewModel: ProfileViewModel = hiltViewModel()
 ) {
 
-    Scaffold(topBar = { DefaultTopBar(title = "Perfil", true, navController) }, content = { it ->
+    Scaffold(topBar = { DefaultTopBar(title = profile, true, navController) }, content = { it ->
         it.calculateBottomPadding()
         ProfileContent()
     }, bottomBar = {
         val onClick = {
-
             navController.navigate(
                 route = AppScreen.ChangeProfileScreen.passUser(viewModel.userData.toJson())
             )

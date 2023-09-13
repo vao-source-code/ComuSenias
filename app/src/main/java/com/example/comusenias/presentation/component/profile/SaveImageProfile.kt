@@ -12,22 +12,17 @@ import com.example.comusenias.presentation.view_model.ChangeProfileViewModel
 
 fun SaveImageProfile(viewModel: ChangeProfileViewModel = hiltViewModel()) {
     when (val response = viewModel.saveImageResponse) {
-        is Response.Loading -> {
+        Response.Loading -> {
             DefaultLoadingProgressIndicator()
         }
-
         is Response.Success -> {
             viewModel.onUpdate(response.data)
         }
-
         is Response.Error -> {
-            Toast.makeText(
-                LocalContext.current,
-                response?.exception?.message.toString(),
-                Toast.LENGTH_SHORT
-            ).show()
+            Toast.makeText(LocalContext.current, response.exception?.message ?: "Error desconcido", Toast.LENGTH_LONG).show()
         }
 
         else -> {}
     }
+
 }

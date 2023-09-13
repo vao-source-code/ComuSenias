@@ -1,5 +1,6 @@
 package com.example.comusenias.presentation.component.login
 
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -68,7 +69,6 @@ fun LoginForm(
 
     }
 }
-
 
 
 

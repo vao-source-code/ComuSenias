@@ -12,6 +12,11 @@ import com.example.comusenias.domain.models.Response
 import com.example.comusenias.domain.models.User
 import com.example.comusenias.domain.use_cases.auth.AuthUseCases
 import com.example.comusenias.domain.use_cases.users.UsersUseCase
+import com.example.comusenias.presentation.ui.theme.emptyString
+import com.example.comusenias.presentation.ui.theme.invalidEmail
+import com.example.comusenias.presentation.ui.theme.passwordDoNotMatch
+import com.example.comusenias.presentation.ui.theme.restrictionNameUserAccount
+import com.example.comusenias.presentation.ui.theme.restrictionPasswordUserAccount
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -73,47 +78,31 @@ class RegisterViewModel @Inject constructor(
     }
 
     fun validateUserName() {
-        if (LibraryString.validUserName(state.userName)) {
-            isUserNameValid = true
-            errorUserName = ""
-        } else {
-            isUserNameValid = false
-            errorUserName = "El nombre de usuario debe tener al menos 3 caracteres"
-        }
+        val isValid = LibraryString.validUserName(state.userName)
+        isUserNameValid = isValid
+        errorUserName =
+            if (isValid) emptyString else restrictionNameUserAccount
         enabledRegisterButton()
     }
 
     fun validateEmail() {
-        if (LibraryString.validEmail(state.email)) {
-            isEmailValid = true
-            errorEmail = ""
-        } else {
-            isEmailValid = false
-            errorEmail = "El email no es valido"
-        }
+        val isValid = LibraryString.validEmail(state.email)
+        isEmailValid = isValid
+        errorEmail = if (isValid) emptyString else invalidEmail
         enabledRegisterButton()
     }
 
-
     fun validatePassword() {
-        if (LibraryString.validPassword(state.password)) {
-            isPasswordValid = true
-            errorPassword = ""
-        } else {
-            isPasswordValid = false
-            errorPassword = "La contraseña debe tener al menos 8 caracteres, una mayúscula y un número"
-        }
+        val isValid = LibraryString.validPassword(state.password)
+        isPasswordValid = isValid
+        errorPassword = if (isValid) emptyString else restrictionPasswordUserAccount
         enabledRegisterButton()
     }
 
     fun validateConfirmPassword() {
-        if (state.password == state.confirmPassword) {
-            isConfirmPasswordValid = true
-            errorConfirmPassword = ""
-        } else {
-            isConfirmPasswordValid = false
-            errorConfirmPassword = "Las contraseñas no coinciden"
-        }
+        val isValid = state.password == state.confirmPassword
+        isConfirmPasswordValid = isValid
+        errorConfirmPassword = if (isValid) emptyString else passwordDoNotMatch
         enabledRegisterButton()
     }
 
