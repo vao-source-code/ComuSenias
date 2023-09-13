@@ -9,14 +9,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.comusenias.domain.library.LibraryPassword
 import com.example.comusenias.presentation.component.defaults.DefaultTopBar
 import com.example.comusenias.presentation.component.profile.ProfileContent
 import com.example.comusenias.presentation.component.profile.ProfileFooterContent
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.view_model.ProfileViewModel
-import java.net.URLEncoder
-import java.nio.charset.StandardCharsets
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -31,8 +28,7 @@ fun ProfileScreen(
         ProfileContent()
     }, bottomBar = {
         val onClick = {
-            viewModel.userData.image = URLEncoder.encode(viewModel.userData.image, StandardCharsets.UTF_8.toString())
-            viewModel.userData.password = LibraryPassword.encodePassword(viewModel.userData.password)
+
             navController.navigate(
                 route = AppScreen.ChangeProfileScreen.passUser(viewModel.userData.toJson())
             )

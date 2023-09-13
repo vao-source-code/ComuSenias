@@ -16,6 +16,7 @@ import com.example.comusenias.domain.models.User
 import com.example.comusenias.domain.use_cases.users.UsersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.File
 import javax.inject.Inject
@@ -40,48 +41,54 @@ class ChangeProfileViewModel @Inject constructor(
     var updateResponse by mutableStateOf<Response<Boolean>?>(null)
         private set
 
-    var imageUri by mutableStateOf<String>("")
     val resultingActivityHandler = ResultingActivityHandler()
     var saveImageResponse by mutableStateOf<Response<String>?>(null)
         private set
-    var file : File? = null
+    var file: File? = null
 
     init {
-        state = state.copy(userName = user.userName)
+        state = state.copy(userName = user.userName, image = user.image)
     }
 
-    fun saveImage() = viewModelScope.launch {
-        if(file != null){
+    fun save() = viewModelScope.launch(Dispatchers.IO) {
+        saveImage()
+        onUpdate(state.image)
+    }
+
+    fun saveImage() = viewModelScope.launch(Dispatchers.IO) {
+        if (file != null) {
             saveImageResponse = Response.Loading
             val result = usersUseCase.saveImageUser(file!!)
             saveImageResponse = result
         }
 
     }
-    fun pickImage() = viewModelScope.launch {
+
+    fun pickImage() = viewModelScope.launch (Dispatchers.IO){
         val result = resultingActivityHandler.getContent("image/*")
         if (result != null) {
             file = ComposeFileProvider.createFileFromUri(context, result)
-            imageUri = result.toString()
+            state = state.copy(image = result.toString())
+
         }
     }
 
-    fun takePhoto() = viewModelScope.launch {
+    fun takePhoto() = viewModelScope.launch(Dispatchers.IO) {
         val result = resultingActivityHandler.takePicturePreview()
         if (result != null) {
-            imageUri = ComposeFileProvider.getPathFromBitmap(context, result)
-            file = File(imageUri)
+            state = state.copy(image = ComposeFileProvider.getPathFromBitmap(context, result))
+            file = File(state.image)
         }
 
     }
 
-    fun updateUser(user: User) = viewModelScope.launch {
+    fun updateUser(user: User) = viewModelScope.launch (Dispatchers.IO){
         updateResponse = Response.Loading
         val result = usersUseCase.updateUser(user)
         updateResponse = result
     }
 
-    fun onUpdate(uri : String) {
+    fun onUpdate(uri: String) {
         val user = User(id = user.id, userName = state.userName, image = uri)
         updateUser(user)
     }

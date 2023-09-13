@@ -16,6 +16,7 @@ fun ResponseStatusProfile(viewModel: ChangeProfileViewModel = hiltViewModel()) {
             DefaultLoadingProgressIndicator()
         }
         is Response.Success -> {
+
             Toast.makeText(LocalContext.current, "Datos Actualizados", Toast.LENGTH_SHORT).show()
         }
         is Response.Error -> {

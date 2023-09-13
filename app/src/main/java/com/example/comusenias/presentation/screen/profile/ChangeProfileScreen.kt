@@ -38,15 +38,15 @@ fun ChangeProfileScreen(
         bottomBar = {
             val onClick =
                 {
-                    changeViewModel.saveImage()
+                    changeViewModel.save()
                     navController.navigate(route = AppScreen.ProfileScreen.route)
                 }
 
             ProfileFooterContent(onClick)
 
         })
-    SaveImageProfile()
     ResponseStatusProfile()
+    SaveImageProfile()
 
 }
 

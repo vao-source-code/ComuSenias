@@ -98,11 +98,11 @@ fun ChangeProfileContent(
                         },
                 ) {
 
-                    if (viewModel.imageUri != "") {
+                    if (viewModel.state.image != "") {
                         AsyncImage(
                             modifier = Modifier
                                 .size(140.dp), contentScale = ContentScale.Crop,
-                            model = viewModel.imageUri, contentDescription = "Seleted Image"
+                            model = viewModel.state.image, contentDescription = "Seleted Image"
                         )
                     } else {
                         Image(

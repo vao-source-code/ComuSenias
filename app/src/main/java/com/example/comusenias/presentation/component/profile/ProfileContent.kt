@@ -22,6 +22,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.AsyncImage
 import com.example.comusenias.R
 import com.example.comusenias.presentation.component.defaults.app.TextFieldApp
 import com.example.comusenias.presentation.ui.theme.ComuSeniasTheme
@@ -46,13 +47,22 @@ fun ProfileContent(
                     .size(140.dp)
                     .clip(CircleShape),
             ) {
-                Image(
-                    modifier= Modifier.size(140.dp),
-                    contentScale = ContentScale.Crop,
-                    painter = painterResource(id = R.drawable.profile_avatar),
-                    contentDescription = "image avatar",
 
-                )
+                if (viewModel.userData.image != "") {
+                    AsyncImage(
+                        modifier = Modifier
+                            .size(140.dp), contentScale = ContentScale.Crop,
+                        model = viewModel.userData.image, contentDescription = "Seleted Image"
+                    )
+                }else{
+                    Image(
+                        modifier = Modifier.size(140.dp),
+                        contentScale = ContentScale.Crop,
+                        painter = painterResource(id = R.drawable.profile_avatar),
+                        contentDescription = "image avatar",
+
+                        )
+                }
 
             }
 
