@@ -32,16 +32,13 @@ fun AppNavigation(navController: NavHostController) {
         }
 
         composable(
-            route = AppScreen.ChangeProfileScreen.route, arguments = listOf(navArgument("user") {
+            route = AppScreen.ChangeProfileScreen.route,
+            arguments = listOf(navArgument("user"){
                 type = NavType.StringType
             })
-        ) {
-            it.arguments?.getString("user")?.let { user ->
-                ChangeProfileScreen(
-                    navController = navController,
-                    modifier = Modifier.fillMaxSize(),
-                    user = user
-                )
+        ) { user ->
+            user.arguments?.getString("user")?.let {
+                ChangeProfileScreen(modifier = Modifier.fillMaxSize(), navController=navController, user = it)
             }
 
         }

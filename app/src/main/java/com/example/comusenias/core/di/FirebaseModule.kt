@@ -12,6 +12,7 @@ import com.example.comusenias.domain.use_cases.auth.Logout
 import com.example.comusenias.domain.use_cases.auth.Register
 import com.example.comusenias.domain.use_cases.users.CreateUser
 import com.example.comusenias.domain.use_cases.users.GetUserById
+import com.example.comusenias.domain.use_cases.users.SaveImageUser
 import com.example.comusenias.domain.use_cases.users.UpdateUser
 import com.example.comusenias.domain.use_cases.users.UsersUseCase
 import com.google.firebase.auth.FirebaseAuth
@@ -19,6 +20,7 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -67,7 +69,17 @@ object FirebaseModule {
     fun providerUsersUseCases(usersRepository: UsersRepository) = UsersUseCase(
         createUser = CreateUser(usersRepository),
         getUserById = GetUserById(usersRepository),
-        updateUser = UpdateUser(usersRepository)
+        updateUser = UpdateUser(usersRepository),
+        saveImageUser = SaveImageUser(usersRepository)
     )
+
+    /*----------------------------- Storage --------------------------------------------------- */
+    @Provides
+    fun providerFirebaseStorage() : FirebaseStorage = FirebaseStorage.getInstance()
+
+    @Provides
+    fun providerStorageRef(storage : FirebaseStorage) = storage.reference.child(USERS_COLLECTION)
+
+
 
 }
