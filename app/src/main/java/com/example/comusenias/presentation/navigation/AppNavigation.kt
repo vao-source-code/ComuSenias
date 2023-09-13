@@ -10,7 +10,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.comusenias.presentation.activities.MainActivity
-import com.example.comusenias.presentation.component.ShowBottomBar
+import com.example.comusenias.presentation.component.bottomBar.ShowBottomBar
 import com.example.comusenias.presentation.screen.login.LoginScreen
 import com.example.comusenias.presentation.screen.profile.ChangeProfilePasswordScreen
 import com.example.comusenias.presentation.screen.profile.ProfileScreen

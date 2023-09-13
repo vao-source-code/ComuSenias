@@ -1,4 +1,4 @@
-package com.example.comusenias.presentation.component
+package com.example.comusenias.presentation.component.bottomBar
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -54,7 +54,7 @@ fun ShowBottomBar(navController: NavHostController) {
 }
 
 @Composable
-private fun GetBottomBarTitle(
+fun GetBottomBarTitle(
     currentRoute: String?,
     item: BottomBarItem
 ) {
