@@ -1,5 +1,6 @@
 package com.example.comusenias.presentation.view_model
 
+import android.net.Uri
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -34,6 +35,9 @@ class ChangeProfileViewModel @Inject constructor(
     var updateResponse by mutableStateOf<Response<Boolean>?>(null)
         private set
 
+    var imageUri by mutableStateOf<Uri?>(null)
+    var hasImage by mutableStateOf<Boolean>(false)
+
 
     init {
         state = state.copy(userName = user.userName)
@@ -54,6 +58,13 @@ class ChangeProfileViewModel @Inject constructor(
         state = state.copy(userName = userName)
     }
 
+    fun onGaleryResult(uri: Uri){
+        imageUri = uri
+    }
+
+    fun onCameraResult(result: Boolean){
+        hasImage = result
+    }
 
     fun validateUserName() {
         if (LibraryString.validUserName(state.userName)) {

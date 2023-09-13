@@ -9,6 +9,7 @@ import androidx.navigation.NavHostController
 import com.example.comusenias.presentation.component.defaults.DefaultTopBar
 import com.example.comusenias.presentation.component.profile.ChangeProfileContent
 import com.example.comusenias.presentation.component.profile.ProfileFooterContent
+import com.example.comusenias.presentation.component.profile.ResponseStatusProfile
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.view_model.ChangeProfileViewModel
 
@@ -42,6 +43,7 @@ fun ChangeProfileScreen(
             ProfileFooterContent(onClick)
 
         })
+    ResponseStatusProfile()
 
 }
 
