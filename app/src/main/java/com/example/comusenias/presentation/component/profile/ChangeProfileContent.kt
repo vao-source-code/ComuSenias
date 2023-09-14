@@ -71,7 +71,7 @@ fun ChangeProfileContent(
     )
 
     viewModel.resultingActivityHandler.handle()
-    Box(modifier = modifier!!.padding(20.dp)) {
+    Box(modifier = Modifier.padding(20.dp)) {
 
         Column(
             modifier = Modifier.fillMaxWidth(),
@@ -135,7 +135,7 @@ fun ChangeProfileContent(
             TextFieldApp(
                 label = "Usuario",
                 value = state.userName,
-                onValueChange = { viewModel.onUserNameChange(it) },
+                onValueChange = { viewModel.onUsernameInput(it) },
                 validateField = { viewModel.validateUserName() },
                 icon = Icons.Default.Edit,
                 keyboardType = KeyboardType.Text,

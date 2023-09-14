@@ -1,18 +1,17 @@
 package com.example.comusenias.presentation.screen.profile
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.comusenias.presentation.component.defaults.DefaultTopBar
 import com.example.comusenias.presentation.component.profile.ChangeProfileContent
 import com.example.comusenias.presentation.component.profile.ProfileFooterContent
 import com.example.comusenias.presentation.component.profile.ResponseStatusProfile
 import com.example.comusenias.presentation.component.profile.SaveImageProfile
-import com.example.comusenias.presentation.navigation.AppScreen
-import com.example.comusenias.presentation.ui.theme.editData
 import com.example.comusenias.presentation.view_model.ChangeProfileViewModel
 
 
@@ -20,32 +19,32 @@ import com.example.comusenias.presentation.view_model.ChangeProfileViewModel
 @Composable
 fun ChangeProfileScreen(
     navController: NavHostController,
-    modifier: Modifier?,
+    modifier: Modifier,
     changeViewModel: ChangeProfileViewModel = hiltViewModel(),
-    user : String = ""
+    user: String = ""
 ) {
 
-    Scaffold(
-        topBar = { DefaultTopBar(title = editData, true, navController) },
-        content = {
-            it.calculateBottomPadding()
+    Box(
+        modifier = modifier.fillMaxSize()
+    ) {
+        Column(modifier = modifier.fillMaxSize()) {
             ChangeProfileContent(
                 modifier = modifier,
                 navController = navController,
             )
-        },
-        bottomBar = {
-            val onClick =
+            val onClick : () -> Unit =
                 {
-                    changeViewModel.save()
-                    navController.navigate(route = AppScreen.ProfileScreen.route)
+                    changeViewModel.saveImage()
+
                 }
 
             ProfileFooterContent(onClick)
-            ResponseStatusProfile(changeViewModel)
-            SaveImageProfile(changeViewModel)
-        })
+            SaveImageProfile()
+            ResponseStatusProfile()
 
+
+        }
+    }
 
 }
 

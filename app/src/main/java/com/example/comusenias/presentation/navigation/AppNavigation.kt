@@ -11,7 +11,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.comusenias.presentation.activities.MainActivity
 import com.example.comusenias.presentation.component.bottomBar.ShowBottomBar
@@ -71,8 +70,6 @@ private fun GetNavHost(
             }
 
         }
-        composable(AppScreen.MainActivity.route) {
-            MainActivity()
-        }
+
     }
 }

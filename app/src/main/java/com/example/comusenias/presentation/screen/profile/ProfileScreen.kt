@@ -24,8 +24,6 @@ fun ProfileScreen(
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
             ProfileContent(
-                navController = navController,
-                modifier = modifier,
                 viewModel = viewModel
             )
             val onClick = {

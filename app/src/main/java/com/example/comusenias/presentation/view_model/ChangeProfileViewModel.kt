@@ -46,67 +46,72 @@ class ChangeProfileViewModel @Inject constructor(
     var file: File? = null
 
     init {
-        state = state.copy(userName = user.userName, image = user.image)
+        // SET ARGUMENTS
+        state = state.copy(
+            userName = user.userName,
+            image = user.image
+        )
+
     }
 
-    fun save() = viewModelScope.launch(Dispatchers.IO) {
-        saveImage()
-    }
-
-    fun saveImage() = viewModelScope.launch(Dispatchers.IO) {
+    fun saveImage() = viewModelScope.launch (Dispatchers.IO){
         if (file != null) {
             saveImageResponse = Response.Loading
             val result = usersUseCase.saveImageUser(file!!)
             saveImageResponse = result
-            if(saveImageResponse is Response.Success){
-                onUpdate((saveImageResponse as Response.Success).data)
-            }
         }
 
+        update(user = User(
+            id = user.id,
+            userName = state.userName,
+            image = state.image
+        ))
     }
 
-    fun pickImage() = viewModelScope.launch(Dispatchers.IO) {
+    fun pickImage() = viewModelScope.launch (Dispatchers.IO){
         val result = resultingActivityHandler.getContent("image/*")
         if (result != null) {
             file = ComposeFileProvider.createFileFromUri(context, result)
             state = state.copy(image = result.toString())
-
         }
     }
 
-    fun takePhoto() = viewModelScope.launch(Dispatchers.IO) {
+    fun takePhoto() = viewModelScope.launch (Dispatchers.IO){
         val result = resultingActivityHandler.takePicturePreview()
         if (result != null) {
             state = state.copy(image = ComposeFileProvider.getPathFromBitmap(context, result))
             file = File(state.image)
         }
-
     }
 
-    fun updateUser(user: User) = viewModelScope.launch(Dispatchers.IO) {
+    fun onUpdate(url: String) {
+        val myUser = User(
+            id = user.id,
+            userName = state.userName,
+            image = url
+        )
+        update(myUser)
+    }
+
+    fun update(user: User) = viewModelScope.launch (Dispatchers.IO){
         updateResponse = Response.Loading
         val result = usersUseCase.updateUser(user)
         updateResponse = result
     }
 
-    fun onUpdate(uri: String) {
-        val user = User(id = user.id, userName = state.userName, image = uri)
-        updateUser(user)
-    }
-
-    fun onUserNameChange(userName: String) {
-        state = state.copy(userName = userName)
+    fun onUsernameInput(username: String) {
+        state = state.copy(userName = username)
     }
 
 
     fun validateUserName() {
-        if (LibraryString.validUserName(state.userName)) {
-            isUserNameValid = true
-            errorUserName = ""
-        } else {
-            isUserNameValid = false
-            errorUserName = "El nombre de usuario debe tener al menos 3 caracteres"
+            if (LibraryString.validUserName(state.userName)) {
+                isUserNameValid = true
+                errorUserName = ""
+            } else {
+                isUserNameValid = false
+                errorUserName = "El nombre de usuario debe tener al menos 3 caracteres"
+            }
         }
-    }
 
-}
+    }

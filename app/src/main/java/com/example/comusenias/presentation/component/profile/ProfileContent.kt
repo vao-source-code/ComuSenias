@@ -19,13 +19,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.example.comusenias.R
 import com.example.comusenias.presentation.component.defaults.app.TextFieldApp
-import com.example.comusenias.presentation.ui.theme.ComuSeniasTheme
 import com.example.comusenias.presentation.view_model.ProfileViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -98,16 +96,3 @@ fun ProfileContent(
     }
 }
 
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun PreviewProfileContent() {
-
-    ComuSeniasTheme() {
-        ProfileContent(
-
-        )
-    }
-
-
-}
