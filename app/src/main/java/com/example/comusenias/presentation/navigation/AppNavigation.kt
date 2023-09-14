@@ -1,7 +1,6 @@
 package com.example.comusenias.presentation.navigation
 
 import PermissionCameraScreen
-import RequestCameraPermission
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -9,6 +8,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.comusenias.presentation.screen.camera.CameraScreen
+import com.example.comusenias.presentation.screen.camera.TestCamera
 import com.example.comusenias.presentation.screen.login.LoginScreen
 import com.example.comusenias.presentation.screen.profile.ChangeProfilePasswordScreen
 import com.example.comusenias.presentation.screen.profile.ProfileScreen
@@ -23,7 +23,8 @@ fun AppNavigation(navController: NavHostController) {
             SplashScreen(navController)
         }
         composable(AppScreen.MainActivity.route) {
-            LoginScreen(navController = navController)
+           // LoginScreen(navController = navController)
+            TestCamera(navController = navController)
         }
         composable(AppScreen.RegisterScreen.route) {
             RegisterScreen(navController = navController , modifier = Modifier.fillMaxSize())
@@ -50,6 +51,3 @@ fun AppNavigation(navController: NavHostController) {
 
 }
 
-fun RequestCameraPermission() {
-    TODO("Not yet implemented")
-}

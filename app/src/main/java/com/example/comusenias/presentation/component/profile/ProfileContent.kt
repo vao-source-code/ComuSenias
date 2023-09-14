@@ -71,9 +71,7 @@ fun ProfileContent(
                 )
 
                 IconButton(
-                    onClick = {
-                        navController?.navigate(AppScreen.CameraScreenPermission.route)
-                    },
+                    onClick = {},
                     modifier = Modifier
                         .align(Alignment.BottomEnd)
                         .offset(y = (-10).dp),

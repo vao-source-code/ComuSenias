@@ -1,53 +1,52 @@
+
+import android.Manifest
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
+
+
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavHostController
 import com.example.comusenias.presentation.navigation.AppScreen
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RequestCameraPermission(
-    activity: ComponentActivity, // Agrega el parámetro activity
+fun RequestPermissions(
     onPermissionGranted: () -> Unit,
     onPermissionDenied: () -> Unit
 ) {
-    val context = LocalContext.current
-    val launcher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-        if (isGranted) {
+    val requestPermissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        if (permissions.all { it.value }) {
+            // Todos los permisos fueron concedidos.
             onPermissionGranted()
         } else {
+            // Al menos un permiso fue denegado.
             onPermissionDenied()
         }
     }
 
-    val hasCameraPermission = remember {
-        ContextCompat.checkSelfPermission(
-            context,
-            android.Manifest.permission.CAMERA
-        ) == android.content.pm.PackageManager.PERMISSION_GRANTED
-    }
-
-    if (!hasCameraPermission) {
-        SideEffect {
-            launcher.launch(android.Manifest.permission.CAMERA)
-        }
-    } else {
-        onPermissionGranted()
+    DisposableEffect(Unit) {
+        requestPermissionLauncher.launch(
+            arrayOf(
+                android.Manifest.permission.CAMERA,
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+            )
+        )
+        onDispose { /* Hacer algo cuando se desecha el efecto */ }
     }
 }
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PermissionCameraScreen(navController: NavHostController) {
     val context = LocalContext.current
-    val activity = LocalContext.current as ComponentActivity // Obtén el ComponentActivity
-    RequestCameraPermission(
-        activity = activity, // Pasa el ComponentActivity
+    RequestPermissions(
         onPermissionGranted = {
             navController.navigate(AppScreen.CameraScreen.route)
         },

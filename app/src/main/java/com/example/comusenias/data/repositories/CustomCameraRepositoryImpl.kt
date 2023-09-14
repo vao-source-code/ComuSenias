@@ -19,42 +19,54 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 import javax.inject.Inject
 
-class CustomCameraRepositoryImpl@Inject constructor(
-    private val cameraProvider:ProcessCameraProvider,
+class CustomCameraRepositoryImpl @Inject constructor(
+    private val cameraProvider: ProcessCameraProvider,
     private val cameraSelector: CameraSelector,
     private val preview: Preview,
     private val imageAnalysis: ImageAnalysis,
     private val imageCapture: ImageCapture,
-):CustomCameraRepository {
+) : CustomCameraRepository {
     override suspend fun captureAndSaveImage(context: Context) {
-        val name = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS", Locale.ENGLISH).format(System.currentTimeMillis())
-
+        val name = SimpleDateFormat(
+            "yyyy-MM-dd-HH-mm-ss-SSS",
+            Locale.ENGLISH
+        ).format(System.currentTimeMillis())
         // For save
         val contentValues = ContentValues().apply {
-            put(MediaStore.MediaColumns.DISPLAY_NAME,name)
-            put(MediaStore.MediaColumns.MIME_TYPE,"image/jpeg")
-            if(Build.VERSION.SDK_INT > 28){
-                put(MediaStore.MediaColumns.RELATIVE_PATH,"Pictures/My-Camera-App-Images")
-
+            put(MediaStore.MediaColumns.DISPLAY_NAME, name)
+            put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
+            if (Build.VERSION.SDK_INT > 28) {
+                put(MediaStore.MediaColumns.RELATIVE_PATH, "Pictures/My-Camera-App-Images")
             }
         }
         // For capture output
-
-        val outputOptions = ImageCapture.OutputFileOptions.Builder(context.contentResolver,MediaStore.Images.Media.EXTERNAL_CONTENT_URI,contentValues).build()
+        val outputOptions = ImageCapture.OutputFileOptions.Builder(
+            context.contentResolver,
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+            contentValues
+        ).build()
 
         //Take Pictures
-        imageCapture.takePicture(outputOptions,ContextCompat.getMainExecutor(context),object:ImageCapture.OnImageSavedCallback{
-            override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                Toast.makeText(context,"Saved image: ${outputFileResults.savedUri}",Toast.LENGTH_SHORT).show()
-            }
+        imageCapture.takePicture(
+            outputOptions,
+            ContextCompat.getMainExecutor(context),
+            object : ImageCapture.OnImageSavedCallback {
+                override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+                    Toast.makeText(
+                        context,
+                        "Saved image: ${outputFileResults.savedUri}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
 
-            override fun onError(exception: ImageCaptureException) {
-                Toast.makeText(context,"Some error ocurred: ${exception.message}",Toast.LENGTH_SHORT).show()
-            }
-
-        })
-
-
+                override fun onError(exception: ImageCaptureException) {
+                    Toast.makeText(
+                        context,
+                        "Some error ocurred: ${exception.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            })
     }
 
     override suspend fun showCameraPreview(
@@ -64,10 +76,16 @@ class CustomCameraRepositoryImpl@Inject constructor(
         preview.setSurfaceProvider(previewView.surfaceProvider)
         try {
             cameraProvider.unbindAll()
-            cameraProvider.bindToLifecycle(lifecycleOwner,cameraSelector,preview,imageAnalysis,imageCapture)
-        }
-        catch (e:Exception){
+            cameraProvider.bindToLifecycle(
+                lifecycleOwner,
+                cameraSelector,
+                preview,
+                imageAnalysis,
+                imageCapture
+            )
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }
+
 }
