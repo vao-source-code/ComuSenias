@@ -14,6 +14,7 @@ import com.example.comusenias.domain.models.ChangeProfileState
 import com.example.comusenias.domain.models.Response
 import com.example.comusenias.domain.models.User
 import com.example.comusenias.domain.use_cases.users.UsersUseCase
+import com.example.comusenias.presentation.ui.theme.restrictionNameUserAccount
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
@@ -48,27 +49,27 @@ class ChangeProfileViewModel @Inject constructor(
     init {
         // SET ARGUMENTS
         state = state.copy(
-            userName = user.userName,
-            image = user.image
+            userName = user.userName, image = user.image
         )
 
     }
 
-    fun saveImage() = viewModelScope.launch (Dispatchers.IO){
-        if (file != null) {
+    fun saveImage() = viewModelScope.launch(Dispatchers.IO) {
+
+        file?.let {
             saveImageResponse = Response.Loading
-            val result = usersUseCase.saveImageUser(file!!)
+            val result = usersUseCase.saveImageUser(it)
             saveImageResponse = result
         }
 
-        update(user = User(
-            id = user.id,
-            userName = state.userName,
-            image = state.image
-        ))
+        update(
+            user = User(
+                id = user.id, userName = state.userName, image = state.image
+            )
+        )
     }
 
-    fun pickImage() = viewModelScope.launch (Dispatchers.IO){
+    fun pickImage() = viewModelScope.launch(Dispatchers.IO) {
         val result = resultingActivityHandler.getContent("image/*")
         if (result != null) {
             file = ComposeFileProvider.createFileFromUri(context, result)
@@ -76,7 +77,7 @@ class ChangeProfileViewModel @Inject constructor(
         }
     }
 
-    fun takePhoto() = viewModelScope.launch (Dispatchers.IO){
+    fun takePhoto() = viewModelScope.launch(Dispatchers.IO) {
         val result = resultingActivityHandler.takePicturePreview()
         if (result != null) {
             state = state.copy(image = ComposeFileProvider.getPathFromBitmap(context, result))
@@ -86,14 +87,12 @@ class ChangeProfileViewModel @Inject constructor(
 
     fun onUpdate(url: String) {
         val myUser = User(
-            id = user.id,
-            userName = state.userName,
-            image = url
+            id = user.id, userName = state.userName, image = url
         )
         update(myUser)
     }
 
-    fun update(user: User) = viewModelScope.launch (Dispatchers.IO){
+    fun update(user: User) = viewModelScope.launch(Dispatchers.IO) {
         updateResponse = Response.Loading
         val result = usersUseCase.updateUser(user)
         updateResponse = result
@@ -105,13 +104,13 @@ class ChangeProfileViewModel @Inject constructor(
 
 
     fun validateUserName() {
-            if (LibraryString.validUserName(state.userName)) {
-                isUserNameValid = true
-                errorUserName = ""
-            } else {
-                isUserNameValid = false
-                errorUserName = "El nombre de usuario debe tener al menos 3 caracteres"
-            }
+        if (LibraryString.validUserName(state.userName)) {
+            isUserNameValid = true
+            errorUserName = ""
+        } else {
+            isUserNameValid = false
+            errorUserName = restrictionNameUserAccount
         }
-
     }
+
+}

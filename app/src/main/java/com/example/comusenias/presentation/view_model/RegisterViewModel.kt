@@ -24,8 +24,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
-    private val authUseCases: AuthUseCases,
-    private val usersUseCase: UsersUseCase
+    private val authUseCases: AuthUseCases, private val usersUseCase: UsersUseCase
 ) : ViewModel() {
 
 
@@ -43,7 +42,7 @@ class RegisterViewModel @Inject constructor(
 
 
     var isPasswordValid: Boolean by mutableStateOf(false)
-    var errorPassword: String by  mutableStateOf("")
+    var errorPassword: String by mutableStateOf("")
 
 
     var isConfirmPasswordValid: Boolean by mutableStateOf(false)
@@ -64,9 +63,7 @@ class RegisterViewModel @Inject constructor(
     fun onRegister() {
 
         user = User(
-            userName = state.userName,
-            email = state.email,
-            password = state.password
+            userName = state.userName, email = state.email, password = state.password
         )
         register(user)
 
@@ -80,8 +77,7 @@ class RegisterViewModel @Inject constructor(
     fun validateUserName() {
         val isValid = LibraryString.validUserName(state.userName)
         isUserNameValid = isValid
-        errorUserName =
-            if (isValid) emptyString else restrictionNameUserAccount
+        errorUserName = if (isValid) emptyString else restrictionNameUserAccount
         enabledRegisterButton()
     }
 
@@ -127,7 +123,6 @@ class RegisterViewModel @Inject constructor(
     fun onConfirmPasswordInput(confirmPassword: String) {
         state = state.copy(confirmPassword = confirmPassword)
     }
-
 
 
 }

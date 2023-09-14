@@ -30,7 +30,7 @@ class UsersRepositoryImpl @Inject constructor(
     }
 
     override fun getUserById(id: String): Flow<User> = callbackFlow {
-        val snapshotListener = userRef.document(id).addSnapshotListener { snapshot, e ->
+        val snapshotListener = userRef.document(id).addSnapshotListener { snapshot, _ ->
             val user = snapshot?.toObject(User::class.java) ?: User()
             trySend(user)
         }

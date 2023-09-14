@@ -18,7 +18,7 @@ loggingInterceptor = "4.9.3"
 firebaseAuth = "21.1.0"
 firebaseBom = "32.2.0"
 jUnit = "4.13.2"
-espresso = "3.5.1"
+espresso = "3.5.0"
 junitExt = "1.1.5"
 kotlinBom = "1.8.0"
 androidApplication = "8.0.2"
@@ -30,7 +30,7 @@ coil = "2.4.0"
 accompanist = "0.30.0"
 firebaseStorage = "24.7.1"
 commons = "2.8.0"
-
+kotlinXCoroutinesTest = "1.7.3"
 
 [libraries]
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "core" }
@@ -70,8 +70,9 @@ mockitoAndroid = { module = "org.mockito:mockito-android", version.ref = "mockit
 gson = { module = "com.google.code.gson:gson", version.ref = "converterGson" }
 coil = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 accompanist = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist" }
-firebaseStorage = { module = "com.google.firebase:firebase-firestore-ktx", version.ref = "firebaseStorage"}
-commons = {module = "commons-io:commons-io", version.ref = "commons"}
+firebaseStorage = { module = "com.google.firebase:firebase-firestore-ktx", version.ref = "firebaseStorage" }
+commons = { module = "commons-io:commons-io", version.ref = "commons" }
+kotlinXCoroutinesTest = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinXCoroutinesTest" }
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "androidApplication" }

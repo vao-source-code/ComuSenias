@@ -14,8 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val authUsesCases: AuthUseCases,
-    private val useCases: UsersUseCase
+    private val authUsesCases: AuthUseCases, private val useCases: UsersUseCase
 ) : ViewModel() {
 
 
@@ -28,11 +27,12 @@ class ProfileViewModel @Inject constructor(
         getUserData()
     }
 
-    private fun getUserData() = viewModelScope.launch{
-        useCases.getUserById(currentUser!!.uid).collect() {
-            userData = it
+    private fun getUserData() = viewModelScope.launch {
+        currentUser?.let {
+            useCases.getUserById(it.uid).collect() { user ->
+                userData = user
+            }
         }
-
     }
 
     fun logout() {

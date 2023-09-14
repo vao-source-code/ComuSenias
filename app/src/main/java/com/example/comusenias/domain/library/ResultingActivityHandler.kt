@@ -15,11 +15,19 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 
 class ResultingActivityHandler {
+
+
+    companion object{
+        private const val MAX_TRY = 10
+        private const val MILLIS = 200L
+    }
+
+
     private var _callback = mutableStateOf<(@Composable () -> Unit)?>(null)
 
     suspend fun takePicturePreview(
-        maxTry: Int = 10,
-        millis: Long = 200,
+        maxTry: Int = MAX_TRY,
+        millis: Long = MILLIS,
     ): Bitmap?{
         return request(
             ActivityResultContracts
@@ -32,8 +40,8 @@ class ResultingActivityHandler {
     }
     suspend fun getContent(
         type: String,
-        maxTry: Int = 10,
-        millis: Long = 200,
+        maxTry: Int = MAX_TRY,
+        millis: Long = MILLIS,
     ): Uri?{
         return request(
             ActivityResultContracts.GetContent(),
@@ -46,8 +54,8 @@ class ResultingActivityHandler {
 
     suspend fun <I, O> request(
         contract: ActivityResultContract<I, O>,
-        maxTry: Int = 10,
-        millis: Long = 200,
+        maxTry: Int = MAX_TRY,
+        millis: Long = MILLIS,
         launcher: (ManagedActivityResultLauncher<I,O>)->Unit
     ): O? =  suspendCancellableCoroutine {coroutine->
         _callback.value = {

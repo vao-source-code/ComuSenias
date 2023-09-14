@@ -9,6 +9,10 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
+import com.example.comusenias.presentation.ui.theme.DIALOG_CAPTURE_PICTURE
+import com.example.comusenias.presentation.ui.theme.DIALOG_CAPTURE_TITLE
+import com.example.comusenias.presentation.ui.theme.DIALOG_GALLERY
+import com.example.comusenias.presentation.ui.theme.size20
 
 @Composable
 fun DialogCapturePicture(
@@ -23,16 +27,16 @@ fun DialogCapturePicture(
             onDismissRequest = { status.value = false },
             title = {
                 Text(
-                    text = "Selecciona una opción",
+                    text = DIALOG_CAPTURE_TITLE,
                     color = Color.Black,
-                    fontSize = 20.sp
+                    fontSize = size20.sp
                 )
             },
             confirmButton = {
                 Text(
-                    text = "Tomar foto",
+                    text = DIALOG_CAPTURE_PICTURE,
                     color = Color.Black,
-                    fontSize = 20.sp,
+                    fontSize = size20.sp,
                     modifier = Modifier.clickable {
                         takePhoto()
                         status.value = false
@@ -41,9 +45,9 @@ fun DialogCapturePicture(
             },
             dismissButton = {
                 Text(
-                    text = "Seleccionar foto",
+                    text = DIALOG_GALLERY,
                     color = Color.Black,
-                    fontSize = 20.sp,
+                    fontSize = size20.sp,
                     modifier = Modifier.clickable {
                         pickPhoto()
                         status.value = false

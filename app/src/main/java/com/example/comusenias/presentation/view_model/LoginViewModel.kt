@@ -19,35 +19,33 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(private val authUseCases: AuthUseCases): ViewModel() {
+class LoginViewModel @Inject constructor(private val authUseCases: AuthUseCases) : ViewModel() {
 
     var loginResponse by mutableStateOf<Response<FirebaseUser>?>(null)
-
-
     var state by mutableStateOf(LoginState())
         private set
 
-
     var isEmailValid: Boolean by mutableStateOf(false)
-    var errorEmail :  String  by mutableStateOf("")
+    var errorEmail: String by mutableStateOf("")
 
-    var isPasswordValid : Boolean by  mutableStateOf(false)
-    var errorPassword: String by  mutableStateOf("")
+    var isPasswordValid: Boolean by mutableStateOf(false)
+    var errorPassword: String by mutableStateOf("")
 
     var isLoginEnabled = false
 
     val currentUser = authUseCases.getCurrentUser()
 
 
-
-    init{
+    init {
         if (currentUser != null) {
             loginResponse = Response.Success(currentUser)
         }
     }
+
     fun enabledLoginButton() {
-        isLoginEnabled =  isEmailValid && isPasswordValid
+        isLoginEnabled = isEmailValid && isPasswordValid
     }
+
     fun validateEmail() {
         val isValid = LibraryString.validEmail(state.email)
         isEmailValid = isValid
@@ -63,20 +61,19 @@ class LoginViewModel @Inject constructor(private val authUseCases: AuthUseCases)
         enabledLoginButton()
     }
 
-    /*-------------------corrutinas -------------------------------------------------*/
 
-    fun login () = viewModelScope.launch(IO) {
+    fun login() = viewModelScope.launch(IO) {
         loginResponse = Response.Loading
         val result = authUseCases.login(state.email, state.password)
         loginResponse = result
 
     }
 
-    fun onEmailInput( email : String){
+    fun onEmailInput(email: String) {
         state = state.copy(email = email)
     }
 
-    fun onPasswordInput( password : String){
+    fun onPasswordInput(password: String) {
         state = state.copy(password = password)
     }
 }

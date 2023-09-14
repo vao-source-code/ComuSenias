@@ -7,7 +7,6 @@ import java.io.File
 
 
 interface UsersRepository {
-
     suspend fun createUser(user : User): Response<Boolean>
     fun getUserById(id: String): Flow<User>
     suspend fun updateUser(user: User): Response<Boolean>

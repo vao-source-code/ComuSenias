@@ -24,6 +24,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.example.comusenias.R
 import com.example.comusenias.presentation.component.defaults.app.TextFieldApp
+import com.example.comusenias.presentation.ui.theme.PROFILE_EMAIL
+import com.example.comusenias.presentation.ui.theme.PROFILE_USER
 import com.example.comusenias.presentation.view_model.ProfileViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -69,7 +71,7 @@ fun ProfileContent(
             Spacer(modifier = Modifier.height(55.dp))
             TextFieldApp(
 
-                label = "Nombre del usuario",
+                label = PROFILE_USER,
                 value = viewModel.userData.userName,
                 onValueChange = {},
                 validateField = {},
@@ -81,7 +83,7 @@ fun ProfileContent(
             Spacer(modifier = Modifier.height(20.dp))
             TextFieldApp(
 
-                label = "Correo electrónico",
+                label = PROFILE_EMAIL,
                 value = viewModel.userData.email,
                 onValueChange = {},
                 validateField = {},

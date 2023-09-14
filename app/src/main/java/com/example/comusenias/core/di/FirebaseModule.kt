@@ -2,7 +2,6 @@ package com.example.comusenias.core.di
 
 import com.example.comusenias.constants.FirebaseConstants.USERS_COLLECTION
 import com.example.comusenias.data.repositories.AuthRepositoryImpl
-import com.example.comusenias.data.repositories.UsersRepositoryImpl
 import com.example.comusenias.domain.repositories.AuthRepository
 import com.example.comusenias.domain.repositories.UsersRepository
 import com.example.comusenias.domain.use_cases.auth.AuthUseCases
@@ -61,9 +60,7 @@ object FirebaseModule {
 
 
     @Provides
-    fun providerUsersRepository(impl: UsersRepositoryImpl): UsersRepository {
-        return impl
-    }
+    fun providerUsersRepository(usersRepository: UsersRepository): UsersRepository = usersRepository
 
     @Provides
     fun providerUsersUseCases(usersRepository: UsersRepository) = UsersUseCase(

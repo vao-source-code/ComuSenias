@@ -1,9 +1,8 @@
 package com.example.comusenias.domain.models
 
 import com.example.comusenias.domain.library.LibraryPassword
+import com.example.comusenias.domain.library.LibraryString
 import com.google.gson.Gson
-import java.net.URLEncoder
-import java.nio.charset.StandardCharsets
 
 
 data class User(
@@ -19,7 +18,7 @@ data class User(
             userName,
             email,
             LibraryPassword.encodePassword(password),
-            if(image != "") URLEncoder.encode(image, StandardCharsets.UTF_8.toString()) else ""
+            if(image != "") LibraryString.encodeURL(image) else ""
         )
     )
 

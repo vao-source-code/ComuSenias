@@ -7,22 +7,32 @@ import javax.crypto.spec.PBEKeySpec
 
 object LibraryPassword {
 
+    private const val ITERATION_COUNT = 100000
+    private const val KEY_LENGTH = 256
+    private const val ALGORITHM = "PBKDF2WithHmacSHA256"
+    private const val SALT_LENGTH = 24
+    private const val SALT_ARRAY = 16
+
     fun hashPassword(password: String): String {
         val salt = generateSalt()
-        val spec = PBEKeySpec(password.toCharArray(), salt, 100000, 256)
-        val factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256")
+        val spec = PBEKeySpec(password.toCharArray(), salt, ITERATION_COUNT, KEY_LENGTH)
+        val factory = SecretKeyFactory.getInstance(ALGORITHM)
         val key = factory.generateSecret(spec)
         val hash = key.encoded
         return Base64.encodeToString(hash, Base64.NO_WRAP)
     }
 
     fun checkPassword(password: String, hashedPassword: String): Boolean {
-        val salt = Base64.decode(hashedPassword.substring(0, 24), Base64.NO_WRAP)
-        val spec = PBEKeySpec(password.toCharArray(), salt, 100000, 256)
-        val factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256")
+        val salt = Base64.decode(hashedPassword.substring(0, SALT_LENGTH), Base64.NO_WRAP)
+        val spec = PBEKeySpec(password.toCharArray(), salt, ITERATION_COUNT, KEY_LENGTH)
+        val factory = SecretKeyFactory.getInstance(ALGORITHM)
         val key = factory.generateSecret(spec)
         val hash = key.encoded
-        return hash.contentEquals(Base64.decode(hashedPassword.substring(24), Base64.NO_WRAP))
+        return hash.contentEquals(
+            Base64.decode(
+                hashedPassword.substring(SALT_LENGTH), Base64.NO_WRAP
+            )
+        )
     }
 
     fun encodePassword(password: String): String {
@@ -30,7 +40,7 @@ object LibraryPassword {
     }
 
     private fun generateSalt(): ByteArray {
-        val bytes = ByteArray(16)
+        val bytes = ByteArray(SALT_ARRAY)
         SecureRandom().nextBytes(bytes)
         return bytes
     }

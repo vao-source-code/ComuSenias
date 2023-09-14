@@ -34,6 +34,10 @@ import com.example.comusenias.R
 import com.example.comusenias.presentation.component.defaults.DialogCapturePicture
 import com.example.comusenias.presentation.component.defaults.app.TextFieldApp
 import com.example.comusenias.presentation.component.defaults.app.TextFieldAppPassword
+import com.example.comusenias.presentation.ui.theme.CHANGE_PROFILE_CONFIRM_PASSWORD
+import com.example.comusenias.presentation.ui.theme.CHANGE_PROFILE_PASSWORD
+import com.example.comusenias.presentation.ui.theme.CHANGE_PROFILE_USER
+import com.example.comusenias.presentation.ui.theme.size20
 import com.example.comusenias.presentation.view_model.ChangeProfileViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
@@ -42,8 +46,8 @@ import com.google.accompanist.permissions.rememberPermissionState
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class)
 @Composable
 fun ChangeProfileContent(
-    navController: NavHostController? = null,
-    modifier: Modifier? = Modifier,
+    navController: NavHostController,
+    modifier: Modifier,
     viewModel: ChangeProfileViewModel = hiltViewModel()
 ) {
 
@@ -52,16 +56,13 @@ fun ChangeProfileContent(
         android.Manifest.permission.CAMERA
     )
 
-
-
-
     val state = viewModel.state
-    var dialogState = remember {
+    val dialogState = remember {
         mutableStateOf(false)
     }
 
     DialogCapturePicture(
-       status = dialogState,
+        status = dialogState,
         takePhoto = {
             viewModel.takePhoto()
         },
@@ -71,7 +72,7 @@ fun ChangeProfileContent(
     )
 
     viewModel.resultingActivityHandler.handle()
-    Box(modifier = Modifier.padding(20.dp)) {
+    Box(modifier = Modifier.padding(size20.dp)) {
 
         Column(
             modifier = Modifier.fillMaxWidth(),
@@ -89,16 +90,14 @@ fun ChangeProfileContent(
                         .size(140.dp)
                         .clip(CircleShape)
                         .clickable {
-                            if (cameraPermissionState.status.isGranted) {
-                            } else {
+                            if (!cameraPermissionState.status.isGranted) {
                                 cameraPermissionState.launchPermissionRequest()
                             }
-
                             dialogState.value = true
                         },
                 ) {
 
-                    if (viewModel.state.image != "") {
+                    if (viewModel.state.image.isNotEmpty()) {
                         AsyncImage(
                             modifier = Modifier
                                 .size(140.dp), contentScale = ContentScale.Crop,
@@ -133,7 +132,7 @@ fun ChangeProfileContent(
             Spacer(modifier = Modifier.height(55.dp))
 
             TextFieldApp(
-                label = "Usuario",
+                label = CHANGE_PROFILE_USER,
                 value = state.userName,
                 onValueChange = { viewModel.onUsernameInput(it) },
                 validateField = { viewModel.validateUserName() },
@@ -145,7 +144,7 @@ fun ChangeProfileContent(
 
             Spacer(modifier = Modifier.height(20.dp))
             TextFieldAppPassword(
-                label = "Nueva contraseña",
+                label = CHANGE_PROFILE_PASSWORD,
                 value = "New Password",
                 onValueChange = {},
                 validateField = {},
@@ -153,7 +152,7 @@ fun ChangeProfileContent(
                 )
             Spacer(modifier = Modifier.height(20.dp))
             TextFieldAppPassword(
-                label = "Repita contraseña",
+                label = CHANGE_PROFILE_CONFIRM_PASSWORD,
                 value = "New Password",
                 onValueChange = {},
                 validateField = {},

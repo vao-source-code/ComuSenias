@@ -9,10 +9,11 @@ import com.example.comusenias.R
 import org.apache.commons.io.FileUtils
 import java.io.File
 import java.io.FileOutputStream
+import java.io.IOException
 import java.io.OutputStream
 import java.util.UUID
 
-class ComposeFileProvider: FileProvider(R.xml.file_paths) {
+class ComposeFileProvider : FileProvider(R.xml.file_paths) {
 
     companion object {
 
@@ -28,32 +29,44 @@ class ComposeFileProvider: FileProvider(R.xml.file_paths) {
                 return file
             } catch (e: Exception) {
                 e.printStackTrace()
-                return null
+                // Devuelve un archivo temporal vacío si la función no pudo crear un archivo
+                return File.createTempFile(
+                    "${System.currentTimeMillis()}",
+                    ".png",
+                    context.cacheDir
+                )
             }
         }
-        fun getImageUri(context: Context): Uri {
 
-            val directory = File(context.cacheDir, "images")
-            directory.mkdirs()
-            val file = File.createTempFile(
-                "selected_image_",
-                ".jpg",
-                directory
-            )
-            val authority = context.packageName + ".fileprovider"
-            return getUriForFile(
-                context,
-                authority,
-                file
-            )
+        fun getImageUri(context: Context): Uri {
+            try {
+                val directory = File(context.cacheDir, "images")
+                directory.mkdirs()
+                val file = File.createTempFile(
+                    "selected_image_",
+                    ".jpg",
+                    directory
+                )
+                val authority = context.packageName + ".fileprovider"
+                return getUriForFile(
+                    context,
+                    authority,
+                    file
+                )
+
+            }catch (e: IOException) {
+                e.printStackTrace()
+            }
+            // Devuelve un Uri vacío si la función no pudo crear un archivo
+           return Uri.EMPTY
         }
 
         fun getPathFromBitmap(context: Context, bitmap: Bitmap): String {
             val wrapper = ContextWrapper(context)
             var file = wrapper.getDir("Images", Context.MODE_PRIVATE)
-            file = File(file,"${UUID.randomUUID()}.jpg")
+            file = File(file, "${UUID.randomUUID()}.jpg")
             val stream: OutputStream = FileOutputStream(file)
-            bitmap.compress(Bitmap.CompressFormat.JPEG,100,stream)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
             stream.flush()
             stream.close()
             return file.path
