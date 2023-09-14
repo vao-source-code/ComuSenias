@@ -27,3 +27,7 @@ const val restrictionNameUserAccount = "El nombre de usuario debe tener al menos
 const val restrictionPasswordUserAccount = "La contraseña debe tener al menos 8 caracteres"
 const val passwordDoNotMatch = "Las contraseñas no coinciden"
 const val emptyString = ""
+const val LEAR_TEXT : String = "Aprender"
+const val PROFILE_TEXT : String = "Perfil"
+const val PREMIUM_TEXT : String = "Premium"
+const val EMPTY_STRING : String = ""
