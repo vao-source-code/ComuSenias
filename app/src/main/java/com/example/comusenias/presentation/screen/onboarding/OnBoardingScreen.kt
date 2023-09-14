@@ -8,5 +8,5 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun OnBoardingScreen(navController: NavController) {
-            OnBoarding(navController = navController)
+    OnBoarding(navController = navController)
 }

@@ -18,7 +18,7 @@ import com.example.comusenias.presentation.splashScreen.SplashScreen
 fun AppNavigation() {
     val navController: NavHostController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = AppScreen.SplashScreen.route) {
+    NavHost(navController = navController, startDestination = AppScreen.OnBoardingScreen.route) {
         composable(AppScreen.SplashScreen.route) {
             SplashScreen(navController)
         }
