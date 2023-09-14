@@ -26,63 +26,67 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.example.comusenias.constants.TestTag
+import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
+import com.example.comusenias.presentation.ui.theme.size10
+import com.example.comusenias.presentation.ui.theme.size12
+import com.example.comusenias.presentation.ui.theme.size16
+import com.example.comusenias.presentation.ui.theme.size6
 
 @Composable
 fun BottomSection(
     size: Int,
     index: Int,
-    onNextClicked:()->Unit
+    onNextClicked: () -> Unit
 ) {
     Box(
-        modifier= Modifier
+        modifier = Modifier
             .fillMaxWidth()
-            .padding(12.dp)
-    ){
+            .padding(size12.dp)
+    ) {
         Indicators(size = size, index = index)
 
         FloatingActionButton(
-            onClick =onNextClicked,
-            modifier=Modifier
+            onClick = onNextClicked,
+            modifier = Modifier
                 .align(CenterEnd)
                 .testTag(TestTag.TAG_BUTTON_NEXT),
             backgroundColor = Color.Black,
             contentColor = Color.White
         ) {
-            Icon(Icons.Outlined.KeyboardArrowRight,null)
+            Icon(Icons.Outlined.KeyboardArrowRight, null)
         }
     }
 }
 
 @Composable
-fun BoxScope.Indicators(size:Int, index:Int){
+fun BoxScope.Indicators(size: Int, index: Int) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(6.dp),
+        horizontalArrangement = Arrangement.spacedBy(size6.dp),
         modifier = Modifier.align(Alignment.CenterStart)
     ) {
-        repeat(size){
+        repeat(size) {
             Indicator(isSelected = it == index)
         }
     }
 }
 
 @Composable
-fun Indicator(isSelected:Boolean){
-    val width= animateDpAsState(
-        targetValue = if (isSelected) 16.dp else 13.dp,
-        animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy), label = ""
+fun Indicator(isSelected: Boolean) {
+    val width = animateDpAsState(
+        targetValue = if (isSelected) size16.dp else size12.dp,
+        animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy), label = EMPTY_STRING
     )
     Box(
         modifier = Modifier
-            .height(10.dp)
+            .height(size10.dp)
             .width(width.value)
             .clip(CircleShape)
             .background(
                 if (isSelected) Color.Black
                 else primaryColorApp
             )
-            .testTag(TestTag.TAG_INDICATOR+ isSelected)
-    ){
-    }
+            .testTag(TestTag.TAG_INDICATOR + isSelected)
+    )
 }

@@ -110,8 +110,6 @@ dependencies {
     androidTestAnnotationProcessor libs.daggerHiltCompiler
     testImplementation libs.daggerHiltTesting
     testAnnotationProcessor libs.daggerHiltCompiler
-    implementation libs.mockitoCore
-    androidTestImplementation libs.mockitoAndroid
 }
 kapt {
     correctErrorTypes true

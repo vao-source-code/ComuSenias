@@ -24,6 +24,12 @@ import androidx.navigation.NavController
 import com.example.comusenias.constants.TestTag
 import com.example.comusenias.domain.models.OnBoardingItem
 import com.example.comusenias.presentation.ui.theme.blackColorApp
+import com.example.comusenias.presentation.ui.theme.size08
+import com.example.comusenias.presentation.ui.theme.size1
+import com.example.comusenias.presentation.ui.theme.size20
+import com.example.comusenias.presentation.ui.theme.size24
+import com.example.comusenias.presentation.ui.theme.size250
+import com.example.comusenias.presentation.ui.theme.size95
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
@@ -32,7 +38,7 @@ import kotlinx.coroutines.launch
 @ExperimentalPagerApi
 @Composable
 fun OnBoarding(navController: NavController) {
-    val scope= rememberCoroutineScope()
+    val scope = rememberCoroutineScope()
 
     Column(Modifier.fillMaxSize()) {
         val items = OnBoardingItem.get()
@@ -41,22 +47,23 @@ fun OnBoarding(navController: NavController) {
         TopSection(navController)
         HorizontalPager(
             state = state,
-            modifier= Modifier
+            modifier = Modifier
                 .fillMaxSize()
-                .weight(0.8f)
-        ) {page->
+                .weight(size08)
+        ) { page ->
             OnBoardingItem(items[page], page = page)
         }
         BottomSection(size = items.size, index = state.currentPage) {
-            if (state.currentPage+1 <items.size)
+            if (state.currentPage + size1 < items.size)
                 scope.launch {
-                    state.scrollToPage(state.currentPage+1)
-                }else {
-                    // Navega al LoginScreen
-                }
+                    state.scrollToPage(state.currentPage + size1)
+                } else {
+                // Navega al LoginScreen
+            }
         }
     }
 }
+
 @Composable
 fun OnBoardingItem(
     item: OnBoardingItem,
@@ -67,21 +74,22 @@ fun OnBoardingItem(
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 20.dp)
-            .testTag(TestTag.TAG_ONBOARDING_ITEM + page )
+            .padding(horizontal = size20.dp)
+            .testTag(TestTag.TAG_ONBOARDING_ITEM + page)
     ) {
         Image(
             modifier = Modifier
-                .height(250.dp),
+                .height(size250.dp),
             painter = painterResource(item.image),
             contentScale = ContentScale.Fit,
-            contentDescription = null)
-        Spacer(modifier = Modifier.height(95.dp))
+            contentDescription = "image"
+        )
+        Spacer(modifier = Modifier.height(size95.dp))
         Text(
             text = stringResource(item.text),
             textAlign = TextAlign.Center,
-            fontSize = 24.sp,
-            color= blackColorApp,
+            fontSize = size24.sp,
+            color = blackColorApp,
             fontWeight = FontWeight.SemiBold
         )
     }
