@@ -11,6 +11,11 @@ import com.example.comusenias.presentation.component.defaults.app.Authentication
 import com.example.comusenias.presentation.component.defaults.app.AuthenticationHeaderContent
 import com.example.comusenias.presentation.component.login.LoginForm
 import com.example.comusenias.presentation.navigation.AppScreen
+import com.example.comusenias.presentation.ui.theme.dontHaveAccount
+import com.example.comusenias.presentation.ui.theme.register
+import com.example.comusenias.presentation.ui.theme.size16
+import com.example.comusenias.presentation.ui.theme.size20
+import com.example.comusenias.presentation.ui.theme.size50
 
 @Composable
 fun LoginScreen(navController: NavHostController, modifier: Modifier) {
@@ -25,8 +30,8 @@ fun LoginScreen(navController: NavHostController, modifier: Modifier) {
             AuthenticationHeaderContent()
             LoginForm(navController = navController)
             AuthenticationFooterContent(
-                text1 = "No tienes una cuenta",
-                text2 = "Regístrate",
+                textOne = dontHaveAccount,
+                textTwo = register,
                 onClickText = { navController.navigate(route = AppScreen.RegisterScreen.route) }
             )
         }

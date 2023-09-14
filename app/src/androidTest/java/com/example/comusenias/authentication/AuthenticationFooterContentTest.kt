@@ -17,8 +17,8 @@ class AuthenticationFooterContentTest {
     fun testAuthenticationFooterContent(){
         composeTestRule.setContent {
             AuthenticationFooterContent(
-                text1 = "No tienes una cuenta",
-                text2 = "Regístrate",
+                textOne = "No tienes una cuenta",
+                textTwo = "Regístrate",
             )
         }
         composeTestRule.onNodeWithTag(TestTag.TAG_TEXT_CLICK_FOOTER).assertIsDisplayed()
@@ -27,8 +27,8 @@ class AuthenticationFooterContentTest {
     fun testAuthenticationFooterContentClickAction(){
         composeTestRule.setContent {
             AuthenticationFooterContent(
-                text1 = "No tienes una cuenta",
-                text2 = "Regístrate",
+                textOne = "No tienes una cuenta",
+                textTwo = "Regístrate",
 
             )
         }

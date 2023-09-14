@@ -14,8 +14,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.comusenias.presentation.ui.theme.ComuSeniasTheme
+import com.example.comusenias.presentation.ui.theme.arrowBack
 import com.example.comusenias.presentation.ui.theme.backgroundColorApp
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
+import com.example.comusenias.presentation.ui.theme.size19
+import com.example.comusenias.presentation.ui.theme.title
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -24,10 +27,9 @@ fun DefaultTopBar(
     upAvailable: Boolean = false,
     navHostController: NavHostController? = null
 ) {
-
     TopAppBar(
         title = {
-            Text(text = title, fontSize = 19.sp, color = backgroundColorApp)
+            Text(text = title, fontSize = size19.sp, color = backgroundColorApp)
         },
         colors = TopAppBarDefaults.smallTopAppBarColors(
             titleContentColor = Color.White,
@@ -38,23 +40,19 @@ fun DefaultTopBar(
                 IconButton(onClick = { navHostController?.popBackStack() }) {
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
-                        contentDescription = "Arrow Back",
+                        contentDescription = arrowBack,
                         tint = backgroundColorApp
                     )
-
                 }
             }
         }
     )
-
 }
-
 
 @Composable
 @Preview(showBackground = true)
 fun DefaultTopBarPreview() {
     ComuSeniasTheme {
-        DefaultTopBar(title = "Title", upAvailable = true)
-
+        DefaultTopBar(title = title, upAvailable = true)
     }
 }
