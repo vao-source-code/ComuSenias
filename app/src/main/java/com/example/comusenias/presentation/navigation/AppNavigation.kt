@@ -1,12 +1,16 @@
 package com.example.comusenias.presentation.navigation
 
-import androidx.compose.foundation.layout.fillMaxSize
+import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
+import com.example.comusenias.presentation.activities.MainActivity
+import com.example.comusenias.presentation.component.bottomBar.ShowBottomBar
 import com.example.comusenias.presentation.screen.login.LoginScreen
 import com.example.comusenias.presentation.screen.onboarding.OnBoardingScreen
 import com.example.comusenias.presentation.screen.profile.ChangeProfilePasswordScreen
@@ -14,31 +18,56 @@ import com.example.comusenias.presentation.screen.profile.ProfileScreen
 import com.example.comusenias.presentation.screen.register.RegisterScreen
 import com.example.comusenias.presentation.splashScreen.SplashScreen
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppNavigation() {
-    val navController: NavHostController = rememberNavController()
-
-    NavHost(navController = navController, startDestination = AppScreen.OnBoardingScreen.route) {
-        composable(AppScreen.SplashScreen.route) {
-            SplashScreen(navController)
+fun AppNavigation(
+    navController: NavHostController,
+) {
+    Scaffold(
+        bottomBar = {
+            ShowBottomBar(navController = navController)
         }
+    ) { paddingValues ->
+        GetNavHost(navController, Modifier.padding(paddingValues))
+    }
+}
+
+@Composable
+private fun GetNavHost(
+    navController: NavHostController,
+    modifier: Modifier,
+) {
+    NavHost(
+        navController = navController,
+        startDestination = AppScreen.LoginScreen.route
+    ) {
         composable(AppScreen.OnBoardingScreen.route) {
             OnBoardingScreen(navController = navController)
         }
         composable(AppScreen.LoginScreen.route) {
-            LoginScreen(navController = navController)
-        }
-        composable(AppScreen.RegisterScreen.route) {
-            RegisterScreen(navController = navController, modifier = Modifier.fillMaxSize())
+            LoginScreen(navController = navController, modifier)
         }
         composable(AppScreen.ProfileScreen.route) {
-            ProfileScreen(navController = navController, modifier = Modifier.fillMaxSize())
+            ProfileScreen(navController = navController, modifier = modifier)
+        }
+        composable(AppScreen.RegisterScreen.route) {
+            RegisterScreen(navController = navController, modifier = modifier)
+        }
+        composable(AppScreen.SplashScreen.route) {
+            SplashScreen(navController)
+        }
+        composable(AppScreen.MainActivity.route) {
+            MainActivity()
         }
         composable(AppScreen.ChangeProfileScreen.route) {
             ChangeProfilePasswordScreen(
                 navController = navController,
-                modifier = Modifier.fillMaxSize()
+                modifier = modifier
             )
+        }
+        composable(AppScreen.MainActivity.route) {
+            MainActivity()
         }
     }
 }
