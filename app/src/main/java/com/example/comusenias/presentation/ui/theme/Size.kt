@@ -19,7 +19,7 @@ const val size30: Int = 30
 const val size40: Int = 40
 const val size48: Int = 48
 const val size50: Int = 50
+const val SIZE70: Int = 70
 const val size100: Int = 100
 const val size130: Int = 130
 const val size150: Int = 150
-
