@@ -6,6 +6,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -17,19 +18,26 @@ import com.example.comusenias.presentation.screen.profile.ChangeProfilePasswordS
 import com.example.comusenias.presentation.screen.profile.ProfileScreen
 import com.example.comusenias.presentation.screen.register.RegisterScreen
 import com.example.comusenias.presentation.splashScreen.SplashScreen
+import com.example.comusenias.presentation.view_model.BottomBarViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppNavigation(
     navController: NavHostController,
+    bottomBarViewModel: BottomBarViewModel = hiltViewModel()
 ) {
+
     Scaffold(
         bottomBar = {
             ShowBottomBar(navController = navController)
         }
     ) { paddingValues ->
-        GetNavHost(navController, Modifier.padding(paddingValues))
+        GetNavHost(
+            navController,
+            Modifier.padding(paddingValues),
+            bottomBarViewModel
+        )
     }
 }
 
@@ -37,25 +45,28 @@ fun AppNavigation(
 private fun GetNavHost(
     navController: NavHostController,
     modifier: Modifier,
+    bottomBarViewModel: BottomBarViewModel
 ) {
+
     NavHost(
         navController = navController,
-        startDestination = AppScreen.LoginScreen.route
+        startDestination = AppScreen.OnBoardingScreen.route
     ) {
+        composable(AppScreen.SplashScreen.route) {
+            SplashScreen(navController)
+        }
         composable(AppScreen.OnBoardingScreen.route) {
             OnBoardingScreen(navController = navController)
         }
         composable(AppScreen.LoginScreen.route) {
-            LoginScreen(navController = navController, modifier)
+            LoginScreen(navController = navController, modifier, bottomBarViewModel)
         }
-        composable(AppScreen.ProfileScreen.route) {
-            ProfileScreen(navController = navController, modifier = modifier)
-        }
+
         composable(AppScreen.RegisterScreen.route) {
             RegisterScreen(navController = navController, modifier = modifier)
         }
-        composable(AppScreen.SplashScreen.route) {
-            SplashScreen(navController)
+        composable(AppScreen.ProfileScreen.route) {
+            ProfileScreen(navController = navController, modifier = modifier)
         }
         composable(AppScreen.MainActivity.route) {
             MainActivity()
@@ -65,9 +76,6 @@ private fun GetNavHost(
                 navController = navController,
                 modifier = modifier
             )
-        }
-        composable(AppScreen.MainActivity.route) {
-            MainActivity()
         }
     }
 }

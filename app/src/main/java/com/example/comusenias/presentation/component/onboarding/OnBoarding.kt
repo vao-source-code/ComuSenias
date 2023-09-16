@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,6 +25,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.comusenias.constants.TestTag
 import com.example.comusenias.domain.models.OnBoardingItem
+import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.size08
 import com.example.comusenias.presentation.ui.theme.size1
@@ -31,6 +33,7 @@ import com.example.comusenias.presentation.ui.theme.size20
 import com.example.comusenias.presentation.ui.theme.size24
 import com.example.comusenias.presentation.ui.theme.size250
 import com.example.comusenias.presentation.ui.theme.size95
+import com.example.comusenias.presentation.view_model.BottomBarViewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
@@ -40,6 +43,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun OnBoarding(navController: NavController) {
     val scope = rememberCoroutineScope()
+    val bottomBarViewModel = remember { BottomBarViewModel() }
+
 
     Column(Modifier.fillMaxSize()) {
         val items = OnBoardingItem.get()
@@ -59,7 +64,9 @@ fun OnBoarding(navController: NavController) {
                 scope.launch {
                     state.scrollToPage(state.currentPage + size1)
                 } else {
-                // Navega al LoginScreen
+                navController.popBackStack()
+                bottomBarViewModel.isBottomAppBarVisible.value = true
+                navController.navigate(AppScreen.LoginScreen.route)
             }
         }
     }
