@@ -62,6 +62,7 @@ fun RegisterForm(
                 label = confirmPassword,
                 errorMsg = viewModel.errorConfirmPassword
             )
+            TermsAndConditions()
         }
         Column(
             modifier = Modifier.fillMaxWidth(),

@@ -4,6 +4,7 @@ const val size1: Int = 1
 const val size2: Int = 2
 const val size3: Int = 3
 const val size5: Int = 5
+const val size6: Int = 6
 const val size10: Int = 10
 const val size12: Int = 12
 const val size14: Int = 14
