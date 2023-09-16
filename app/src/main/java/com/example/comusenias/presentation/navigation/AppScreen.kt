@@ -13,5 +13,6 @@ sealed class AppScreen(val route : String) {
         }
     }
     object HomeScreen : AppScreen("home_screen")
+    object ChoseYourProfile : AppScreen("chose_your_profile")
 
 }

@@ -20,6 +20,8 @@ const val register: String = "Registrate"
 const val terms: String = "Terminos"
 const val accept: String = "Acepto"
 const val conditions: String = "Condiciones"
+const val CHOSE_YOU_PROFILE = "ELEJI TU PERFIL"
+
 const val logInLog = "Login"
 const val email = "Email"
 const val editData = "Editar Datos"

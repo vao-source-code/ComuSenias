@@ -15,6 +15,7 @@ import com.example.comusenias.presentation.component.defaults.app.ButtonApp
 import com.example.comusenias.presentation.component.defaults.app.TextFieldApp
 import com.example.comusenias.presentation.component.defaults.app.TextFieldAppPassword
 import com.example.comusenias.presentation.component.login.ResponseStatusLogin
+import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.confirmPassword
 import com.example.comusenias.presentation.ui.theme.emailText
 import com.example.comusenias.presentation.ui.theme.password
@@ -70,8 +71,8 @@ fun RegisterForm(
         ) {
             ButtonApp(
                 titleButton = register,
-                onClickButton = {  viewModel.onRegister() },
-                enabledButton = viewModel.isRegisterEnabled
+                onClickButton = {  navController.navigate(AppScreen.ChoseYourProfile.route) },
+                enabledButton = true
             )
         }
     }
