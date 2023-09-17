@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
@@ -34,16 +32,15 @@ import com.example.comusenias.presentation.ui.theme.placeholderTextColor
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TextFieldApp(
-        value: String,
-        onValueChange: (value: String) -> Unit,
-        validateField: () -> Unit = {},
-        label: String,
-        icon: ImageVector,
-        keyboardType: KeyboardType = KeyboardType.Text,
-        hideText: Boolean = false,
-        errorMsg: String = "",
-        readOnly: Boolean = false,
-
+    value: String,
+    onValueChange: (value: String) -> Unit,
+    validateField: () -> Unit = {},
+    label: String,
+    keyboardType: KeyboardType = KeyboardType.Text,
+    hideText: Boolean = false,
+    errorMsg: String = "",
+    readOnly: Boolean = false,
+    icon: ImageVector?
     ) {
 
     val maxChar = 32
@@ -76,21 +73,18 @@ fun TextFieldApp(
                               },
                 keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
                 trailingIcon = {
-                    Icon(
-                        modifier = Modifier.clickable {  },
-                        imageVector = icon,
-                        contentDescription = label,
-                        tint = iconColorTextField,
-                    )
+                    if (icon != null) {
+                        Icon(
+                            modifier = Modifier.clickable {  },
+                            imageVector = icon,
+                            contentDescription = label,
+                            tint = iconColorTextField,
+                        )
+                    }
                 },
                 readOnly= readOnly,
                 visualTransformation = if (hideText) PasswordVisualTransformation() else VisualTransformation.None,
             )
             TextErrorDefault(errorMsg = errorMsg)
         }
-}
-@Preview(showBackground = true)
-@Composable
-fun PrevieTextField(){
-    TextFieldApp(value = "", onValueChange = {}, label = "Corre electrónico", icon = Icons.Default.Email)
 }

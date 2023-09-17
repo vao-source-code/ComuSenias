@@ -1,7 +1,9 @@
-package com.example.comusenias.presentation.component.choseYourProfile
+package com.example.comusenias.presentation.component.register.choseYourProfile
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -29,11 +31,15 @@ import com.example.comusenias.presentation.ui.theme.size3
 import com.example.comusenias.presentation.ui.theme.size40
 
 @Composable
-fun CardCategoryProfile(image: Int, title : String) {
+fun CardCategoryProfile(image: Int, title : String,onClickCard: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(size100.dp)
+            .clickable {
+                onClickCard
+                Log.d("CardCategoryProfile", "Pressed Box")
+            }
             .shadow(
                 elevation = size3.dp,
                 shape = RoundedCornerShape(size10.dp),
@@ -47,7 +53,6 @@ fun CardCategoryProfile(image: Int, title : String) {
                 ambientColor = Color(0x21000000)
             )
             .background(primaryColorApp, shape = RoundedCornerShape(size10.dp))
-//            .padding(size5.dp),
     ){
         Row(
             modifier = Modifier

@@ -18,6 +18,7 @@ import com.example.comusenias.presentation.screen.login.LoginScreen
 import com.example.comusenias.presentation.screen.profile.ChangeProfileScreen
 import com.example.comusenias.presentation.screen.profile.ProfileScreen
 import com.example.comusenias.presentation.screen.register.ChoseYourProfile
+import com.example.comusenias.presentation.screen.register.EspecialistForm
 import com.example.comusenias.presentation.screen.register.RegisterScreen
 import com.example.comusenias.presentation.splashScreen.SplashScreen
 
@@ -56,6 +57,9 @@ private fun GetNavHost(
         }
         composable(AppScreen.ChoseYourProfile.route) {
             ChoseYourProfile(navController = navController, modifier = modifier)
+        }
+        composable(AppScreen.EspecialistForm.route) {
+            EspecialistForm(navController = navController, modifier = modifier)
         }
         composable(AppScreen.SplashScreen.route) {
             SplashScreen(navController)

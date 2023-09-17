@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -132,13 +133,13 @@ fun ChangeProfileContent(
             Spacer(modifier = Modifier.height(55.dp))
 
             TextFieldApp(
-                label = CHANGE_PROFILE_USER,
                 value = state.userName,
                 onValueChange = { viewModel.onUsernameInput(it) },
                 validateField = { viewModel.validateUserName() },
-                icon = Icons.Default.Edit,
+                label = CHANGE_PROFILE_USER,
                 keyboardType = KeyboardType.Text,
                 errorMsg = viewModel.errorUserName,
+                icon = Icons.Default.Person
             )
 
 

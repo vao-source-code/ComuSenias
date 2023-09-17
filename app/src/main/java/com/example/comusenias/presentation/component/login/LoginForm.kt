@@ -43,8 +43,8 @@ fun LoginForm(
                 validateField = { viewModel.validateEmail() },
                 label = emailText,
                 keyboardType = KeyboardType.Email,
-                icon = Icons.Default.Email,
-                errorMsg = viewModel.errorEmail
+                errorMsg = viewModel.errorEmail,
+                icon = Icons.Default.Email
             )
             TextFieldAppPassword(
                 value = state.password,

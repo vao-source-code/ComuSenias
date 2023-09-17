@@ -46,8 +46,8 @@ fun RegisterForm(
                 validateField = { viewModel.validateEmail() },
                 label = emailText,
                 keyboardType = KeyboardType.Email,
-                icon = Icons.Default.Email,
-                errorMsg = viewModel.errorEmail
+                errorMsg = viewModel.errorEmail,
+                icon = Icons.Default.Email
             )
             TextFieldAppPassword(
                 value = state.password,
@@ -71,7 +71,7 @@ fun RegisterForm(
         ) {
             ButtonApp(
                 titleButton = register,
-                onClickButton = {  navController.navigate(AppScreen.ChoseYourProfile.route) },
+                onClickButton = {  navController.navigate(AppScreen.EspecialistForm.route) },
                 enabledButton = true
             )
         }

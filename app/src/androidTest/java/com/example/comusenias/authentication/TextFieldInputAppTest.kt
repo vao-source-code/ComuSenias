@@ -1,6 +1,5 @@
 package com.example.comusenias.authentication
 
-import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.ui.test.assertHeightIsEqualTo
 import androidx.compose.ui.test.assertTextEquals
@@ -21,9 +20,8 @@ class TextFieldInputAppTest {
         composeTestRule.setContent {
             TextFieldApp(
                 value = "fabian@gmail.com",
-                onValueChange = { } ,
-                label = "Correo electrónico" ,
-                icon = Icons.Default.Email
+                onValueChange = { },
+                label = "Correo electrónico"
             )
         }
         composeTestRule.onNodeWithTag(TestTag.TAG_TEXT_FIELD_APP).assertTextEquals("fabian@gmail.com")
@@ -33,9 +31,8 @@ class TextFieldInputAppTest {
         composeTestRule.setContent {
             TextFieldApp(
                 value = "fabian@gmail.com",
-                onValueChange = { } ,
-                label = "Correo electrónico" ,
-                icon = Icons.Default.Email
+                onValueChange = { },
+                label = "Correo electrónico"
             )
         }
         composeTestRule.onNodeWithTag(TestTag.TAG_TEXT_FIELD_APP).assertHeightIsEqualTo(50.dp)

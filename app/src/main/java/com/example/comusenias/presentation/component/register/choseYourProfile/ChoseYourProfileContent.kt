@@ -1,4 +1,4 @@
-package com.example.comusenias.presentation.component.choseYourProfile
+package com.example.comusenias.presentation.component.register.choseYourProfile
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.comusenias.R
+import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.CHOSE_YOU_PROFILE
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
 import com.example.comusenias.presentation.ui.theme.size20
@@ -33,7 +34,15 @@ fun ChoseYourProfileContent(navController : NavHostController){
             fontSize = size20.sp,
             fontWeight = FontWeight.Bold
         )
-        CardCategoryProfile(image = R.drawable.children_category, title = "Niños")
-        CardCategoryProfile(image = R.drawable.diagnostic_category, title = "Especialista")
+        CardCategoryProfile(
+            image = R.drawable.children_category,
+            title = "Niños",
+            onClickCard = {navController.navigate(AppScreen.EspecialistForm.route)}
+        )
+        CardCategoryProfile(
+            image = R.drawable.diagnostic_category,
+            title = "Especialista",
+            onClickCard = {navController.navigate(AppScreen.LoginScreen.route)}
+        )
     }
 }

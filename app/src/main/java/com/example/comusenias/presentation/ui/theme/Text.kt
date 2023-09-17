@@ -21,6 +21,8 @@ const val terms: String = "Terminos"
 const val accept: String = "Acepto"
 const val conditions: String = "Condiciones"
 const val CHOSE_YOU_PROFILE = "ELEJI TU PERFIL"
+const val CONTINUE = "Continuar"
+const val ACEPT_TERMS = "Acepto  que mis datos sean utilizados con fines profesionales y de contacto."
 
 const val logInLog = "Login"
 const val email = "Email"
