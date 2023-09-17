@@ -71,7 +71,7 @@ fun RegisterForm(
         ) {
             ButtonApp(
                 titleButton = register,
-                onClickButton = {  navController.navigate(AppScreen.EspecialistForm.route) },
+                onClickButton = {  navController.navigate(route = AppScreen.ChoseYourProfile.route) },
                 enabledButton = true
             )
         }
