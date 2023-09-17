@@ -76,9 +76,7 @@ android {
 
 dependencies {
 
-
-    //implementation libs.object.detection.common
-    //implementation libs.gms.play.services.tflite.gpu
+    implementation 'org.tensorflow:tensorflow-lite-gpu:2.3.0'
     testImplementation 'junit:junit:'
     testImplementation "androidx.arch.core:core-testing:2.2.0"
     implementation libs.core.ktx
@@ -141,22 +139,23 @@ dependencies {
 
     // import DownloadModels task
 
+
+    //// import DownloadModels task
     project.ext.ASSET_DIR = projectDir.toString() + '/src/main/assets'
-    project.ext.TMP_DIR   = project.buildDir.toString() + '/downloads'
+    project.ext.TEST_ASSETS_DIR = projectDir.toString() + '/src/androidTest/assets'
 
     // Download default models; if you wish to use your own models then
     // place them in the "assets" directory and comment out this line.
     apply from: "download_model.gradle"
 
-    implementation 'org.tensorflow:tensorflow-lite:2.8.0'
-    implementation 'org.tensorflow:tensorflow-lite-task-vision:0.4.0'
-    // Import the GPU delegate plugin Library for GPU inference
-    implementation 'org.tensorflow:tensorflow-lite-gpu-delegate-plugin:0.4.0'
-    implementation 'org.tensorflow:tensorflow-lite-gpu:2.9.0'
-    implementation 'org.tensorflow:tensorflow-lite-support:0.4.0'
-    implementation 'org.tensorflow:tensorflow-lite-metadata:0.1.0'
+    implementation 'org.tensorflow:tensorflow-lite:2.13.0' // Dependencia de TensorFlow Lite
+    implementation 'org.tensorflow:tensorflow-lite-support:0.4.0' // Reemplaza '0.0.0' con la versión actual
+
+    implementation 'org.tensorflow:tensorflow-lite-metadata:0.2.0'
+    implementation 'com.google.mlkit:object-detection-custom:17.0.0'
 
 
+    implementation 'org.tensorflow:tensorflow-lite:2.8.0' // O la versión más reciente compatible
 }
 kapt {
     correctErrorTypes true
