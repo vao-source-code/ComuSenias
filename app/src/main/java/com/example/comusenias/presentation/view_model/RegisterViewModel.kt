@@ -9,7 +9,7 @@ import com.example.comusenias.domain.library.LibraryString
 import com.example.comusenias.domain.models.Response
 import com.example.comusenias.domain.models.User
 import com.example.comusenias.domain.use_cases.auth.AuthUseCases
-import com.example.comusenias.presentation.ui.theme.emptyString
+import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.invalidEmail
 import com.example.comusenias.presentation.ui.theme.passwordDoNotMatch
 import com.example.comusenias.presentation.ui.theme.restrictionNameUserAccount
@@ -68,28 +68,28 @@ class RegisterViewModel @Inject constructor(private val authUseCases: AuthUseCas
         val isValid = LibraryString.validUserName(userName.value)
         isUserNameValid.value = isValid
         errorUserName.value =
-            if (isValid) emptyString else restrictionNameUserAccount
+            if (isValid) EMPTY_STRING else restrictionNameUserAccount
         enabledRegisterButton()
     }
 
     fun validateEmail() {
         val isValid = LibraryString.validEmail(email.value)
         isEmailValid.value = isValid
-        errorEmail.value = if (isValid) emptyString else invalidEmail
+        errorEmail.value = if (isValid) EMPTY_STRING else invalidEmail
         enabledRegisterButton()
     }
 
     fun validatePassword() {
         val isValid = LibraryString.validPassword(password.value)
         isPasswordValid.value = isValid
-        errorPassword.value = if (isValid) emptyString else restrictionPasswordUserAccount
+        errorPassword.value = if (isValid) EMPTY_STRING else restrictionPasswordUserAccount
         enabledRegisterButton()
     }
 
     fun validateConfirmPassword() {
         val isValid = password.value == confirmPassword.value
         isConfirmPasswordValid.value = isValid
-        errorConfirmPassword.value = if (isValid) emptyString else passwordDoNotMatch
+        errorConfirmPassword.value = if (isValid) EMPTY_STRING else passwordDoNotMatch
         enabledRegisterButton()
     }
 }

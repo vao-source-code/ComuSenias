@@ -8,7 +8,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.example.comusenias.domain.library.LibraryString
 import com.example.comusenias.domain.models.Response
 import com.example.comusenias.domain.use_cases.auth.AuthUseCases
-import com.example.comusenias.presentation.ui.theme.emptyString
+import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.invalidEmail
 import com.example.comusenias.presentation.ui.theme.invalidPassword
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -49,14 +49,14 @@ class LoginViewModel @Inject constructor(private val authUseCases: AuthUseCases)
     fun validateEmail() {
         val isValid = LibraryString.validEmail(email.value)
         isEmailValid.value = isValid
-        errorEmail.value = if (isValid) emptyString else invalidEmail
+        errorEmail.value = if (isValid) EMPTY_STRING else invalidEmail
         enabledLoginButton()
     }
 
     fun validatePassword() {
         val isValid = LibraryString.validPassword(password.value)
         isPasswordValid.value = isValid
-        errorPassword.value = if (isValid) emptyString else invalidPassword
+        errorPassword.value = if (isValid) EMPTY_STRING else invalidPassword
         enabledLoginButton()
     }
 

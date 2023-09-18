@@ -13,21 +13,22 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.comusenias.R
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
+import com.example.comusenias.presentation.ui.theme.size12
 
 @Composable
 fun TopSection(navController: NavController) {
     Box(
-        modifier= Modifier
+        modifier = Modifier
             .fillMaxWidth()
-            .padding(12.dp)
-    ){
+            .padding(size12.dp)
+    ) {
         TextButton(
-            onClick = { },
-            modifier=Modifier.align(Alignment.CenterEnd)
+            onClick = {},
+            modifier = Modifier.align(Alignment.CenterEnd)
         ) {
             Text(
                 text = stringResource(R.string.titleSkipButton),
-                color= primaryColorApp
+                color = primaryColorApp
             )
         }
     }
