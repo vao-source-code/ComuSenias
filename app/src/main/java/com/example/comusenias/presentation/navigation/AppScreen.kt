@@ -13,9 +13,9 @@ sealed class AppScreen(val route : String) {
         }
     }
     object HomeScreen : AppScreen("home_screen")
-    object ChoseYourProfile : AppScreen("chose_your_profile")
-    object EspecialistForm : AppScreen("especialist_form")
-    object ChildForm : AppScreen("child_form")
+    object ChoseYourProfileScreen : AppScreen("chose_your_profile_screen")
+    object EspecialistFormScreen : AppScreen("especialist_form_screen")
+    object ChildFormScreen : AppScreen("child_form_screen")
 
 
 

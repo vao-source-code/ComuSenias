@@ -36,13 +36,13 @@ fun ChoseYourProfileContent(navController : NavHostController){
         )
         CardCategoryProfile(
             image = R.drawable.children_category,
-            title = "Niños",
-            onClickCard = { navController.navigate(route = AppScreen.ChildForm.route) }
+            title = "Niño",
+            onClickCard = { navController.navigate(route = AppScreen.ChildFormScreen.route) }
         )
         CardCategoryProfile(
             image = R.drawable.diagnostic_category,
             title = "Especialista",
-            onClickCard = { navController.navigate(route = AppScreen.EspecialistForm.route) }
+            onClickCard = { navController.navigate(route = AppScreen.EspecialistFormScreen.route) }
         )
     }
 }

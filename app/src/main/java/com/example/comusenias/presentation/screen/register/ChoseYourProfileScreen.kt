@@ -16,7 +16,7 @@ import com.example.comusenias.presentation.ui.theme.size100
 import com.example.comusenias.presentation.ui.theme.size30
 
 @Composable
-fun ChoseYourProfile(modifier: Modifier, navController: NavHostController) {
+fun ChoseYourProfileScreen(modifier: Modifier, navController: NavHostController) {
     Box(
         modifier = modifier
             .fillMaxSize()

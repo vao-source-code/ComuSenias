@@ -17,9 +17,9 @@ import com.example.comusenias.presentation.component.bottomBar.ShowBottomBar
 import com.example.comusenias.presentation.screen.login.LoginScreen
 import com.example.comusenias.presentation.screen.profile.ChangeProfileScreen
 import com.example.comusenias.presentation.screen.profile.ProfileScreen
-import com.example.comusenias.presentation.screen.register.ChildForm
-import com.example.comusenias.presentation.screen.register.ChoseYourProfile
-import com.example.comusenias.presentation.screen.register.EspecialistForm
+import com.example.comusenias.presentation.screen.register.ChildFormScreen
+import com.example.comusenias.presentation.screen.register.ChoseYourProfileScreen
+import com.example.comusenias.presentation.screen.register.EspecialistFormScreen
 import com.example.comusenias.presentation.screen.register.RegisterScreen
 import com.example.comusenias.presentation.splashScreen.SplashScreen
 
@@ -56,14 +56,14 @@ private fun GetNavHost(
         composable(AppScreen.RegisterScreen.route) {
             RegisterScreen(navController = navController, modifier = modifier)
         }
-        composable(AppScreen.ChoseYourProfile.route) {
-            ChoseYourProfile(navController = navController, modifier = modifier)
+        composable(AppScreen.ChoseYourProfileScreen.route) {
+            ChoseYourProfileScreen(navController = navController, modifier = modifier)
         }
-        composable(AppScreen.EspecialistForm.route) {
-            EspecialistForm(navController = navController, modifier = modifier)
+        composable(AppScreen.EspecialistFormScreen.route) {
+            EspecialistFormScreen(navController = navController, modifier = modifier)
         }
-        composable(AppScreen.ChildForm.route) {
-            ChildForm(navController = navController, modifier = modifier)
+        composable(AppScreen.ChildFormScreen.route) {
+            ChildFormScreen(navController = navController, modifier = modifier)
         }
         composable(AppScreen.SplashScreen.route) {
             SplashScreen(navController)
