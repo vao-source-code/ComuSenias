@@ -38,7 +38,6 @@ fun CardCategoryProfile(image: Int, title : String,onClickCard: () -> Unit) {
             .height(size100.dp)
             .clickable {
                 onClickCard
-                Log.d("CardCategoryProfile", "Pressed Box")
             }
             .shadow(
                 elevation = size3.dp,

@@ -10,7 +10,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.comusenias.presentation.component.defaults.app.TextFieldApp
+import com.example.comusenias.presentation.ui.theme.AGE
 import com.example.comusenias.presentation.ui.theme.HOW_OLD_ARE_YOU
+import com.example.comusenias.presentation.ui.theme.NAME
 import com.example.comusenias.presentation.ui.theme.SIZE70
 import com.example.comusenias.presentation.ui.theme.WHAT_IS_YOUR_NAME
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
@@ -35,7 +37,7 @@ fun ChildFormContent(){
             TextFieldApp(
                 value = "",
                 onValueChange = {},
-                label = "Nombre",
+                label = NAME,
                 icon = null
             )
         }
@@ -51,7 +53,7 @@ fun ChildFormContent(){
             TextFieldApp(
                 value = "",
                 onValueChange = {},
-                label = "Años",
+                label = AGE,
                 icon = null
             )
         }

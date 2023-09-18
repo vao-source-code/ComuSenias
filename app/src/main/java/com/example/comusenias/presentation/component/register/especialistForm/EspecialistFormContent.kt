@@ -7,6 +7,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.comusenias.presentation.component.defaults.app.TextFieldApp
+import com.example.comusenias.presentation.ui.theme.EXPIRY_OF_PROFESSIONAL_REGISTRATION
+import com.example.comusenias.presentation.ui.theme.MEDICAL_TITLE
+import com.example.comusenias.presentation.ui.theme.NAME
+import com.example.comusenias.presentation.ui.theme.NUMBER_PHONE
+import com.example.comusenias.presentation.ui.theme.PROFESSIONAL_REGISTRATION
+import com.example.comusenias.presentation.ui.theme.SPECIALTY
 import com.example.comusenias.presentation.ui.theme.size16
 
 @Composable
@@ -18,37 +24,37 @@ fun EspecialistFormContent(){
         TextFieldApp(
             value = "",
             onValueChange = {},
-            label = "Nombre",
+            label = NAME,
             icon = null
         )
         TextFieldApp(
             value = "",
             onValueChange = {},
-            label = "Numero de Matricula",
+            label = PROFESSIONAL_REGISTRATION,
             icon = null
         )
         TextFieldApp(
             value = "",
             onValueChange = {},
-            label = "Vencimiento de Matricula",
+            label = EXPIRY_OF_PROFESSIONAL_REGISTRATION,
             icon = null
         )
         TextFieldApp(
             value = "",
             onValueChange = {},
-            label = "Titulo Medico",
+            label = MEDICAL_TITLE,
             icon = null
         )
         TextFieldApp(
             value = "",
             onValueChange = {},
-            label = "Especialidad",
+            label = SPECIALTY,
             icon = null
         )
         TextFieldApp(
             value = "",
             onValueChange = {},
-            label = "Telefono",
+            label = NUMBER_PHONE,
             icon = null
         )
         AcceptTerm()
