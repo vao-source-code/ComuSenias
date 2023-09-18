@@ -1,95 +1,128 @@
 package com.example.comusenias.presentation.view_model
 
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.auth.FirebaseUser
+import com.example.comusenias.domain.library.LibraryPassword
 import com.example.comusenias.domain.library.LibraryString
+import com.example.comusenias.domain.models.RegisterState
 import com.example.comusenias.domain.models.Response
 import com.example.comusenias.domain.models.User
 import com.example.comusenias.domain.use_cases.auth.AuthUseCases
-import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
+import com.example.comusenias.domain.use_cases.users.UsersUseCase
+import com.example.comusenias.presentation.ui.theme.emptyString
 import com.example.comusenias.presentation.ui.theme.invalidEmail
 import com.example.comusenias.presentation.ui.theme.passwordDoNotMatch
 import com.example.comusenias.presentation.ui.theme.restrictionNameUserAccount
 import com.example.comusenias.presentation.ui.theme.restrictionPasswordUserAccount
+import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RegisterViewModel @Inject constructor(private val authUseCases: AuthUseCases) : ViewModel() {
+class RegisterViewModel @Inject constructor(
+    private val authUseCases: AuthUseCases, private val usersUseCase: UsersUseCase
+) : ViewModel() {
 
-    var userName: MutableState<String> = mutableStateOf("")
-    var isUserNameValid: MutableState<Boolean> = mutableStateOf(false)
-    var errorUserName: MutableState<String> = mutableStateOf("")
 
-    var email: MutableState<String> = mutableStateOf("")
-    var isEmailValid: MutableState<Boolean> = mutableStateOf(false)
-    var errorEmail: MutableState<String> = mutableStateOf("")
+    var registerResponse by mutableStateOf<Response<FirebaseUser>?>(null)
+        private set
 
-    var password: MutableState<String> = mutableStateOf("")
-    var isPasswordValid: MutableState<Boolean> = mutableStateOf(false)
-    var errorPassword: MutableState<String> = mutableStateOf("")
+    var state by mutableStateOf(RegisterState())
+        private set
 
-    var confirmPassword: MutableState<String> = mutableStateOf("")
-    var isConfirmPasswordValid: MutableState<Boolean> = mutableStateOf(false)
-    var errorConfirmPassword: MutableState<String> = mutableStateOf("")
+    var isUserNameValid: Boolean by mutableStateOf(false)
+    var errorUserName: String by mutableStateOf("")
+
+    var isEmailValid: Boolean by mutableStateOf(false)
+    var errorEmail: String by mutableStateOf("")
+
+
+    var isPasswordValid: Boolean by mutableStateOf(false)
+    var errorPassword: String by mutableStateOf("")
+
+
+    var isConfirmPasswordValid: Boolean by mutableStateOf(false)
+    var errorConfirmPassword: String by mutableStateOf("")
+
 
     var isRegisterEnabled = false
 
-    private val _registerFlow = MutableStateFlow<Response<FirebaseUser>?>(null)
-    val registerFlow: StateFlow<Response<FirebaseUser>?> = _registerFlow
+    var user = User()
+
 
     fun register(user: User) = viewModelScope.launch {
-        _registerFlow.value = Response.Loading
+        registerResponse = Response.Loading
         val result = authUseCases.register(user)
-        _registerFlow.value = result
+        registerResponse = result
     }
 
     fun onRegister() {
-        val user = User(
-            userName = userName.value,
-            email = email.value,
-            password = password.value
+
+        user = User(
+            userName = state.userName, email = state.email, password = state.password
         )
         register(user)
+
     }
 
-    private fun enabledRegisterButton() {
+    fun enabledRegisterButton() {
         isRegisterEnabled =
-            isUserNameValid.value && isEmailValid.value && isPasswordValid.value && isConfirmPasswordValid.value
+            isUserNameValid && isEmailValid && isPasswordValid && isConfirmPasswordValid
     }
 
     fun validateUserName() {
-        val isValid = LibraryString.validUserName(userName.value)
-        isUserNameValid.value = isValid
-        errorUserName.value =
-            if (isValid) EMPTY_STRING else restrictionNameUserAccount
+        val isValid = LibraryString.validUserName(state.userName)
+        isUserNameValid = isValid
+        errorUserName = if (isValid) emptyString else restrictionNameUserAccount
         enabledRegisterButton()
     }
 
     fun validateEmail() {
-        val isValid = LibraryString.validEmail(email.value)
-        isEmailValid.value = isValid
-        errorEmail.value = if (isValid) EMPTY_STRING else invalidEmail
+        val isValid = LibraryString.validEmail(state.email)
+        isEmailValid = isValid
+        errorEmail = if (isValid) emptyString else invalidEmail
         enabledRegisterButton()
     }
 
     fun validatePassword() {
-        val isValid = LibraryString.validPassword(password.value)
-        isPasswordValid.value = isValid
-        errorPassword.value = if (isValid) EMPTY_STRING else restrictionPasswordUserAccount
+        val isValid = LibraryString.validPassword(state.password)
+        isPasswordValid = isValid
+        errorPassword = if (isValid) emptyString else restrictionPasswordUserAccount
         enabledRegisterButton()
     }
 
     fun validateConfirmPassword() {
-        val isValid = password.value == confirmPassword.value
-        isConfirmPasswordValid.value = isValid
-        errorConfirmPassword.value = if (isValid) EMPTY_STRING else passwordDoNotMatch
+        val isValid = state.password == state.confirmPassword
+        isConfirmPasswordValid = isValid
+        errorConfirmPassword = if (isValid) emptyString else passwordDoNotMatch
         enabledRegisterButton()
     }
+
+    fun createUser() = viewModelScope.launch {
+        user.id = authUseCases.getCurrentUser()?.uid!!
+        user.password = LibraryPassword.hashPassword(user.password)
+        usersUseCase.createUser(user)
+    }
+
+    fun onEmailInput(email: String) {
+        state = state.copy(email = email)
+    }
+
+    fun onUserNameInput(userName: String) {
+        state = state.copy(userName = userName)
+    }
+
+    fun onPasswordInput(password: String) {
+        state = state.copy(password = password)
+    }
+
+    fun onConfirmPasswordInput(confirmPassword: String) {
+        state = state.copy(confirmPassword = confirmPassword)
+    }
+
+
 }

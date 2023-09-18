@@ -20,7 +20,7 @@ fun ProfileFooterContent(onClickButton: () -> Unit?) {
         horizontalArrangement = Arrangement.Center
     ) {
         ButtonApp(
-            titleButton = "Cambiar Datos",
+            titleButton = "Actualizar Datos",
             icon = null,
             onClickButton = {
                 onClickButton()
