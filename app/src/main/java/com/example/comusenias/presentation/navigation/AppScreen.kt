@@ -13,5 +13,7 @@ sealed class AppScreen(val route : String) {
         }
     }
     object HomeScreen : AppScreen("home_screen")
+    object OnboardingScreen : AppScreen("onboarding_screen")
+
 
 }

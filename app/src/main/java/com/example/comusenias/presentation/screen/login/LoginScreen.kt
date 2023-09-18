@@ -29,7 +29,6 @@ fun LoginScreen(
         modifier = modifier
             .fillMaxSize()
             .testTag(TestTag.TAG_LOGIN_SCREEN),
-
         ) {
         Column(
             modifier = Modifier.fillMaxSize(),
