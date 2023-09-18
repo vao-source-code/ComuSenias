@@ -8,10 +8,9 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.comusenias.R
+import com.example.comusenias.presentation.ui.theme.SKIP
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
 import com.example.comusenias.presentation.ui.theme.size12
 
@@ -27,7 +26,7 @@ fun TopSection(navController: NavController) {
             modifier = Modifier.align(Alignment.CenterEnd)
         ) {
             Text(
-                text = stringResource(R.string.titleSkipButton),
+                text = SKIP,
                 color = primaryColorApp
             )
         }

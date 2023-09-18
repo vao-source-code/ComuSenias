@@ -26,6 +26,7 @@ import androidx.navigation.NavController
 import com.example.comusenias.constants.TestTag
 import com.example.comusenias.domain.models.OnBoardingItem
 import com.example.comusenias.presentation.navigation.AppScreen
+import com.example.comusenias.presentation.ui.theme.IMAGE
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.size08
 import com.example.comusenias.presentation.ui.theme.size1
@@ -44,7 +45,6 @@ import kotlinx.coroutines.launch
 fun OnBoarding(navController: NavController) {
     val scope = rememberCoroutineScope()
     val bottomBarViewModel = remember { BottomBarViewModel() }
-
 
     Column(Modifier.fillMaxSize()) {
         val items = OnBoardingItem.get()
@@ -91,7 +91,7 @@ fun OnBoardingItem(
                 .width(size250.dp),
             painter = painterResource(item.image),
             contentScale = ContentScale.Fit,
-            contentDescription = "image"
+            contentDescription = IMAGE
         )
         Spacer(modifier = Modifier.height(size95.dp))
         Text(
