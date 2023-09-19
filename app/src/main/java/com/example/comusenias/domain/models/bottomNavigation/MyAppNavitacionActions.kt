@@ -16,7 +16,7 @@ data class BottomBarItem(
 fun getBottomBarItems(): List<BottomBarItem> {
     return listOf(
         BottomBarItem(
-            route = AppScreen.LoginScreen.route,
+            route = AppScreen.HomeScreen.route,
             title = LEAR_TEXT,
             selectedIcon = R.drawable.book_fechado,
             unselectedIcon = R.drawable.book_open,
