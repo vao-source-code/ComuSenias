@@ -4,7 +4,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.ImageFormat
 import android.graphics.Rect
-import android.graphics.RectF
 import android.graphics.YuvImage
 import android.media.Image
 import android.os.Build
@@ -23,10 +22,12 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import com.example.comusenias.domain.models.ObjectDetectionResult
 import com.example.comusenias.domain.repositories.CameraRepository
-import com.example.comusenias.ml.SsdMobilenetV11Metadata
+import com.example.comusenias.ml.SingLanguage
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import org.tensorflow.lite.DataType
 import org.tensorflow.lite.support.image.TensorImage
+import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -123,64 +124,54 @@ class CameraRepositoryImpl @Inject constructor(
 
     private fun setupImageAnalysis() {
         imageAnalysis = ImageAnalysis.Builder()
-            .setBackpressureStrategy(ImageAnalysis.STRATEGY_BLOCK_PRODUCER)
+            .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
             .build()
     }
 
     @OptIn(ExperimentalGetImage::class)
     override suspend fun startObjectDetection(): Flow<List<ObjectDetectionResult>> {
         imageAnalysis?.setAnalyzer(Executors.newSingleThreadExecutor()) { imageProxy ->
-
-            Thread.sleep(1000)
-
-            // Convierte la Image en un Bitmap
+            // Convert the Image to a Bitmap
             val bitmap = convertImageToBitmap(imageProxy.image!!)
 
-            // Crea y configura el modelo
-            val model = SsdMobilenetV11Metadata.newInstance(context)
+            // Ensure the bitmap is not null
+            if (bitmap != null) {
+                // Scale the bitmap to match the model's input shape (96x96)
+                val scaledBitmap = Bitmap.createScaledBitmap(bitmap, 96, 96, true)
 
-            // Crea una imagen de TensorFlow Lite a partir del bitmap
-            val image = TensorImage.fromBitmap(bitmap)
+                // Convert the Bitmap to a TensorImage
+                val image = TensorImage(DataType.FLOAT32)
+                image.load(scaledBitmap)
+                val byteBuffer = image.buffer
 
-            // Ejecuta la inferencia del modelo y obtiene los resultados
-            val outputs = model.process(image)
-            val locations = outputs.locationsAsTensorBuffer
-            val classes = outputs.classesAsTensorBuffer
-            val scores = outputs.scoresAsTensorBuffer
-            val numberOfDetections = outputs.numberOfDetectionsAsTensorBuffer
+                // Calculate the expected buffer size
+                val expectedBufferSize = 1 * 96 * 96 * 3 * 4 // 1 (batch) * 96 * 96 (image dimensions) * 3 (channels) * 4 (bytes for FLOAT32)
 
+                if (byteBuffer.capacity() != expectedBufferSize) {
+                    throw IllegalArgumentException("Input buffer size does not match the expected size.")
+                }
 
-            // Cierra los recursos del modelo
+                // Load the buffer into the TensorBuffer
+                val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 96, 96, 3), DataType.FLOAT32)
+                inputFeature0.loadBuffer(byteBuffer)
 
-            model.close()
+                // Load your model and run inference
+                val model = SingLanguage.newInstance(context)
+                val outputs = model.process(inputFeature0)
+                val outputFeature0 = outputs.outputFeature0AsTensorBuffer
 
-
-
-            val detectionResults = mutableListOf<ObjectDetectionResult>()
-
-            for (i in 0 until numberOfDetections.getIntValue(0)) {
-               // val labelName = labelsMap[outputs.classesAsTensorBuffer.getIntValue(i)] ?: "Etiqueta Desconocida"
-                val label = classes.dataType.name
-                val confidence = scores.getFloatValue(i)
-                val left = locations.getFloatValue(i * 4)
-                val top = locations.getFloatValue(i * 4 + 1)
-                val right = locations.getFloatValue(i * 4 + 2)
-                val bottom = locations.getFloatValue(i * 4 + 3)
-
-                val boundingBox = RectF(left, top, right, bottom)
-
-                // Crea una instancia de ObjectDetectionResult y agrégala a la lista
-                val objectDetectionResult = ObjectDetectionResult(label, confidence, boundingBox)
-                detectionResults.add(objectDetectionResult)
+                // Release model resources if no longer used.
+                model.close()
             }
 
-            objectDetectionResultFlow.value = detectionResults
-
+            // Close the image proxy
             imageProxy.close()
         }
 
         return objectDetectionResultFlow
     }
+
+
 
     private fun convertImageToBitmap(image: Image): Bitmap? {
         val planes = image.planes
@@ -197,9 +188,12 @@ class CameraRepositoryImpl @Inject constructor(
         vBuffer.get(nv21, ySize, vSize)
         uBuffer.get(nv21, ySize + vSize, uSize)
 
+        // Crea un bitmap con los datos de nv21
         val yuvImage = YuvImage(nv21, ImageFormat.NV21, image.width, image.height, null)
         val outputStream = ByteArrayOutputStream()
-        yuvImage.compressToJpeg(Rect(0, 0, image.width, image.height), 100, outputStream)
+        if (!yuvImage.compressToJpeg(Rect(0, 0, image.width, image.height), 100, outputStream)) {
+            return null
+        }
         val jpegBytes = outputStream.toByteArray()
 
         return BitmapFactory.decodeByteArray(jpegBytes, 0, jpegBytes.size)

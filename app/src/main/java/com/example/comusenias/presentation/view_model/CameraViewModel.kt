@@ -9,13 +9,10 @@ import com.example.comusenias.domain.models.ObjectDetectionResult
 import com.example.comusenias.domain.use_cases.camera.CameraUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
 
 
 @HiltViewModel
@@ -37,7 +34,7 @@ class CameraViewModel @Inject constructor(private val useCases: CameraUseCases):
     }
 
     fun startObjectDetection(){
-        viewModelScope.launch {
+        viewModelScope.launch (Dispatchers.IO){
             val resultsFlow = useCases.startObjectDetection()
             resultsFlow.collect { results ->
                 _objectDetectionResults.value = results
