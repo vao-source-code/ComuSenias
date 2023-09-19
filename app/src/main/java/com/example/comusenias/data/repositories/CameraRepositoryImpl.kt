@@ -4,10 +4,12 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.ImageFormat
 import android.graphics.Rect
+import android.graphics.RectF
 import android.graphics.YuvImage
 import android.media.Image
 import android.os.Build
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.Toast
 import androidx.annotation.OptIn
 import androidx.camera.core.CameraSelector
@@ -22,7 +24,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import com.example.comusenias.domain.models.ObjectDetectionResult
 import com.example.comusenias.domain.repositories.CameraRepository
-import com.example.comusenias.ml.SingLanguage
+import com.example.comusenias.ml.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.tensorflow.lite.DataType
@@ -122,12 +124,13 @@ class CameraRepositoryImpl @Inject constructor(
         }
     }
 
-    private fun setupImageAnalysis() {
+   private fun setupImageAnalysis() {
         imageAnalysis = ImageAnalysis.Builder()
             .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
             .build()
     }
 
+     var detectionResults: ArrayList<ObjectDetectionResult> =  ArrayList()
     @OptIn(ExperimentalGetImage::class)
     override suspend fun startObjectDetection(): Flow<List<ObjectDetectionResult>> {
         imageAnalysis?.setAnalyzer(Executors.newSingleThreadExecutor()) { imageProxy ->
@@ -156,9 +159,12 @@ class CameraRepositoryImpl @Inject constructor(
                 inputFeature0.loadBuffer(byteBuffer)
 
                 // Load your model and run inference
-                val model = SingLanguage.newInstance(context)
+                val model = A.newInstance(context)
                 val outputs = model.process(inputFeature0)
+                Log.d("TAG", "startObjectDetection: " + outputs.outputFeature0AsTensorBuffer.floatArray.contentToString())
                 val outputFeature0 = outputs.outputFeature0AsTensorBuffer
+
+                objectDetectionResultFlow.value = processOutput(outputFeature0)
 
                 // Release model resources if no longer used.
                 model.close()
@@ -171,6 +177,35 @@ class CameraRepositoryImpl @Inject constructor(
         return objectDetectionResultFlow
     }
 
+
+    private fun processOutput( outputFeature0: TensorBuffer): List<ObjectDetectionResult> {
+        // Placeholder logic to process the model output and create ObjectDetectionResult list
+        // Replace this with your actual processing logic based on your model output format
+
+        val shape = outputFeature0.shape
+        if (shape.isEmpty() || shape.size < 2) {
+            throw IllegalStateException("Invalid shape for outputFeature0")
+        }
+
+        val numResults = shape[1] / 6 // Each detection has 6 values (label, confidence, bounding box)
+
+
+        for (i in 0 until numResults) {
+            val label = outputFeature0.getFloatValue(i * 6)
+            val confidence = outputFeature0.getFloatValue(i * 6 + 1)
+            val left = outputFeature0.getFloatValue(i * 6 + 2)
+            val top = outputFeature0.getFloatValue(i * 6 + 3)
+            val right = outputFeature0.getFloatValue(i * 6 + 4)
+            val bottom = outputFeature0.getFloatValue(i * 6 + 5)
+
+            val boundingBox = RectF(left, top, right, bottom)
+
+            val detectionResult = ObjectDetectionResult(label.toString(), confidence, boundingBox)
+            detectionResults.add(detectionResult)
+        }
+
+        return detectionResults
+    }
 
 
     private fun convertImageToBitmap(image: Image): Bitmap? {
