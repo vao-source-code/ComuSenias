@@ -16,6 +16,7 @@ import com.example.comusenias.presentation.activities.MainActivity
 import com.example.comusenias.presentation.component.bottomBar.ShowBottomBar
 import com.example.comusenias.presentation.screen.home.HomeScreen
 import com.example.comusenias.presentation.screen.login.LoginScreen
+import com.example.comusenias.presentation.screen.onboarding.OnBoardingScreen
 import com.example.comusenias.presentation.screen.profile.ChangeProfileScreen
 import com.example.comusenias.presentation.screen.profile.ProfileScreen
 import com.example.comusenias.presentation.screen.register.RegisterScreen
@@ -50,6 +51,9 @@ private fun GetNavHost(
         }
         composable(AppScreen.ProfileScreen.route) {
             ProfileScreen(navController = navController, modifier = modifier)
+        }
+        composable(AppScreen.OnboardingScreen.route) {
+            OnBoardingScreen(navController = navController, modifier = modifier)
         }
         composable(AppScreen.RegisterScreen.route) {
             RegisterScreen(navController = navController, modifier = modifier)

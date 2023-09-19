@@ -28,7 +28,7 @@ fun ButtonDefault(
     errorMsg: String = "",
     enabled: Boolean = true
 ) {
-    Column() {
+    Column {
         Button(
             modifier = modifier
                 .fillMaxWidth()
