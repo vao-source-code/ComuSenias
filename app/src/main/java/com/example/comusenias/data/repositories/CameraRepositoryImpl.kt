@@ -2,7 +2,10 @@ import android.content.ContentValues
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.ImageFormat
+import android.graphics.Paint
 import android.graphics.Rect
 import android.graphics.RectF
 import android.graphics.YuvImage
@@ -24,13 +27,18 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import com.example.comusenias.domain.models.ObjectDetectionResult
 import com.example.comusenias.domain.repositories.CameraRepository
-import com.example.comusenias.ml.*
+import com.example.comusenias.ml.Detect
+import com.example.comusenias.ml.SignLanguage
+import com.example.comusenias.ml.SsdMobilenetV11Metadata11
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.tensorflow.lite.DataType
+import org.tensorflow.lite.support.common.FileUtil
 import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
 import java.io.ByteArrayOutputStream
+import java.nio.ByteBuffer
+import java.nio.ByteOrder
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.concurrent.Executors
@@ -44,9 +52,16 @@ class CameraRepositoryImpl @Inject constructor(
     private val context: Context
 ) : CameraRepository {
 
-    private val objectDetectionResultFlow = MutableStateFlow<List<ObjectDetectionResult>>(emptyList())
+    private val objectDetectionResultFlow =
+        MutableStateFlow<List<ObjectDetectionResult>>(emptyList())
 
     private var imageAnalysis: ImageAnalysis? = null
+
+    var labels:List<String> = FileUtil.loadLabels(context, "labels.txt")
+    var colors = listOf<Int>(
+        Color.BLUE, Color.GREEN, Color.RED, Color.CYAN, Color.GRAY, Color.BLACK,
+        Color.DKGRAY, Color.MAGENTA, Color.YELLOW, Color.RED)
+    val paint = Paint()
 
     init {
         setupImageAnalysis()
@@ -124,87 +139,62 @@ class CameraRepositoryImpl @Inject constructor(
         }
     }
 
-   private fun setupImageAnalysis() {
+    private fun setupImageAnalysis() {
         imageAnalysis = ImageAnalysis.Builder()
-            .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+            .setBackpressureStrategy(ImageAnalysis.STRATEGY_BLOCK_PRODUCER)
             .build()
     }
-
-     var detectionResults: ArrayList<ObjectDetectionResult> =  ArrayList()
     @OptIn(ExperimentalGetImage::class)
     override suspend fun startObjectDetection(): Flow<List<ObjectDetectionResult>> {
         imageAnalysis?.setAnalyzer(Executors.newSingleThreadExecutor()) { imageProxy ->
-            // Convert the Image to a Bitmap
-            val bitmap = convertImageToBitmap(imageProxy.image!!)
+            try {
+                val model = SsdMobilenetV11Metadata11.newInstance(context)
 
-            // Ensure the bitmap is not null
-            if (bitmap != null) {
-                // Scale the bitmap to match the model's input shape (96x96)
-                val scaledBitmap = Bitmap.createScaledBitmap(bitmap, 96, 96, true)
+                // Convierte la Image en un Bitmap
+                val bitmap = convertImageToBitmap(imageProxy.image!!)
 
-                // Convert the Bitmap to a TensorImage
-                val image = TensorImage(DataType.FLOAT32)
-                image.load(scaledBitmap)
-                val byteBuffer = image.buffer
+                // Crea una imagen de TensorFlow Lite a partir del bitmap
+                val image = TensorImage.fromBitmap(bitmap)
 
-                // Calculate the expected buffer size
-                val expectedBufferSize = 1 * 96 * 96 * 3 * 4 // 1 (batch) * 96 * 96 (image dimensions) * 3 (channels) * 4 (bytes for FLOAT32)
+                // Ejecuta la inferencia del modelo y obtiene los resultados
+                val outputs = model.process(image)
+                val locations = outputs.locationsAsTensorBuffer
+                val classes = outputs.classesAsTensorBuffer
+                val scores = outputs.scoresAsTensorBuffer
+                val numberOfDetections = outputs.numberOfDetectionsAsTensorBuffer
 
-                if (byteBuffer.capacity() != expectedBufferSize) {
-                    throw IllegalArgumentException("Input buffer size does not match the expected size.")
+                val detectionResults = mutableListOf<ObjectDetectionResult>()
+
+                for (i in 0 until numberOfDetections.getIntValue(0)) {
+                    val labelName = labels[outputs.classesAsTensorBuffer.getIntValue(i)] ?: "Etiqueta Desconocida"
+                    val confidence = scores.getFloatValue(i)
+                    val left = locations.getFloatValue(i * 4)
+                    val top = locations.getFloatValue(i * 4 + 1)
+                    val right = locations.getFloatValue(i * 4 + 2)
+                    val bottom = locations.getFloatValue(i * 4 + 3)
+
+                    val boundingBox = RectF(left, top, right, bottom)
+
+                    // Crea una instancia de ObjectDetectionResult y agrégala a la lista
+                    val objectDetectionResult = ObjectDetectionResult(labelName, confidence, boundingBox)
+                    detectionResults.add(objectDetectionResult)
+
+                    // Actualiza el MutableStateFlow con el resultado actual
+                    objectDetectionResultFlow.value = listOf(objectDetectionResult)
                 }
 
-                // Load the buffer into the TensorBuffer
-                val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 96, 96, 3), DataType.FLOAT32)
-                inputFeature0.loadBuffer(byteBuffer)
-
-                // Load your model and run inference
-                val model = A.newInstance(context)
-                val outputs = model.process(inputFeature0)
-                Log.d("TAG", "startObjectDetection: " + outputs.outputFeature0AsTensorBuffer.floatArray.contentToString())
-                val outputFeature0 = outputs.outputFeature0AsTensorBuffer
-
-                objectDetectionResultFlow.value = processOutput(outputFeature0)
-
-                // Release model resources if no longer used.
+                // Cierra los recursos del modelo
                 model.close()
-            }
 
-            // Close the image proxy
-            imageProxy.close()
+                // Libera la ImageProxy
+                imageProxy.close()
+
+            } catch (e: Exception) {
+                Log.e("ObjectDetection", "Error durante la detección de objetos: ${e.message}")
+            }
         }
 
         return objectDetectionResultFlow
-    }
-
-
-    private fun processOutput( outputFeature0: TensorBuffer): List<ObjectDetectionResult> {
-        // Placeholder logic to process the model output and create ObjectDetectionResult list
-        // Replace this with your actual processing logic based on your model output format
-
-        val shape = outputFeature0.shape
-        if (shape.isEmpty() || shape.size < 2) {
-            throw IllegalStateException("Invalid shape for outputFeature0")
-        }
-
-        val numResults = shape[1] / 6 // Each detection has 6 values (label, confidence, bounding box)
-
-
-        for (i in 0 until numResults) {
-            val label = outputFeature0.getFloatValue(i * 6)
-            val confidence = outputFeature0.getFloatValue(i * 6 + 1)
-            val left = outputFeature0.getFloatValue(i * 6 + 2)
-            val top = outputFeature0.getFloatValue(i * 6 + 3)
-            val right = outputFeature0.getFloatValue(i * 6 + 4)
-            val bottom = outputFeature0.getFloatValue(i * 6 + 5)
-
-            val boundingBox = RectF(left, top, right, bottom)
-
-            val detectionResult = ObjectDetectionResult(label.toString(), confidence, boundingBox)
-            detectionResults.add(detectionResult)
-        }
-
-        return detectionResults
     }
 
 
@@ -223,14 +213,12 @@ class CameraRepositoryImpl @Inject constructor(
         vBuffer.get(nv21, ySize, vSize)
         uBuffer.get(nv21, ySize + vSize, uSize)
 
-        // Crea un bitmap con los datos de nv21
         val yuvImage = YuvImage(nv21, ImageFormat.NV21, image.width, image.height, null)
         val outputStream = ByteArrayOutputStream()
-        if (!yuvImage.compressToJpeg(Rect(0, 0, image.width, image.height), 100, outputStream)) {
-            return null
-        }
+        yuvImage.compressToJpeg(Rect(0, 0, image.width, image.height), 100, outputStream)
         val jpegBytes = outputStream.toByteArray()
 
         return BitmapFactory.decodeByteArray(jpegBytes, 0, jpegBytes.size)
     }
+
 }

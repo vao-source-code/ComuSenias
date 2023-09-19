@@ -4,7 +4,7 @@ import android.graphics.RectF
 
 
 data class ObjectDetectionResult(
-    val label: String,
-    val confidence: Float,
-    val boundingBox: RectF
+    var label: String,
+    var confidence: Float,
+    var boundingBox: RectF
 )
