@@ -4,15 +4,26 @@
 
 
     <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.front"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.front.autofocus"
+        android:required="false" />
+
+    <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission
-        android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" tools:ignore="ScopedStorage"/>
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
 
 
     <application
@@ -37,15 +48,27 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name="com.example.comusenias.demo_camera.DemoIACamera"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light"/>
+
+        <activity
+            android:name="com.example.comusenias.demo_camera.WordMakerActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.comusenias.demo_camera.CameraActivity"
+            android:exported="false" />
+
         <provider
-            android:authorities="com.example.comusenias.fileprovider"
             android:name=".domain.library.ComposeFileProvider"
-            android:grantUriPermissions="true"
-            android:exported="false">
+            android:authorities="com.example.comusenias.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
 
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"/>
+                android:resource="@xml/file_paths" />
         </provider>
     </application>
 

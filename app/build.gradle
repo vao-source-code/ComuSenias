@@ -47,6 +47,18 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
+    sourceSets {
+        main {
+            jni {
+                srcDirs 'src\\main\\jni', 'src\\main\\jnilibs'
+            }
+        }
+    }
+
+    aaptOptions {
+        noCompress "tflite"
+        noCompress "lite"
+    }
     testOptions {
         unitTests.returnDefaultValues = true
     }
@@ -115,6 +127,16 @@ dependencies {
     implementation libs.coil
     implementation libs.accompanist
     implementation libs.commons
+
+    implementation project(path: ':openCVLibrary3413')
+
+    implementation 'androidx.appcompat:appcompat:1.6.0-alpha04'
+
+    implementation 'org.tensorflow:tensorflow-lite-metadata:0.1.0-rc1'
+    implementation 'org.tensorflow:tensorflow-lite-gpu:2.2.0'
+    implementation 'org.tensorflow:tensorflow-lite-support:0.1.0'
+    implementation 'org.tensorflow:tensorflow-lite-task-vision:0.1.0'
+    implementation 'org.tensorflow:tensorflow-lite-task-text:0.1.0'
 }
 kapt {
     correctErrorTypes true
