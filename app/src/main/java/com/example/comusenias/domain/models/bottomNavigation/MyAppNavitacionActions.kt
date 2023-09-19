@@ -17,7 +17,7 @@ fun getBottomBarItems(): List<BottomBarItem> {
     return listOf(
         //TODO hay que agregar los menu correctos para cada pantalla
         BottomBarItem(
-            route = AppScreen.LoginScreen.route,
+            route = AppScreen.HomeScreen.route,
             title = LEAR_TEXT,
             selectedIcon = R.drawable.book_fechado,
             unselectedIcon = R.drawable.book_open,

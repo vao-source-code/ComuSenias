@@ -19,7 +19,6 @@ const val email = "Email"
 const val editData = "Editar Datos"
 const val title = "Title"
 const val arrowBack = "Arrow Back"
-const val profile = "Perfil"
 const val iconApp = "icono de la app"
 const val iconButtonDescription = "icon button description"
 const val insertDataToLogIn = "Ingrese los datos para iniciar sesión"
@@ -47,3 +46,5 @@ const val CHANGE_PROFILE_CONFIRM_PASSWORD = "Confirmar Contraseña"
 /*-----------------PROFILE CONTENT -----------------*/
 const val PROFILE_USER = "Nombre del Usuario"
 const val PROFILE_EMAIL = "Correo electrónico"
+
+const val LETS_GO_LEARN : String = "¡Vamos aprender Sabrina!"

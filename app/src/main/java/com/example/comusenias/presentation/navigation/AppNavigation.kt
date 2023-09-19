@@ -14,6 +14,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.comusenias.presentation.activities.MainActivity
 import com.example.comusenias.presentation.component.bottomBar.ShowBottomBar
+import com.example.comusenias.presentation.screen.home.HomeScreen
 import com.example.comusenias.presentation.screen.login.LoginScreen
 import com.example.comusenias.presentation.screen.onboarding.OnBoardingScreen
 import com.example.comusenias.presentation.screen.profile.ChangeProfileScreen
@@ -43,7 +44,7 @@ private fun GetNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = AppScreen.LoginScreen.route
+        startDestination = AppScreen.SplashScreen.route
     ) {
         composable(AppScreen.LoginScreen.route) {
             LoginScreen(navController = navController, modifier)
@@ -74,6 +75,8 @@ private fun GetNavHost(
             }
 
         }
-
+        composable(AppScreen.HomeScreen.route) {
+            HomeScreen(navController = navController, modifier = modifier)
+        }
     }
 }
