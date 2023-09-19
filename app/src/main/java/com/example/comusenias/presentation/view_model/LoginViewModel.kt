@@ -1,69 +1,79 @@
 package com.example.comusenias.presentation.view_model
 
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.auth.FirebaseUser
 import com.example.comusenias.domain.library.LibraryString
+import com.example.comusenias.domain.models.LoginState
 import com.example.comusenias.domain.models.Response
 import com.example.comusenias.domain.use_cases.auth.AuthUseCases
 import com.example.comusenias.presentation.ui.theme.emptyString
 import com.example.comusenias.presentation.ui.theme.invalidEmail
 import com.example.comusenias.presentation.ui.theme.invalidPassword
+import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(private val authUseCases: AuthUseCases) : ViewModel() {
 
-    private val _loginFlow = MutableStateFlow<Response<FirebaseUser>?>(null)
-    val loginFlow: StateFlow<Response<FirebaseUser>?> = _loginFlow
+    var loginResponse by mutableStateOf<Response<FirebaseUser>?>(null)
+    var state by mutableStateOf(LoginState())
+        private set
 
-    var email: MutableState<String> = mutableStateOf("")
-    var isEmailValid: MutableState<Boolean> = mutableStateOf(false)
-    var errorEmail: MutableState<String> = mutableStateOf("")
+    var isEmailValid: Boolean by mutableStateOf(false)
+    var errorEmail: String by mutableStateOf("")
 
-    var password: MutableState<String> = mutableStateOf("")
-    var isPasswordValid: MutableState<Boolean> = mutableStateOf(false)
-    var errorPassword: MutableState<String> = mutableStateOf("")
+    var isPasswordValid: Boolean by mutableStateOf(false)
+    var errorPassword: String by mutableStateOf("")
 
     var isLoginEnabled = false
 
-    private val currentUser = authUseCases.getCurrentUser()
+    val currentUser = authUseCases.getCurrentUser()
+
 
     init {
         if (currentUser != null) {
-            _loginFlow.value = Response.Success(currentUser)
+            loginResponse = Response.Success(currentUser)
         }
     }
 
-    private fun enabledLoginButton() {
-        isLoginEnabled = isEmailValid.value && isPasswordValid.value
+    fun enabledLoginButton() {
+        isLoginEnabled = isEmailValid && isPasswordValid
     }
 
     fun validateEmail() {
-        val isValid = LibraryString.validEmail(email.value)
-        isEmailValid.value = isValid
-        errorEmail.value = if (isValid) emptyString else invalidEmail
+        val isValid = LibraryString.validEmail(state.email)
+        isEmailValid = isValid
+        errorEmail = if (isValid) emptyString else invalidEmail
         enabledLoginButton()
+
     }
 
     fun validatePassword() {
-        val isValid = LibraryString.validPassword(password.value)
-        isPasswordValid.value = isValid
-        errorPassword.value = if (isValid) emptyString else invalidPassword
+        val isValid = LibraryString.validPassword(state.password)
+        isPasswordValid = isValid
+        errorPassword = if (isValid) emptyString else invalidPassword
         enabledLoginButton()
     }
 
-    /*-------------------coroutines-------------------------------------------------*/
+
     fun login() = viewModelScope.launch(IO) {
-        _loginFlow.value = Response.Loading
-        val result = authUseCases.login(email.value, password.value)
-        _loginFlow.value = result
+        loginResponse = Response.Loading
+        val result = authUseCases.login(state.email, state.password)
+        loginResponse = result
+
+    }
+
+    fun onEmailInput(email: String) {
+        state = state.copy(email = email)
+    }
+
+    fun onPasswordInput(password: String) {
+        state = state.copy(password = password)
     }
 }

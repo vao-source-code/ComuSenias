@@ -15,6 +15,7 @@ data class BottomBarItem(
 
 fun getBottomBarItems(): List<BottomBarItem> {
     return listOf(
+        //TODO hay que agregar los menu correctos para cada pantalla
         BottomBarItem(
             route = AppScreen.HomeScreen.route,
             title = LEAR_TEXT,

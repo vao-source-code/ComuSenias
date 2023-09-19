@@ -24,15 +24,17 @@ fun ProfileScreen(
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
             ProfileContent(
-                navController = navController,
-                modifier = modifier,
                 viewModel = viewModel
             )
-            ProfileFooterContent {
-                navController.navigate(route = AppScreen.ChangeProfileScreen.route) {
-                    popUpTo(AppScreen.ProfileScreen.route) {}
-                }
+            val onClick = {
+                navController.navigate(
+                    route = AppScreen.ChangeProfileScreen.passUser(viewModel.userData.toJson())
+                )
             }
+
+            ProfileFooterContent(
+                onClickButton = onClick
+            )
         }
     }
 }

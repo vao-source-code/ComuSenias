@@ -18,13 +18,19 @@ loggingInterceptor = "4.9.3"
 firebaseAuth = "21.1.0"
 firebaseBom = "32.2.0"
 jUnit = "4.13.2"
-espresso = "3.5.1"
+espresso = "3.5.0"
 junitExt = "1.1.5"
 kotlinBom = "1.8.0"
 androidApplication = "8.0.2"
 kotlinAndroid = "1.7.20"
 kotlinJvm = "1.6.10"
 googleServices = "4.3.15"
+gson = "2.9.0"
+coil = "2.4.0"
+accompanist = "0.30.0"
+firebaseStorage = "24.7.1"
+commons = "2.8.0"
+kotlinXCoroutinesTest = "1.7.3"
 
 [libraries]
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "core" }
@@ -39,7 +45,7 @@ jUnit-extend = { module = "junit:junit", version.ref = "jUnit" }
 junitExt = { module = "androidx.test.ext:junit", version.ref = "junitExt" }
 espresso = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockK" }
-mockkAndroid = { module = "io.mockk:mockk-android", version.ref = "mockK" }
+mockkAndroid = { module = "io.mockk:mockk", version.ref = "mockK" }
 composeUiTooling = { module = "androidx.compose.ui:ui-tooling" }
 composeUiTestManifest = { module = "androidx.compose.ui:ui-test-manifest" }
 firebaseAuth = { module = "com.google.firebase:firebase-auth", version.ref = "firebaseAuth" }
@@ -61,6 +67,12 @@ daggerHiltTesting = { module = "com.google.dagger:hilt-android-testing", version
 hiltNavigationCompose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "navigationHilt" }
 mockitoCore = { module = "org.mockito:mockito-core", version.ref = "mockito" }
 mockitoAndroid = { module = "org.mockito:mockito-android", version.ref = "mockito" }
+gson = { module = "com.google.code.gson:gson", version.ref = "converterGson" }
+coil = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
+accompanist = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist" }
+firebaseStorage = { module = "com.google.firebase:firebase-firestore-ktx", version.ref = "firebaseStorage" }
+commons = { module = "commons-io:commons-io", version.ref = "commons" }
+kotlinXCoroutinesTest = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinXCoroutinesTest" }
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "androidApplication" }

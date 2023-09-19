@@ -30,4 +30,19 @@ const val LEAR_TEXT : String = "Aprender"
 const val PROFILE_TEXT : String = "Perfil"
 const val PREMIUM_TEXT : String = "Premium"
 const val EMPTY_STRING : String = ""
+
+/*-----------------DIALOG CAPTURE-----------------*/
+const val DIALOG_GALLERY : String = "Galeria"
+const val DIALOG_CAPTURE_PICTURE : String = "Tomar foto"
+const val DIALOG_CAPTURE_TITLE : String = "Selecciona una opción"
+
+/*-----------------CHANGE PROFILE CONTENT -----------------*/
+const val CHANGE_PROFILE_USER = "Nuevo Usuario"
+const val CHANGE_PROFILE_PASSWORD = "Nueva Contraseña"
+const val CHANGE_PROFILE_CONFIRM_PASSWORD = "Confirmar Contraseña"
+
+/*-----------------PROFILE CONTENT -----------------*/
+const val PROFILE_USER = "Nombre del Usuario"
+const val PROFILE_EMAIL = "Correo electrónico"
+
 const val LETS_GO_LEARN : String = "¡Vamos aprender Sabrina!"
