@@ -47,7 +47,7 @@ fun ShowBottomBar(navController: NavHostController) {
                 },
                 onClick = {
                     navigateTo(navController, item)
-                }
+                },
             )
         }
     }

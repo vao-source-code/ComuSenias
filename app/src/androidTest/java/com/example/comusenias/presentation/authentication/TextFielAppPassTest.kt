@@ -1,4 +1,4 @@
-package com.example.comusenias.authentication
+package com.example.comusenias.presentation.authentication
 
 import androidx.compose.ui.test.assertHeightIsEqualTo
 import androidx.compose.ui.test.assertIsDisplayed

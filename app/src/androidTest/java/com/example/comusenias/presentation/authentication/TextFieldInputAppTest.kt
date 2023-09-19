@@ -1,4 +1,4 @@
-package com.example.comusenias.authentication
+package com.example.comusenias.presentation.authentication
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email

@@ -41,7 +41,6 @@ fun TextFieldAppPassword(
     val isHideText = remember { mutableStateOf(true) }
     val maxChar = 32
 
-
     Column {
         OutlinedTextField(
             modifier = Modifier
