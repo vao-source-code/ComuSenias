@@ -14,7 +14,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.comusenias.presentation.activities.MainActivity
 import com.example.comusenias.presentation.component.bottomBar.ShowBottomBar
+import com.example.comusenias.presentation.screen.home.HomeScreen
 import com.example.comusenias.presentation.screen.login.LoginScreen
+import com.example.comusenias.presentation.screen.onboarding.OnBoardingScreen
 import com.example.comusenias.presentation.screen.profile.ChangeProfileScreen
 import com.example.comusenias.presentation.screen.profile.ProfileScreen
 import com.example.comusenias.presentation.screen.register.ChildFormScreen
@@ -45,13 +47,16 @@ private fun GetNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = AppScreen.LoginScreen.route
+        startDestination = AppScreen.SplashScreen.route
     ) {
         composable(AppScreen.LoginScreen.route) {
             LoginScreen(navController = navController, modifier)
         }
         composable(AppScreen.ProfileScreen.route) {
             ProfileScreen(navController = navController, modifier = modifier)
+        }
+        composable(AppScreen.OnboardingScreen.route) {
+            OnBoardingScreen(navController = navController, modifier = modifier)
         }
         composable(AppScreen.RegisterScreen.route) {
             RegisterScreen(navController = navController, modifier = modifier)
@@ -82,6 +87,8 @@ private fun GetNavHost(
             }
 
         }
-
+        composable(AppScreen.HomeScreen.route) {
+            HomeScreen(navController = navController, modifier = modifier)
+        }
     }
 }
