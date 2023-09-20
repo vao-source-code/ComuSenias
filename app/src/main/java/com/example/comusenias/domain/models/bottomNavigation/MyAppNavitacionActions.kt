@@ -22,7 +22,7 @@ fun getBottomBarItems(): List<BottomBarItem> {
             selectedIcon = R.drawable.book_fechado,
             unselectedIcon = R.drawable.book_open,
         ), BottomBarItem(
-            route = AppScreen.RegisterScreen.route,
+            route = AppScreen.PremiumScreen.route,
             title = PREMIUM_TEXT,
             selectedIcon = R.drawable.workspace_premium,
             unselectedIcon = R.drawable.workspace_premium,

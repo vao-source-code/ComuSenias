@@ -14,6 +14,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.comusenias.presentation.activities.MainActivity
 import com.example.comusenias.presentation.screen.home.HomeScreen
+import com.example.comusenias.presentation.screen.premiun.PremiunScreen
 import com.example.comusenias.presentation.screen.profile.ChangeProfileScreen
 import com.example.comusenias.presentation.screen.profile.ProfileScreen
 import com.example.comusenias.presentation.splashScreen.SplashScreen
@@ -50,6 +51,10 @@ private fun GetNavHost(
 
         composable(AppScreen.SplashScreen.route) {
             SplashScreen(navController)
+        }
+
+        composable(AppScreen.PremiumScreen.route) {
+            PremiunScreen(navController= navController , modifier = modifier)
         }
         composable(AppScreen.MainActivity.route) {
             MainActivity()
