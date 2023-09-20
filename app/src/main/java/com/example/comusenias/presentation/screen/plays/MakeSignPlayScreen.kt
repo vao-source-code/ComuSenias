@@ -18,10 +18,8 @@ import com.example.comusenias.presentation.component.defaults.app.ButtonApp
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.CONTINUE
 import com.example.comusenias.presentation.ui.theme.DESC_IMAGE_SIGN
-import com.example.comusenias.presentation.ui.theme.SIZE100
 import com.example.comusenias.presentation.ui.theme.SIZE16
 import com.example.comusenias.presentation.ui.theme.SIZE390
-import com.example.comusenias.presentation.ui.theme.SIZE60
 
 @Composable
 fun MakeSignPlayScreen(navController: NavHostController, modifier: Modifier) {
@@ -35,6 +33,7 @@ fun MakeSignPlayView(navController: NavHostController, modifier: Modifier) {
         contentAlignment = Alignment.TopStart
     ) {
         Column(
+            modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -45,17 +44,11 @@ fun MakeSignPlayView(navController: NavHostController, modifier: Modifier) {
                 painter = painterResource(id = R.drawable.ia_o_poc),
                 contentDescription = DESC_IMAGE_SIGN
             )
-            Box(
-                modifier = Modifier
-                    .padding(bottom = SIZE100.dp),
-                contentAlignment = Alignment.BottomCenter
-            ) {
-                ButtonApp(
-                    titleButton = CONTINUE,
-                    onClickButton = { navController.navigate(AppScreen.CongratsPlayScreen.route) },
-                    modifier = modifier.padding(top = SIZE60.dp, start = SIZE16.dp, end = SIZE16.dp)
-                )
-            }
+            ButtonApp(
+                titleButton = CONTINUE,
+                onClickButton = { navController.navigate(AppScreen.CongratsPlayScreen.route) },
+                modifier = modifier.padding(top = 100.dp, start = SIZE16.dp, end = SIZE16.dp)
+            )
         }
     }
 }

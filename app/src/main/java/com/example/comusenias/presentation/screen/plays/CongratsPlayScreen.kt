@@ -39,6 +39,7 @@ fun CongratsPlayView(navController: NavHostController, modifier: Modifier) {
         contentAlignment = Alignment.TopStart
     ) {
         Column(
+            modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

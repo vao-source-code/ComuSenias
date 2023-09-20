@@ -30,7 +30,6 @@ import com.example.comusenias.presentation.ui.theme.SIZE2
 import com.example.comusenias.presentation.ui.theme.SIZE200
 import com.example.comusenias.presentation.ui.theme.SIZE60
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
-import com.example.comusenias.presentation.ui.theme.size10
 import com.example.comusenias.presentation.ui.theme.size20
 
 @Composable
@@ -78,7 +77,7 @@ fun ChoseTheSignPlayView(navController: NavHostController, modifier: Modifier) {
                 Image(
                     painter = painterResource(id = R.drawable.letra_o),
                     contentDescription = DESC_IMAGE_SIGN,
-                    modifier = Modifier.size(size10.dp)
+                    modifier = Modifier.size(100.dp)
                 )
                 Image(
                     painter = painterResource(id = R.drawable.senial_dos),
@@ -91,7 +90,6 @@ fun ChoseTheSignPlayView(navController: NavHostController, modifier: Modifier) {
                     modifier = Modifier.size(100.dp)
                 )
             }
-            // Image(painter = , contentDescription =)
             Box(
                 modifier = Modifier
                     .fillMaxSize()

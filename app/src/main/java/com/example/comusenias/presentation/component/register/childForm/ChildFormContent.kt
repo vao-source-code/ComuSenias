@@ -23,10 +23,10 @@ import com.example.comusenias.presentation.ui.theme.size20
 fun ChildFormContent(){
     Column(
         modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(SIZE70.dp)
+        verticalArrangement = Arrangement.spacedBy(size20.dp)
     ) {
         Column(
-            verticalArrangement = Arrangement.spacedBy(size10.dp)
+            verticalArrangement = Arrangement.spacedBy(2.dp)
         ) {
             Text(
                 text = WHAT_IS_YOUR_NAME,

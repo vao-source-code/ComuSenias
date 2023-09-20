@@ -37,7 +37,7 @@ fun ButtonApp(
         onClick = { onClickButton() },
         modifier = modifier
             .fillMaxWidth()
-            .padding()
+            .padding(bottom = 16.dp)
             .height(50.dp)
             .testTag(TestTag.TAG_BUTTON_APP)
     ) {
