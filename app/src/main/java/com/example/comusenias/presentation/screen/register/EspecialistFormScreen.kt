@@ -36,7 +36,7 @@ fun EspecialistFormScreen(modifier: Modifier, navController: NavHostController) 
             EspecialistFormContent()
             ButtonApp(
                 titleButton = CONTINUE,
-                onClickButton = { navController.navigate(route = AppScreen.HomeScreen.route) }
+                onClickButton = { navController.navigate(route = AppScreen.SpecialistScreen.route) }
             )
         }
     }

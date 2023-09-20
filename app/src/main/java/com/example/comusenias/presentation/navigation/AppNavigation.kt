@@ -13,9 +13,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.comusenias.presentation.activities.MainActivity
+import com.example.comusenias.presentation.component.specialist.SpecialistDetailsScreen
 import com.example.comusenias.presentation.screen.home.HomeScreen
-import com.example.comusenias.presentation.screen.login.LoginScreen
-import com.example.comusenias.presentation.screen.onboarding.OnBoardingScreen
 import com.example.comusenias.presentation.screen.plays.ChoseTheSignPlayScreen
 import com.example.comusenias.presentation.screen.plays.CongratsPlayScreen
 import com.example.comusenias.presentation.screen.plays.LearnSignScreen
@@ -23,6 +22,7 @@ import com.example.comusenias.presentation.screen.plays.MakeSignPlayScreen
 import com.example.comusenias.presentation.screen.premiun.PremiunScreen
 import com.example.comusenias.presentation.screen.profile.ChangeProfileScreen
 import com.example.comusenias.presentation.screen.profile.ProfileScreen
+import com.example.comusenias.presentation.screen.specialist.SpecialistHomeExample
 import com.example.comusenias.presentation.splashScreen.SplashScreen
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -82,6 +82,14 @@ private fun GetNavHost(
         }
         composable(AppScreen.HomeScreen.route) {
             HomeScreen(navController = navController, modifier = modifier)
+        }
+
+        composable(AppScreen.SpecialistScreen.route) {
+            SpecialistHomeExample(navController = navController, modifier = modifier)
+        }
+
+        composable(AppScreen.SpecialistDetailsScreen.route) {
+            SpecialistDetailsScreen(navController = navController, modifier = modifier)
         }
         composable(AppScreen.LearnSignScreen.route) {
             LearnSignScreen(navController = navController, modifier = modifier)
