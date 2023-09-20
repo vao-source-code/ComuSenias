@@ -1,4 +1,5 @@
 [versions]
+accompanistPager = "0.12.0"
 core = "1.10.1"
 activityCompose = "1.7.2"
 composeBom = "2022.10.00"
@@ -33,6 +34,8 @@ commons = "2.8.0"
 kotlinXCoroutinesTest = "1.7.3"
 
 [libraries]
+accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanistPager" }
+accompanist-pager-indicators = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanistPager" }
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "core" }
 kotlinBom = { module = "org.jetbrains.kotlin:kotlin-bom", version.ref = "kotlinBom" }
 activityCompose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }

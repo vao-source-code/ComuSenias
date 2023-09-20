@@ -19,7 +19,6 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.comusenias.constants.TestTag
@@ -32,17 +31,16 @@ import com.example.comusenias.presentation.ui.theme.placeholderTextColor
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TextFieldApp(
-    value: String,
-    onValueChange: (value: String) -> Unit,
-    validateField: () -> Unit = {},
-    label: String,
-    keyboardType: KeyboardType = KeyboardType.Text,
-    hideText: Boolean = false,
-    errorMsg: String = "",
-    readOnly: Boolean = false,
-    icon: ImageVector?
+        value: String,
+        onValueChange: (value: String) -> Unit,
+        validateField: () -> Unit = {},
+        label: String,
+        icon: ImageVector,
+        keyboardType: KeyboardType = KeyboardType.Text,
+        hideText: Boolean = false,
+        errorMsg: String = "",
+        readOnly: Boolean = false,
     ) {
-
     val maxChar = 32
 
         Column {
@@ -73,14 +71,12 @@ fun TextFieldApp(
                               },
                 keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
                 trailingIcon = {
-                    if (icon != null) {
-                        Icon(
-                            modifier = Modifier.clickable {  },
-                            imageVector = icon,
-                            contentDescription = label,
-                            tint = iconColorTextField,
-                        )
-                    }
+                    Icon(
+                        modifier = Modifier.clickable {  },
+                        imageVector = icon,
+                        contentDescription = label,
+                        tint = iconColorTextField,
+                    )
                 },
                 readOnly= readOnly,
                 visualTransformation = if (hideText) PasswordVisualTransformation() else VisualTransformation.None,

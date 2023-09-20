@@ -2,6 +2,7 @@ package com.example.comusenias.presentation.component.bottomBar
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBarItem
@@ -19,14 +20,17 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.comusenias.domain.models.bottomNavigation.BottomBarItem
 import com.example.comusenias.domain.models.bottomNavigation.getBottomBarItems
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
-import com.example.comusenias.presentation.ui.theme.SIZE70
+import com.example.comusenias.presentation.ui.theme.primaryColorApp
+import com.example.comusenias.presentation.ui.theme.size24
+import com.example.comusenias.presentation.ui.theme.size30
+import com.example.comusenias.presentation.ui.theme.size50
 
 @Composable
 fun ShowBottomBar(navController: NavHostController) {
     BottomAppBar(
         modifier = Modifier
             .fillMaxWidth()
-            .height(SIZE70.dp),
+            .height(size50.dp),
         containerColor = Color.Transparent,
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -35,19 +39,22 @@ fun ShowBottomBar(navController: NavHostController) {
         getBottomBarItems().forEach { item ->
             NavigationBarItem(
                 selected = currentRoute == item.route,
-                label = { GetBottomBarTitle(currentRoute, item) },
                 icon = {
                     Icon(
                         imageVector = getBottomBarImage(
                             currentRoute = currentRoute,
                             item = item
                         ),
-                        contentDescription = item.route
+                        contentDescription = item.route,
+                        modifier = if (currentRoute == item.route) Modifier.size(size30.dp) else Modifier.size(
+                            size24.dp
+                        ),
+                        tint = if (currentRoute == item.route) primaryColorApp else Color.Black
                     )
                 },
                 onClick = {
                     navigateTo(navController, item)
-                }
+                },
             )
         }
     }
