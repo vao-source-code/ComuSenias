@@ -26,7 +26,7 @@ fun ResponseStatusLogin(navController : NavHostController , viewModel: LoginView
 
         is Response.Success -> {
             LaunchedEffect(Unit) {
-                navController.navigate(route = AppScreen.ProfileScreen.route) {
+                navController.navigate(route = AppScreen.HomeScreen.route) {
                     popUpTo(AppScreen.LoginScreen.route) {
                         inclusive = true
                     }

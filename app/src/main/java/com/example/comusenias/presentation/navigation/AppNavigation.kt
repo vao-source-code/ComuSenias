@@ -13,7 +13,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.comusenias.presentation.activities.MainActivity
-import com.example.comusenias.presentation.component.bottomBar.ShowBottomBar
 import com.example.comusenias.presentation.screen.home.HomeScreen
 import com.example.comusenias.presentation.screen.login.LoginScreen
 import com.example.comusenias.presentation.screen.onboarding.OnBoardingScreen
@@ -21,12 +20,9 @@ import com.example.comusenias.presentation.screen.plays.ChoseTheSignPlayScreen
 import com.example.comusenias.presentation.screen.plays.CongratsPlayScreen
 import com.example.comusenias.presentation.screen.plays.LearnSignScreen
 import com.example.comusenias.presentation.screen.plays.MakeSignPlayScreen
+import com.example.comusenias.presentation.screen.premiun.PremiunScreen
 import com.example.comusenias.presentation.screen.profile.ChangeProfileScreen
 import com.example.comusenias.presentation.screen.profile.ProfileScreen
-import com.example.comusenias.presentation.screen.register.ChildFormScreen
-import com.example.comusenias.presentation.screen.register.ChoseYourProfileScreen
-import com.example.comusenias.presentation.screen.register.EspecialistFormScreen
-import com.example.comusenias.presentation.screen.register.RegisterScreen
 import com.example.comusenias.presentation.splashScreen.SplashScreen
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -35,11 +31,7 @@ import com.example.comusenias.presentation.splashScreen.SplashScreen
 fun AppNavigation(
     navController: NavHostController,
 ) {
-    Scaffold(
-        bottomBar = {
-            ShowBottomBar(navController = navController)
-        }
-    ) { paddingValues ->
+    Scaffold{ paddingValues ->
         GetNavHost(navController, Modifier.padding(paddingValues))
     }
 }
@@ -53,29 +45,22 @@ private fun GetNavHost(
         navController = navController,
         startDestination = AppScreen.SplashScreen.route
     ) {
-        composable(AppScreen.LoginScreen.route) {
-            LoginScreen(navController = navController, modifier)
-        }
+
+        authNavGraph(navController = navController , modifier = modifier)
+
         composable(AppScreen.ProfileScreen.route) {
             ProfileScreen(navController = navController, modifier = modifier)
         }
-        composable(AppScreen.OnboardingScreen.route) {
-            OnBoardingScreen(navController = navController, modifier = modifier)
+        composable(AppScreen.HomeScreen.route) {
+            HomeScreen(navController = navController, modifier = modifier)
         }
-        composable(AppScreen.RegisterScreen.route) {
-            RegisterScreen(navController = navController, modifier = modifier)
-        }
-        composable(AppScreen.ChoseYourProfileScreen.route) {
-            ChoseYourProfileScreen(navController = navController, modifier = modifier)
-        }
-        composable(AppScreen.EspecialistFormScreen.route) {
-            EspecialistFormScreen(navController = navController, modifier = modifier)
-        }
-        composable(AppScreen.ChildFormScreen.route) {
-            ChildFormScreen(navController = navController, modifier = modifier)
-        }
+
         composable(AppScreen.SplashScreen.route) {
             SplashScreen(navController)
+        }
+
+        composable(AppScreen.PremiumScreen.route) {
+            PremiunScreen(navController= navController , modifier = modifier)
         }
         composable(AppScreen.MainActivity.route) {
             MainActivity()

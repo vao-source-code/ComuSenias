@@ -33,6 +33,7 @@ import androidx.navigation.NavHostController
 import com.example.comusenias.R
 import com.example.comusenias.domain.library.chapter.ProvideChapter
 import com.example.comusenias.presentation.navigation.AppScreen
+import com.example.comusenias.presentation.component.bottomBar.ShowBottomBar
 import com.example.comusenias.presentation.ui.theme.LETS_GO_LEARN
 import com.example.comusenias.presentation.ui.theme.QUANTITY_COLUMNS
 import com.example.comusenias.presentation.ui.theme.SIZE12
@@ -44,11 +45,19 @@ import com.example.comusenias.presentation.ui.theme.SIZE60
 import com.example.comusenias.presentation.ui.theme.size10
 import com.example.comusenias.presentation.ui.theme.size20
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(navController: NavHostController, modifier: Modifier) {
-    HomeScreenExample(
-        navController = navController, modifier = modifier
-    )
+    Scaffold(
+        bottomBar = {
+            ShowBottomBar(navController = navController)
+        }
+    ) { paddingValues ->
+        HomeScreenExample(
+            navController = navController, modifier = modifier.padding(paddingValues)
+        )
+    }
+
 }
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
