@@ -52,6 +52,13 @@ const val LEAR_TEXT : String = "Aprender"
 const val PROFILE_TEXT : String = "Perfil"
 const val PREMIUM_TEXT : String = "Premium"
 const val EMPTY_STRING : String = ""
+const val START_WITH_LETTER : String = "Empecemos con la letra"
+const val DESC_IMAGE_SIGN : String = "Descripción de la imagen"
+const val CHOSE_CORRECT_SING : String = "Elegí la señal correcta"
+const val FINISH_LVL : String = "!Felicitaciones! Nivel terminado"
+const val GO_FOR_MORE : String = "Vamos por mas"
+
+
 
 /*-----------------DIALOG CAPTURE-----------------*/
 const val DIALOG_GALLERY : String = "Galeria"

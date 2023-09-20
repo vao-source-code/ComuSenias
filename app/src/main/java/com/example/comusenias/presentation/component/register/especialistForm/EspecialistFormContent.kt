@@ -12,14 +12,14 @@ import com.example.comusenias.presentation.ui.theme.MEDICAL_TITLE
 import com.example.comusenias.presentation.ui.theme.NAME
 import com.example.comusenias.presentation.ui.theme.NUMBER_PHONE
 import com.example.comusenias.presentation.ui.theme.PROFESSIONAL_REGISTRATION
+import com.example.comusenias.presentation.ui.theme.SIZE16
 import com.example.comusenias.presentation.ui.theme.SPECIALTY
-import com.example.comusenias.presentation.ui.theme.size16
 
 @Composable
 fun EspecialistFormContent(){
     Column(
         modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(size16.dp)
+        verticalArrangement = Arrangement.spacedBy(SIZE16.dp)
     ) {
         TextFieldApp(
             value = "",

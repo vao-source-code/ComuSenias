@@ -20,4 +20,8 @@ sealed class AppScreen(val route : String) {
     object ChoseYourProfileScreen : AppScreen("chose_your_profile_screen")
     object EspecialistFormScreen : AppScreen("especialist_screen")
     object ChildFormScreen : AppScreen("child_form_screen")
+    object LearnSignScreen : AppScreen("learn_sign")
+    object ChoseTheSignPlayScreen : AppScreen("chose_the_sign_play")
+    object MakeSignPlayScreen : AppScreen("make_sign_play")
+    object CongratsPlayScreen : AppScreen("congrats_play")
 }
