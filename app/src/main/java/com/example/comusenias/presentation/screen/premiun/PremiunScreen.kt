@@ -1,4 +1,4 @@
-package com.example.comusenias.presentation.screen.profile
+package com.example.comusenias.presentation.screen.premiun
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,7 +18,7 @@ import com.example.comusenias.presentation.view_model.ProfileViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileScreen(
+fun PremiunScreen(
     navController: NavHostController,
     modifier: Modifier,
     viewModel: ProfileViewModel = hiltViewModel()

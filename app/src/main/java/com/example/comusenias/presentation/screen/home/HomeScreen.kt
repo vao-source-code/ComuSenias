@@ -18,6 +18,8 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -30,6 +32,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.comusenias.R
 import com.example.comusenias.domain.library.chapter.ProvideChapter
+import com.example.comusenias.presentation.component.bottomBar.ShowBottomBar
 import com.example.comusenias.presentation.ui.theme.LETS_GO_LEARN
 import com.example.comusenias.presentation.ui.theme.QUANTITY_COLUMNS
 import com.example.comusenias.presentation.ui.theme.SIZE200
@@ -41,11 +44,19 @@ import com.example.comusenias.presentation.ui.theme.size12
 import com.example.comusenias.presentation.ui.theme.size16
 import com.example.comusenias.presentation.ui.theme.size20
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(navController: NavHostController, modifier: Modifier) {
-    HomeScreenExample(
-        navController = navController, modifier = modifier
-    )
+    Scaffold(
+        bottomBar = {
+            ShowBottomBar(navController = navController)
+        }
+    ) { paddingValues ->
+        HomeScreenExample(
+            navController = navController, modifier = modifier.padding(paddingValues)
+        )
+    }
+
 }
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
