@@ -37,7 +37,7 @@ fun CardCategoryProfile(image: Int, title : String,onClickCard: () -> Unit) {
             .fillMaxWidth()
             .height(size100.dp)
             .clickable {
-                onClickCard
+                onClickCard()
             }
             .shadow(
                 elevation = size3.dp,
