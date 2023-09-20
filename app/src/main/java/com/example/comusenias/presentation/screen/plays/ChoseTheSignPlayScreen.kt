@@ -25,6 +25,7 @@ import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.CHOSE_CORRECT_SING
 import com.example.comusenias.presentation.ui.theme.CONTINUE
 import com.example.comusenias.presentation.ui.theme.DESC_IMAGE_SIGN
+import com.example.comusenias.presentation.ui.theme.SIZE100
 import com.example.comusenias.presentation.ui.theme.SIZE16
 import com.example.comusenias.presentation.ui.theme.SIZE2
 import com.example.comusenias.presentation.ui.theme.SIZE200
@@ -77,7 +78,7 @@ fun ChoseTheSignPlayView(navController: NavHostController, modifier: Modifier) {
                 Image(
                     painter = painterResource(id = R.drawable.letra_o),
                     contentDescription = DESC_IMAGE_SIGN,
-                    modifier = Modifier.size(100.dp)
+                    modifier = Modifier.size(SIZE100.dp)
                 )
                 Image(
                     painter = painterResource(id = R.drawable.senial_dos),
