@@ -12,6 +12,7 @@ import androidx.navigation.NavHostController
 import com.example.comusenias.presentation.component.defaults.app.AuthenticationHeaderContent
 import com.example.comusenias.presentation.component.defaults.app.ButtonApp
 import com.example.comusenias.presentation.component.register.childForm.ChildFormContent
+import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.CONTINUE
 import com.example.comusenias.presentation.ui.theme.size30
 @Composable
@@ -30,7 +31,7 @@ fun ChildFormScreen(modifier: Modifier, navController: NavHostController) {
             ChildFormContent()
             ButtonApp(
                 titleButton = CONTINUE,
-                onClickButton = { }
+                onClickButton = { navController.navigate(route = AppScreen.HomeScreen.route) }
             )
         }
     }

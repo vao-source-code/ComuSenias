@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.comusenias.presentation.component.register.choseYourProfile.ChoseYourProfileContent
 import com.example.comusenias.presentation.component.defaults.app.AuthenticationHeaderContent
-import com.example.comusenias.presentation.ui.theme.size100
+import com.example.comusenias.presentation.ui.theme.SIZE100
 import com.example.comusenias.presentation.ui.theme.size30
 
 @Composable
@@ -25,7 +25,7 @@ fun ChoseYourProfileScreen(modifier: Modifier, navController: NavHostController)
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = size30.dp, end = size30.dp, top = size30.dp),
-            verticalArrangement = Arrangement.spacedBy(size100.dp)
+            verticalArrangement = Arrangement.spacedBy(SIZE100.dp)
         ) {
             AuthenticationHeaderContent()
             ChoseYourProfileContent(navController = navController)

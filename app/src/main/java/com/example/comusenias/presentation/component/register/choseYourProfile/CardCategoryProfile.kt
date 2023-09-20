@@ -1,6 +1,5 @@
 package com.example.comusenias.presentation.component.register.choseYourProfile
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -25,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
 import com.example.comusenias.presentation.ui.theme.size10
-import com.example.comusenias.presentation.ui.theme.size100
+import com.example.comusenias.presentation.ui.theme.SIZE100
 import com.example.comusenias.presentation.ui.theme.size24
 import com.example.comusenias.presentation.ui.theme.size3
 import com.example.comusenias.presentation.ui.theme.size40
@@ -35,7 +34,7 @@ fun CardCategoryProfile(image: Int, title : String,onClickCard: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(size100.dp)
+            .height(SIZE100.dp)
             .clickable {
                 onClickCard()
             }
@@ -72,7 +71,7 @@ fun CircleImageView(image : Int) {
         contentDescription = "Circle Image",
         contentScale = ContentScale.Crop,
         modifier = Modifier
-            .width(size100.dp)
+            .width(SIZE100.dp)
     )
 }
 
