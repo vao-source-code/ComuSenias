@@ -1,5 +1,6 @@
 package com.example.comusenias.presentation.onboarding
 
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.assertHasClickAction
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertWidthIsEqualTo
@@ -27,7 +28,7 @@ class OnBoardingTest {
         val pageTwo = 1
         composeTestRule.setContent {
             val navController = rememberNavController()
-            OnBoardingScreen(navController = navController )
+            OnBoardingScreen(navController = navController, modifier = Modifier )
         }
         composeTestRule.onNodeWithTag(TestTag.TAG_ONBOARDING_ITEM + pageOne ).assertIsDisplayed()
         composeTestRule.onNodeWithTag(TestTag.TAG_BUTTON_NEXT).performClick()

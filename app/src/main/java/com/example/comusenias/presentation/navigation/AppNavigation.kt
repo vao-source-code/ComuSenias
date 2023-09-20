@@ -23,6 +23,9 @@ import com.example.comusenias.presentation.screen.plays.LearnSignScreen
 import com.example.comusenias.presentation.screen.plays.MakeSignPlayScreen
 import com.example.comusenias.presentation.screen.profile.ChangeProfileScreen
 import com.example.comusenias.presentation.screen.profile.ProfileScreen
+import com.example.comusenias.presentation.screen.register.ChildFormScreen
+import com.example.comusenias.presentation.screen.register.ChoseYourProfileScreen
+import com.example.comusenias.presentation.screen.register.EspecialistFormScreen
 import com.example.comusenias.presentation.screen.register.RegisterScreen
 import com.example.comusenias.presentation.splashScreen.SplashScreen
 
@@ -61,6 +64,15 @@ private fun GetNavHost(
         }
         composable(AppScreen.RegisterScreen.route) {
             RegisterScreen(navController = navController, modifier = modifier)
+        }
+        composable(AppScreen.ChoseYourProfileScreen.route) {
+            ChoseYourProfileScreen(navController = navController, modifier = modifier)
+        }
+        composable(AppScreen.EspecialistFormScreen.route) {
+            EspecialistFormScreen(navController = navController, modifier = modifier)
+        }
+        composable(AppScreen.ChildFormScreen.route) {
+            ChildFormScreen(navController = navController, modifier = modifier)
         }
         composable(AppScreen.SplashScreen.route) {
             SplashScreen(navController)

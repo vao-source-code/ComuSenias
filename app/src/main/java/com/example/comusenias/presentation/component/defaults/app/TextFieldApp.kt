@@ -35,7 +35,7 @@ fun TextFieldApp(
         onValueChange: (value: String) -> Unit,
         validateField: () -> Unit = {},
         label: String,
-        icon: ImageVector,
+        icon: ImageVector?,
         keyboardType: KeyboardType = KeyboardType.Text,
         hideText: Boolean = false,
         errorMsg: String = "",
@@ -71,12 +71,14 @@ fun TextFieldApp(
                               },
                 keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
                 trailingIcon = {
-                    Icon(
-                        modifier = Modifier.clickable {  },
-                        imageVector = icon,
-                        contentDescription = label,
-                        tint = iconColorTextField,
-                    )
+                    if (icon != null) {
+                        Icon(
+                            modifier = Modifier.clickable {  },
+                            imageVector = icon,
+                            contentDescription = label,
+                            tint = iconColorTextField,
+                        )
+                    }
                 },
                 readOnly= readOnly,
                 visualTransformation = if (hideText) PasswordVisualTransformation() else VisualTransformation.None,
