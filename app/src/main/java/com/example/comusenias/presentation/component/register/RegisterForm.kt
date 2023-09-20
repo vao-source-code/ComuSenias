@@ -1,4 +1,4 @@
-package com.example.comusenias.presentation.component.login
+package com.example.comusenias.presentation.component.register
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,18 +12,21 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.comusenias.presentation.component.defaults.app.ButtonApp
-import com.example.comusenias.presentation.component.defaults.app.GoogleSignInButton
 import com.example.comusenias.presentation.component.defaults.app.TextFieldApp
 import com.example.comusenias.presentation.component.defaults.app.TextFieldAppPassword
+import com.example.comusenias.presentation.component.login.ResponseStatusLogin
+import com.example.comusenias.presentation.navigation.AppScreen
+import com.example.comusenias.presentation.ui.theme.confirmPassword
 import com.example.comusenias.presentation.ui.theme.emailText
-import com.example.comusenias.presentation.ui.theme.logIn
 import com.example.comusenias.presentation.ui.theme.password
-import com.example.comusenias.presentation.view_model.LoginViewModel
+import com.example.comusenias.presentation.ui.theme.register
+import com.example.comusenias.presentation.ui.theme.size10
+import com.example.comusenias.presentation.view_model.RegisterViewModel
 
 @Composable
-fun LoginForm(
-    navController: NavHostController,
-    viewModel: LoginViewModel = hiltViewModel()
+fun RegisterForm(
+    navController : NavHostController,
+    viewModel: RegisterViewModel = hiltViewModel()
 ) {
     val state = viewModel.state
     Column(
@@ -53,23 +56,24 @@ fun LoginForm(
                 label = password,
                 errorMsg = viewModel.errorPassword
             )
-            RememberMeAndForgetMyPass()
+            TextFieldAppPassword(
+                value = state.confirmPassword,
+                onValueChange = { viewModel.onConfirmPasswordInput(it) },
+                validateField = { viewModel.validatePassword() },
+                label = confirmPassword,
+                errorMsg = viewModel.errorConfirmPassword
+            )
+            TermsAndConditions()
         }
         Column(
             modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(10.dp)
+            verticalArrangement = Arrangement.spacedBy(size10.dp)
         ) {
             ButtonApp(
-                titleButton = logIn,
-                onClickButton = { viewModel.login() },
-                enabledButton = viewModel.isLoginEnabled
+                titleButton = register,
+                onClickButton = {  navController.navigate(route = AppScreen.ChoseYourProfileScreen.route) },
+                enabledButton = true
             )
-            LineDivisorLogin()
-            GoogleSignInButton()
         }
     }
 }
-
-
-
-

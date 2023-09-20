@@ -9,16 +9,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.comusenias.presentation.component.defaults.app.AuthenticationFooterContent
 import com.example.comusenias.presentation.component.defaults.app.AuthenticationHeaderContent
-import com.example.comusenias.presentation.component.register.RegisterForm
+import com.example.comusenias.presentation.component.defaults.app.ButtonApp
+import com.example.comusenias.presentation.component.register.childForm.ChildFormContent
 import com.example.comusenias.presentation.navigation.AppScreen
-import com.example.comusenias.presentation.ui.theme.doYouAlreadyHaveAnAccount
-import com.example.comusenias.presentation.ui.theme.enter
+import com.example.comusenias.presentation.ui.theme.CONTINUE
 import com.example.comusenias.presentation.ui.theme.size30
-
 @Composable
-fun RegisterScreen(modifier: Modifier, navController: NavHostController) {
+fun ChildFormScreen(modifier: Modifier, navController: NavHostController) {
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -30,11 +28,10 @@ fun RegisterScreen(modifier: Modifier, navController: NavHostController) {
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             AuthenticationHeaderContent()
-            RegisterForm(navController = navController)
-            AuthenticationFooterContent(
-                textOne = doYouAlreadyHaveAnAccount,
-                textTwo = enter,
-                onClickText = { navController.navigate(route = AppScreen.LoginScreen.route) }
+            ChildFormContent()
+            ButtonApp(
+                titleButton = CONTINUE,
+                onClickButton = { navController.navigate(route = AppScreen.HomeScreen.route) }
             )
         }
     }

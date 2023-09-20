@@ -15,7 +15,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.comusenias.constants.TestTag
@@ -49,10 +48,4 @@ fun ButtonApp(
             Icon(imageVector = icon, contentDescription = "Icons button")
         }
     }
-}
-
-@Preview
-@Composable
-fun PreviewButton(){
-    ButtonApp(titleButton = "Iniciar sesión")
 }

@@ -10,7 +10,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
@@ -70,24 +71,22 @@ fun ProfileContent(
 
             Spacer(modifier = Modifier.height(55.dp))
             TextFieldApp(
-
-                label = PROFILE_USER,
+                icon = Icons.Default.Person,
                 value = viewModel.userData.userName,
                 onValueChange = {},
                 validateField = {},
-                icon = Icons.Default.Edit,
+                label = PROFILE_USER,
                 keyboardType = KeyboardType.Text,
                 hideText = false,
                 readOnly = true,
             )
             Spacer(modifier = Modifier.height(20.dp))
             TextFieldApp(
-
-                label = PROFILE_EMAIL,
+                icon = Icons.Default.Email,
                 value = viewModel.userData.email,
                 onValueChange = {},
                 validateField = {},
-                icon = Icons.Default.Edit,
+                label = PROFILE_EMAIL,
                 keyboardType = KeyboardType.Text,
                 hideText = false,
                 readOnly = true

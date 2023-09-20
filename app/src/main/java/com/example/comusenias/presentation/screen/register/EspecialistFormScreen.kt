@@ -5,20 +5,22 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.comusenias.presentation.component.defaults.app.AuthenticationFooterContent
 import com.example.comusenias.presentation.component.defaults.app.AuthenticationHeaderContent
-import com.example.comusenias.presentation.component.register.RegisterForm
+import com.example.comusenias.presentation.component.defaults.app.ButtonApp
+import com.example.comusenias.presentation.component.register.especialistForm.EspecialistFormContent
 import com.example.comusenias.presentation.navigation.AppScreen
-import com.example.comusenias.presentation.ui.theme.doYouAlreadyHaveAnAccount
-import com.example.comusenias.presentation.ui.theme.enter
+import com.example.comusenias.presentation.ui.theme.CONTINUE
 import com.example.comusenias.presentation.ui.theme.size30
+import com.example.comusenias.presentation.ui.theme.size50
 
 @Composable
-fun RegisterScreen(modifier: Modifier, navController: NavHostController) {
+fun EspecialistFormScreen(modifier: Modifier, navController: NavHostController) {
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -26,15 +28,15 @@ fun RegisterScreen(modifier: Modifier, navController: NavHostController) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .verticalScroll(rememberScrollState())
                 .padding(start = size30.dp, end = size30.dp, top = size30.dp),
-            verticalArrangement = Arrangement.SpaceBetween
+            verticalArrangement = Arrangement.spacedBy(size50.dp)
         ) {
             AuthenticationHeaderContent()
-            RegisterForm(navController = navController)
-            AuthenticationFooterContent(
-                textOne = doYouAlreadyHaveAnAccount,
-                textTwo = enter,
-                onClickText = { navController.navigate(route = AppScreen.LoginScreen.route) }
+            EspecialistFormContent()
+            ButtonApp(
+                titleButton = CONTINUE,
+                onClickButton = { navController.navigate(route = AppScreen.HomeScreen.route) }
             )
         }
     }

@@ -21,8 +21,8 @@ class TextFieldInputAppTest {
         composeTestRule.setContent {
             TextFieldApp(
                 value = "fabian@gmail.com",
-                onValueChange = { } ,
-                label = "Correo electrónico" ,
+                onValueChange = { },
+                label = "Correo electrónico",
                 icon = Icons.Default.Email
             )
         }
@@ -33,8 +33,8 @@ class TextFieldInputAppTest {
         composeTestRule.setContent {
             TextFieldApp(
                 value = "fabian@gmail.com",
-                onValueChange = { } ,
-                label = "Correo electrónico" ,
+                onValueChange = { },
+                label = "Correo electrónico",
                 icon = Icons.Default.Email
             )
         }
