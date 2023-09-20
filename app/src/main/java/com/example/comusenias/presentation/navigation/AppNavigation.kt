@@ -43,7 +43,7 @@ private fun GetNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = AppScreen.PremiumScreen.route
+        startDestination = AppScreen.SplashScreen.route
     ) {
 
         authNavGraph(navController = navController , modifier = modifier)
