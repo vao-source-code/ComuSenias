@@ -65,8 +65,8 @@ fun SpecialistHomeExample(navController: NavHostController, modifier: Modifier) 
 
                 CardHomeSpecialist(
                     image = R.drawable.diagnostic_category,
-                    title = "Nombre especialista",
-                    subtitle = "Especialidad",
+                    title = "Juan Perez",
+                    subtitle = "Psicologo Infantil",
                     onClickCard = { navController.navigate(route = AppScreen.ProfileScreen.route) }
                 )
 
@@ -116,15 +116,15 @@ fun CardExampleDos(user: User, navController: NavHostController, onItemSelected:
 
 fun getChapterItem(): List<User> {
     return listOf(
-        User(id = "1", userName = "Nombre", image = ""),
-        User(id = "2", userName = "Nombre1", image = ""),
-        User(id = "3", userName = "Nombre2", image = ""),
-        User(id = "4", userName = "Nombre3", image = ""),
-        User(id = "5", userName = "Nombre4", image = ""),
-        User(id = "6", userName = "Nombre5", image = ""),
-        User(id = "7", userName = "Nombre6", image = ""),
-        User(id = "8", userName = "Nombre7", image = ""),
-        User(id = "9", userName = "Nombre8", image = ""),
+        User(id = "1", userName = "Alberto Wirstes", image = ""),
+        User(id = "2", userName = "Sabrina Gomez", image = ""),
+        User(id = "3", userName = "Norma Gonzales", image = ""),
+        User(id = "4", userName = "Nicolas Orue", image = ""),
+        User(id = "5", userName = "Esther Segovia", image = ""),
+        User(id = "6", userName = "Juan Carnizo", image = ""),
+        User(id = "7", userName = "Victor Alvarez", image = ""),
+        User(id = "8", userName = "Karina Gomez", image = ""),
+        User(id = "9", userName = "Daniel Arribas", image = ""),
 
         )
 }
