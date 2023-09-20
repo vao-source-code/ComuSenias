@@ -27,10 +27,10 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.example.comusenias.constants.TestTag
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
+import com.example.comusenias.presentation.ui.theme.SIZE12
+import com.example.comusenias.presentation.ui.theme.SIZE16
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
 import com.example.comusenias.presentation.ui.theme.size10
-import com.example.comusenias.presentation.ui.theme.size12
-import com.example.comusenias.presentation.ui.theme.size16
 import com.example.comusenias.presentation.ui.theme.size6
 
 @Composable
@@ -42,7 +42,7 @@ fun BottomSection(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(size12.dp)
+            .padding(SIZE12.dp)
     ) {
         Indicators(size = size, index = index)
 
@@ -75,7 +75,7 @@ fun BoxScope.Indicators(size: Int, index: Int) {
 @Composable
 fun Indicator(isSelected: Boolean) {
     val width = animateDpAsState(
-        targetValue = if (isSelected) size16.dp else size12.dp,
+        targetValue = if (isSelected) SIZE16.dp else SIZE12.dp,
         animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy), label = EMPTY_STRING
     )
     Box(

@@ -3,6 +3,7 @@ package com.example.comusenias.presentation.screen.home
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,6 +19,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -30,15 +32,16 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.comusenias.R
 import com.example.comusenias.domain.library.chapter.ProvideChapter
+import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.LETS_GO_LEARN
 import com.example.comusenias.presentation.ui.theme.QUANTITY_COLUMNS
+import com.example.comusenias.presentation.ui.theme.SIZE12
+import com.example.comusenias.presentation.ui.theme.SIZE16
 import com.example.comusenias.presentation.ui.theme.SIZE200
 import com.example.comusenias.presentation.ui.theme.SIZE22
 import com.example.comusenias.presentation.ui.theme.SIZE26
 import com.example.comusenias.presentation.ui.theme.SIZE60
 import com.example.comusenias.presentation.ui.theme.size10
-import com.example.comusenias.presentation.ui.theme.size12
-import com.example.comusenias.presentation.ui.theme.size16
 import com.example.comusenias.presentation.ui.theme.size20
 
 @Composable
@@ -59,7 +62,7 @@ fun HomeScreenExample(navController: NavHostController, modifier: Modifier) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(size16.dp),
+                .padding(SIZE16.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -88,33 +91,35 @@ fun HomeScreenExample(navController: NavHostController, modifier: Modifier) {
                     .fillMaxWidth()
                     .align(Alignment.CenterHorizontally)
             )
-            ChapterView(modifier = modifier)
+            ChapterView(navController, modifier = modifier)
         }
     }
 }
 
 @Composable
-fun ChapterView(modifier: Modifier) {
+fun ChapterView(navController: NavHostController, modifier: Modifier) {
     LazyVerticalGrid(
         modifier = modifier,
         columns = GridCells.Fixed(QUANTITY_COLUMNS),
     ) {
         items(getChapterItem()) { chapter ->
-            CardExampleDos(chapter = chapter) {
-            }
+            CardExampleDos(chapter = chapter, navController)
         }
     }
 }
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("NewApi")
 @Composable
-fun CardExampleDos(chapter: ProvideChapter, onItemSelected: (ProvideChapter) -> Unit) {
+fun CardExampleDos(chapter: ProvideChapter, navController: NavHostController) {
     Card(
         colors = CardDefaults.cardColors(
             containerColor = chapter.color
         ),
-        modifier = Modifier.padding(size12.dp),
+        modifier = Modifier
+            .padding(SIZE12.dp)
+            .clickable { navController.navigate(AppScreen.LearnSignScreen.route) },
         shape = RoundedCornerShape(SIZE26.dp),
         elevation = CardDefaults.cardElevation(
             defaultElevation = size20.dp
@@ -122,7 +127,7 @@ fun CardExampleDos(chapter: ProvideChapter, onItemSelected: (ProvideChapter) -> 
     ) {
         Column(
             modifier = Modifier
-                .padding(size12.dp)
+                .padding(SIZE12.dp)
                 .background(chapter.color)
         ) {
             Image(
@@ -138,7 +143,7 @@ fun CardExampleDos(chapter: ProvideChapter, onItemSelected: (ProvideChapter) -> 
                 modifier = Modifier.align(Alignment.CenterHorizontally),
                 text = chapter.title,
                 style = androidx.compose.ui.text.TextStyle(
-                    fontSize = size16.sp,
+                    fontSize = SIZE16.sp,
                     fontWeight = FontWeight.Bold
                 ),
             )

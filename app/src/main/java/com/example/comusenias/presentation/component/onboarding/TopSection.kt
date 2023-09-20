@@ -10,16 +10,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.comusenias.presentation.ui.theme.SIZE12
 import com.example.comusenias.presentation.ui.theme.SKIP
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
-import com.example.comusenias.presentation.ui.theme.size12
 
 @Composable
 fun TopSection(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(size12.dp)
+            .padding(SIZE12.dp)
     ) {
         TextButton(
             onClick = {},

@@ -29,7 +29,7 @@ fun LoginForm(
         verticalArrangement = Arrangement.spacedBy(50.dp)
     ) {
 
-        ResponseStatusLogin(navController =navController)
+        ResponseStatusLogin(navController = navController)
 
         Column(
             modifier = Modifier.fillMaxWidth(),
@@ -37,7 +37,7 @@ fun LoginForm(
         ) {
             TextFieldApp(
                 value = state.email,
-                onValueChange = {viewModel.onEmailInput(it) },
+                onValueChange = { viewModel.onEmailInput(it) },
                 validateField = { viewModel.validateEmail() },
                 label = "Correo electrónico",
                 keyboardType = KeyboardType.Email,
@@ -65,8 +65,6 @@ fun LoginForm(
             LineDivisorLogin()
             GoogleSignInButton()
         }
-
-
     }
 }
 

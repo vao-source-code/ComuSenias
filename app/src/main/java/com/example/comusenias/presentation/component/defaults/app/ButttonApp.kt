@@ -3,6 +3,7 @@ package com.example.comusenias.presentation.component.defaults.app
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -20,20 +21,23 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.comusenias.constants.TestTag
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
+
 @Composable
 fun ButtonApp(
     titleButton: String,
     onClickButton: () -> Unit = {},
     enabledButton: Boolean = true,
-    icon: ImageVector? = null
+    icon: ImageVector? = null,
+    modifier: Modifier = Modifier
 ) {
     Button(
         colors = ButtonDefaults.buttonColors(primaryColorApp),
         shape = RoundedCornerShape(10.dp),
         enabled = enabledButton,
         onClick = { onClickButton() },
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
+            .padding()
             .height(50.dp)
             .testTag(TestTag.TAG_BUTTON_APP)
     ) {
@@ -53,6 +57,6 @@ fun ButtonApp(
 
 @Preview
 @Composable
-fun PreviewButton(){
+fun PreviewButton() {
     ButtonApp(titleButton = "Iniciar sesión")
 }
