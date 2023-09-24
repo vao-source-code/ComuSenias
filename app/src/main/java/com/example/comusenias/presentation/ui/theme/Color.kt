@@ -2,6 +2,7 @@ package com.example.comusenias.presentation.ui.theme
 import androidx.compose.ui.graphics.Color
 
 val primaryColorApp = Color(0xFF7584F2)
+val cardColorCheckPoint = Color(0xB2F2D05C)
 val backgroundColorApp = Color(0xFFFFFFFF)
 val blackColorApp = Color(0xFF252525)
 val cardGray = Color(0xFFD9D9D9)
