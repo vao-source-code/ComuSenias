@@ -60,7 +60,7 @@ fun CardGameCheckPoint() {
                     text = "Prueba de control",
                     style = TextStyle(
                         fontSize = SIZE16.sp,
-                        fontWeight = FontWeight(600),
+                        fontWeight = FontWeight.SemiBold,
                         color = blackColorApp
                     )
                 )
@@ -68,7 +68,7 @@ fun CardGameCheckPoint() {
                     text = "¿Has consultado con un especialista para evaluar cómo está avanzando tu aprendizaje?",
                     style = TextStyle(
                         fontSize = SIZE12.sp,
-                        fontWeight = FontWeight(400),
+                        fontWeight = FontWeight.Normal,
                         color = blackColorApp
                     )
                 )

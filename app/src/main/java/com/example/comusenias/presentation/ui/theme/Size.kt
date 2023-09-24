@@ -2,13 +2,15 @@ package com.example.comusenias.presentation.ui.theme
 
 const val size08: Float = 0.8f
 const val size1: Int = 1
-const val SIZE2: Int = 1
+const val SIZE2: Int = 2
 const val size3: Int = 3
 const val size5: Int = 5
 const val size6: Int = 6
 const val size7: Int = 7
+const val size9: Int = 9
 const val size10: Int = 10
 const val SIZE12: Int = 12
+const val size13: Int = 13
 const val size14: Int = 14
 const val size15: Int = 15
 const val SIZE16: Int = 16

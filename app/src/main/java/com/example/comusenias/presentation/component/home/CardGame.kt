@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.comusenias.R
@@ -33,7 +34,7 @@ import com.example.comusenias.presentation.ui.theme.cardGray
 import com.example.comusenias.presentation.ui.theme.cardInProgress
 import com.example.comusenias.presentation.ui.theme.iconColorProgress
 import com.example.comusenias.presentation.ui.theme.size15
-
+@Preview(showBackground = true)
 @Composable
 fun CardGame() {
     Box (
@@ -61,7 +62,7 @@ fun CardGame() {
                     style = TextStyle(
                         fontSize = SIZE16.sp,
                         lineHeight = SIZE24.sp,
-                        fontWeight = FontWeight(500),
+                        fontWeight = FontWeight.Medium,
                         color = blackColorApp
                     )
                 )
