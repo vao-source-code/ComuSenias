@@ -20,6 +20,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.comusenias.R
+import com.example.comusenias.presentation.ui.theme.CHECK_POINT
+import com.example.comusenias.presentation.ui.theme.CONSULT_WHIT_ESPECIALIST
 import com.example.comusenias.presentation.ui.theme.SIZE12
 import com.example.comusenias.presentation.ui.theme.SIZE16
 import com.example.comusenias.presentation.ui.theme.SIZE28
@@ -57,7 +59,7 @@ fun CardGameCheckPoint() {
                 verticalArrangement = Arrangement.spacedBy(size7.dp)
             ) {
                 Text(
-                    text = "Prueba de control",
+                    text = CHECK_POINT,
                     style = TextStyle(
                         fontSize = SIZE16.sp,
                         fontWeight = FontWeight.SemiBold,
@@ -65,7 +67,7 @@ fun CardGameCheckPoint() {
                     )
                 )
                 Text(
-                    text = "¿Has consultado con un especialista para evaluar cómo está avanzando tu aprendizaje?",
+                    text = CONSULT_WHIT_ESPECIALIST,
                     style = TextStyle(
                         fontSize = SIZE12.sp,
                         fontWeight = FontWeight.Normal,
