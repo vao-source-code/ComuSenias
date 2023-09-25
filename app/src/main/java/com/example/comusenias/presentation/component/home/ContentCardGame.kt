@@ -42,11 +42,11 @@ enum class StatusGame {
 fun ContentCardGame(status: StatusGame ) {
     var currentStatus by remember { mutableStateOf(status) }
 
-    var lineColor: Color
-    var backgroundColorCard: Color
-    var iconColor: Color
-    var blur: Int
-    var iconImage: Int
+    val lineColor: Color
+    val backgroundColorCard: Color
+    val iconColor: Color
+    val blur: Int
+    val iconImage: Int
 
     when (currentStatus) {
         StatusGame.COMPLETED -> {
