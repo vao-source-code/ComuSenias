@@ -1,5 +1,6 @@
 package com.example.comusenias.presentation.component.home
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -7,21 +8,22 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.comusenias.presentation.ui.theme.size1
 import com.example.comusenias.presentation.ui.theme.size14
 
-@Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun ContentHome() {
+fun ContentHome(navController: NavHostController, modifier: Modifier) {
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
             .padding(
-                horizontal = size14.dp,
-                vertical = size14.dp
-            ),
+                start = size14.dp,
+                end = size14.dp,
+            )
+            .background(Color.White),
         verticalArrangement = Arrangement.spacedBy(size1.dp)
     ) {
         item {

@@ -1,12 +1,15 @@
 package com.example.comusenias.presentation.component.home
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -22,7 +25,9 @@ import com.example.comusenias.presentation.ui.theme.size20
 fun ContentLevel() {
     Column(
         modifier = Modifier
-            .padding(top = size20.dp, bottom = SIZE12.dp),
+            .fillMaxSize()
+            .padding(top = size20.dp, bottom = SIZE12.dp)
+            .background(Color.White),
         verticalArrangement = Arrangement.spacedBy(SIZE2.dp, Alignment.CenterVertically),
         horizontalAlignment = Alignment.Start,
     ) {
