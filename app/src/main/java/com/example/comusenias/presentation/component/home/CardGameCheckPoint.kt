@@ -1,5 +1,6 @@
 package com.example.comusenias.presentation.component.home
 
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -36,6 +37,7 @@ import com.example.comusenias.presentation.ui.theme.size7
 @Preview(showBackground = true)
 @Composable
 fun CardGameCheckPoint() {
+    val border = animateColorAsState(cardGray, label = "")
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -51,7 +53,8 @@ fun CardGameCheckPoint() {
         ) {
             ImageWhitBorder(
                 image = R.drawable.diagnostic_category ,
-                borderColor = cardGray
+                borderColor = border,
+                border = 0
             )
             Column(
                 modifier = Modifier

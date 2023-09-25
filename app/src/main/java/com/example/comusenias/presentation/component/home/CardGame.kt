@@ -13,12 +13,13 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.comusenias.R
@@ -28,20 +29,22 @@ import com.example.comusenias.presentation.ui.theme.SIZE24
 import com.example.comusenias.presentation.ui.theme.SIZE27
 import com.example.comusenias.presentation.ui.theme.SIZE28
 import com.example.comusenias.presentation.ui.theme.SIZE36
-import com.example.comusenias.presentation.ui.theme.SIZE90
+import com.example.comusenias.presentation.ui.theme.SIZE70
 import com.example.comusenias.presentation.ui.theme.blackColorApp
-import com.example.comusenias.presentation.ui.theme.cardGray
-import com.example.comusenias.presentation.ui.theme.cardInProgress
-import com.example.comusenias.presentation.ui.theme.iconColorProgress
 import com.example.comusenias.presentation.ui.theme.size15
-@Preview(showBackground = true)
+
 @Composable
-fun CardGame() {
+fun CardGame(
+    lineColor: State<Color>,
+    backgroundCard: State<Color>,
+    iconColor: State<Color>,
+    icon: State<Int>
+    ) {
     Box (
         modifier = Modifier
-            .background(cardInProgress, shape = RoundedCornerShape(SIZE12.dp))
+            .background(backgroundCard.value, shape = RoundedCornerShape(SIZE12.dp))
             .fillMaxWidth()
-            .height(SIZE90.dp)
+            .height(SIZE70.dp)
     ) {
         Row(
             modifier = Modifier
@@ -50,7 +53,7 @@ fun CardGame() {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(SIZE28.dp)
         ) {
-           ImageWhitBorder(image = R.drawable.vowels, borderColor = cardGray)
+           ImageWhitBorder(image = R.drawable.vowel_a, borderColor = lineColor)
             Row(
                 modifier = Modifier
                     .fillMaxWidth(),
@@ -62,16 +65,16 @@ fun CardGame() {
                     style = TextStyle(
                         fontSize = SIZE16.sp,
                         lineHeight = SIZE24.sp,
-                        fontWeight = FontWeight.Medium,
+                        fontWeight = FontWeight.SemiBold,
                         color = blackColorApp
                     )
                 )
                 Icon(
                     modifier = Modifier
                         .size(SIZE36.dp),
-                    painter = painterResource(id = R.drawable.time_icon),
+                    painter = painterResource(id = icon.value),
                     contentDescription = "",
-                    tint = iconColorProgress
+                    tint = iconColor.value
                 )
             }
         }
