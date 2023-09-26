@@ -29,7 +29,7 @@ import com.example.comusenias.presentation.ui.theme.SIZE24
 import com.example.comusenias.presentation.ui.theme.SIZE27
 import com.example.comusenias.presentation.ui.theme.SIZE28
 import com.example.comusenias.presentation.ui.theme.SIZE36
-import com.example.comusenias.presentation.ui.theme.SIZE70
+import com.example.comusenias.presentation.ui.theme.SIZE90
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.size15
 
@@ -44,7 +44,7 @@ fun CardGame(
         modifier = Modifier
             .background(backgroundCard.value, shape = RoundedCornerShape(SIZE12.dp))
             .fillMaxWidth()
-            .height(SIZE70.dp)
+            .height(SIZE90.dp)
     ) {
         Row(
             modifier = Modifier

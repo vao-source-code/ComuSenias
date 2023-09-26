@@ -18,5 +18,8 @@ class TestTag {
         const val TAG_COLUMN_SPLASH_SCREEN = "columnSplashScreen"
         const val TAG_BUTTON_DEFAULT = "columnSplashScreen"
         const val TAG_PROFESIONAL_SCREEN = "profesionalScreen"
+        const val TAG_CONTENT_CARD_GAME = "contentCardGame"
+        const val TAG_LINE_COLOR_CARD = "lineColor"
+
     }
 }

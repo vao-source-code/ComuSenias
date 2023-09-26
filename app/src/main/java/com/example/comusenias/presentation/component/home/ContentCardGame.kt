@@ -15,13 +15,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.comusenias.R
+import com.example.comusenias.constants.TestTag
 import com.example.comusenias.presentation.ui.theme.SIZE12
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.cardGray
@@ -40,7 +41,7 @@ enum class StatusGame {
 
 @Composable
 fun ContentCardGame(status: StatusGame ) {
-    var currentStatus by remember { mutableStateOf(status) }
+    val currentStatus by remember { mutableStateOf(status) }
 
     val lineColor: Color
     val backgroundColorCard: Color
@@ -72,17 +73,18 @@ fun ContentCardGame(status: StatusGame ) {
         }
     }
 
-    var linecColorAnimate = animateColorAsState(lineColor, label = "")
-    var backgroundColorCardAnimate = animateColorAsState(backgroundColorCard, label = "")
-    var iconColorAnimate = animateColorAsState(iconColor, label = "")
-    var blurAnimate = animateDpAsState(targetValue = blur.dp, label = "")
-    var iconAnimate = animateIntAsState(targetValue = iconImage, label = "")
+    val linecColorAnimate = animateColorAsState(lineColor, label = "")
+    val backgroundColorCardAnimate = animateColorAsState(backgroundColorCard, label = "")
+    val iconColorAnimate = animateColorAsState(iconColor, label = "")
+    val blurAnimate = animateDpAsState(targetValue = blur.dp, label = "")
+    val iconAnimate = animateIntAsState(targetValue = iconImage, label = "")
 
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .blur(radius = blurAnimate.value)
             .background(Color.White)
+            .testTag(TestTag.TAG_CONTENT_CARD_GAME + currentStatus.name)
     ) {
         CardGame(
             lineColor = linecColorAnimate,
@@ -103,6 +105,7 @@ fun ContentCardGame(status: StatusGame ) {
                         color = linecColorAnimate.value,
                         shape = RoundedCornerShape(SIZE12.dp)
                     )
+                    .testTag(TestTag.TAG_LINE_COLOR_CARD)
             )
         }
     }
