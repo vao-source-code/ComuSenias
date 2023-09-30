@@ -1,0 +1,3 @@
+package com.example.comusenias.presentation.view_model
+
+class ListLetrasViewModel

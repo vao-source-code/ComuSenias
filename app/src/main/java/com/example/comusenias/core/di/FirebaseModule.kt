@@ -78,6 +78,8 @@ object FirebaseModule {
     @Provides
     fun providerStorageRef(storage : FirebaseStorage) = storage.reference.child(USERS_COLLECTION)
 
+    @Provides
+    fun providerStorageLetter(storage : FirebaseStorage, user : String) = storage.reference.child(USERS_COLLECTION)
 
 
 }
