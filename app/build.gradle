@@ -118,6 +118,9 @@ dependencies {
     implementation libs.coil
     implementation libs.accompanist
     implementation libs.commons
+
+    implementation 'com.google.firebase:firebase-storage:20.0.0'
+
 }
 kapt {
     correctErrorTypes true
