@@ -28,6 +28,7 @@ fun LoginScreen(
     bottomBarViewModel: BottomBarViewModel = hiltViewModel()
 ) {
     bottomBarViewModel.isBottomAppBarVisible.value = true
+
     Box(
         modifier = modifier
             .fillMaxSize()
