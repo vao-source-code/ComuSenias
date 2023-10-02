@@ -5,5 +5,5 @@ import java.io.File
 
 interface LetterImageRepository {
 
-    suspend fun getLetterImage(letter: Char): File
+    suspend fun getLetterImage(letter: String): File
 }
