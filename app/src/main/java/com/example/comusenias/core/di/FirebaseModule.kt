@@ -15,6 +15,7 @@ import com.example.comusenias.domain.use_cases.auth.Logout
 import com.example.comusenias.domain.use_cases.auth.Register
 import com.example.comusenias.domain.use_cases.letters.GetImage
 import com.example.comusenias.domain.use_cases.letters.LettersUseCase
+import com.example.comusenias.domain.use_cases.letters.SearchImage
 import com.example.comusenias.domain.use_cases.users.CreateUser
 import com.example.comusenias.domain.use_cases.users.GetUserById
 import com.example.comusenias.domain.use_cases.users.SaveImageUser
@@ -37,7 +38,7 @@ import javax.inject.Named
 @Module
 object FirebaseModule {
 
-    /*----------------------------- Auth --------------------------------------------------- */
+    /*----------------------------- Auth -------------------------------------------------------- */
     @Provides
     fun providerFirebaseAuth() = FirebaseAuth.getInstance()
 
@@ -66,6 +67,11 @@ object FirebaseModule {
     fun providerUserRef(db: FirebaseFirestore): CollectionReference =
         db.collection(USERS_COLLECTION)
 
+    @Provides
+    @Named(LETTERS_COLLECTION)
+    fun providerLettersRef(db: FirebaseFirestore): CollectionReference =
+        db.collection(LETTERS_COLLECTION)
+
 
     @Provides
     fun providerUsersRepository(impl: UsersRepositoryImpl): UsersRepository = impl
@@ -83,20 +89,22 @@ object FirebaseModule {
 
     @Provides
     fun providerLettersUseCases(letterImageRepository: LetterImageRepository) = LettersUseCase(
-        getImage = GetImage(letterImageRepository)
+        getImage = GetImage(letterImageRepository),
+        searchImage = SearchImage(letterImageRepository)
     )
 
-    /*----------------------------- Storage --------------------------------------------------- */
+    /*----------------------------- Storage ----------------------------------------------------- */
     @Provides
-    fun providerFirebaseStorage() : FirebaseStorage = FirebaseStorage.getInstance()
+    fun providerFirebaseStorage(): FirebaseStorage = FirebaseStorage.getInstance()
 
     @Provides
     @Named(USERS_COLLECTION)
-    fun providerStorageRefUsers(storage : FirebaseStorage) = storage.reference.child(USERS_COLLECTION)
+    fun providerStorageRefUsers(storage: FirebaseStorage) =
+        storage.reference.child(USERS_COLLECTION)
 
     @Provides
     @Named(LETTERS_COLLECTION)
-    fun providerStorageRefLetters(storage : FirebaseStorage) = storage.reference.child(LETTERS_COLLECTION)
-
+    fun providerStorageRefLetters(storage: FirebaseStorage) =
+        storage.reference.child(LETTERS_COLLECTION)
 
 }
