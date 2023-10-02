@@ -13,7 +13,6 @@ import com.example.comusenias.presentation.component.defaults.app.TextFieldApp
 import com.example.comusenias.presentation.ui.theme.AGE
 import com.example.comusenias.presentation.ui.theme.HOW_OLD_ARE_YOU
 import com.example.comusenias.presentation.ui.theme.NAME
-import com.example.comusenias.presentation.ui.theme.SIZE70
 import com.example.comusenias.presentation.ui.theme.WHAT_IS_YOUR_NAME
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
 import com.example.comusenias.presentation.ui.theme.size10
@@ -23,7 +22,6 @@ import com.example.comusenias.presentation.ui.theme.size20
 fun ChildFormContent(){
     Column(
         modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(SIZE70.dp)
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(size10.dp)

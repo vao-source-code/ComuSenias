@@ -65,6 +65,7 @@ dependencies {
     implementation libs.uiGraphics
     implementation libs.uiToolingPreview
     implementation libs.material3
+    implementation libs.constraintlayout.compose
 
     implementation libs.accompanist.pager
     implementation libs.accompanist.pager.indicators
