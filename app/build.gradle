@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace 'com.example.comusenias'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.example.comusenias"
@@ -53,6 +53,8 @@ android {
 }
 
 dependencies {
+    implementation libs.ui.android
+    implementation libs.play.services.mlkit.text.recognition.common
     testImplementation 'junit:junit:'
     testImplementation "androidx.arch.core:core-testing:2.2.0"
     testImplementation 'androidx.test:core:1.5.0'

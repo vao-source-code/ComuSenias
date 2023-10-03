@@ -23,7 +23,7 @@ jUnit = "4.13.2"
 espresso = "3.5.0"
 junitExt = "1.1.5"
 kotlinBom = "1.8.0"
-androidApplication = "8.0.2"
+androidApplication = "8.1.2"
 kotlinAndroid = "1.7.20"
 kotlinJvm = "1.6.10"
 googleServices = "4.3.15"
@@ -78,6 +78,8 @@ accompanist = { module = "com.google.accompanist:accompanist-permissions", versi
 firebaseStorage = { module = "com.google.firebase:firebase-firestore-ktx", version.ref = "firebaseStorage" }
 commons = { module = "commons-io:commons-io", version.ref = "commons" }
 kotlinXCoroutinesTest = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinXCoroutinesTest" }
+ui-android = { group = "androidx.compose.ui", name = "ui-android", version = "1.5.2" }
+play-services-mlkit-text-recognition-common = { group = "com.google.android.gms", name = "play-services-mlkit-text-recognition-common", version = "19.0.0" }
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "androidApplication" }
