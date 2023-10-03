@@ -3,7 +3,7 @@ package com.example.comusenias.data.repositories
 import android.net.Uri
 import com.example.comusenias.constants.FirebaseConstants.USERS_COLLECTION
 import com.example.comusenias.domain.models.Response
-import com.example.comusenias.domain.models.User
+import com.example.comusenias.domain.models.model.UserModel
 import com.example.comusenias.domain.repositories.UsersRepository
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.storage.StorageReference
@@ -21,7 +21,7 @@ class UsersRepositoryImpl @Inject constructor(
 ) : UsersRepository {
 
 
-    override suspend fun createUser(user: User): Response<Boolean> {
+    override suspend fun createUser(user: UserModel): Response<Boolean> {
         return try {
             usersRef.document(user.id).set(user).await()
             Response.Success(true)
@@ -31,9 +31,9 @@ class UsersRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getUserById(id: String): Flow<User> = callbackFlow {
+    override fun getUserById(id: String): Flow<UserModel> = callbackFlow {
         val snapshotListener = usersRef.document(id).addSnapshotListener { snapshot, _ ->
-            val user = snapshot?.toObject(User::class.java) ?: User()
+            val user = snapshot?.toObject(UserModel::class.java) ?: UserModel()
             trySend(user)
         }
         awaitClose {
@@ -41,7 +41,7 @@ class UsersRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun updateUser(user: User): Response<Boolean> {
+    override suspend fun updateUser(user: UserModel): Response<Boolean> {
         return try {
             val mapImage: MutableMap<String, Any> = HashMap()
             mapImage["userName"] = user.userName

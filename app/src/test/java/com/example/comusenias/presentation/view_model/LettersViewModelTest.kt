@@ -2,10 +2,10 @@ package com.example.comusenias.presentation.view_model
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.comusenias.constants.AlphabetConstants
-import com.example.comusenias.domain.models.Letters
 import com.example.comusenias.domain.models.Response
-import com.example.comusenias.domain.use_cases.letters.LettersUseCase
-import com.example.comusenias.domain.use_cases.letters.SearchImage
+import com.example.comusenias.domain.models.model.LetterModel
+import com.example.comusenias.domain.use_cases.letters.LettersFactoryUseCases
+import com.example.comusenias.domain.use_cases.letters.SearchImageLetterUseCase
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.RelaxedMockK
@@ -21,15 +21,15 @@ import org.junit.Rule
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-class ListLettersViewModelTest {
+class LettersViewModelTest {
 
     @RelaxedMockK
-    private lateinit var lettersUseCase: LettersUseCase
+    private lateinit var lettersUseCase: LettersFactoryUseCases
 
     @RelaxedMockK
-    private lateinit var searchImage: SearchImage
+    private lateinit var searchImage: SearchImageLetterUseCase
 
-    private lateinit var viewModel: ListLettersViewModel
+    private lateinit var viewModel: LettersViewModel
 
     @get:Rule
     var rule: InstantTaskExecutorRule = InstantTaskExecutorRule()
@@ -37,7 +37,7 @@ class ListLettersViewModelTest {
     @Before
     fun onBefore() {
        MockKAnnotations.init(this)
-        viewModel = ListLettersViewModel(lettersUseCase = lettersUseCase)
+        viewModel = LettersViewModel(lettersUseCase = lettersUseCase)
         Dispatchers.setMain(Dispatchers.Unconfined)
     }
 
@@ -50,15 +50,15 @@ class ListLettersViewModelTest {
     @Test
     fun verificarBusquedaDeImagen() {
         //Given
-        val letters = Letters("id_number", AlphabetConstants.Letter.F.toString(), "")
+        val letters = LetterModel("id_number", AlphabetConstants.Letter.F.toString(), "")
         val listOf = listOf(letters)
 
         //When
 
-        coEvery { lettersUseCase.searchImage("a") } returns object :
-            Flow<Response<List<Letters>>> {
-            override suspend fun collect(collector: FlowCollector<Response<List<Letters>>>) {
-                collector.emit(Response.Success(listOf(Letters("id_number", AlphabetConstants.Letter.F.toString(), ""))))
+        coEvery { lettersUseCase.searchImageLetterUseCase("a") } returns object :
+            Flow<Response<List<LetterModel>>> {
+            override suspend fun collect(collector: FlowCollector<Response<List<LetterModel>>>) {
+                collector.emit(Response.Success(listOf(LetterModel("id_number", AlphabetConstants.Letter.F.toString(), ""))))
             }
         }
 

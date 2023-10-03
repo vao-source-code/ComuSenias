@@ -8,19 +8,19 @@ import com.example.comusenias.data.repositories.UsersRepositoryImpl
 import com.example.comusenias.domain.repositories.AuthRepository
 import com.example.comusenias.domain.repositories.LetterImageRepository
 import com.example.comusenias.domain.repositories.UsersRepository
-import com.example.comusenias.domain.use_cases.auth.AuthUseCases
-import com.example.comusenias.domain.use_cases.auth.GetCurrentUser
-import com.example.comusenias.domain.use_cases.auth.Login
-import com.example.comusenias.domain.use_cases.auth.Logout
-import com.example.comusenias.domain.use_cases.auth.Register
-import com.example.comusenias.domain.use_cases.letters.GetImage
-import com.example.comusenias.domain.use_cases.letters.LettersUseCase
-import com.example.comusenias.domain.use_cases.letters.SearchImage
-import com.example.comusenias.domain.use_cases.users.CreateUser
-import com.example.comusenias.domain.use_cases.users.GetUserById
-import com.example.comusenias.domain.use_cases.users.SaveImageUser
-import com.example.comusenias.domain.use_cases.users.UpdateUser
-import com.example.comusenias.domain.use_cases.users.UsersUseCase
+import com.example.comusenias.domain.use_cases.auth.AuthFactoryUseCases
+import com.example.comusenias.domain.use_cases.auth.GetCurrentUserUseCase
+import com.example.comusenias.domain.use_cases.auth.LoginUseCase
+import com.example.comusenias.domain.use_cases.auth.LogoutUseCase
+import com.example.comusenias.domain.use_cases.auth.RegisterUseCase
+import com.example.comusenias.domain.use_cases.letters.GetImageUseCase
+import com.example.comusenias.domain.use_cases.letters.LettersFactoryUseCases
+import com.example.comusenias.domain.use_cases.letters.SearchImageLetterUseCase
+import com.example.comusenias.domain.use_cases.users.CreateUserUseCase
+import com.example.comusenias.domain.use_cases.users.GetUserByIdUseCase
+import com.example.comusenias.domain.use_cases.users.SaveImageUserUseCase
+import com.example.comusenias.domain.use_cases.users.UpdateUserUseCase
+import com.example.comusenias.domain.use_cases.users.UsersFactoryUseCases
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -50,11 +50,11 @@ object FirebaseModule {
 
     @Provides
     fun providerAuthUseCases(authRepository: AuthRepository) =
-        AuthUseCases(
-            getCurrentUser = GetCurrentUser(authRepository),
-            login = Login(authRepository),
-            logout = Logout(authRepository),
-            register = Register(authRepository)
+        AuthFactoryUseCases(
+            getCurrentUserUseCase = GetCurrentUserUseCase(authRepository),
+            loginUseCase = LoginUseCase(authRepository),
+            logoutUseCase = LogoutUseCase(authRepository),
+            registerUseCase = RegisterUseCase(authRepository)
         )
 
     /*----------------------------- Firestore --------------------------------------------------- */
@@ -77,20 +77,20 @@ object FirebaseModule {
     fun providerUsersRepository(impl: UsersRepositoryImpl): UsersRepository = impl
 
     @Provides
-    fun providerUsersUseCases(usersRepository: UsersRepository) = UsersUseCase(
-        createUser = CreateUser(usersRepository),
-        getUserById = GetUserById(usersRepository),
-        updateUser = UpdateUser(usersRepository),
-        saveImageUser = SaveImageUser(usersRepository)
+    fun providerUsersUseCases(usersRepository: UsersRepository) = UsersFactoryUseCases(
+        createUserUseCase = CreateUserUseCase(usersRepository),
+        getUserByIdUseCase = GetUserByIdUseCase(usersRepository),
+        updateUserUseCase = UpdateUserUseCase(usersRepository),
+        saveImageUserUseCase = SaveImageUserUseCase(usersRepository)
     )
 
     @Provides
     fun providerLetterImageRepository(impl: LetterImageRepositoryImpl): LetterImageRepository = impl
 
     @Provides
-    fun providerLettersUseCases(letterImageRepository: LetterImageRepository) = LettersUseCase(
-        getImage = GetImage(letterImageRepository),
-        searchImage = SearchImage(letterImageRepository)
+    fun providerLettersUseCases(letterImageRepository: LetterImageRepository) = LettersFactoryUseCases(
+        getImageUseCase = GetImageUseCase(letterImageRepository),
+        searchImageLetterUseCase = SearchImageLetterUseCase(letterImageRepository)
     )
 
     /*----------------------------- Storage ----------------------------------------------------- */

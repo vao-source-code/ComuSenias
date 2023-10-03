@@ -7,11 +7,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.comusenias.domain.library.LibraryPassword
 import com.example.comusenias.domain.library.LibraryString
-import com.example.comusenias.domain.models.RegisterState
 import com.example.comusenias.domain.models.Response
-import com.example.comusenias.domain.models.User
-import com.example.comusenias.domain.use_cases.auth.AuthUseCases
-import com.example.comusenias.domain.use_cases.users.UsersUseCase
+import com.example.comusenias.domain.models.model.UserModel
+import com.example.comusenias.domain.models.state.RegisterState
+import com.example.comusenias.domain.use_cases.auth.AuthFactoryUseCases
+import com.example.comusenias.domain.use_cases.users.UsersFactoryUseCases
 import com.example.comusenias.presentation.ui.theme.emptyString
 import com.example.comusenias.presentation.ui.theme.invalidEmail
 import com.example.comusenias.presentation.ui.theme.passwordDoNotMatch
@@ -24,7 +24,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
-    private val authUseCases: AuthUseCases, private val usersUseCase: UsersUseCase
+    private val authUseCases: AuthFactoryUseCases, private val usersUseCase: UsersFactoryUseCases
 ) : ViewModel() {
 
 
@@ -51,18 +51,18 @@ class RegisterViewModel @Inject constructor(
 
     var isRegisterEnabled = false
 
-    var user = User()
+    var user = UserModel()
 
 
-    fun register(user: User) = viewModelScope.launch {
+    fun register(user: UserModel) = viewModelScope.launch {
         registerResponse = Response.Loading
-        val result = authUseCases.register(user)
+        val result = authUseCases.registerUseCase(user)
         registerResponse = result
     }
 
     fun onRegister() {
 
-        user = User(
+        user = UserModel(
             userName = state.userName, email = state.email, password = state.password
         )
         register(user)
@@ -103,9 +103,9 @@ class RegisterViewModel @Inject constructor(
     }
 
     fun createUser() = viewModelScope.launch {
-        user.id = authUseCases.getCurrentUser()?.uid!!
+        user.id = authUseCases.getCurrentUserUseCase()?.uid!!
         user.password = LibraryPassword.hashPassword(user.password)
-        usersUseCase.createUser(user)
+        usersUseCase.createUserUseCase(user)
     }
 
     fun onEmailInput(email: String) {

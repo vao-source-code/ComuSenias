@@ -1,8 +1,8 @@
 package com.example.comusenias.data.repositories
 
 import com.example.comusenias.constants.FirebaseConstants
-import com.example.comusenias.domain.models.Letters
 import com.example.comusenias.domain.models.Response
+import com.example.comusenias.domain.models.model.LetterModel
 import com.example.comusenias.domain.repositories.LetterImageRepository
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.storage.StorageReference
@@ -38,20 +38,20 @@ class LetterImageRepositoryImpl @Inject constructor(
      * @param letter La letra a buscar. Se debe usar una letra de AphabetConstants.
      * @return Flow emitting emitiendo una respuesta con una lista de letras y sus imágenes.
      */
-    override suspend fun searchLetterImage(letter: String): Flow<Response<List<Letters>>> =
+    override suspend fun searchLetterImage(letter: String): Flow<Response<List<LetterModel>>> =
         callbackFlow {
-            val snapshotListener = lettersRef.whereEqualTo(Letters.FIELD_LETTER, letter)
+            val snapshotListener = lettersRef.whereEqualTo(LetterModel.FIELD_LETTER, letter)
                 .addSnapshotListener { snapshot, e ->
                     val postsResponse = if (snapshot != null) {
-                        val posts = snapshot.documents.map { document ->
-                            Letters(
+                        val putLetter = snapshot.documents.map { document ->
+                            LetterModel(
                                 id = document.id,
-                                letter = document.data?.get(Letters.FIELD_LETTER) as String,
-                                image = document.data?.get(Letters.FIELD_IMAGE) as String
+                                letter = document.data?.get(LetterModel.FIELD_LETTER) as String,
+                                image = document.data?.get(LetterModel.FIELD_IMAGE) as String
                             )
                         }.toMutableList()
 
-                        Response.Success(posts)
+                        Response.Success(putLetter)
                     } else {
                         Response.Error(e)
                     }

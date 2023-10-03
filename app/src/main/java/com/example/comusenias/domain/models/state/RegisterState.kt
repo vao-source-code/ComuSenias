@@ -1,4 +1,4 @@
-package com.example.comusenias.domain.models
+package com.example.comusenias.domain.models.state
 
 data class RegisterState(
     val userName : String = "",

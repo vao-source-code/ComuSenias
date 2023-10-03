@@ -1,8 +1,8 @@
 package com.example.comusenias.domain.use_cases.letters
 
 import android.util.Log
-import com.example.comusenias.domain.models.Letters
 import com.example.comusenias.domain.models.Response
+import com.example.comusenias.domain.models.model.LetterModel
 import com.example.comusenias.domain.repositories.LetterImageRepository
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -20,21 +20,21 @@ class LettersUseCaseTest {
     @RelaxedMockK
     private lateinit var letterImageRepositoryImpl: LetterImageRepository
 
-    private lateinit var lettersUseCase: LettersUseCase
+    private lateinit var lettersUseCase: LettersFactoryUseCases
 
     @Before
     fun onBefore() {
         MockKAnnotations.init(this)
-        lettersUseCase = LettersUseCase(
-            getImage = GetImage(letterImageRepositoryImpl),
-            searchImage = SearchImage(letterImageRepositoryImpl)
+        lettersUseCase = LettersFactoryUseCases(
+            getImageUseCase = GetImageUseCase(letterImageRepositoryImpl),
+            searchImageLetterUseCase = SearchImageLetterUseCase(letterImageRepositoryImpl)
         )
     }
 
 
     @Test
     fun verificarBusquedaDeImagen() = runBlocking {
-        val image = lettersUseCase.getImage("letra_a.png")
+        val image = lettersUseCase.getImageUseCase("letra_a.png")
         Log.d("test", image.toString())
         assertNotEquals(image, null)
     }
@@ -43,14 +43,14 @@ class LettersUseCaseTest {
     fun verificarBusquedaDeImagenDeLetraTest() = runBlocking {
         //Given
         coEvery { letterImageRepositoryImpl.searchLetterImage("a") } returns object :
-            Flow<Response<List<Letters>>> {
-            override suspend fun collect(collector: FlowCollector<Response<List<Letters>>>) {
-                collector.emit(Response.Success(listOf(Letters("id_number", "a", ""))))
+            Flow<Response<List<LetterModel>>> {
+            override suspend fun collect(collector: FlowCollector<Response<List<LetterModel>>>) {
+                collector.emit(Response.Success(listOf(LetterModel("id_number", "a", ""))))
             }
         }
 
         //When
-        lettersUseCase.searchImage("a")
+        lettersUseCase.searchImageLetterUseCase("a")
 
         //Then
         coVerify { letterImageRepositoryImpl.searchLetterImage("a") }

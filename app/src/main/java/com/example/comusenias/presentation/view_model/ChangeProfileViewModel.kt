@@ -10,10 +10,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.comusenias.domain.library.ComposeFileProvider
 import com.example.comusenias.domain.library.LibraryString
 import com.example.comusenias.domain.library.ResultingActivityHandler
-import com.example.comusenias.domain.models.ChangeProfileState
 import com.example.comusenias.domain.models.Response
-import com.example.comusenias.domain.models.User
-import com.example.comusenias.domain.use_cases.users.UsersUseCase
+import com.example.comusenias.domain.models.model.UserModel
+import com.example.comusenias.domain.models.state.ChangeProfileState
+import com.example.comusenias.domain.use_cases.users.UsersFactoryUseCases
 import com.example.comusenias.presentation.ui.theme.restrictionNameUserAccount
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -25,7 +25,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ChangeProfileViewModel @Inject constructor(
     private var savedStateHandle: SavedStateHandle,
-    private val usersUseCase: UsersUseCase,
+    private val usersUseCase: UsersFactoryUseCases,
     @ApplicationContext private val context: Context
 ) : ViewModel() {
 
@@ -36,7 +36,7 @@ class ChangeProfileViewModel @Inject constructor(
     var errorUserName: String by mutableStateOf("")
 
     val data = savedStateHandle.get<String>("user")
-    val user = User.fromJson(data!!)
+    val user = UserModel.fromJson(data!!)
 
     var updateResponse by mutableStateOf<Response<Boolean>?>(null)
         private set
@@ -58,12 +58,12 @@ class ChangeProfileViewModel @Inject constructor(
 
         file?.let {
             saveImageResponse = Response.Loading
-            val result = usersUseCase.saveImageUser(it)
+            val result = usersUseCase.saveImageUserUseCase(it)
             saveImageResponse = result
         }
 
         update(
-            user = User(
+            user = UserModel(
                 id = user.id, userName = state.userName, image = state.image
             )
         )
@@ -86,15 +86,15 @@ class ChangeProfileViewModel @Inject constructor(
     }
 
     fun onUpdate(url: String) {
-        val myUser = User(
+        val myUser = UserModel(
             id = user.id, userName = state.userName, image = url
         )
         update(myUser)
     }
 
-    fun update(user: User) = viewModelScope.launch(Dispatchers.IO) {
+    fun update(user: UserModel) = viewModelScope.launch(Dispatchers.IO) {
         updateResponse = Response.Loading
-        val result = usersUseCase.updateUser(user)
+        val result = usersUseCase.updateUserUseCase(user)
         updateResponse = result
     }
 
