@@ -10,54 +10,74 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import com.example.comusenias.domain.models.Notification
 import com.example.comusenias.R
+
 @Composable
 fun NotificationScreen() {
-    Column(modifier = Modifier.padding(16.dp)) {
-        NotificationItem(
-            iconResId = R.drawable.baseline_arrow_back_24,
-            content = "Aviso",
-            time = " "
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        NotificationItem(
-            iconResId = R.drawable.eclipse_specialist1,
-            content = "Daniel te ha pedido que corrijas su ejercicio",
-            time = "Hace 5 horas"
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        NotificationItem(
-            iconResId = R.drawable.eclipse_specialist2,
-            content = "Natalia te ha pedido que corrijas su ejercicio",
-            time = "Ayer 10:30 am"
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        NotificationItem(
-            iconResId = R.drawable.onboarding3,
-            content = "Nuevos Desafios semanales disponibles. ¡Animate a practicar!",
-            time = "Anteayer 9:30 am"
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        NotificationItem(
-            iconResId = R.drawable.onboarding2,
-            content = "Mohamed Fathy te pidio que corrijas su ejercicio",
-            time = "Anteayer 12:30 am"
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        Image(
-            painter = painterResource(R.drawable.baseline_diversity_3_24),
-            contentDescription = null,
-            modifier = Modifier.size(24.dp)
-        )
-        Text(text = "Suscribete ahora y desbloquea beneficios esclusivos", style = MaterialTheme.typography.subtitle1,textAlign = TextAlign.Center)
-        Button(onClick = { /* Handle button click */ },modifier = Modifier.align(Alignment.End)) {
-            Text(text = "Subscribe")
+    LazyColumn(modifier = Modifier.padding(16.dp)) {
+        items(notificationList) { notification ->
+            NotificationItem(notification)
+            Spacer(modifier = Modifier.height(16.dp))
+        }
+        item {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.baseline_diversity_3_24),
+                    contentDescription = null,
+                    modifier = Modifier.size(24.dp)
+                )
+                Text(
+                    text = "Suscribete ahora y desbloquea beneficios exclusivos",
+                    style = MaterialTheme.typography.subtitle1,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.weight(1f)
+                )
+                Button(
+                    onClick = { /* Handle button click */ },
+                ) {
+                    Text(text = "Subscribe")
+                }
+            }
         }
     }
 }
+val notificationList = listOf(
+    Notification(
+        iconResId = R.drawable.baseline_arrow_back_24,
+        content = "Aviso",
+        time = " "
+    ),
+    Notification(
+        iconResId = R.drawable.noti3,
+        content = "Marcela te ha pedido que corrijas su ejercicio",
+        time = "Hace 5 horas"
+    ),
+    Notification(
+        iconResId = R.drawable.noti1,
+        content = "Natalia te ha pedido que corrijas su ejercicio",
+        time = "Ayer 10:30"
+    ),
+    Notification(
+        iconResId = R.drawable.noti4,
+        content = "Daniel te ha pedido que corrijas su ejercicio",
+        time = "anteayer 6:15"
+    ),
+    Notification(
+        iconResId = R.drawable.noti2,
+        content = "Nuevos Desafios semanales disponibles. ¡Animate a practicar!",
+        time = "anteayer 12:30"
+    ),
+    // Add more notifications as needed
+)
 
 @Composable
-fun NotificationItem(iconResId: Int, content: String, time: String) {
+fun NotificationItem(notification: Notification) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -65,15 +85,15 @@ fun NotificationItem(iconResId: Int, content: String, time: String) {
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Image(
-                painter = painterResource(iconResId),
+                painter = painterResource(notification.iconResId),
                 contentDescription = null,
                 modifier = Modifier.size(40.dp)
             )
             Spacer(modifier = Modifier.width(16.dp))
             Column {
-                Text(text = content, style = MaterialTheme.typography.subtitle1)
+                Text(text = notification.content, style = MaterialTheme.typography.subtitle1)
                 Spacer(modifier = Modifier.height(4.dp))
-                Text(text = time, style = MaterialTheme.typography.caption)
+                Text(text = notification.time, style = MaterialTheme.typography.caption)
             }
         }
     }
