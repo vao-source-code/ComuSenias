@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.comusenias.domain.models.RegisterState
+import com.example.comusenias.domain.models.state.RegisterState
 import com.example.comusenias.presentation.component.defaults.ButtonDefault
 import com.example.comusenias.presentation.component.defaults.TextFieldDefault
 import com.example.comusenias.presentation.ui.theme.ComuSeniasTheme

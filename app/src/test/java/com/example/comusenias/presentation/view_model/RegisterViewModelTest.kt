@@ -1,9 +1,9 @@
 package com.example.comusenias.presentation.view_model
 
 import com.example.comusenias.domain.models.Response
-import com.example.comusenias.domain.models.User
-import com.example.comusenias.domain.use_cases.auth.AuthUseCases
-import com.example.comusenias.domain.use_cases.users.UsersUseCase
+import com.example.comusenias.domain.models.model.UserModel
+import com.example.comusenias.domain.use_cases.auth.AuthFactoryUseCases
+import com.example.comusenias.domain.use_cases.users.UsersFactoryUseCases
 import com.google.firebase.auth.FirebaseUser
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -22,10 +22,10 @@ import org.mockito.Mock
 class RegisterViewModelTest {
 
     @Mock
-    private lateinit var authUseCases: AuthUseCases
+    private lateinit var authUseCases: AuthFactoryUseCases
 
     @Mock
-    private lateinit var usersUseCase: UsersUseCase
+    private lateinit var usersUseCase: UsersFactoryUseCases
 
     private lateinit var viewModel: RegisterViewModel
 
@@ -44,7 +44,7 @@ class RegisterViewModelTest {
     @Test
     fun registerIsSuccessful() = runBlocking {
 
-        val user = User(
+        val user = UserModel(
             id = "1",
             userName = "test",
             email = "aW@gmail.com",
@@ -52,7 +52,7 @@ class RegisterViewModelTest {
         )
 
         val result = Response.Success(mockk<FirebaseUser>())
-        coEvery { authUseCases.register(user) } returns result
+        coEvery { authUseCases.registerUseCase(user) } returns result
         viewModel.register(user)
         assertEquals(viewModel.registerResponse, result)
 
@@ -62,14 +62,14 @@ class RegisterViewModelTest {
     @Test
     fun registerIsError() = runBlocking {
 
-        val user = User(
+        val user = UserModel(
             id = "1",
             userName = "test",
             email = "",
         )
 
         val result = Response.Error(Exception("Error"))
-        coEvery { authUseCases.register(user) } returns result
+        coEvery { authUseCases.registerUseCase(user) } returns result
         viewModel.register(user)
         assertEquals(viewModel.registerResponse, result)
 
