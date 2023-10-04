@@ -50,8 +50,8 @@ fun NotificationScreen() {
 val notificationList = listOf(
     Notification(
         iconResId = R.drawable.baseline_arrow_back_24,
-        content = "Aviso",
-        time = " "
+        time = " ",
+        content = "AVISO"
     ),
     Notification(
         iconResId = R.drawable.noti3,
@@ -84,16 +84,38 @@ fun NotificationItem(notification: Notification) {
             .padding(8.dp)
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Image(
-                painter = painterResource(notification.iconResId),
-                contentDescription = null,
-                modifier = Modifier.size(40.dp)
-            )
-            Spacer(modifier = Modifier.width(16.dp))
-            Column {
-                Text(text = notification.content, style = MaterialTheme.typography.subtitle1)
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(text = notification.time, style = MaterialTheme.typography.caption)
+            if (notification == notificationList.first()) {
+                Image(
+                    painter = painterResource(notification.iconResId),
+                    contentDescription = null,
+                    modifier = Modifier.size(40.dp)
+                )
+                Spacer(modifier = Modifier.width(30.dp).height(30.dp))
+                Column {
+                    Modifier.width(16.dp)
+                    Text(
+                        text = notification.content,
+                        style = MaterialTheme.typography.subtitle1
+                    )
+                }
+            } else {
+                Image(
+                    painter = painterResource(notification.iconResId),
+                    contentDescription = null,
+                    modifier = Modifier.size(40.dp)
+                )
+                Spacer(modifier = Modifier.width(16.dp))
+                Column {
+                    Text(
+                        text = notification.content,
+                        style = MaterialTheme.typography.subtitle1
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = notification.time,
+                        style = MaterialTheme.typography.caption
+                    )
+                }
             }
         }
     }
