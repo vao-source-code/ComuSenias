@@ -32,9 +32,7 @@ ComuSenias
 - `tag-version` - Liberada a PlayStore.
 
 ## 🏗️📱 Arquitectura de desarrollo 
-- ![MacBook Air - 1](https://github.com/vao-source-code/ComuSenias/assets/72049474/10469608-7cfb-4665-8ffa-d411b816d471)
-
-        
+![arquitecture](https://github.com/vao-source-code/ComuSenias/assets/72049474/1c5f3623-c556-4f2e-82ce-d3ed208ca31e)        
   # 🧹📦 MVP (Model-View-Presenter) Arquitectura desarrollo (en capas)
       
         
