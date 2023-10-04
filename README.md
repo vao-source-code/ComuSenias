@@ -75,8 +75,9 @@ ComuSenias
 ## 💻 Developers
 
 - [Victor Orue](https://github.com/vao-source-code) (@vao-source-code)
-- []
+- [Pablo Carballo](https://github.com/pableArg) (@pableArg)
+- [Fabian Zarate](https://github.com/lanzarlosdados) (@lanzarlosdados)
+- [Juan Guerrero](https://github.com/juanmatiasg) (@juanmatiasg)
+- [Fernando Benitez](https://github.com/ferseba18) (@ferseba18)
 
--- NO TOCAR
-
---- Dios está en los detalles ---
+--- El código limpio siempre parece que fue escrito por alguien que se preocupa. ---
