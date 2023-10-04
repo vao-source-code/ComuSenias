@@ -60,6 +60,12 @@ const val CHOSE_CORRECT_SING : String = "Elegí la señal correcta"
 const val FINISH_LVL : String = "!Felicitaciones! Nivel terminado"
 const val GO_FOR_MORE : String = "Vamos por mas"
 
+/*-----------------BUTTONS AND ICONS-----------------*/
+
+const val CLOSE : String = "Salir de la pantalla"
+
+
+
 
 
 /*-----------------DIALOG CAPTURE-----------------*/

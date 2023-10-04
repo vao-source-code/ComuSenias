@@ -33,7 +33,10 @@ fun ContentHome(navController: NavHostController, modifier: Modifier) {
             ContentLevel()
         }
         items(statusCards()) { statusGame ->
-            ContentCardGame(status = statusGame)
+            ContentCardGame(
+                status = statusGame,
+                navController = navController
+            )
         }
         item {
             CardGameCheckPoint()

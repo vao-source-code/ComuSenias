@@ -2,7 +2,7 @@ package com.example.comusenias.presentation.ui.theme
 import androidx.compose.ui.graphics.Color
 
 val primaryColorApp = Color(0xFF7584F2)
-val greenColorApp =  Color(0xFF68F28B)
+val greenColorApp =  Color(0xFF58C573)
 val cardColorCheckPoint = Color(0xB2F2D05C)
 val backgroundColorApp = Color(0xFFFFFFFF)
 val blackColorApp = Color(0xFF252525)
@@ -12,6 +12,8 @@ val cardInProgress = Color(0xFFF3F8FE)
 val placeholderTextColor = Color(0x99000000)
 val backgroundColorTextField = Color(0x33C4C4C4)
 val iconColorTextField = Color(0x4D000000)
+val borderButtonLetter = Color(0xFF727272)
+
 val md_theme_light_primary = Color(0xFF1A5ABD)
 val md_theme_light_onPrimary = Color(0xFFFFFFFF)
 val md_theme_light_primaryContainer = Color(0xFFD8E2FF)

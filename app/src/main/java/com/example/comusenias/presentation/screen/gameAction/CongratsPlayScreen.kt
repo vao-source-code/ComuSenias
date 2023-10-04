@@ -1,4 +1,4 @@
-package com.example.comusenias.presentation.screen.plays
+package com.example.comusenias.presentation.screen.gameAction
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement

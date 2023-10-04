@@ -15,10 +15,10 @@ import androidx.navigation.navArgument
 import com.example.comusenias.presentation.activities.MainActivity
 import com.example.comusenias.presentation.component.specialist.SpecialistDetailsScreen
 import com.example.comusenias.presentation.screen.home.HomeScreen
-import com.example.comusenias.presentation.screen.plays.ChoseTheSignPlayScreen
-import com.example.comusenias.presentation.screen.plays.CongratsPlayScreen
-import com.example.comusenias.presentation.screen.plays.LearnSignScreen
-import com.example.comusenias.presentation.screen.plays.MakeSignPlayScreen
+import com.example.comusenias.presentation.screen.gameAction.ChoseTheSignPlayScreen
+import com.example.comusenias.presentation.screen.gameAction.CongratsPlayScreen
+import com.example.comusenias.presentation.screen.gameAction.LearnSignScreen
+import com.example.comusenias.presentation.screen.gameAction.MakeSignPlayScreen
 import com.example.comusenias.presentation.screen.premiun.PremiunScreen
 import com.example.comusenias.presentation.screen.profile.ChangeProfileScreen
 import com.example.comusenias.presentation.screen.profile.ProfileScreen
