@@ -69,9 +69,6 @@ ComuSenias
   - name: Android Test Report: Este paso genera un informe de las pruebas de Android.
   - if: ${{ always() }} garantiza que el informe de las pruebas de Android se genere incluso si las pruebas fallan.
 
-    
-## ⚠️ Things to know
-
 ## 💻 Developers
 
 - [Victor Orue](https://github.com/vao-source-code) (@vao-source-code)
