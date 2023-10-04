@@ -48,10 +48,10 @@ ComuSenias
         - PRESENTATION: Esta carpeta contiene el código que implementa la interfaz de usuario de la aplicación. Esto incluye clases como actividades, screen y componentes de jetpack compose.
      
   ## 🧹🏛️ MVVM (Model-View-ViewModel) Patron de diseño
-  El patrón de arquitectura MVVM, también conocido como Model View ViewModel, se refiere a un modelo de diseño que tiene el objetivo para llevar a cabo la separación del apartado de la interfaz de usuario (View) de la parte lógica (Model).
-  -  MODEL: El modelo representa los datos de la aplicación y su lógica de negocio.
-  -  VIEW: La vista representa la interfaz de usuario de la aplicación.
-  -  VIEWMODEL: El ViewModel es el intermediario entre la vista y el modelo. Se encarga de convertir los datos del modelo en un formato que la vista pueda entender y de responder a las acciones del usuario.
+    - El patrón de arquitectura MVVM, también conocido como Model View ViewModel, se refiere a un modelo de diseño que tiene el objetivo para llevar a cabo la separación del apartado de la interfaz de usuario (View) de la parte lógica (Model).
+      -  MODEL: El modelo representa los datos de la aplicación y su lógica de negocio.
+      -  VIEW: La vista representa la interfaz de usuario de la aplicación.
+      -  VIEWMODEL: El ViewModel es el intermediario entre la vista y el modelo. Se encarga de convertir los datos del modelo en un formato que la vista pueda entender y de responder a las acciones del usuario.
 
 
 ## ⚙️🚀 CI/CD
@@ -63,11 +63,11 @@ ComuSenias
   - name: Build app: Este paso ejecuta el comando ./gradlew assemble para construir la aplicación.
 - 🚀📦 CD
      El flujo de trabajo tiene un solo trabajo, llamado test, que se ejecuta en una máquina virtual de Ubuntu de última versión. Los pasos del trabajo son los siguientes:
-        - uses: actions/checkout@v3: Este paso clona el repositorio en la máquina virtual.
-        - name: set up JDK 17: Este paso configura la máquina virtual para usar la versión 17 del JDK de Temurin.
-        - name: Unit Test: Este paso ejecuta el comando ./gradlew testDebugUnitTest para ejecutar las pruebas unitarias de la aplicación.
-        - name: Android Test Report: Este paso genera un informe de las pruebas de Android.
-        - if: ${{ always() }} garantiza que el informe de las pruebas de Android se genere incluso si las pruebas fallan.
+  - uses: actions/checkout@v3: Este paso clona el repositorio en la máquina virtual.
+  - name: set up JDK 17: Este paso configura la máquina virtual para usar la versión 17 del JDK de Temurin.
+  - name: Unit Test: Este paso ejecuta el comando ./gradlew testDebugUnitTest para ejecutar las pruebas unitarias de la aplicación.
+  - name: Android Test Report: Este paso genera un informe de las pruebas de Android.
+  - if: ${{ always() }} garantiza que el informe de las pruebas de Android se genere incluso si las pruebas fallan.
 
     
 ## ⚠️ Things to know
