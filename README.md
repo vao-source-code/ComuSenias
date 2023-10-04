@@ -35,6 +35,7 @@ ComuSenias
 ![arquitecture MVPC](https://github.com/vao-source-code/ComuSenias/assets/72049474/cea6de82-9517-418b-9ad1-925deb00a72c)
 
   # 🧹📦 MVP (Model-View-Presenter) Arquitectura desarrollo (en capas)
+  
   - La capa más interna es la capa de dominio, que contiene la lógica empresarial central de la aplicación. Esta capa es independiente de cualquier marco o biblioteca externa, lo que facilita su prueba y mantenimiento.
   - La siguiente capa es la capa de datos, que proporciona acceso a las fuentes de datos de la aplicación. Esta capa se puede implementar utilizando una variedad de tecnologías, como Room, SQLite o Firebase.
   - La capa más externa es la capa de presentación, que es responsable de mostrar la interfaz de usuario de la aplicación y manejar las interacciones del usuario. Esta capa se implementa utilizando componentes de la interfaz de usuario de Android, como actividades y fragmentos.
