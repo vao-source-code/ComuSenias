@@ -1,4 +1,7 @@
 package com.example.comusenias.presentation.component.gameAction
 
-class SignInterpretationStatus {
+import androidx.compose.runtime.Composable
+
+@Composable
+fun SignInterpretationStatus() {
 }
