@@ -57,10 +57,10 @@ ComuSenias
 ## ⚙️🚀 CI/CD
 - 🔄🛠️ CI
      El flujo de trabajo tiene un solo trabajo, llamado build, que se ejecuta en una máquina virtual de Ubuntu de última versión. Los pasos del trabajo son los siguientes:
-        - uses: actions/checkout@v3: Este paso clona el repositorio en la máquina virtual.
-        - name: set up JDK 17: Este paso configura la máquina virtual para usar la versión 17 del JDK de Temurin.
-        - name: Setup Gradle: Este paso configura Gradle en la máquina virtual.
-        - name: Build app: Este paso ejecuta el comando ./gradlew assemble para construir la aplicación.
+  - uses: actions/checkout@v3: Este paso clona el repositorio en la máquina virtual.
+  - name: set up JDK 17: Este paso configura la máquina virtual para usar la versión 17 del JDK de Temurin.
+  - name: Setup Gradle: Este paso configura Gradle en la máquina virtual.
+  - name: Build app: Este paso ejecuta el comando ./gradlew assemble para construir la aplicación.
 - 🚀📦 CD
      El flujo de trabajo tiene un solo trabajo, llamado test, que se ejecuta en una máquina virtual de Ubuntu de última versión. Los pasos del trabajo son los siguientes:
         - uses: actions/checkout@v3: Este paso clona el repositorio en la máquina virtual.
