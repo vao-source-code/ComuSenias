@@ -35,42 +35,18 @@ ComuSenias
 - Arquitectura que definimos por concepto
 ![arquitecture MVPC](https://github.com/vao-source-code/ComuSenias/assets/72049474/cea6de82-9517-418b-9ad1-925deb00a72c)
 - Arquitectura de las carpetas en el sector principal de la app        
-java/com/example/comusenias
-                ├── constants
-                ├── core
-                │   └── di
-                ├── data
-                │   └── repositories
-                │   
-                ├── domain
-                │	├── library
-                │   ├── models
-                │   │    ├── bottomNavigation
-                │   │    ├── model
-                │   │    └── state
-                │   │    
-                │   ├── repositories
-                │   └── use_cases
-                │          
-                ├── presentation
-                │   ├── activities
-                │   ├── component
-                │   ├── navigation
-                │   ├── ui
-                │   │   └── theme
-                │   └── view_model
-                ├── ComuseniasApp.kt	
+![imagen](https://github.com/vao-source-code/ComuSenias/assets/72049474/55462e7b-ebf7-40c3-8b1a-1c46f89dc74f)
 
   ## 🧹📦 The Clean Code Blog
-    La arquitectura Clean Code MVVM es una implementación de estos principios en el contexto de aplicaciones móviles.
-    Esta arquitectura separa la lógica de la interfaz de usuario (UI) de la lógica de negocio, lo que facilita la comprensión, la modificación, la prueba y el mantenimiento del código.
+    - La arquitectura Clean Code MVVM es una implementación de estos principios en el contexto de aplicaciones móviles.
+    - Esta arquitectura separa la lógica de la interfaz de usuario (UI) de la lógica de negocio, lo que facilita la comprensión, la modificación, la prueba y el mantenimiento del código.
   - [GUIA](https://medium.com/android-dev-hacks/detailed-guide-on-android-clean-architecture-9eab262a9011)
     PARTES QUE DEFINIMOS: 
-        CONSTANTS: Esta carpeta contiene constantes que se utilizan en toda la aplicación, como valores de cadena, IDs de recursos, etc.
-        CORE: Esta carpeta contiene el código que es esencial para el funcionamiento de la aplicación, pero que no es específico de ninguna capa en particular. Esto incluye clases como el inyector de dependencias y el despachador.
-        DATA: Esta carpeta contiene el código que interactúa con las fuentes de datos de la aplicación. Esto incluye clases como repositorios y modelos de datos.
-        DOMAIN: Esta carpeta contiene el código que implementa la lógica de negocio de la aplicación. Esto incluye clases como casos de uso, modelos de dominio y repositorios de dominio.
-        PRESENTATION: Esta carpeta contiene el código que implementa la interfaz de usuario de la aplicación. Esto incluye clases como actividades, screen y componentes de jetpack compose.
+        - CONSTANTS: Esta carpeta contiene constantes que se utilizan en toda la aplicación, como valores de cadena, IDs de recursos, etc.
+        - CORE: Esta carpeta contiene el código que es esencial para el funcionamiento de la aplicación, pero que no es específico de ninguna capa en particular. Esto incluye clases como el inyector de dependencias y el despachador.
+        - DATA: Esta carpeta contiene el código que interactúa con las fuentes de datos de la aplicación. Esto incluye clases como repositorios y modelos de datos.
+        - DOMAIN: Esta carpeta contiene el código que implementa la lógica de negocio de la aplicación. Esto incluye clases como casos de uso, modelos de dominio y repositorios de dominio.
+        - PRESENTATION: Esta carpeta contiene el código que implementa la interfaz de usuario de la aplicación. Esto incluye clases como actividades, screen y componentes de jetpack compose.
      
   ## 🧹🏛️ MVVM (Model-View-ViewModel) Patron de diseño
   El patrón de arquitectura MVVM, también conocido como Model View ViewModel, se refiere a un modelo de diseño que tiene el objetivo para llevar a cabo la separación del apartado de la interfaz de usuario (View) de la parte lógica (Model).
@@ -82,17 +58,17 @@ java/com/example/comusenias
 ## ⚙️🚀 CI/CD
 - 🔄🛠️ CI
      El flujo de trabajo tiene un solo trabajo, llamado build, que se ejecuta en una máquina virtual de Ubuntu de última versión. Los pasos del trabajo son los siguientes:
-        uses: actions/checkout@v3: Este paso clona el repositorio en la máquina virtual.
-        name: set up JDK 17: Este paso configura la máquina virtual para usar la versión 17 del JDK de Temurin.
-        name: Setup Gradle: Este paso configura Gradle en la máquina virtual.
-        name: Build app: Este paso ejecuta el comando ./gradlew assemble para construir la aplicación.
+        - uses: actions/checkout@v3: Este paso clona el repositorio en la máquina virtual.
+        - name: set up JDK 17: Este paso configura la máquina virtual para usar la versión 17 del JDK de Temurin.
+        - name: Setup Gradle: Este paso configura Gradle en la máquina virtual.
+        - name: Build app: Este paso ejecuta el comando ./gradlew assemble para construir la aplicación.
 - 🚀📦 CD
      El flujo de trabajo tiene un solo trabajo, llamado test, que se ejecuta en una máquina virtual de Ubuntu de última versión. Los pasos del trabajo son los siguientes:
-        uses: actions/checkout@v3: Este paso clona el repositorio en la máquina virtual.
-        name: set up JDK 17: Este paso configura la máquina virtual para usar la versión 17 del JDK de Temurin.
-        name: Unit Test: Este paso ejecuta el comando ./gradlew testDebugUnitTest para ejecutar las pruebas unitarias de la aplicación.
-        name: Android Test Report: Este paso genera un informe de las pruebas de Android.
-        if: ${{ always() }} garantiza que el informe de las pruebas de Android se genere incluso si las pruebas fallan.
+        - uses: actions/checkout@v3: Este paso clona el repositorio en la máquina virtual.
+        - name: set up JDK 17: Este paso configura la máquina virtual para usar la versión 17 del JDK de Temurin.
+        - name: Unit Test: Este paso ejecuta el comando ./gradlew testDebugUnitTest para ejecutar las pruebas unitarias de la aplicación.
+        - name: Android Test Report: Este paso genera un informe de las pruebas de Android.
+        - if: ${{ always() }} garantiza que el informe de las pruebas de Android se genere incluso si las pruebas fallan.
 
     
 ## ⚠️ Things to know
