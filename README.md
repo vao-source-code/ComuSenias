@@ -33,14 +33,14 @@ ComuSenias
 
 ## 🏗️📱 Arquitectura de desarrollo 
 - Arquitectura que definimos por concepto
-![arquitecture MVPC](https://github.com/vao-source-code/ComuSenias/assets/72049474/cea6de82-9517-418b-9ad1-925deb00a72c)
+- ![arquitecture MVPC](https://github.com/vao-source-code/ComuSenias/assets/72049474/cea6de82-9517-418b-9ad1-925deb00a72c)
 - Arquitectura de las carpetas en el sector principal de la app        
-![imagen](https://github.com/vao-source-code/ComuSenias/assets/72049474/55462e7b-ebf7-40c3-8b1a-1c46f89dc74f)
+- ![imagen](https://github.com/vao-source-code/ComuSenias/assets/72049474/55462e7b-ebf7-40c3-8b1a-1c46f89dc74f)
 
   ## 🧹📦 The Clean Code Blog
     - La arquitectura Clean Code MVVM es una implementación de estos principios en el contexto de aplicaciones móviles.
     - Esta arquitectura separa la lógica de la interfaz de usuario (UI) de la lógica de negocio, lo que facilita la comprensión, la modificación, la prueba y el mantenimiento del código.
-  - [GUIA](https://medium.com/android-dev-hacks/detailed-guide-on-android-clean-architecture-9eab262a9011)
+    - [GUIA](https://medium.com/android-dev-hacks/detailed-guide-on-android-clean-architecture-9eab262a9011)
     PARTES QUE DEFINIMOS: 
         - CONSTANTS: Esta carpeta contiene constantes que se utilizan en toda la aplicación, como valores de cadena, IDs de recursos, etc.
         - CORE: Esta carpeta contiene el código que es esencial para el funcionamiento de la aplicación, pero que no es específico de ninguna capa en particular. Esto incluye clases como el inyector de dependencias y el despachador.
