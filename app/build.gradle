@@ -53,8 +53,6 @@ android {
 }
 
 dependencies {
-    implementation libs.ui.android
-    implementation libs.play.services.mlkit.text.recognition.common
     testImplementation 'junit:junit:'
     testImplementation "androidx.arch.core:core-testing:2.2.0"
     testImplementation 'androidx.test:core:1.5.0'
@@ -63,13 +61,11 @@ dependencies {
     implementation platform(libs.composeBom)
     androidTestImplementation platform(libs.composeBom)
     implementation platform(libs.kotlinBom)
-    implementation libs.ui
     implementation libs.uiGraphics
     implementation libs.uiToolingPreview
     implementation libs.material3
     implementation libs.constraintlayout.compose
 
-    implementation libs.accompanist.pager
     implementation libs.accompanist.pager.indicators
 
     androidTestImplementation libs.junitExt
