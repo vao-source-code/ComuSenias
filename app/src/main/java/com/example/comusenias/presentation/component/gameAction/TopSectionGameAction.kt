@@ -25,10 +25,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.comusenias.R
 import com.example.comusenias.presentation.component.home.ProgressBar
 import com.example.comusenias.presentation.ui.theme.CLOSE
 import com.example.comusenias.presentation.ui.theme.SIZE12
@@ -40,9 +38,11 @@ import com.example.comusenias.presentation.ui.theme.size20
 import com.example.comusenias.presentation.ui.theme.size24
 import com.example.comusenias.presentation.ui.theme.size50
 
-@Preview(showBackground = true)
 @Composable
-fun TopSectionGameAction() {
+fun TopSectionGameAction(
+    title: String,
+    image: Int
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -50,8 +50,8 @@ fun TopSectionGameAction() {
         verticalArrangement = Arrangement.spacedBy(size20.dp)
     ) {
         CloseAndProgressBar()
-        TitleGameAction()
-        ContentImageGame()
+        TitleGameAction(title = title)
+        ContentImageGame(image = image)
     }
 }
 
@@ -75,9 +75,9 @@ fun CloseAndProgressBar() {
 }
 
 @Composable
-fun TitleGameAction() {
+fun TitleGameAction(title: String) {
     Text(
-        text = "Comencemos",
+        text = title,
         style = TextStyle(
             fontSize = size20.sp,
             fontWeight = FontWeight.SemiBold,
@@ -88,7 +88,7 @@ fun TitleGameAction() {
 }
 
 @Composable
-fun ContentImageGame() {
+fun ContentImageGame(image: Int) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -102,7 +102,7 @@ fun ContentImageGame() {
         Image(
             modifier = Modifier
                 .fillMaxSize(),
-            painter = painterResource(id = R.drawable.letra_a),
+            painter = painterResource(id = image),
             contentDescription = "image description",
             contentScale = ContentScale.Fit
         )

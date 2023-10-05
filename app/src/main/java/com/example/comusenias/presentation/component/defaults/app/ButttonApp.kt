@@ -25,11 +25,11 @@ import com.example.comusenias.presentation.ui.theme.primaryColorApp
 @Composable
 fun ButtonApp(
     titleButton: String,
-    onClickButton: () -> Unit = {},
     enabledButton: Boolean = true,
     icon: ImageVector? = null,
-    modifier: Modifier = Modifier
-) {
+    modifier: Modifier = Modifier,
+    onClickButton: () -> Unit = {}
+    ) {
     Button(
         colors = ButtonDefaults.buttonColors(primaryColorApp),
         shape = RoundedCornerShape(10.dp),

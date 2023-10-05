@@ -8,10 +8,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
@@ -24,28 +20,25 @@ import com.example.comusenias.presentation.ui.theme.primaryColorApp
 @Composable
 fun BottomSectionGameAction(
     titleButton: String,
-    buttonVisible: Boolean,
-    onNextClicked: () -> Unit
+    enabled: Boolean,
+    clickButton: () -> Unit
+) {
+    Button(
+        enabled = enabled,
+        colors = ButtonDefaults.buttonColors(primaryColorApp),
+        shape = RoundedCornerShape(10.dp),
+        onClick = { clickButton() },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding()
+            .height(50.dp)
+            .testTag(TestTag.TAG_BUTTON_APP)
     ) {
-    val isButtonVisible by remember { mutableStateOf(buttonVisible) }
-
-    if (isButtonVisible) {
-        Button(
-            colors = ButtonDefaults.buttonColors(primaryColorApp),
-            shape = RoundedCornerShape(10.dp),
-            onClick = onNextClicked,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding()
-                .height(50.dp)
-                .testTag(TestTag.TAG_BUTTON_APP)
-        ) {
-            Text(
-                color = Color.White,
-                text = titleButton,
-                fontSize = 17.sp,
-                fontWeight = FontWeight.SemiBold
-            )
-        }
+        Text(
+            color = Color.White,
+            text = titleButton,
+            fontSize = 17.sp,
+            fontWeight = FontWeight.SemiBold
+        )
     }
 }

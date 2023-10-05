@@ -47,24 +47,24 @@ fun MatchLetter(
     randomLetter: String,
     responseMatchLetter: (Boolean) -> Unit
 ) {
-    var isEnableButtonLetter by remember { mutableStateOf(true) }
-
+    var isEnable by remember { mutableStateOf(true) }
+    val isEnableButtonLetter = remember { mutableStateOf(isEnable) }
     val letters = listOf(singLetter, randomLetter)
     val randomLetters = letters.shuffled()
 
     Row(
         modifier = Modifier
-            .padding(top = size30.dp),
+            .padding(top = size30.dp) ,
         horizontalArrangement = Arrangement.spacedBy(size30.dp)
     ) {
         randomLetters.forEach { letter ->
             ButtonLetter(
                 letter = letter,
                 letterCompare = singLetter,
-                isEnable = isEnableButtonLetter
+                isEnable = isEnableButtonLetter.value
             ) {
                 responseMatchLetter(it)
-                isEnableButtonLetter = false
+                isEnableButtonLetter.value = false
             }
         }
     }

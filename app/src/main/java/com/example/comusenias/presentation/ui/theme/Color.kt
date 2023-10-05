@@ -13,6 +13,7 @@ val placeholderTextColor = Color(0x99000000)
 val backgroundColorTextField = Color(0x33C4C4C4)
 val iconColorTextField = Color(0x4D000000)
 val borderButtonLetter = Color(0xFF727272)
+val BACKGROUND_CIRCULAR_PROGREES_BAR = Color(0x4D58C573)
 
 val md_theme_light_primary = Color(0xFF1A5ABD)
 val md_theme_light_onPrimary = Color(0xFFFFFFFF)

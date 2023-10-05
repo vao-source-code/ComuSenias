@@ -4,6 +4,7 @@ const val size08: Float = 0.8f
 const val size1: Int = 1
 const val SIZE2: Int = 2
 const val size3: Int = 3
+const val SIZE4: Int = 4
 const val size5: Int = 5
 const val size6: Int = 6
 const val size7: Int = 7
