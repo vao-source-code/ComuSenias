@@ -9,10 +9,14 @@ import com.example.comusenias.presentation.navigation.AppScreen
 
 @Composable
 fun MakeSignPlayScreen(navController: NavHostController, modifier: Modifier) {
+    val stepThree = 3
+
     GameAction(
         imageSign = R.drawable.letra_a_solo,
         title = "Hace la seña A",
         titleButton = "Interpretar seña",
-        clickButton = { navController.navigate(AppScreen.CongratsPlayScreen.route) }
+        currentSteps = stepThree,
+        navController = navController,
+        clickButton = { navController.navigate(AppScreen.InterpretationStatusScreen.route) }
     )
 }

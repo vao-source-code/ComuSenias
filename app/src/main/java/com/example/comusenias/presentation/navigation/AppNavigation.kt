@@ -17,6 +17,7 @@ import com.example.comusenias.presentation.component.specialist.SpecialistDetail
 import com.example.comusenias.presentation.screen.home.HomeScreen
 import com.example.comusenias.presentation.screen.gameAction.ChoseTheSignPlayScreen
 import com.example.comusenias.presentation.screen.gameAction.CongratsPlayScreen
+import com.example.comusenias.presentation.screen.gameAction.InterpretationStatusScreen
 import com.example.comusenias.presentation.screen.gameAction.LearnSignScreen
 import com.example.comusenias.presentation.screen.gameAction.MakeSignPlayScreen
 import com.example.comusenias.presentation.screen.premiun.PremiunScreen
@@ -99,6 +100,9 @@ private fun GetNavHost(
         }
         composable(AppScreen.MakeSignPlayScreen.route) {
             MakeSignPlayScreen(navController = navController, modifier = modifier)
+        }
+        composable(AppScreen.InterpretationStatusScreen.route) {
+           InterpretationStatusScreen(navController = navController, modifier = modifier)
         }
         composable(AppScreen.CongratsPlayScreen.route) {
             CongratsPlayScreen(navController = navController, modifier = modifier)

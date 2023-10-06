@@ -1,6 +1,7 @@
 package com.example.comusenias.presentation.screen.gameAction
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -14,19 +15,27 @@ import com.example.comusenias.presentation.navigation.AppScreen
 
 @Composable
 fun ChoseTheSignPlayScreen(navController: NavHostController, modifier: Modifier) {
-
-    var enabled by remember { mutableStateOf(false) }
-    val isButtonEnabled = remember { mutableStateOf(enabled) }
+    var letter by remember { mutableStateOf("e") }
+    val letterRandom = remember { mutableStateOf(letter) }
+    val isButtonEnabled = remember { mutableStateOf(false) }
+    val stepTwo = 2
+    val onMatchResult: (Boolean) -> Unit = {
+            isButtonEnabled.value = true
+    }
 
     GameAction(
         imageSign = R.drawable.letra_a_solo,
-        title = "¿Que letra es?",
+        title = "¿Qué letra es?",
         titleButton = "Continuar",
         enabledButton = isButtonEnabled.value,
+        currentSteps = stepTwo,
+        navController = navController,
         clickButton = { navController.navigate(AppScreen.MakeSignPlayScreen.route) },
     ) {
-        MatchLetter(singLetter = "A", randomLetter = "U") {
-            isButtonEnabled.value = true
-        }
+        MatchLetter(
+            singLetter = "A",
+            randomLetter = letterRandom.value,
+            responseMatchLetter = onMatchResult
+        )
     }
 }

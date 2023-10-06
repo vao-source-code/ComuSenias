@@ -3,6 +3,7 @@ package com.example.comusenias.presentation.component.gameAction
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,7 +28,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.comusenias.presentation.component.home.ProgressBar
+import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.CLOSE
 import com.example.comusenias.presentation.ui.theme.SIZE12
 import com.example.comusenias.presentation.ui.theme.SIZE2
@@ -41,7 +44,9 @@ import com.example.comusenias.presentation.ui.theme.size50
 @Composable
 fun TopSectionGameAction(
     title: String,
-    image: Int
+    image: Int,
+    currentStep: Int,
+    navController: NavHostController
 ) {
     Column(
         modifier = Modifier
@@ -49,14 +54,17 @@ fun TopSectionGameAction(
             .background(Color.White),
         verticalArrangement = Arrangement.spacedBy(size20.dp)
     ) {
-        CloseAndProgressBar()
+        CloseAndProgressBar(currentStep = currentStep, navController = navController)
         TitleGameAction(title = title)
         ContentImageGame(image = image)
     }
 }
 
 @Composable
-fun CloseAndProgressBar() {
+fun CloseAndProgressBar(currentStep: Int = 0, navController: NavHostController) {
+    val totalSteps = 4
+    val progress = currentStep / totalSteps.toFloat()
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -68,9 +76,10 @@ fun CloseAndProgressBar() {
             imageVector = Icons.Default.Close,
             contentDescription = CLOSE,
             modifier = Modifier
-                .size(size24.dp),
+                .size(size24.dp)
+                .clickable { navController.navigate(AppScreen.HomeScreen.route) },
         )
-        ProgressBar(progress = 1f)
+        ProgressBar(progress = progress)
     }
 }
 

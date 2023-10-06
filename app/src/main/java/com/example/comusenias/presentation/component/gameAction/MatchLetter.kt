@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,7 +36,7 @@ import com.example.comusenias.presentation.ui.theme.greenColorApp
 import com.example.comusenias.presentation.ui.theme.size30
 import com.example.comusenias.presentation.ui.theme.size50
 
-enum class StatusButtonLetter {
+enum class StatusSign {
     NORMAL,
     CORRECT,
     ERROR
@@ -49,12 +50,18 @@ fun MatchLetter(
 ) {
     var isEnable by remember { mutableStateOf(true) }
     val isEnableButtonLetter = remember { mutableStateOf(isEnable) }
+    var mutableRandomLetter by remember { mutableStateOf(randomLetter) }
+
+    LaunchedEffect(mutableRandomLetter) {
+        isEnableButtonLetter.value = true
+    }
+
     val letters = listOf(singLetter, randomLetter)
     val randomLetters = letters.shuffled()
 
     Row(
         modifier = Modifier
-            .padding(top = size30.dp) ,
+            .padding(top = size30.dp),
         horizontalArrangement = Arrangement.spacedBy(size30.dp)
     ) {
         randomLetters.forEach { letter ->
@@ -78,24 +85,24 @@ fun ButtonLetter(
     matchLetter: (Boolean) -> Unit
 ) {
     val statusLetter by remember { mutableStateOf(letter) }
-    var status by remember { mutableStateOf(StatusButtonLetter.NORMAL) }
+    var status by remember { mutableStateOf(StatusSign.NORMAL) }
 
     val borderColor by animateColorAsState(
         when (status) {
-            StatusButtonLetter.NORMAL -> borderButtonLetter
-            StatusButtonLetter.CORRECT -> greenColorApp
-            StatusButtonLetter.ERROR -> Color.Red
+            StatusSign.NORMAL -> borderButtonLetter
+            StatusSign.CORRECT -> greenColorApp
+            StatusSign.ERROR -> Color.Red
         }, label = EMPTY_STRING
     )
     val backgroundColor by animateColorAsState(
         when (status) {
-            StatusButtonLetter.NORMAL -> Color.White
-            StatusButtonLetter.CORRECT -> greenColorApp
-            StatusButtonLetter.ERROR -> Color.Red
+            StatusSign.NORMAL -> Color.White
+            StatusSign.CORRECT -> greenColorApp
+            StatusSign.ERROR -> Color.Red
         }, label = EMPTY_STRING
     )
     val letterColor by animateColorAsState(
-        if (status == StatusButtonLetter.NORMAL) Color.Black else Color.White, label = EMPTY_STRING
+        if (status == StatusSign.NORMAL) Color.Black else Color.White, label = EMPTY_STRING
     )
 
     Box(
@@ -115,10 +122,10 @@ fun ButtonLetter(
                 if (isEnable) {
                     status = if (letter.equals(letterCompare, ignoreCase = true)) {
                         matchLetter(true)
-                        StatusButtonLetter.CORRECT
+                        StatusSign.CORRECT
                     } else {
                         matchLetter(false)
-                        StatusButtonLetter.ERROR
+                        StatusSign.ERROR
                     }
                 }
             }

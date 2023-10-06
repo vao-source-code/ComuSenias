@@ -10,10 +10,14 @@ import com.example.comusenias.presentation.navigation.AppScreen
 
 @Composable
 fun LearnSignScreen(navController: NavHostController, modifier: Modifier) {
+    val stepOne = 1
+
     GameAction(
         imageSign = R.drawable.letra_a,
         title = "Comencemos",
         titleButton = "Continuar",
+        currentSteps = stepOne,
+        navController = navController,
         clickButton = { navController.navigate(AppScreen.ChoseTheSignPlayScreen.route) },
     ) {
         ContentLetterType(letter = "A")

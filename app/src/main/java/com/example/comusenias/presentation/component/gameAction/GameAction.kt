@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.comusenias.presentation.ui.theme.size08
 import com.example.comusenias.presentation.ui.theme.size30
 
@@ -17,6 +18,8 @@ fun GameAction(
     titleButton: String,
     clickButton: () -> Unit,
     enabledButton: Boolean = true,
+    currentSteps: Int,
+    navController: NavHostController,
     content: @Composable () -> Unit = {}
 ) {
     Column(
@@ -26,7 +29,9 @@ fun GameAction(
     ) {
         TopSectionGameAction(
             title = title,
-            image = imageSign
+            image = imageSign,
+            currentStep = currentSteps,
+            navController = navController
         )
         Column(
             modifier = Modifier
