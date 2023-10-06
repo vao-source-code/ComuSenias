@@ -59,9 +59,13 @@ const val DESC_IMAGE_SIGN : String = "Descripción de la imagen"
 const val CHOSE_CORRECT_SING : String = "Elegí la señal correcta"
 const val FINISH_LVL : String = "!Felicitaciones! Nivel terminado"
 const val GO_FOR_MORE : String = "Vamos por mas"
-
-
-
+const val Suscribe = "suscribirse"
+const val Suscribe_Ya = "Suscribete ahora y desbloquea beneficios exclusivos"
+const val Aviso = "AVISO"
+const val NOMBRE_NOTIFICATION1 = "Marcela te ha pedido que corrijas su ejercicio"
+const val NOMBRE_NOTIFICATION2 = "Natalia te ha pedido que corrijas su ejercicio"
+const val NOMBRE_NOTIFICATION3 = "Daniel te ha pedido que corrijas su ejercicio"
+const val NOMBRE_NOTIFICATION4 = "Nuevos Desafios semanales disponibles. ¡Animate a practicar!"
 /*-----------------DIALOG CAPTURE-----------------*/
 const val DIALOG_GALLERY : String = "Galeria"
 const val DIALOG_CAPTURE_PICTURE : String = "Tomar foto"

@@ -16,8 +16,15 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import com.example.comusenias.R
 import com.example.comusenias.domain.models.model.Notification
+import com.example.comusenias.presentation.ui.theme.Aviso
+import com.example.comusenias.presentation.ui.theme.NOMBRE_NOTIFICATION1
+import com.example.comusenias.presentation.ui.theme.NOMBRE_NOTIFICATION2
+import com.example.comusenias.presentation.ui.theme.NOMBRE_NOTIFICATION3
+import com.example.comusenias.presentation.ui.theme.NOMBRE_NOTIFICATION4
 import com.example.comusenias.presentation.ui.theme.SIZE16
 import com.example.comusenias.presentation.ui.theme.SIZE24
+import com.example.comusenias.presentation.ui.theme.Suscribe
+import com.example.comusenias.presentation.ui.theme.Suscribe_Ya
 
 @Composable
 fun NotificationScreen() {
@@ -37,7 +44,7 @@ fun NotificationScreen() {
                     modifier = Modifier.size(SIZE24.dp)
                 )
                 Text(
-                    text = "Suscribete ahora y desbloquea beneficios exclusivos",
+                    text = Suscribe_Ya,
                     style = MaterialTheme.typography.subtitle1,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f)
@@ -45,8 +52,7 @@ fun NotificationScreen() {
                 Button(
                     onClick = { /* Handle button click */ },
                 ) {
-                    val suscribe = "suscribirse"
-                    Text(suscribe)
+                    Text(Suscribe)
                 }
             }
         }
@@ -55,28 +61,28 @@ fun NotificationScreen() {
 val notificationList = listOf(
     Notification(
         iconResId = R.drawable.baseline_arrow_back_24,
-        time = " ",
-        content = "AVISO"
+        time = 1.0,
+        content = Aviso
     ),
     Notification(
-        iconResId = R.drawable.noti3,
-        content = "Marcela te ha pedido que corrijas su ejercicio",
-        time = "Hace 5 horas"
+        iconResId = R.drawable.noti_tres,
+        content = NOMBRE_NOTIFICATION1,
+        time = 15.50
     ),
     Notification(
-        iconResId = R.drawable.noti1,
-        content = "Natalia te ha pedido que corrijas su ejercicio",
-        time = "Ayer 10:30"
+        iconResId = R.drawable.noti_uno,
+        content = NOMBRE_NOTIFICATION2,
+        time = 10.30
     ),
     Notification(
-        iconResId = R.drawable.noti4,
-        content = "Daniel te ha pedido que corrijas su ejercicio",
-        time = "anteayer 6:15"
+        iconResId = R.drawable.noti_dos,
+        content = NOMBRE_NOTIFICATION3,
+        time = 6.15
     ),
     Notification(
-        iconResId = R.drawable.noti2,
-        content = "Nuevos Desafios semanales disponibles. ¡Animate a practicar!",
-        time = "anteayer 12:30"
+        iconResId = R.drawable.noti_cuatro,
+        content = NOMBRE_NOTIFICATION4,
+        time = 12.34
     ),
     // Add more notifications as needed
 )
@@ -90,6 +96,7 @@ fun NotificationItem(notification: Notification) {
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             if (notification == notificationList.first()) {
+
                 Image(
                     painter = painterResource(notification.iconResId),
                     contentDescription = null,
@@ -116,10 +123,6 @@ fun NotificationItem(notification: Notification) {
                         style = MaterialTheme.typography.subtitle1
                     )
                     Spacer(modifier = Modifier.height(SIZE16.dp))
-                    Text(
-                        text = notification.time,
-                        style = MaterialTheme.typography.caption
-                    )
                 }
             }
         }
