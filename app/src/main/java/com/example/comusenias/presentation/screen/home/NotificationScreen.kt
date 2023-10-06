@@ -65,22 +65,22 @@ val notificationList = listOf(
         content = Aviso
     ),
     Notification(
-        iconResId = R.drawable.noti_tres,
+        iconResId = R.drawable.onboarding2,
         content = NOMBRE_NOTIFICATION1,
         time = 15.50
     ),
     Notification(
-        iconResId = R.drawable.noti_uno,
+        iconResId = R.drawable.onboarding3,
         content = NOMBRE_NOTIFICATION2,
         time = 10.30
     ),
     Notification(
-        iconResId = R.drawable.noti_dos,
+        iconResId = R.drawable.onboarding1,
         content = NOMBRE_NOTIFICATION3,
         time = 6.15
     ),
     Notification(
-        iconResId = R.drawable.noti_cuatro,
+        iconResId = R.drawable.onboarding2,
         content = NOMBRE_NOTIFICATION4,
         time = 12.34
     ),
