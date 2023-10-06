@@ -1,6 +1,5 @@
-package com.example.comusenias;
+package com.example.comusenias
 
-import android.app.Application;
+import android.app.Application
 
-public class ComuseniasApp extends Application {
-}
+class ComuseniasApp : Application()
