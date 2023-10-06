@@ -1,7 +1,7 @@
 package com.example.comusenias.presentation.view_model
 
 import com.example.comusenias.domain.models.Response
-import com.example.comusenias.domain.models.User
+import com.example.comusenias.domain.models.user.User
 import com.example.comusenias.domain.use_cases.auth.AuthUseCases
 import com.example.comusenias.domain.use_cases.users.UsersUseCase
 import com.google.firebase.auth.FirebaseUser
@@ -40,13 +40,11 @@ class RegisterViewModelTest {
 
     }
 
-
     @Test
     fun registerIsSuccessful() = runBlocking {
-
         val user = User(
             id = "1",
-            userName = "test",
+            name = "test",
             email = "aW@gmail.com",
             password = "123456",
         )
@@ -61,10 +59,9 @@ class RegisterViewModelTest {
 
     @Test
     fun registerIsError() = runBlocking {
-
         val user = User(
             id = "1",
-            userName = "test",
+            name = "test",
             email = "",
         )
 

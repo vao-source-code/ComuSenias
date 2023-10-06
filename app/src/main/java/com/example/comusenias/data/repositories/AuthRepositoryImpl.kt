@@ -3,7 +3,7 @@ package com.example.comusenias.data.repositories
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.example.comusenias.domain.models.Response
-import com.example.comusenias.domain.models.User
+import com.example.comusenias.domain.models.user.User
 import com.example.comusenias.domain.repositories.AuthRepository
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject

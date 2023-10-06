@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.comusenias.R
-import com.example.comusenias.domain.models.User
+import com.example.comusenias.domain.models.user.User
 import com.example.comusenias.presentation.component.specialist.CardHomeSpecialist
 import com.example.comusenias.presentation.component.specialist.CardProdileUser
 import com.example.comusenias.presentation.navigation.AppScreen
@@ -52,8 +52,6 @@ fun SpecialistHomeExample(navController: NavHostController, modifier: Modifier) 
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
-
             Box(
                 Modifier
                     .shadow(
@@ -62,17 +60,13 @@ fun SpecialistHomeExample(navController: NavHostController, modifier: Modifier) 
                     )
                     .background(primaryColorApp)
             ) {
-
                 CardHomeSpecialist(
                     image = R.drawable.diagnostic_category,
                     title = "Juan Perez",
                     subtitle = "Psicologo Infantil",
                     onClickCard = { navController.navigate(route = AppScreen.ProfileScreen.route) }
                 )
-
-
             }
-
             ProfileView(modifier = modifier, navController = navController)
         }
     }
@@ -81,14 +75,12 @@ fun SpecialistHomeExample(navController: NavHostController, modifier: Modifier) 
 
 @Composable
 fun ProfileView(modifier: Modifier, navController: NavHostController) {
-
     Text(
 
         textAlign = TextAlign.Start,
         text = "Pacientes",
         style = TextStyle(fontSize = SIZE26.sp, fontWeight = FontWeight.Bold)
     )
-
     LazyVerticalGrid(
         modifier = modifier,
         columns = GridCells.Fixed(1),
@@ -100,31 +92,29 @@ fun ProfileView(modifier: Modifier, navController: NavHostController) {
                     navController = navController,
                     {}) //TODO deberia ir los datos del paciente en el {}
             }
-
         }
     }
 }
 
-
 @Composable
 fun CardExampleDos(user: User, navController: NavHostController, onItemSelected: (User) -> Unit) {
-        CardProdileUser(image = R.drawable.profile_avatar,
-            title = user.userName,
-            onClickCard = { navController.navigate(route = AppScreen.SpecialistDetailsScreen.route) })
+    CardProdileUser(image = R.drawable.profile_avatar,
+        title = user.name,
+        onClickCard = { navController.navigate(route = AppScreen.SpecialistDetailsScreen.route) })
 
 }
 
 fun getChapterItem(): List<User> {
     return listOf(
-        User(id = "1", userName = "Alberto Wirstes", image = ""),
-        User(id = "2", userName = "Sabrina Gomez", image = ""),
-        User(id = "3", userName = "Norma Gonzales", image = ""),
-        User(id = "4", userName = "Nicolas Orue", image = ""),
-        User(id = "5", userName = "Esther Segovia", image = ""),
-        User(id = "6", userName = "Juan Carnizo", image = ""),
-        User(id = "7", userName = "Victor Alvarez", image = ""),
-        User(id = "8", userName = "Karina Gomez", image = ""),
-        User(id = "9", userName = "Daniel Arribas", image = ""),
+        User(id = "1", name = "Alberto Wirstes", image = ""),
+        User(id = "2", name = "Sabrina Gomez", image = ""),
+        User(id = "3", name = "Norma Gonzales", image = ""),
+        User(id = "4", name = "Nicolas Orue", image = ""),
+        User(id = "5", name = "Esther Segovia", image = ""),
+        User(id = "6", name = "Juan Carnizo", image = ""),
+        User(id = "7", name = "Victor Alvarez", image = ""),
+        User(id = "8", name = "Karina Gomez", image = ""),
+        User(id = "9", name = "Daniel Arribas", image = ""),
 
         )
 }

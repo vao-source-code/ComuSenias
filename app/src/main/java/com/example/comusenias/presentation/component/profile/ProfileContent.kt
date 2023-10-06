@@ -72,7 +72,7 @@ fun ProfileContent(
             Spacer(modifier = Modifier.height(55.dp))
             TextFieldApp(
                 icon = Icons.Default.Person,
-                value = viewModel.userData.userName,
+                value = viewModel.userData.name,
                 onValueChange = {},
                 validateField = {},
                 label = PROFILE_USER,

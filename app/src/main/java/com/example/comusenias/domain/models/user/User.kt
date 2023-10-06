@@ -1,21 +1,22 @@
-package com.example.comusenias.domain.models
+package com.example.comusenias.domain.models.user
 
 import com.example.comusenias.domain.library.LibraryPassword
 import com.example.comusenias.domain.library.LibraryString
 import com.google.gson.Gson
 
-
-data class User(
-    var id: String = "",
-    var userName: String = "",
+open class User(
+    var id : String = "",
+    var name: String = "",
+    var lastName: String = "",
     var email: String = "",
     var password: String = "",
     var image: String = "",
 ) {
+
     fun toJson(): String = Gson().toJson(
         User(
-            id,
-            userName,
+            name,
+            lastName,
             email,
             LibraryPassword.encodePassword(password),
             if(image != "") LibraryString.encodeURL(image) else ""

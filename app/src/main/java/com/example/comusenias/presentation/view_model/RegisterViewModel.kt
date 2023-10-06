@@ -9,7 +9,7 @@ import com.example.comusenias.domain.library.LibraryPassword
 import com.example.comusenias.domain.library.LibraryString
 import com.example.comusenias.domain.models.RegisterState
 import com.example.comusenias.domain.models.Response
-import com.example.comusenias.domain.models.User
+import com.example.comusenias.domain.models.user.User
 import com.example.comusenias.domain.use_cases.auth.AuthUseCases
 import com.example.comusenias.domain.use_cases.users.UsersUseCase
 import com.example.comusenias.presentation.ui.theme.emptyString
@@ -27,32 +27,26 @@ class RegisterViewModel @Inject constructor(
     private val authUseCases: AuthUseCases, private val usersUseCase: UsersUseCase
 ) : ViewModel() {
 
-
     var registerResponse by mutableStateOf<Response<FirebaseUser>?>(null)
         private set
 
     var state by mutableStateOf(RegisterState())
         private set
 
-    var isUserNameValid: Boolean by mutableStateOf(false)
+    private var isUserNameValid: Boolean by mutableStateOf(false)
     var errorUserName: String by mutableStateOf("")
 
-    var isEmailValid: Boolean by mutableStateOf(false)
+    private var isEmailValid: Boolean by mutableStateOf(false)
     var errorEmail: String by mutableStateOf("")
 
-
-    var isPasswordValid: Boolean by mutableStateOf(false)
+    private var isPasswordValid: Boolean by mutableStateOf(false)
     var errorPassword: String by mutableStateOf("")
 
-
-    var isConfirmPasswordValid: Boolean by mutableStateOf(false)
+    private var isConfirmPasswordValid: Boolean by mutableStateOf(false)
     var errorConfirmPassword: String by mutableStateOf("")
 
-
     var isRegisterEnabled = false
-
     var user = User()
-
 
     fun register(user: User) = viewModelScope.launch {
         registerResponse = Response.Loading
@@ -63,13 +57,13 @@ class RegisterViewModel @Inject constructor(
     fun onRegister() {
 
         user = User(
-            userName = state.userName, email = state.email, password = state.password
+            name = state.userName, email = state.email, password = state.password
         )
         register(user)
 
     }
 
-    fun enabledRegisterButton() {
+    private fun enabledRegisterButton() {
         isRegisterEnabled =
             isUserNameValid && isEmailValid && isPasswordValid && isConfirmPasswordValid
     }
@@ -123,6 +117,4 @@ class RegisterViewModel @Inject constructor(
     fun onConfirmPasswordInput(confirmPassword: String) {
         state = state.copy(confirmPassword = confirmPassword)
     }
-
-
 }

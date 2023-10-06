@@ -18,7 +18,7 @@ import javax.inject.Named
 class LetterImageRepositoryImpl @Inject constructor(
     @Named(FirebaseConstants.LETTERS_COLLECTION) private val storageLettersRef: StorageReference,
     @Named(FirebaseConstants.LETTERS_COLLECTION) private val lettersRef: CollectionReference,
-    ) : LetterImageRepository {
+) : LetterImageRepository {
 
     override suspend fun getLetterImage(letter: String): File {
         return try {

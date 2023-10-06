@@ -3,7 +3,7 @@ package com.example.comusenias.data.repositories
 import android.net.Uri
 import com.example.comusenias.constants.FirebaseConstants.USERS_COLLECTION
 import com.example.comusenias.domain.models.Response
-import com.example.comusenias.domain.models.User
+import com.example.comusenias.domain.models.user.User
 import com.example.comusenias.domain.repositories.UsersRepository
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.storage.StorageReference
@@ -44,7 +44,7 @@ class UsersRepositoryImpl @Inject constructor(
     override suspend fun updateUser(user: User): Response<Boolean> {
         return try {
             val mapImage: MutableMap<String, Any> = HashMap()
-            mapImage["userName"] = user.userName
+            mapImage["userName"] = user.name
             mapImage["image"] = user.image
             usersRef.document(user.id).update(mapImage).await()
             Response.Success(true)

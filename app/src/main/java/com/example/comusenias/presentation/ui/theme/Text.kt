@@ -59,8 +59,8 @@ const val DESC_IMAGE_SIGN : String = "Descripción de la imagen"
 const val CHOSE_CORRECT_SING : String = "Elegí la señal correcta"
 const val FINISH_LVL : String = "!Felicitaciones! Nivel terminado"
 const val GO_FOR_MORE : String = "Vamos por mas"
-
-
+const val USER : String = "user"
+const val PATH_IMAGE : String = "image/*"
 
 /*-----------------DIALOG CAPTURE-----------------*/
 const val DIALOG_GALLERY : String = "Galeria"
