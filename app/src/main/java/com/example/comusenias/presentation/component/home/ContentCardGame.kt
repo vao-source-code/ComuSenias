@@ -23,6 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.comusenias.R
 import com.example.comusenias.constants.TestTag
+import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.SIZE12
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.cardGray
@@ -73,11 +74,11 @@ fun ContentCardGame(status: StatusGame ) {
         }
     }
 
-    val linecColorAnimate = animateColorAsState(lineColor, label = "")
-    val backgroundColorCardAnimate = animateColorAsState(backgroundColorCard, label = "")
-    val iconColorAnimate = animateColorAsState(iconColor, label = "")
-    val blurAnimate = animateDpAsState(targetValue = blur.dp, label = "")
-    val iconAnimate = animateIntAsState(targetValue = iconImage, label = "")
+    val lineColorAnimate = animateColorAsState(lineColor, label = EMPTY_STRING)
+    val backgroundColorCardAnimate = animateColorAsState(backgroundColorCard, label = EMPTY_STRING)
+    val iconColorAnimate = animateColorAsState(iconColor, label = EMPTY_STRING)
+    val blurAnimate = animateDpAsState(targetValue = blur.dp, label = EMPTY_STRING)
+    val iconAnimate = animateIntAsState(targetValue = iconImage, label = EMPTY_STRING)
 
     Column(
         modifier = Modifier
@@ -87,7 +88,7 @@ fun ContentCardGame(status: StatusGame ) {
             .testTag(TestTag.TAG_CONTENT_CARD_GAME + currentStatus.name)
     ) {
         CardGame(
-            lineColor = linecColorAnimate,
+            lineColor = lineColorAnimate,
             backgroundCard = backgroundColorCardAnimate,
             iconColor = iconColorAnimate,
             icon = iconAnimate
@@ -102,7 +103,7 @@ fun ContentCardGame(status: StatusGame ) {
                     .height(size24.dp)
                     .width(size5.dp)
                     .background(
-                        color = linecColorAnimate.value,
+                        color = lineColorAnimate.value,
                         shape = RoundedCornerShape(SIZE12.dp)
                     )
                     .testTag(TestTag.TAG_LINE_COLOR_CARD)
@@ -119,6 +120,4 @@ fun PreviewContentCard(){
         ContentCardGame(status = StatusGame.IN_PROGRESS)
         ContentCardGame(status = StatusGame.BLOCKED)
     }
-
-
 }

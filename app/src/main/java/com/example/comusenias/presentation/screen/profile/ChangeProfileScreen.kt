@@ -3,7 +3,6 @@ package com.example.comusenias.presentation.screen.profile
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -12,18 +11,15 @@ import com.example.comusenias.presentation.component.profile.ChangeProfileConten
 import com.example.comusenias.presentation.component.profile.ProfileFooterContent
 import com.example.comusenias.presentation.component.profile.ResponseStatusProfile
 import com.example.comusenias.presentation.component.profile.SaveImageProfile
+import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.view_model.ChangeProfileViewModel
-
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ChangeProfileScreen(
     navController: NavHostController,
     modifier: Modifier,
     changeViewModel: ChangeProfileViewModel = hiltViewModel(),
-    user: String = ""
+    user: String = EMPTY_STRING
 ) {
-
     Box(
         modifier = modifier.fillMaxSize()
     ) {
@@ -32,19 +28,14 @@ fun ChangeProfileScreen(
                 modifier = modifier,
                 navController = navController,
             )
-            val onClick : () -> Unit =
+            val onClick: () -> Unit =
                 {
                     changeViewModel.saveImage()
-
                 }
-
             ProfileFooterContent(onClick)
             SaveImageProfile()
             ResponseStatusProfile()
-
-
         }
     }
-
 }
 

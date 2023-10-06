@@ -29,53 +29,55 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.comusenias.R
+import com.example.comusenias.presentation.ui.theme.IMAGE_AVATAR
+import com.example.comusenias.presentation.ui.theme.LETTERS
+import com.example.comusenias.presentation.ui.theme.NAME_KID
+import com.example.comusenias.presentation.ui.theme.NUMBERS
+import com.example.comusenias.presentation.ui.theme.SIZE140
+import com.example.comusenias.presentation.ui.theme.VOWELS
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
 import com.example.comusenias.presentation.ui.theme.size10
+import com.example.comusenias.presentation.ui.theme.size20
 import com.example.comusenias.presentation.ui.theme.size3
+import com.example.comusenias.presentation.ui.theme.size30
+import com.example.comusenias.presentation.ui.theme.size40
 
-//TODO debo una cervecita por esto
 @Composable
 fun SpecialistDetailsScreen(modifier: Modifier, navController: NavHostController) {
-
-
-    Column(modifier = Modifier.padding(20.dp)) {
-
+    Column(modifier = Modifier.padding(size20.dp)) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(bottomEnd = 40.dp, bottomStart = 40.dp))
+                .clip(RoundedCornerShape(bottomEnd = size40.dp, bottomStart = size40.dp))
                 .background(color = primaryColorApp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Nombre niño",
-                modifier = Modifier.padding(10.dp),
+                text = NAME_KID,
+                modifier = Modifier.padding(size10.dp),
                 color = Color.White,
-                fontSize = 30.sp
+                fontSize = size30.sp
             )
             Box(
                 modifier = Modifier
-                    .size(140.dp)
-                        .clip(CircleShape),
+                    .size(SIZE140.dp)
+                    .clip(CircleShape),
             ) {
 
                 Image(
-                    modifier = Modifier.size(140.dp),
+                    modifier = Modifier.size(SIZE140.dp),
                     contentScale = ContentScale.Crop,
                     painter = painterResource(id = R.drawable.profile_avatar),
-                    contentDescription = "image avatar",
-
-                    )
-
+                    contentDescription = IMAGE_AVATAR,
+                )
             }
-
         }
 
-        Spacer(modifier = Modifier.size(10.dp))
+        Spacer(modifier = Modifier.size(size10.dp))
         Divider(
             modifier = Modifier
                 .fillMaxWidth()
-                .size(3.dp),
+                .size(size3.dp),
             color = Color.Gray
         )
 
@@ -87,14 +89,26 @@ fun SpecialistDetailsScreen(modifier: Modifier, navController: NavHostController
         Divider(
             modifier = Modifier
                 .fillMaxWidth()
-                .size(3.dp),
+                .size(size3.dp),
             color = Color.Gray
         )
-        Spacer(modifier = Modifier.size(10.dp))
+        Spacer(modifier = Modifier.size(size10.dp))
 
-        CardWithTwoImages(imageLeft = R.drawable.details, imageRight = R.drawable.eclipse_specialist1, text = "Vocales")
-        CardWithTwoImages(imageLeft =  R.drawable.details, imageRight =R.drawable.eclipse_specialist2 , text = "Números")
-        CardWithTwoImages(imageLeft =  R.drawable.details, imageRight = R.drawable.eclipse_specialist3, text = "Letras")
+        CardWithTwoImages(
+            imageLeft = R.drawable.details,
+            imageRight = R.drawable.eclipse_specialist1,
+            text = VOWELS
+        )
+        CardWithTwoImages(
+            imageLeft = R.drawable.details,
+            imageRight = R.drawable.eclipse_specialist2,
+            text = NUMBERS
+        )
+        CardWithTwoImages(
+            imageLeft = R.drawable.details,
+            imageRight = R.drawable.eclipse_specialist3,
+            text = LETTERS
+        )
 
 
     }
@@ -133,12 +147,14 @@ fun CardWithTwoImages(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(10.dp)      .shadow(
+            .padding(10.dp)
+            .shadow(
                 elevation = size3.dp,
                 shape = RoundedCornerShape(size10.dp),
                 spotColor = Color(0x21000000),
                 ambientColor = Color(0x21000000)
-            ).background(Color.White, RoundedCornerShape(size10.dp)),
+            )
+            .background(Color.White, RoundedCornerShape(size10.dp)),
     ) {
         Row(
             modifier = Modifier
@@ -148,7 +164,9 @@ fun CardWithTwoImages(
         ) {
             Image(
                 painter = painterResource(id = imageLeft),
-                modifier = Modifier.size(70.dp).padding(5.dp),
+                modifier = Modifier
+                    .size(70.dp)
+                    .padding(5.dp),
                 contentDescription = "image left"
             )
 
@@ -162,7 +180,9 @@ fun CardWithTwoImages(
 
             Image(
                 painter = painterResource(id = imageRight),
-                modifier = Modifier.size(70.dp).padding(5.dp),
+                modifier = Modifier
+                    .size(70.dp)
+                    .padding(5.dp),
                 contentDescription = "image right"
             )
         }

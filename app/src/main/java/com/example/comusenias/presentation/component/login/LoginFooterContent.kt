@@ -20,26 +20,29 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.ComuSeniasTheme
+import com.example.comusenias.presentation.ui.theme.HAVENT_ACCOUNT
+import com.example.comusenias.presentation.ui.theme.REGISTER
+import com.example.comusenias.presentation.ui.theme.size14
+import com.example.comusenias.presentation.ui.theme.size20
+import com.example.comusenias.presentation.ui.theme.size5
 
 @Composable
-fun FooterContent(navController: NavHostController , modifier: Modifier) {
-    Row( modifier = modifier , horizontalArrangement = Arrangement.Center
+fun FooterContent(navController: NavHostController, modifier: Modifier) {
+    Row(
+        modifier = modifier, horizontalArrangement = Arrangement.Center
 
     ) {
-        Text(text = "¿No tienes una cuenta?" , fontSize = 14.sp , color = Color.Gray)
-
-        Spacer(modifier = Modifier.width(5.dp))
+        Text(text = HAVENT_ACCOUNT, fontSize = size14.sp, color = Color.Gray)
+        Spacer(modifier = Modifier.width(size5.dp))
         Text(
             modifier = Modifier.clickable {
                 navController.navigate(route = AppScreen.RegisterScreen.route)
             },
-            text = "Regístrate",
+            text = REGISTER,
             color = MaterialTheme.colorScheme.secondary,
-            fontSize = 14.sp,
+            fontSize = size14.sp,
             fontWeight = FontWeight.Bold
         )
-
-
     }
 }
 
@@ -47,7 +50,11 @@ fun FooterContent(navController: NavHostController , modifier: Modifier) {
 @Composable
 fun PreviewFooterContent() {
     ComuSeniasTheme() {
-        FooterContent(navController = rememberNavController() , Modifier.fillMaxWidth().padding(bottom = 20.dp))
+        FooterContent(
+            navController = rememberNavController(),
+            Modifier
+                .fillMaxWidth()
+                .padding(bottom = size20.dp)
+        )
     }
-
 }

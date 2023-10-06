@@ -78,7 +78,6 @@ private fun GetNavHost(
                     user = it
                 )
             }
-
         }
 
         composable(AppScreen.SpecialistScreen.route) {

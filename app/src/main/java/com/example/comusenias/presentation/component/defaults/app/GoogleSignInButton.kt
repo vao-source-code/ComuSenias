@@ -30,7 +30,7 @@ import com.example.comusenias.presentation.ui.theme.size19
 import com.example.comusenias.presentation.ui.theme.size20
 import com.example.comusenias.presentation.ui.theme.size24
 import com.example.comusenias.presentation.ui.theme.size3
-import com.example.comusenias.presentation.ui.theme.size50
+import com.example.comusenias.presentation.ui.theme.SIZE50
 
 @Preview(showBackground = true)
 @Composable
@@ -52,7 +52,7 @@ fun GoogleSignInButton() {
                 ambientColor = Color(0x21000000)
             )
             .fillMaxWidth()
-            .height(size50.dp)
+            .height(SIZE50.dp)
             .background(Color.White, shape = RoundedCornerShape(size10.dp))
             .padding(start = size19.dp, end = size20.dp),
         shape = RoundedCornerShape(size10.dp),

@@ -20,26 +20,30 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.ComuSeniasTheme
+import com.example.comusenias.presentation.ui.theme.DO_HAVE_ACCOUNT
+import com.example.comusenias.presentation.ui.theme.LOG_IN
+import com.example.comusenias.presentation.ui.theme.size14
+import com.example.comusenias.presentation.ui.theme.size20
+import com.example.comusenias.presentation.ui.theme.size5
 
 @Composable
-fun RegisterFooterContent(navController: NavHostController , modifier: Modifier) {
-    Row( modifier = modifier , horizontalArrangement = Arrangement.Center
+fun RegisterFooterContent(navController: NavHostController, modifier: Modifier) {
+    Row(
+        modifier = modifier, horizontalArrangement = Arrangement.Center
 
     ) {
-        Text(text = "¿Ya tienes una cuenta?" , fontSize = 14.sp , color = Color.Gray)
+        Text(text = DO_HAVE_ACCOUNT, fontSize = size14.sp, color = Color.Gray)
 
-        Spacer(modifier = Modifier.width(5.dp))
+        Spacer(modifier = Modifier.width(size5.dp))
         Text(
             modifier = Modifier.clickable {
                 navController.navigate(route = AppScreen.LoginScreen.route)
             },
-            text = "Inicia Sesión",
+            text = LOG_IN,
             color = MaterialTheme.colorScheme.secondary,
-            fontSize = 14.sp,
+            fontSize = size14.sp,
             fontWeight = FontWeight.Bold
         )
-
-
     }
 }
 
@@ -47,7 +51,11 @@ fun RegisterFooterContent(navController: NavHostController , modifier: Modifier)
 @Composable
 fun PreviewFooterContent() {
     ComuSeniasTheme() {
-        RegisterFooterContent(navController = rememberNavController() , Modifier.fillMaxWidth().padding(bottom = 20.dp))
+        RegisterFooterContent(
+            navController = rememberNavController(),
+            Modifier
+                .fillMaxWidth()
+                .padding(bottom = size20.dp)
+        )
     }
-
 }

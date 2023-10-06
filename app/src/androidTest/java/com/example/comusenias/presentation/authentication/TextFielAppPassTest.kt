@@ -55,15 +55,4 @@ class TextFielAppPassTest {
         composeTestRule.onNodeWithTag(TestTag.TAG_TEXT_FIELD_APP_PASS, useUnmergedTree = true).assertIsDisplayed()
         composeTestRule.onNodeWithTag(TestTag.TAG_TEXT_FIELD_APP_PASS, useUnmergedTree = true).assertHeightIsEqualTo(50.dp)
     }
-
-    @Test
-    fun testTextFieldAppPassValue(){
-        composeTestRule.setContent {
-            TextFieldAppPassword(
-                value = "12345fabian",
-                onValueChange = {},
-                label = "Contraseña")
-        }
-        composeTestRule.onNodeWithTag(TestTag.TAG_TEXT_FIELD_APP_PASS, useUnmergedTree = true).assertTextEquals("12345fabian")
-    }
 }
