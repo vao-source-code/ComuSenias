@@ -29,6 +29,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import coil.compose.rememberAsyncImagePainter
+import coil.compose.rememberImagePainter
 import com.example.comusenias.presentation.component.home.ProgressBar
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.CLOSE
@@ -62,7 +64,7 @@ fun TopSectionGameAction(
 
 @Composable
 fun CloseAndProgressBar(currentStep: Int = 0, navController: NavHostController) {
-    val totalSteps = 4
+    val totalSteps = 5
     val progress = currentStep / totalSteps.toFloat()
 
     Row(
@@ -97,7 +99,9 @@ fun TitleGameAction(title: String) {
 }
 
 @Composable
-fun ContentImageGame(image: Int) {
+fun ContentImageGame(image: Int, urlImage: String ="") {
+    val painter = rememberAsyncImagePainter(model = urlImage)
+
     Box(
         modifier = Modifier
             .fillMaxWidth()

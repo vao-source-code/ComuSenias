@@ -29,6 +29,8 @@ sealed class AppScreen(val route : String) {
 
     object SpecialistScreen : AppScreen("specialist_screen")
     object SpecialistDetailsScreen : AppScreen("specialist_details_screen")
+    object ChoseTheLetterPlayScreen : AppScreen("chose_the_letter_play")
+
 
 
 }

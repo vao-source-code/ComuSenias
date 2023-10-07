@@ -18,7 +18,7 @@ fun LearnSignScreen(navController: NavHostController, modifier: Modifier) {
         titleButton = "Continuar",
         currentSteps = stepOne,
         navController = navController,
-        clickButton = { navController.navigate(AppScreen.ChoseTheSignPlayScreen.route) },
+        clickButton = { navController.navigate(AppScreen.ChoseTheLetterPlayScreen.route) },
     ) {
         ContentLetterType(letter = "A")
     }

@@ -9,7 +9,7 @@ import com.example.comusenias.presentation.navigation.AppScreen
 
 @Composable
 fun MakeSignPlayScreen(navController: NavHostController, modifier: Modifier) {
-    val stepThree = 3
+    val stepThree = 4
 
     GameAction(
         imageSign = R.drawable.letra_a_solo,
