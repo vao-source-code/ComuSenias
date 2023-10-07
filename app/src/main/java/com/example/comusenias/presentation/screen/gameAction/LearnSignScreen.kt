@@ -7,6 +7,8 @@ import com.example.comusenias.R
 import com.example.comusenias.presentation.component.gameAction.ContentLetterType
 import com.example.comusenias.presentation.component.gameAction.GameAction
 import com.example.comusenias.presentation.navigation.AppScreen
+import com.example.comusenias.presentation.ui.theme.CONTINUE
+import com.example.comusenias.presentation.ui.theme.LETS_GO
 
 @Composable
 fun LearnSignScreen(navController: NavHostController, modifier: Modifier) {
@@ -14,8 +16,8 @@ fun LearnSignScreen(navController: NavHostController, modifier: Modifier) {
 
     GameAction(
         imageSign = R.drawable.letra_a,
-        title = "Comencemos",
-        titleButton = "Continuar",
+        title = LETS_GO,
+        titleButton = CONTINUE,
         currentSteps = stepOne,
         navController = navController,
         clickButton = { navController.navigate(AppScreen.ChoseTheLetterPlayScreen.route) },

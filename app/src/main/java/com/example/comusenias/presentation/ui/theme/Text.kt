@@ -1,8 +1,6 @@
 package com.example.comusenias.presentation.ui.theme
 
 const val logoApp : String = "Logo de la app"
-const val loginSuccess : String = "Login Success"
-const val loginError : String = "Login Error"
 const val emailText : String = "Correo electrónico"
 const val password : String = "Contraseña"
 const val confirmPassword: String = "Confirmar contraseña"
@@ -37,9 +35,7 @@ const val ESPECIALIST = "Especialista"
 const val PROGRESS = "Tu Progreso"
 const val CHECK_POINT = "Punto de Control"
 const val CONSULT_WHIT_ESPECIALIST = "¿Has consultado con un especialista para evaluar cómo está avanzando tu aprendizaje?"
-const val logInLog = "Login"
 const val email = "Email"
-const val editData = "Editar Datos"
 const val title = "Title"
 const val arrowBack = "Arrow Back"
 const val iconApp = "icono de la app"
@@ -54,18 +50,15 @@ const val LEAR_TEXT : String = "Aprender"
 const val PROFILE_TEXT : String = "Perfil"
 const val PREMIUM_TEXT : String = "Premium"
 const val EMPTY_STRING : String = ""
-const val START_WITH_LETTER : String = "Empecemos con la letra"
-const val DESC_IMAGE_SIGN : String = "Descripción de la imagen"
-const val CHOSE_CORRECT_SING : String = "Elegí la señal correcta"
 const val FINISH_LVL : String = "!Felicitaciones! Nivel terminado, vamos por mas!!!"
+const val LETS_GO : String = "Comencemos"
+const val THE_SIGN_IS : String = "La seña es..."
+const val FINISH : String = "Finalizar"
+const val WHAT_SIGN_IS : String = "¿Que seña es la letra?"
+const val WHAT_LETTER_IS : String = "¿Que letra es la seña?"
 
 /*-----------------BUTTONS AND ICONS-----------------*/
-
 const val CLOSE : String = "Salir de la pantalla"
-
-
-
-
 
 /*-----------------DIALOG CAPTURE-----------------*/
 const val DIALOG_GALLERY : String = "Galeria"
@@ -80,5 +73,3 @@ const val CHANGE_PROFILE_CONFIRM_PASSWORD = "Confirmar Contraseña"
 /*-----------------PROFILE CONTENT -----------------*/
 const val PROFILE_USER = "Nombre del Usuario"
 const val PROFILE_EMAIL = "Correo electrónico"
-
-const val LETS_GO_LEARN : String = "¡Vamos aprender Sabrina!"

@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -50,11 +49,6 @@ fun MatchLetter(
 ) {
     var isEnable by remember { mutableStateOf(true) }
     val isEnableButtonLetter = remember { mutableStateOf(isEnable) }
-    var mutableRandomLetter by remember { mutableStateOf(randomLetter) }
-
-    LaunchedEffect(mutableRandomLetter) {
-        isEnableButtonLetter.value = true
-    }
 
     val letters = listOf(singLetter, randomLetter)
     val randomLetters = letters.shuffled()

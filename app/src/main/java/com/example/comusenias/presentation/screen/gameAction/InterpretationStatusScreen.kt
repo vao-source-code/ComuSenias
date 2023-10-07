@@ -9,6 +9,8 @@ import com.example.comusenias.R
 import com.example.comusenias.presentation.component.gameAction.GameAction
 import com.example.comusenias.presentation.component.gameAction.SignInterpretationStatus
 import com.example.comusenias.presentation.navigation.AppScreen
+import com.example.comusenias.presentation.ui.theme.FINISH
+import com.example.comusenias.presentation.ui.theme.THE_SIGN_IS
 
 @Composable
 fun InterpretationStatusScreen(navController: NavHostController, modifier: Modifier) {
@@ -19,10 +21,10 @@ fun InterpretationStatusScreen(navController: NavHostController, modifier: Modif
     }
 
     GameAction(
-        imageSign = R.drawable.letra_a_solo,
+        imageSign = R.drawable.hand_sign,
         enabledButton = isButtonEnabled.value,
-        title = "La seña es...",
-        titleButton = "Finalizar",
+        title = THE_SIGN_IS,
+        titleButton = FINISH,
         currentSteps = stepFour,
         navController = navController,
         clickButton = { navController.navigate(AppScreen.CongratsPlayScreen.route) },

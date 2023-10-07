@@ -30,10 +30,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
-import coil.compose.rememberImagePainter
 import com.example.comusenias.presentation.component.home.ProgressBar
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.CLOSE
+import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
+import com.example.comusenias.presentation.ui.theme.SIZE100
 import com.example.comusenias.presentation.ui.theme.SIZE12
 import com.example.comusenias.presentation.ui.theme.SIZE2
 import com.example.comusenias.presentation.ui.theme.SIZE220
@@ -45,6 +46,7 @@ import com.example.comusenias.presentation.ui.theme.size50
 
 @Composable
 fun TopSectionGameAction(
+    letterSign: String,
     title: String,
     image: Int,
     currentStep: Int,
@@ -58,7 +60,10 @@ fun TopSectionGameAction(
     ) {
         CloseAndProgressBar(currentStep = currentStep, navController = navController)
         TitleGameAction(title = title)
-        ContentImageGame(image = image)
+        ContentImageGame(
+            image = image,
+            letterSign = letterSign
+        )
     }
 }
 
@@ -99,7 +104,11 @@ fun TitleGameAction(title: String) {
 }
 
 @Composable
-fun ContentImageGame(image: Int, urlImage: String ="") {
+fun ContentImageGame(
+    image: Int,
+    urlImage: String = "",
+    letterSign: String
+) {
     val painter = rememberAsyncImagePainter(model = urlImage)
 
     Box(
@@ -111,13 +120,32 @@ fun ContentImageGame(image: Int, urlImage: String ="") {
                 color = primaryColorApp,
                 shape = RoundedCornerShape(size = SIZE12.dp)
             )
+            .background(
+                color = Color.White,
+                shape = RoundedCornerShape(size = SIZE12.dp)
+            ),
     ) {
-        Image(
-            modifier = Modifier
-                .fillMaxSize(),
-            painter = painterResource(id = image),
-            contentDescription = "image description",
-            contentScale = ContentScale.Fit
-        )
+        if (letterSign != ""){
+            Text(
+                modifier = Modifier.fillMaxWidth()
+                    .align(Alignment.Center),
+                text = letterSign.uppercase(),
+                style = TextStyle(
+                    fontSize = SIZE100.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = blackColorApp,
+                    textAlign = TextAlign.Center,
+                )
+
+            )
+        } else {
+            Image(
+                modifier = Modifier
+                    .fillMaxSize(),
+                painter = painterResource(id = image),
+                contentDescription = EMPTY_STRING,
+                contentScale = ContentScale.Fit
+            )
+        }
     }
 }

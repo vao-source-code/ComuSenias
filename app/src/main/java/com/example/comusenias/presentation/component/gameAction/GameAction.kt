@@ -14,6 +14,7 @@ import com.example.comusenias.presentation.ui.theme.size30
 @Composable
 fun GameAction(
     imageSign: Int,
+    letterSign: String = "",
     title: String,
     titleButton: String,
     clickButton: () -> Unit,
@@ -28,6 +29,7 @@ fun GameAction(
             .padding(size30.dp)
     ) {
         TopSectionGameAction(
+            letterSign =letterSign,
             title = title,
             image = imageSign,
             currentStep = currentSteps,

@@ -1,16 +1,15 @@
 package com.example.comusenias.presentation.screen.gameAction
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.example.comusenias.R
 import com.example.comusenias.presentation.component.gameAction.GameAction
-import com.example.comusenias.presentation.component.gameAction.MatchLetter
 import com.example.comusenias.presentation.navigation.AppScreen
+import com.example.comusenias.presentation.ui.theme.CONTINUE
+import com.example.comusenias.presentation.ui.theme.WHAT_SIGN_IS
 
 @Composable
 fun ChoseTheSignPlayScreen(navController: NavHostController, modifier: Modifier) {
@@ -22,8 +21,9 @@ fun ChoseTheSignPlayScreen(navController: NavHostController, modifier: Modifier)
 
     GameAction(
         imageSign = R.drawable.letra_a_solo,
-        title = "¿Qué seña es?",
-        titleButton = "Continuar",
+        letterSign = "a",
+        title = WHAT_SIGN_IS,
+        titleButton = CONTINUE,
         enabledButton = isButtonEnabled.value,
         currentSteps = stepTwo,
         navController = navController,

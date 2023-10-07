@@ -10,7 +10,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.comusenias.presentation.ui.theme.SIZE36
 import com.example.comusenias.presentation.ui.theme.blackColorApp
-import com.example.comusenias.presentation.ui.theme.size20
 import com.example.comusenias.presentation.ui.theme.size30
 
 @Composable

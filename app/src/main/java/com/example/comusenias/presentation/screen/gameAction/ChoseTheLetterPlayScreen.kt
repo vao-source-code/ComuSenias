@@ -10,6 +10,8 @@ import com.example.comusenias.R
 import com.example.comusenias.presentation.component.gameAction.GameAction
 import com.example.comusenias.presentation.component.gameAction.MatchLetter
 import com.example.comusenias.presentation.navigation.AppScreen
+import com.example.comusenias.presentation.ui.theme.CONTINUE
+import com.example.comusenias.presentation.ui.theme.WHAT_LETTER_IS
 
 @Composable
 fun ChoseTheLetterPlayScreen(navController: NavHostController) {
@@ -23,8 +25,8 @@ fun ChoseTheLetterPlayScreen(navController: NavHostController) {
 
     GameAction(
         imageSign = R.drawable.letra_a_solo,
-        title = "¿Qué letra es?",
-        titleButton = "Continuar",
+        title = WHAT_LETTER_IS,
+        titleButton = CONTINUE,
         enabledButton = isButtonEnabled.value,
         currentSteps = stepTwo,
         navController = navController,
