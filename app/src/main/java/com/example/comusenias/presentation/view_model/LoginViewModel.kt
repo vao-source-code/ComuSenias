@@ -6,9 +6,9 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.comusenias.domain.library.LibraryString
-import com.example.comusenias.domain.models.LoginState
 import com.example.comusenias.domain.models.Response
-import com.example.comusenias.domain.use_cases.auth.AuthUseCases
+import com.example.comusenias.domain.models.state.LoginState
+import com.example.comusenias.domain.use_cases.auth.AuthFactoryUseCases
 import com.example.comusenias.presentation.ui.theme.emptyString
 import com.example.comusenias.presentation.ui.theme.invalidEmail
 import com.example.comusenias.presentation.ui.theme.invalidPassword
@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(private val authUseCases: AuthUseCases) : ViewModel() {
+class LoginViewModel @Inject constructor(private val authUseCases: AuthFactoryUseCases) : ViewModel() {
 
     var loginResponse by mutableStateOf<Response<FirebaseUser>?>(null)
     var state by mutableStateOf(LoginState())
@@ -33,7 +33,7 @@ class LoginViewModel @Inject constructor(private val authUseCases: AuthUseCases)
 
     var isLoginEnabled = false
 
-    val currentUser = authUseCases.getCurrentUser()
+    val currentUser = authUseCases.getCurrentUserUseCase()
 
 
     init {
@@ -64,7 +64,7 @@ class LoginViewModel @Inject constructor(private val authUseCases: AuthUseCases)
 
     fun login() = viewModelScope.launch(IO) {
         loginResponse = Response.Loading
-        val result = authUseCases.login(state.email, state.password)
+        val result = authUseCases.loginUseCase(state.email, state.password)
         loginResponse = result
 
     }

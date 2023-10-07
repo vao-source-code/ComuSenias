@@ -1,11 +1,11 @@
-package com.example.comusenias.domain.models
+package com.example.comusenias.domain.models.model
 
 import com.example.comusenias.domain.library.LibraryPassword
 import com.example.comusenias.domain.library.LibraryString
 import com.google.gson.Gson
 
 
-data class User(
+data class UserModel(
     var id: String = "",
     var userName: String = "",
     var email: String = "",
@@ -13,7 +13,7 @@ data class User(
     var image: String = "",
 ) {
     fun toJson(): String = Gson().toJson(
-        User(
+        UserModel(
             id,
             userName,
             email,
@@ -23,7 +23,7 @@ data class User(
     )
 
     companion object {
-        fun fromJson(data: String): User = Gson().fromJson(data, User::class.java)
+        fun fromJson(data: String): UserModel = Gson().fromJson(data, UserModel::class.java)
     }
 
 }
