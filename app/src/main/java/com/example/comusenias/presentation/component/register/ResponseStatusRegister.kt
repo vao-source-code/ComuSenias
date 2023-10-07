@@ -31,7 +31,6 @@ fun ResponseStatusRegister(
         }
 
         is Response.Error -> {
-            //TODO corregir el error de que no se muestra el mensaje de error
             Toast.makeText(
                 LocalContext.current,
                 registerResponse.exception?.message,

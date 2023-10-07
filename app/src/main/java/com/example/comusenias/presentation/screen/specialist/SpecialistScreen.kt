@@ -26,10 +26,12 @@ import androidx.navigation.compose.rememberNavController
 import com.example.comusenias.R
 import com.example.comusenias.domain.models.model.UserModel
 import com.example.comusenias.presentation.component.specialist.CardHomeSpecialist
-import com.example.comusenias.presentation.component.specialist.CardProdileUser
+import com.example.comusenias.presentation.component.specialist.CardProfileUser
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.SIZE26
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
+import com.example.comusenias.presentation.ui.theme.size10
+import com.example.comusenias.presentation.ui.theme.size30
 
 @Composable
 fun SpecialistScreen(navController: NavHostController, modifier: Modifier) {
@@ -37,7 +39,6 @@ fun SpecialistScreen(navController: NavHostController, modifier: Modifier) {
         navController = navController, modifier = modifier
     )
 }
-
 
 @Composable
 fun SpecialistHomeExample(navController: NavHostController, modifier: Modifier) {
@@ -52,13 +53,11 @@ fun SpecialistHomeExample(navController: NavHostController, modifier: Modifier) 
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
-
             Box(
                 Modifier
                     .shadow(
-                        elevation = 10.dp,
-                        shape = RoundedCornerShape(bottomEnd = 30.dp, bottomStart = 30.dp)
+                        elevation = size10.dp,
+                        shape = RoundedCornerShape(bottomEnd = size30.dp, bottomStart = size30.dp)
                     )
                     .background(primaryColorApp)
             ) {
@@ -69,19 +68,14 @@ fun SpecialistHomeExample(navController: NavHostController, modifier: Modifier) 
                     subtitle = "Psicologo Infantil",
                     onClickCard = { navController.navigate(route = AppScreen.ProfileScreen.route) }
                 )
-
-
             }
-
             ProfileView(modifier = modifier, navController = navController)
         }
     }
 }
 
-
 @Composable
 fun ProfileView(modifier: Modifier, navController: NavHostController) {
-
     Text(
 
         textAlign = TextAlign.Start,
@@ -94,7 +88,7 @@ fun ProfileView(modifier: Modifier, navController: NavHostController) {
         columns = GridCells.Fixed(1),
     ) {
         items(getChapterItem()) { chapter ->
-            Column(modifier = Modifier.padding(10.dp)) {
+            Column(modifier = Modifier.padding(size10.dp)) {
                 CardExampleDos(
                     user = chapter,
                     navController = navController,
@@ -107,10 +101,14 @@ fun ProfileView(modifier: Modifier, navController: NavHostController) {
 
 
 @Composable
-fun CardExampleDos(user: UserModel, navController: NavHostController, onItemSelected: (UserModel) -> Unit) {
-        CardProdileUser(image = R.drawable.profile_avatar,
-            title = user.userName,
-            onClickCard = { navController.navigate(route = AppScreen.SpecialistDetailsScreen.route) })
+fun CardExampleDos(
+    user: UserModel,
+    navController: NavHostController,
+    onItemSelected: (UserModel) -> Unit
+) {
+    CardProfileUser(image = R.drawable.profile_avatar,
+        title = user.userName,
+        onClickCard = { navController.navigate(route = AppScreen.SpecialistDetailsScreen.route) })
 
 }
 

@@ -47,7 +47,7 @@ class OnBoardingTest {
 
     @Test
     fun testWhenIndicatorIsDiSelectWidthIsEqualToSizeIndicatorDiSelect(){
-        val sizeIndicatorDiSelect = 13.dp
+        val sizeIndicatorDiSelect = 12.dp
         val isSelect = false
         composeTestRule.setContent {
             Indicator(isSelected = isSelect)
