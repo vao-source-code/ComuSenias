@@ -33,7 +33,7 @@ import com.example.comusenias.presentation.splashScreen.SplashScreen
 fun AppNavigation(
     navController: NavHostController,
 ) {
-    Scaffold{ paddingValues ->
+    Scaffold { paddingValues ->
         GetNavHost(navController, Modifier.padding(paddingValues))
     }
 }
@@ -48,7 +48,7 @@ private fun GetNavHost(
         startDestination = AppScreen.SplashScreen.route
     ) {
 
-        authNavGraph(navController = navController , modifier = modifier)
+        authNavGraph(navController = navController, modifier = modifier)
 
         composable(AppScreen.ProfileScreen.route) {
             ProfileScreen(navController = navController, modifier = modifier)
@@ -62,14 +62,14 @@ private fun GetNavHost(
         }
 
         composable(AppScreen.PremiumScreen.route) {
-            PremiunScreen(navController= navController , modifier = modifier)
+            PremiunScreen(navController = navController, modifier = modifier)
         }
         composable(AppScreen.MainActivity.route) {
             MainActivity()
         }
         composable(
             route = AppScreen.ChangeProfileScreen.route,
-            arguments = listOf(navArgument("user"){
+            arguments = listOf(navArgument("user") {
                 type = NavType.StringType
             })
         ) { user ->
@@ -81,9 +81,6 @@ private fun GetNavHost(
                 )
             }
 
-        }
-        composable(AppScreen.HomeScreen.route) {
-            HomeScreen(navController = navController, modifier = modifier)
         }
 
         composable(AppScreen.SpecialistScreen.route) {

@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.comusenias.R
-import com.example.comusenias.domain.models.User
+import com.example.comusenias.domain.models.model.UserModel
 import com.example.comusenias.presentation.component.specialist.CardHomeSpecialist
 import com.example.comusenias.presentation.component.specialist.CardProdileUser
 import com.example.comusenias.presentation.navigation.AppScreen
@@ -107,24 +107,24 @@ fun ProfileView(modifier: Modifier, navController: NavHostController) {
 
 
 @Composable
-fun CardExampleDos(user: User, navController: NavHostController, onItemSelected: (User) -> Unit) {
+fun CardExampleDos(user: UserModel, navController: NavHostController, onItemSelected: (UserModel) -> Unit) {
         CardProdileUser(image = R.drawable.profile_avatar,
             title = user.userName,
             onClickCard = { navController.navigate(route = AppScreen.SpecialistDetailsScreen.route) })
 
 }
 
-fun getChapterItem(): List<User> {
+fun getChapterItem(): List<UserModel> {
     return listOf(
-        User(id = "1", userName = "Alberto Wirstes", image = ""),
-        User(id = "2", userName = "Sabrina Gomez", image = ""),
-        User(id = "3", userName = "Norma Gonzales", image = ""),
-        User(id = "4", userName = "Nicolas Orue", image = ""),
-        User(id = "5", userName = "Esther Segovia", image = ""),
-        User(id = "6", userName = "Juan Carnizo", image = ""),
-        User(id = "7", userName = "Victor Alvarez", image = ""),
-        User(id = "8", userName = "Karina Gomez", image = ""),
-        User(id = "9", userName = "Daniel Arribas", image = ""),
+        UserModel(id = "1", userName = "Alberto Wirstes", image = ""),
+        UserModel(id = "2", userName = "Sabrina Gomez", image = ""),
+        UserModel(id = "3", userName = "Norma Gonzales", image = ""),
+        UserModel(id = "4", userName = "Nicolas Orue", image = ""),
+        UserModel(id = "5", userName = "Esther Segovia", image = ""),
+        UserModel(id = "6", userName = "Juan Carnizo", image = ""),
+        UserModel(id = "7", userName = "Victor Alvarez", image = ""),
+        UserModel(id = "8", userName = "Karina Gomez", image = ""),
+        UserModel(id = "9", userName = "Daniel Arribas", image = ""),
 
         )
 }

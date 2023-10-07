@@ -1,15 +1,15 @@
 package com.example.comusenias.domain.repositories
 
 import com.example.comusenias.domain.models.Response
-import com.example.comusenias.domain.models.User
+import com.example.comusenias.domain.models.model.UserModel
 import kotlinx.coroutines.flow.Flow
 import java.io.File
 
 
 interface UsersRepository {
-    suspend fun createUser(user : User): Response<Boolean>
-    fun getUserById(id: String): Flow<User>
-    suspend fun updateUser(user: User): Response<Boolean>
+    suspend fun createUser(user : UserModel): Response<Boolean>
+    fun getUserById(id: String): Flow<UserModel>
+    suspend fun updateUser(user: UserModel): Response<Boolean>
     suspend fun saveImage(file : File): Response<String>
     
 }

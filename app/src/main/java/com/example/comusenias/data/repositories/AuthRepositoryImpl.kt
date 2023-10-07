@@ -1,10 +1,10 @@
 package com.example.comusenias.data.repositories
 
+import com.example.comusenias.domain.models.Response
+import com.example.comusenias.domain.models.model.UserModel
+import com.example.comusenias.domain.repositories.AuthRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.example.comusenias.domain.models.Response
-import com.example.comusenias.domain.models.User
-import com.example.comusenias.domain.repositories.AuthRepository
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
@@ -26,7 +26,7 @@ class AuthRepositoryImpl @Inject constructor(private val firebaseAuth: FirebaseA
         }
     }
 
-    override suspend fun register(user: User): Response<FirebaseUser> {
+    override suspend fun register(user: UserModel): Response<FirebaseUser> {
         return try {
             val user = firebaseAuth.createUserWithEmailAndPassword(user.email, user.password)
                 .await()
