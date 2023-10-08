@@ -3,7 +3,7 @@ package com.example.comusenias.data.repositories
 import android.net.Uri
 import com.example.comusenias.constants.FirebaseConstants.USERS_COLLECTION
 import com.example.comusenias.domain.models.Response
-import com.example.comusenias.domain.models.model.UserModel
+import com.example.comusenias.domain.models.users.UserModel
 import com.example.comusenias.domain.repositories.UsersRepository
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.storage.StorageReference
@@ -52,7 +52,7 @@ class UsersRepositoryImpl @Inject constructor(
         return try {
             val mapImage: MutableMap<String, Any> = HashMap()
             mapImage["userName"] = user.userName
-            mapImage["image"] = user.image
+            mapImage["image"] = user.image?.let { it } ?: ""
             usersRef.document(user.id).update(mapImage).await()
             Response.Success(true)
         } catch (e: Exception) {

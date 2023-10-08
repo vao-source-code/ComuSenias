@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.comusenias.constants.AlphabetConstants
 import com.example.comusenias.domain.models.Response
-import com.example.comusenias.domain.models.model.LetterModel
+import com.example.comusenias.domain.models.letter.LetterModel
 import com.example.comusenias.domain.use_cases.letters.LettersFactoryUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
