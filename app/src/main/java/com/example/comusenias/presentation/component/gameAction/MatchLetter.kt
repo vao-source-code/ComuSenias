@@ -28,12 +28,12 @@ import androidx.compose.ui.unit.sp
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.SIZE12
 import com.example.comusenias.presentation.ui.theme.SIZE2
+import com.example.comusenias.presentation.ui.theme.SIZE50
 import com.example.comusenias.presentation.ui.theme.SIZE73
 import com.example.comusenias.presentation.ui.theme.SIZE84
 import com.example.comusenias.presentation.ui.theme.borderButtonLetter
 import com.example.comusenias.presentation.ui.theme.greenColorApp
 import com.example.comusenias.presentation.ui.theme.size30
-import com.example.comusenias.presentation.ui.theme.size50
 
 enum class StatusSign {
     NORMAL,
@@ -128,7 +128,7 @@ fun ButtonLetter(
             modifier = Modifier.fillMaxWidth(),
             text = statusLetter.uppercase(),
             style = TextStyle(
-                fontSize = size50.sp,
+                fontSize =  SIZE50.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = letterColor,
                 textAlign = TextAlign.Center

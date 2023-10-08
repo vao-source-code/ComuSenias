@@ -38,11 +38,11 @@ import com.example.comusenias.presentation.ui.theme.SIZE100
 import com.example.comusenias.presentation.ui.theme.SIZE12
 import com.example.comusenias.presentation.ui.theme.SIZE2
 import com.example.comusenias.presentation.ui.theme.SIZE220
+import com.example.comusenias.presentation.ui.theme.SIZE50
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
 import com.example.comusenias.presentation.ui.theme.size20
 import com.example.comusenias.presentation.ui.theme.size24
-import com.example.comusenias.presentation.ui.theme.size50
 
 @Composable
 fun TopSectionGameAction(
@@ -77,7 +77,7 @@ fun CloseAndProgressBar(currentStep: Int = 0, navController: NavHostController) 
             .fillMaxWidth()
             .background(Color.White),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(size50.dp)
+        horizontalArrangement = Arrangement.spacedBy(SIZE50.dp)
     ) {
         Icon(
             imageVector = Icons.Default.Close,

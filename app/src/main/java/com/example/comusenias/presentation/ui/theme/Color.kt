@@ -13,7 +13,6 @@ val placeholderTextColor = Color(0x99000000)
 val backgroundColorTextField = Color(0x33C4C4C4)
 val iconColorTextField = Color(0x4D000000)
 val borderButtonLetter = Color(0xFF727272)
-val BACKGROUND_CIRCULAR_PROGREES_BAR = Color(0x4D58C573)
 
 val md_theme_light_primary = Color(0xFF1A5ABD)
 val md_theme_light_onPrimary = Color(0xFFFFFFFF)
@@ -71,10 +70,8 @@ val md_theme_dark_outline = Color(0xFF8E9099)
 val md_theme_dark_inverseOnSurface = Color(0xFF001F2A)
 val md_theme_dark_inverseSurface = Color(0xFFBFE9FF)
 val md_theme_dark_inversePrimary = Color(0xFF1A5ABD)
-val md_theme_dark_shadow = Color(0xFF000000)
 val md_theme_dark_surfaceTint = Color(0xFFAEC6FF)
 val md_theme_dark_outlineVariant = Color(0xFF44474F)
 val md_theme_dark_scrim = Color(0xFF000000)
 
 
-val seed = Color(0xFF6699FF)
