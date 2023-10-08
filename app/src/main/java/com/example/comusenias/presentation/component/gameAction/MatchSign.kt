@@ -21,8 +21,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.example.comusenias.constants.TestTag
 import com.example.comusenias.presentation.screen.gameAction.Sign
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.SIZE12
@@ -111,6 +113,7 @@ fun ButtonSign(
                     }
                 }
             }
+            .testTag(TestTag.TAG_MATCH_SIGN + sign.letter)
     ) {
         Image(
             painter = painterResource(statusImage),

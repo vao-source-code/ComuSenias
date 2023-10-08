@@ -13,7 +13,6 @@ class MatchLetterComposableTest {
     @Test
     fun testWhenMatchLetterIsCorrect() {
         var isCorrect = false
-
         val singLetter = "A"
         val randomLetter = "B"
 
@@ -28,7 +27,6 @@ class MatchLetterComposableTest {
 
         composeTestRule.onAllNodesWithText(singLetter).assertCountEquals(1)
         composeTestRule.onAllNodesWithText(randomLetter).assertCountEquals(1)
-
         composeTestRule.onNodeWithText(singLetter).performClick()
 
         assert(isCorrect)
@@ -37,7 +35,6 @@ class MatchLetterComposableTest {
     @Test
     fun matchLetterIncorrectStateTest() {
         var isCorrect = true
-
         val singLetter = "A"
         val randomLetter = "B"
 
@@ -52,7 +49,6 @@ class MatchLetterComposableTest {
 
         composeTestRule.onAllNodesWithText(singLetter).assertCountEquals(1)
         composeTestRule.onAllNodesWithText(randomLetter).assertCountEquals(1)
-
         composeTestRule.onNodeWithText(randomLetter).performClick()
 
         assert(!isCorrect)
