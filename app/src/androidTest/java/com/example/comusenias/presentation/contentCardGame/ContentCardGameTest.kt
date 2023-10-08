@@ -16,7 +16,7 @@ class ContentCardGameTest {
     @Test
     fun testContentCardGameCompleted() {
         composeTestRule.setContent {
-            ContentCardGame(StatusGame.COMPLETED)
+            ContentCardGame(StatusGame.COMPLETED, onClickCard = {})
         }
         composeTestRule.onNodeWithTag(TestTag.TAG_CONTENT_CARD_GAME + StatusGame.COMPLETED.name)
             .assertExists()
@@ -25,7 +25,7 @@ class ContentCardGameTest {
     @Test
     fun testContentCardGameProgress() {
         composeTestRule.setContent {
-            ContentCardGame(StatusGame.IN_PROGRESS)
+            ContentCardGame(StatusGame.IN_PROGRESS, onClickCard = {})
         }
         composeTestRule.onNodeWithTag(TestTag.TAG_CONTENT_CARD_GAME + StatusGame.IN_PROGRESS.name)
             .assertExists()
@@ -34,7 +34,7 @@ class ContentCardGameTest {
     @Test
     fun testContentCardGameBlocked() {
         composeTestRule.setContent {
-            ContentCardGame(StatusGame.BLOCKED)
+            ContentCardGame(StatusGame.BLOCKED, onClickCard = {})
         }
         composeTestRule.onNodeWithTag(TestTag.TAG_CONTENT_CARD_GAME + StatusGame.BLOCKED.name)
             .assertExists()
