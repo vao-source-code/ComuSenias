@@ -14,7 +14,6 @@ import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import kotlinx.coroutines.delay
 
-
 @Composable
 fun MakeSignPlayScreen(navController: NavHostController, modifier: Modifier) {
 

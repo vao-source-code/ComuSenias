@@ -6,7 +6,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.example.comusenias.R
-import com.example.comusenias.domain.models.OnBoardingItem
 import com.example.comusenias.presentation.component.gameAction.GameAction
 import com.example.comusenias.presentation.component.gameAction.MatchSign
 import com.example.comusenias.presentation.navigation.AppScreen

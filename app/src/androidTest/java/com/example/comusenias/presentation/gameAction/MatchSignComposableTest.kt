@@ -13,12 +13,14 @@ import org.junit.Test
 class MatchSignComposableTest {
     @get:Rule
     val composeTestRule = createComposeRule()
+    val letter = "a"
+    val randomLetter = "o"
 
     @Test
     fun testWhenMatchSignIsIncorrect() {
         var isCorrect = true
-        val sign = Sign(imageResource = R.drawable.letra_a_solo, letter = "a")
-        val randomSign = Sign(imageResource = R.drawable.sign_o, letter = "o")
+        val sign = Sign(imageResource = R.drawable.letra_a_solo, letter = letter)
+        val randomSign = Sign(imageResource = R.drawable.sign_o, letter = randomLetter)
 
         composeTestRule.setContent {
             MatchSign(
@@ -29,17 +31,17 @@ class MatchSignComposableTest {
                 isCorrect = it
             }
         }
-        composeTestRule.onNodeWithTag(TestTag.TAG_MATCH_SIGN + "o").assertExists()
-        composeTestRule.onNodeWithTag(TestTag.TAG_MATCH_SIGN + "a").assertExists()
-        composeTestRule.onNodeWithTag(TestTag.TAG_MATCH_SIGN + "o").performClick()
+        composeTestRule.onNodeWithTag(TestTag.TAG_MATCH_SIGN + randomLetter).assertExists()
+        composeTestRule.onNodeWithTag(TestTag.TAG_MATCH_SIGN + letter).assertExists()
+        composeTestRule.onNodeWithTag(TestTag.TAG_MATCH_SIGN + randomLetter).performClick()
         assert(!isCorrect)
     }
 
     @Test
     fun testWhenMatchSignCorrect() {
         var isCorrect = false
-        val sign = Sign(imageResource = R.drawable.letra_a_solo, letter = "a")
-        val randomSign = Sign(imageResource = R.drawable.sign_o, letter = "o")
+        val sign = Sign(imageResource = R.drawable.letra_a_solo, letter = letter)
+        val randomSign = Sign(imageResource = R.drawable.sign_o, letter = randomLetter)
 
         composeTestRule.setContent {
             MatchSign(
@@ -50,9 +52,9 @@ class MatchSignComposableTest {
                 isCorrect = it
             }
         }
-        composeTestRule.onNodeWithTag(TestTag.TAG_MATCH_SIGN + "o").assertExists()
-        composeTestRule.onNodeWithTag(TestTag.TAG_MATCH_SIGN + "a").assertExists()
-        composeTestRule.onNodeWithTag(TestTag.TAG_MATCH_SIGN + "a").performClick()
+        composeTestRule.onNodeWithTag(TestTag.TAG_MATCH_SIGN + randomLetter).assertExists()
+        composeTestRule.onNodeWithTag(TestTag.TAG_MATCH_SIGN + letter).assertExists()
+        composeTestRule.onNodeWithTag(TestTag.TAG_MATCH_SIGN + randomLetter).performClick()
         assert(isCorrect)
     }
 }
