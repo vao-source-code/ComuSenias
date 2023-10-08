@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
@@ -149,9 +148,9 @@ fun CardFormRegister(navController : NavHostController, viewModel: RegisterViewM
 
             ButtonDefault(
                 text = "Registrarse",
-                icon = Icons.Default.ArrowForward,
                 onClick = { viewModel.onRegister() },
-                enabled = viewModel.isRegisterEnabled
+                enabled = viewModel.isRegisterEnabled,
+                icon = null
             )
 
 

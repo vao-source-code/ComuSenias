@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Card
@@ -123,10 +122,10 @@ fun CardFormLogin(navController: NavHostController, viewModel: LoginViewModel) {
 
             ButtonDefault(
                 text = "Iniciar sesión",
-                icon = Icons.Default.ArrowForward,
                 onClick = { viewModel.login() },
                 errorMsg = viewModel.errorEmail.value,
-                enabled = viewModel.isLoginEnabled
+                enabled = viewModel.isLoginEnabled,
+                icon = null
             )
 
 
