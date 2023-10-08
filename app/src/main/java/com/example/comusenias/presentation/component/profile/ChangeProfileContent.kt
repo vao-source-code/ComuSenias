@@ -102,7 +102,7 @@ fun ChangeProfileContent(
                         },
                 ) {
 
-                    if (viewModel.state.image.isNotEmpty()) {
+                    if (viewModel.state.image?.isNotEmpty() == true) {
                         AsyncImage(
                             modifier = Modifier
                                 .size(SIZE140.dp), contentScale = ContentScale.Crop,

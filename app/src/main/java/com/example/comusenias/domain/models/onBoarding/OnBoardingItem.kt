@@ -1,4 +1,4 @@
-package com.example.comusenias.domain.models
+package com.example.comusenias.domain.models.onBoarding
 
 import com.example.comusenias.R
 

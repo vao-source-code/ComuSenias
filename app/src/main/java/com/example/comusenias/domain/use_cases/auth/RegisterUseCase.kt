@@ -1,6 +1,6 @@
 package com.example.comusenias.domain.use_cases.auth
 
-import com.example.comusenias.domain.models.model.UserModel
+import com.example.comusenias.domain.models.users.UserModel
 import com.example.comusenias.domain.repositories.AuthRepository
 import javax.inject.Inject
 

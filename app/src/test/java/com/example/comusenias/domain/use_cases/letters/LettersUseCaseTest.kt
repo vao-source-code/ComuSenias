@@ -2,7 +2,7 @@ package com.example.comusenias.domain.use_cases.letters
 
 import android.util.Log
 import com.example.comusenias.domain.models.Response
-import com.example.comusenias.domain.models.model.LetterModel
+import com.example.comusenias.domain.models.letter.LetterModel
 import com.example.comusenias.domain.repositories.LetterImageRepository
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery

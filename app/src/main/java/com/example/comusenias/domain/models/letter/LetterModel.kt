@@ -1,4 +1,4 @@
-package com.example.comusenias.domain.models.model
+package com.example.comusenias.domain.models.letter
 
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.FIELD_IMAGES

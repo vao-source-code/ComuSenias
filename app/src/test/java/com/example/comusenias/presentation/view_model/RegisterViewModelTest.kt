@@ -1,7 +1,7 @@
 package com.example.comusenias.presentation.view_model
 
 import com.example.comusenias.domain.models.Response
-import com.example.comusenias.domain.models.model.UserModel
+import com.example.comusenias.domain.models.users.UserModel
 import com.example.comusenias.domain.use_cases.auth.AuthFactoryUseCases
 import com.example.comusenias.domain.use_cases.users.UsersFactoryUseCases
 import com.google.firebase.auth.FirebaseUser
