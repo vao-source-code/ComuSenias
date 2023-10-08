@@ -17,7 +17,7 @@ import com.example.comusenias.presentation.component.defaults.app.Authentication
 import com.example.comusenias.presentation.component.login.LoginForm
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.dontHaveAccount
-import com.example.comusenias.presentation.ui.theme.register
+import com.example.comusenias.presentation.ui.theme.REGISTER
 import com.example.comusenias.presentation.view_model.BottomBarViewModel
 import com.example.comusenias.presentation.ui.theme.size30
 
@@ -44,7 +44,7 @@ fun LoginScreen(
             LoginForm(navController = navController)
             AuthenticationFooterContent(
                 textOne = dontHaveAccount,
-                textTwo = register,
+                textTwo = REGISTER,
                 onClickText = { navController.navigate(route = AppScreen.RegisterScreen.route) }
             )
         }

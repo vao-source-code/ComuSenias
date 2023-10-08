@@ -24,20 +24,22 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.comusenias.presentation.ui.theme.CIRCLE_IMAGE
 import com.example.comusenias.presentation.ui.theme.SIZE100
 import com.example.comusenias.presentation.ui.theme.size10
+import com.example.comusenias.presentation.ui.theme.size150
 import com.example.comusenias.presentation.ui.theme.size20
 import com.example.comusenias.presentation.ui.theme.size24
 import com.example.comusenias.presentation.ui.theme.size3
 import com.example.comusenias.presentation.ui.theme.size40
 
 @Composable
-fun CardHomeSpecialist(image: Int, title : String, subtitle : String , onClickCard: () -> Unit) {
+fun CardHomeSpecialist(image: Int, title: String, subtitle: String, onClickCard: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(150.dp)
-            .padding(20.dp)
+            .height(size150.dp)
+            .padding(size20.dp)
             .clickable {
                 onClickCard()
             }
@@ -54,30 +56,28 @@ fun CardHomeSpecialist(image: Int, title : String, subtitle : String , onClickCa
                 ambientColor = Color(0x21000000)
             )
             .background(Color.White, shape = RoundedCornerShape(size10.dp))
-    ){
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxHeight(),
             horizontalArrangement = Arrangement.spacedBy(size40.dp),
             verticalAlignment = Alignment.CenterVertically
-        ){
-            CircleImageView(image = image )
+        ) {
+            CircleImageView(image = image)
 
             Column() {
                 TitleCardCategoryProfile(title = title)
                 SubTitleCardCategoryProfile(title = subtitle)
             }
-
-
         }
     }
 }
 
 @Composable
-fun CircleImageView(image : Int) {
+fun CircleImageView(image: Int) {
     Image(
         painter = painterResource(image),
-        contentDescription = "Circle Image",
+        contentDescription = CIRCLE_IMAGE,
         contentScale = ContentScale.Crop,
         modifier = Modifier
             .width(SIZE100.dp)
@@ -85,7 +85,7 @@ fun CircleImageView(image : Int) {
 }
 
 @Composable
-fun TitleCardCategoryProfile(title: String){
+fun TitleCardCategoryProfile(title: String) {
     Text(
         modifier = Modifier
             .fillMaxWidth(),
@@ -97,7 +97,7 @@ fun TitleCardCategoryProfile(title: String){
 }
 
 @Composable
-fun SubTitleCardCategoryProfile(title: String){
+fun SubTitleCardCategoryProfile(title: String) {
     Text(
         modifier = Modifier
             .fillMaxWidth(),

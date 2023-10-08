@@ -17,10 +17,8 @@ class ProfileViewModel @Inject constructor(
     private val authUsesCases: AuthFactoryUseCases, private val useCases: UsersFactoryUseCases
 ) : ViewModel() {
 
-
     var userData by mutableStateOf(UserModel())
         private set
-
     val currentUser = authUsesCases.getCurrentUserUseCase()
 
     init {
@@ -29,7 +27,7 @@ class ProfileViewModel @Inject constructor(
 
     private fun getUserData() = viewModelScope.launch {
         currentUser?.let {
-            useCases.getUserByIdUseCase(it.uid).collect() { user ->
+            useCases.getUserByIdUseCase(it.uid).collect { user ->
                 userData = user
             }
         }

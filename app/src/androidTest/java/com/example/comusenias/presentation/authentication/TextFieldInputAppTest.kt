@@ -38,6 +38,6 @@ class TextFieldInputAppTest {
                 icon = Icons.Default.Email
             )
         }
-        composeTestRule.onNodeWithTag(TestTag.TAG_TEXT_FIELD_APP).assertHeightIsEqualTo(50.dp)
+        composeTestRule.onNodeWithTag(TestTag.TAG_TEXT_FIELD_APP).assertHeightIsEqualTo(56.dp)
     }
 }

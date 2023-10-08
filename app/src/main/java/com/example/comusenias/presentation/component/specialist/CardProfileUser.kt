@@ -22,6 +22,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.comusenias.presentation.ui.theme.CIRCLE_IMAGE
 import com.example.comusenias.presentation.ui.theme.SIZE100
 import com.example.comusenias.presentation.ui.theme.size10
 import com.example.comusenias.presentation.ui.theme.size24
@@ -29,12 +30,11 @@ import com.example.comusenias.presentation.ui.theme.size3
 import com.example.comusenias.presentation.ui.theme.size40
 
 @Composable
-fun CardProdileUser(image: Int, title : String,onClickCard: () -> Unit) {
+fun CardProfileUser(image: Int, title: String, onClickCard: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(SIZE100.dp)
-
             .clickable {
                 onClickCard()
             }
@@ -51,24 +51,24 @@ fun CardProdileUser(image: Int, title : String,onClickCard: () -> Unit) {
                 ambientColor = Color(0x21000000)
             )
             .background(Color.White, shape = RoundedCornerShape(size10.dp))
-    ){
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxHeight(),
             horizontalArrangement = Arrangement.spacedBy(size40.dp),
             verticalAlignment = Alignment.CenterVertically
-        ){
-            CircleImageViewUserSpecialist(image = image )
+        ) {
+            CircleImageViewUserSpecialist(image = image)
             TitleCardCategoryUserSpecialist(title = title)
         }
     }
 }
 
 @Composable
-fun CircleImageViewUserSpecialist(image : Int) {
+fun CircleImageViewUserSpecialist(image: Int) {
     Image(
         painter = painterResource(image),
-        contentDescription = "Circle Image",
+        contentDescription = CIRCLE_IMAGE,
         contentScale = ContentScale.Crop,
         modifier = Modifier
             .width(SIZE100.dp)
@@ -76,7 +76,7 @@ fun CircleImageViewUserSpecialist(image : Int) {
 }
 
 @Composable
-fun TitleCardCategoryUserSpecialist(title: String){
+fun TitleCardCategoryUserSpecialist(title: String) {
     Text(
         modifier = Modifier
             .fillMaxWidth(),

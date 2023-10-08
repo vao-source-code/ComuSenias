@@ -20,7 +20,10 @@ class UsersRepositoryImpl @Inject constructor(
     @Named(USERS_COLLECTION) private val storageUsersRef: StorageReference
 ) : UsersRepository {
 
-
+    /** Create a new user in the database
+     * @param user: UserModel
+     * @return Response<Boolean>
+     * */
     override suspend fun createUser(user: UserModel): Response<Boolean> {
         return try {
             usersRef.document(user.id).set(user).await()
@@ -31,6 +34,10 @@ class UsersRepositoryImpl @Inject constructor(
         }
     }
 
+    /** Get a user by id
+     * @param id: String
+     * @return Flow<UserModel>
+     * */
     override fun getUserById(id: String): Flow<UserModel> = callbackFlow {
         val snapshotListener = usersRef.document(id).addSnapshotListener { snapshot, _ ->
             val user = snapshot?.toObject(UserModel::class.java) ?: UserModel()
@@ -58,7 +65,6 @@ class UsersRepositoryImpl @Inject constructor(
         return try {
             val fromFile = Uri.fromFile(file)
             val ref = storageUsersRef.child(file.name)
-            val loadTask = ref.putFile(fromFile).await()
             val url = ref.downloadUrl.await()
             return Response.Success(url.toString())
         } catch (e: Exception) {
