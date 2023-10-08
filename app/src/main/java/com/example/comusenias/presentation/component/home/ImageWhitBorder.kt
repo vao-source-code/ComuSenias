@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.example.comusenias.presentation.ui.theme.AVATAR
 import com.example.comusenias.presentation.ui.theme.SIZE64
 import com.example.comusenias.presentation.ui.theme.size5
 
@@ -33,7 +34,7 @@ fun ImageWhitBorder(
             modifier = Modifier
                 .fillMaxSize(),
             painter = painterResource(image),
-            contentDescription = "avatar",
+            contentDescription = AVATAR,
             contentScale = ContentScale.Crop
         )
     }

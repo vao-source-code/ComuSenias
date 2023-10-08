@@ -4,6 +4,7 @@ import com.example.comusenias.constants.FirebaseConstants
 import com.example.comusenias.domain.models.Response
 import com.example.comusenias.domain.models.model.LetterModel
 import com.example.comusenias.domain.repositories.LetterImageRepository
+import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.channels.awaitClose
@@ -14,21 +15,19 @@ import java.io.File
 import javax.inject.Inject
 import javax.inject.Named
 
-
 class LetterImageRepositoryImpl @Inject constructor(
     @Named(FirebaseConstants.LETTERS_COLLECTION) private val storageLettersRef: StorageReference,
     @Named(FirebaseConstants.LETTERS_COLLECTION) private val lettersRef: CollectionReference,
-    ) : LetterImageRepository {
+) : LetterImageRepository {
 
     override suspend fun getLetterImage(letter: String): File {
         return try {
             val image = storageLettersRef.child(letter)
-            val bytes = image.getBytes(640000).await()
             val file = File(image.name)
             file
         } catch (e: Exception) {
             e.printStackTrace()
-            File("")
+            File(EMPTY_STRING)
         }
     }
 
@@ -50,7 +49,6 @@ class LetterImageRepositoryImpl @Inject constructor(
                                 image = document.data?.get(LetterModel.FIELD_IMAGE) as String
                             )
                         }.toMutableList()
-
                         Response.Success(putLetter)
                     } else {
                         Response.Error(e)
@@ -61,5 +59,4 @@ class LetterImageRepositoryImpl @Inject constructor(
                 snapshotListener.remove()
             }
         }
-
 }

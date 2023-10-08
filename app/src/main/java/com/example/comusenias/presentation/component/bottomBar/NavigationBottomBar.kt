@@ -24,14 +24,14 @@ import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
 import com.example.comusenias.presentation.ui.theme.size24
 import com.example.comusenias.presentation.ui.theme.size30
-import com.example.comusenias.presentation.ui.theme.size50
+import com.example.comusenias.presentation.ui.theme.SIZE50
 
 @Composable
 fun ShowBottomBar(navController: NavHostController) {
     BottomAppBar(
         modifier = Modifier
             .fillMaxWidth()
-            .height(size50.dp)
+            .height(SIZE50.dp)
             .shadow(4.dp),
         containerColor = Color.White,
     ) {

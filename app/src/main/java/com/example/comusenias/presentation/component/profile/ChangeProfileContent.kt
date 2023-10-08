@@ -15,7 +15,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
@@ -38,20 +37,25 @@ import com.example.comusenias.presentation.component.defaults.app.TextFieldAppPa
 import com.example.comusenias.presentation.ui.theme.CHANGE_PROFILE_CONFIRM_PASSWORD
 import com.example.comusenias.presentation.ui.theme.CHANGE_PROFILE_PASSWORD
 import com.example.comusenias.presentation.ui.theme.CHANGE_PROFILE_USER
+import com.example.comusenias.presentation.ui.theme.IMAGE_AVATAR
+import com.example.comusenias.presentation.ui.theme.IMAGE_EDIT_BUTTON
+import com.example.comusenias.presentation.ui.theme.SELECTED_IMAGE
+import com.example.comusenias.presentation.ui.theme.SIZE140
+import com.example.comusenias.presentation.ui.theme.SIZE55
+import com.example.comusenias.presentation.ui.theme.size10
 import com.example.comusenias.presentation.ui.theme.size20
 import com.example.comusenias.presentation.view_model.ChangeProfileViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class)
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun ChangeProfileContent(
     navController: NavHostController,
     modifier: Modifier,
     viewModel: ChangeProfileViewModel = hiltViewModel()
 ) {
-
     // Camera permission state
     val cameraPermissionState = rememberPermissionState(
         android.Manifest.permission.CAMERA
@@ -84,11 +88,11 @@ fun ChangeProfileContent(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Spacer(modifier = Modifier.height(55.dp))
+                Spacer(modifier = Modifier.height(SIZE55.dp))
 
                 Box(
                     modifier = Modifier
-                        .size(140.dp)
+                        .size(SIZE140.dp)
                         .clip(CircleShape)
                         .clickable {
                             if (!cameraPermissionState.status.isGranted) {
@@ -101,36 +105,33 @@ fun ChangeProfileContent(
                     if (viewModel.state.image.isNotEmpty()) {
                         AsyncImage(
                             modifier = Modifier
-                                .size(140.dp), contentScale = ContentScale.Crop,
-                            model = viewModel.state.image, contentDescription = "Seleted Image"
+                                .size(SIZE140.dp), contentScale = ContentScale.Crop,
+                            model = viewModel.state.image, contentDescription = SELECTED_IMAGE
                         )
                     } else {
                         Image(
                             modifier = Modifier
-                                .size(140.dp),
+                                .size(SIZE140.dp),
                             contentScale = ContentScale.Crop,
                             painter = painterResource(id = R.drawable.profile_avatar),
-                            contentDescription = "image avatar",
-
-                            )
+                            contentDescription = IMAGE_AVATAR,
+                        )
                     }
-
-
                     IconButton(
                         onClick = { /* Acción al hacer clic en el botón */ },
                         modifier = Modifier
                             .align(Alignment.BottomEnd)
-                            .offset(y = (-10).dp),
+                            .offset(y = (-size10).dp),
                     ) {
                         Icon(
                             imageVector = Icons.Default.Edit,
-                            contentDescription = "image edit button",
+                            contentDescription = IMAGE_EDIT_BUTTON,
                         )
                     }
                 }
             }
 
-            Spacer(modifier = Modifier.height(55.dp))
+            Spacer(modifier = Modifier.height(SIZE55.dp))
 
             TextFieldApp(
                 value = state.userName,
@@ -142,26 +143,24 @@ fun ChangeProfileContent(
                 icon = Icons.Default.Person
             )
 
+            Spacer(modifier = Modifier.height(size20.dp))
 
-            Spacer(modifier = Modifier.height(20.dp))
             TextFieldAppPassword(
                 label = CHANGE_PROFILE_PASSWORD,
-                value = "New Password",
+                value = CHANGE_PROFILE_PASSWORD,
                 onValueChange = {},
                 validateField = {},
+            )
 
-                )
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(size20.dp))
             TextFieldAppPassword(
                 label = CHANGE_PROFILE_CONFIRM_PASSWORD,
-                value = "New Password",
+                value = CHANGE_PROFILE_PASSWORD,
                 onValueChange = {},
                 validateField = {},
 
                 )
-            Spacer(modifier = Modifier.height(10.dp))
-
+            Spacer(modifier = Modifier.height(size10.dp))
         }
-
     }
 }

@@ -4,13 +4,12 @@ import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import com.example.comusenias.domain.models.bottomNavigation.BottomBarItem
+import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import org.junit.Rule
 import org.junit.Test
 
 
 class NavigationAppBarKtTest {
-
-    private val EMPTY_STRING = ""
 
     @get:Rule
     val composeTestRule = createComposeRule()

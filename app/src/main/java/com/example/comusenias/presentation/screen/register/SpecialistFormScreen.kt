@@ -17,10 +17,10 @@ import com.example.comusenias.presentation.component.register.especialistForm.Es
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.CONTINUE
 import com.example.comusenias.presentation.ui.theme.size30
-import com.example.comusenias.presentation.ui.theme.size50
+import com.example.comusenias.presentation.ui.theme.SIZE50
 
 @Composable
-fun EspecialistFormScreen(modifier: Modifier, navController: NavHostController) {
+fun SpecialistFormScreen(modifier: Modifier, navController: NavHostController) {
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -30,7 +30,7 @@ fun EspecialistFormScreen(modifier: Modifier, navController: NavHostController) 
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
                 .padding(start = size30.dp, end = size30.dp, top = size30.dp),
-            verticalArrangement = Arrangement.spacedBy(size50.dp)
+            verticalArrangement = Arrangement.spacedBy(SIZE50.dp)
         ) {
             AuthenticationHeaderContent()
             EspecialistFormContent()

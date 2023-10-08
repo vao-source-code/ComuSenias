@@ -17,8 +17,8 @@ class ComposeFileProvider : FileProvider(R.xml.file_paths) {
 
     companion object {
 
-        fun createFileFromUri(context: Context, uri: Uri): File? {
-            return try {
+        fun createFileFromUri(context: Context, uri: Uri): File {
+            try {
                 val stream = context.contentResolver.openInputStream(uri)
                 val file = File.createTempFile(
                     "${System.currentTimeMillis()}",
@@ -54,11 +54,11 @@ class ComposeFileProvider : FileProvider(R.xml.file_paths) {
                     file
                 )
 
-            }catch (e: IOException) {
+            } catch (e: IOException) {
                 e.printStackTrace()
             }
             // Devuelve un Uri vacío si la función no pudo crear un archivo
-           return Uri.EMPTY
+            return Uri.EMPTY
         }
 
         fun getPathFromBitmap(context: Context, bitmap: Bitmap): String {
@@ -71,7 +71,5 @@ class ComposeFileProvider : FileProvider(R.xml.file_paths) {
             stream.close()
             return file.path
         }
-
     }
-
 }

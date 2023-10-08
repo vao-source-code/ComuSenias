@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import com.example.comusenias.R
 import com.example.comusenias.presentation.ui.theme.CHECK_POINT
 import com.example.comusenias.presentation.ui.theme.CONSULT_WHIT_ESPECIALIST
+import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.SIZE12
 import com.example.comusenias.presentation.ui.theme.SIZE16
 import com.example.comusenias.presentation.ui.theme.SIZE28
@@ -37,7 +38,7 @@ import com.example.comusenias.presentation.ui.theme.size7
 @Preview(showBackground = true)
 @Composable
 fun CardGameCheckPoint() {
-    val border = animateColorAsState(cardGray, label = "")
+    val border = animateColorAsState(cardGray, label = EMPTY_STRING)
     Box(
         modifier = Modifier
             .fillMaxWidth()
