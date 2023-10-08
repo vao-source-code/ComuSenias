@@ -51,7 +51,6 @@ class LoginViewModel @Inject constructor(private val authUseCases: AuthFactoryUs
         isEmailValid = isValid
         errorEmail = if (isValid) emptyString else invalidEmail
         enabledLoginButton()
-
     }
 
     fun validatePassword() {

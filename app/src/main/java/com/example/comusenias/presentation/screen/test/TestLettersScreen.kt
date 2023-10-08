@@ -1,4 +1,4 @@
-package com.example.comusenias.presentation.screen.plays
+package com.example.comusenias.presentation.screen.test
 
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel

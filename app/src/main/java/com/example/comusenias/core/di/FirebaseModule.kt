@@ -1,12 +1,15 @@
 package com.example.comusenias.core.di
 
 import com.example.comusenias.constants.FirebaseConstants.LETTERS_COLLECTION
+import com.example.comusenias.constants.FirebaseConstants.LEVEL_COLLECTION
 import com.example.comusenias.constants.FirebaseConstants.USERS_COLLECTION
 import com.example.comusenias.data.repositories.AuthRepositoryImpl
 import com.example.comusenias.data.repositories.LetterImageRepositoryImpl
+import com.example.comusenias.data.repositories.LevelRepositoryImpl
 import com.example.comusenias.data.repositories.UsersRepositoryImpl
 import com.example.comusenias.domain.repositories.AuthRepository
 import com.example.comusenias.domain.repositories.LetterImageRepository
+import com.example.comusenias.domain.repositories.LevelRepository
 import com.example.comusenias.domain.repositories.UsersRepository
 import com.example.comusenias.domain.use_cases.auth.AuthFactoryUseCases
 import com.example.comusenias.domain.use_cases.auth.GetCurrentUserUseCase
@@ -16,6 +19,8 @@ import com.example.comusenias.domain.use_cases.auth.RegisterUseCase
 import com.example.comusenias.domain.use_cases.letters.GetImageUseCase
 import com.example.comusenias.domain.use_cases.letters.LettersFactoryUseCases
 import com.example.comusenias.domain.use_cases.letters.SearchImageLetterUseCase
+import com.example.comusenias.domain.use_cases.level.GetLevelsUseCase
+import com.example.comusenias.domain.use_cases.level.LevelFactoryUseCases
 import com.example.comusenias.domain.use_cases.users.CreateUserUseCase
 import com.example.comusenias.domain.use_cases.users.GetUserByIdUseCase
 import com.example.comusenias.domain.use_cases.users.SaveImageUserUseCase
@@ -62,6 +67,7 @@ object FirebaseModule {
     @Provides
     fun providerFirebaseFirestore(): FirebaseFirestore = Firebase.firestore
 
+    /*----------------------------- Firestore Collections ---------------------------------------- */
     @Provides
     @Named(USERS_COLLECTION)
     fun providerUserRef(db: FirebaseFirestore): CollectionReference =
@@ -72,10 +78,23 @@ object FirebaseModule {
     fun providerLettersRef(db: FirebaseFirestore): CollectionReference =
         db.collection(LETTERS_COLLECTION)
 
+    @Provides
+    @Named(LEVEL_COLLECTION)
+    fun providerLevelRef(db: FirebaseFirestore): CollectionReference =
+        db.collection(LEVEL_COLLECTION)
+
+    /*----------------------------- Repositories ------------------------------------------------ */
 
     @Provides
     fun providerUsersRepository(impl: UsersRepositoryImpl): UsersRepository = impl
 
+    @Provides
+    fun providerLetterImageRepository(impl: LetterImageRepositoryImpl): LetterImageRepository = impl
+
+    @Provides
+    fun providerLevelRepository(impl: LevelRepositoryImpl): LevelRepository = impl
+
+    /*----------------------------- Use Cases --------------------------------------------------- */
     @Provides
     fun providerUsersUseCases(usersRepository: UsersRepository) = UsersFactoryUseCases(
         createUserUseCase = CreateUserUseCase(usersRepository),
@@ -85,12 +104,14 @@ object FirebaseModule {
     )
 
     @Provides
-    fun providerLetterImageRepository(impl: LetterImageRepositoryImpl): LetterImageRepository = impl
-
-    @Provides
     fun providerLettersUseCases(letterImageRepository: LetterImageRepository) = LettersFactoryUseCases(
         getImageUseCase = GetImageUseCase(letterImageRepository),
         searchImageLetterUseCase = SearchImageLetterUseCase(letterImageRepository)
+    )
+
+    @Provides
+    fun providerLevelUseCases(levelRepository: LevelRepository) = LevelFactoryUseCases(
+        getLevelsUseCase= GetLevelsUseCase(levelRepository)
     )
 
     /*----------------------------- Storage ----------------------------------------------------- */
@@ -106,5 +127,10 @@ object FirebaseModule {
     @Named(LETTERS_COLLECTION)
     fun providerStorageRefLetters(storage: FirebaseStorage) =
         storage.reference.child(LETTERS_COLLECTION)
+
+    @Provides
+    @Named(LEVEL_COLLECTION)
+    fun providerStorageRefLevel(storage: FirebaseStorage) =
+        storage.reference.child(LEVEL_COLLECTION)
 
 }
