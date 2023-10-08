@@ -10,12 +10,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import com.example.comusenias.presentation.ui.theme.size1
 import com.example.comusenias.presentation.ui.theme.size14
 
 @Composable
-fun ContentHome(navController: NavHostController, modifier: Modifier) {
+fun ContentHome(
+    modifier: Modifier,
+    onClickCard: () -> Unit
+    ) {
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
@@ -35,7 +37,7 @@ fun ContentHome(navController: NavHostController, modifier: Modifier) {
         items(statusCards()) { statusGame ->
             ContentCardGame(
                 status = statusGame,
-                navController = navController
+                onClickCard = { onClickCard() }
             )
         }
         item {

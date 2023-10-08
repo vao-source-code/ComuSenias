@@ -11,6 +11,7 @@ import com.example.comusenias.presentation.component.gameAction.GameAction
 import com.example.comusenias.presentation.component.gameAction.MatchLetter
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.CONTINUE
+import com.example.comusenias.presentation.ui.theme.STEP_TWO
 import com.example.comusenias.presentation.ui.theme.WHAT_LETTER_IS
 
 @Composable
@@ -18,7 +19,6 @@ fun ChoseTheLetterPlayScreen(navController: NavHostController) {
     var letter by remember { mutableStateOf("e") }
     val letterRandom = remember { mutableStateOf(letter) }
     val isButtonEnabled = remember { mutableStateOf(false) }
-    val stepTwo = 2
     val onMatchResult: (Boolean) -> Unit = {
         isButtonEnabled.value = true
     }
@@ -28,7 +28,7 @@ fun ChoseTheLetterPlayScreen(navController: NavHostController) {
         title = WHAT_LETTER_IS,
         titleButton = CONTINUE,
         enabledButton = isButtonEnabled.value,
-        currentSteps = stepTwo,
+        currentSteps = STEP_TWO,
         navController = navController,
         clickButton = { navController.navigate(AppScreen.ChoseTheSignPlayScreen.route) },
     ) {

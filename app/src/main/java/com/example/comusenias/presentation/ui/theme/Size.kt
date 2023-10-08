@@ -6,6 +6,7 @@ const val SIZE2: Int = 2
 const val size3: Int = 3
 const val SIZE4: Int = 4
 const val size5: Int = 5
+const val SIZE5: Int = 5
 const val size6: Int = 6
 const val size7: Int = 7
 const val size9: Int = 9
@@ -40,14 +41,23 @@ const val SIZE84: Int = 84
 const val size95: Int = 95
 const val SIZE90: Int = 90
 const val SIZE100: Int = 100
+const val SIZE120: Int = 120
 const val size130: Int = 130
 const val size150: Int = 150
+const val SIZE150: Int = 150
 const val SIZE200: Int = 200
 const val SIZE220: Int = 220
 const val SIZE250: Int = 250
 const val SIZE300: Int = 300
-const val SIZE390: Int = 390
-
-const val QUANTITY_COLUMNS: Int = 2
-
 const val size250: Int = 250
+
+const val STEP_ONE: Int = 1
+const val STEP_TWO: Int = 2
+const val STEP_TREE: Int = 3
+const val STEP_FOUR: Int = 4
+
+
+
+
+
+

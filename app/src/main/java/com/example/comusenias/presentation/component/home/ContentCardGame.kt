@@ -20,12 +20,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.example.comusenias.R
 import com.example.comusenias.constants.TestTag
-import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.SIZE12
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.cardGray
@@ -43,7 +40,10 @@ enum class StatusGame {
 }
 
 @Composable
-fun ContentCardGame(status: StatusGame, navController: NavController ) {
+fun ContentCardGame(
+    status: StatusGame,
+    onClickCard: () -> Unit
+) {
     val currentStatus by remember { mutableStateOf(status) }
 
     val lineColor: Color
@@ -87,7 +87,7 @@ fun ContentCardGame(status: StatusGame, navController: NavController ) {
             .fillMaxWidth()
             .blur(radius = blurAnimate.value)
             .background(Color.White)
-            .clickable { navController.navigate(AppScreen.LearnSignScreen.route) }
+            .clickable { onClickCard() }
             .testTag(TestTag.TAG_CONTENT_CARD_GAME + currentStatus.name)
     ) {
         CardGame(

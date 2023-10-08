@@ -13,6 +13,7 @@ import androidx.navigation.NavHostController
 import com.example.comusenias.presentation.component.bottomBar.ShowBottomBar
 import com.example.comusenias.presentation.component.home.ContentHome
 import com.example.comusenias.presentation.component.home.TopBarHome
+import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.size3
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -30,12 +31,12 @@ fun HomeScreen(navController: NavHostController, modifier: Modifier) {
     ) { paddingValues ->
         Box(
             modifier = Modifier
-                .fillMaxSize() // Ocupar todo el espacio disponible
+                .fillMaxSize()
                 .padding(paddingValues)
         ) {
             ContentHome(
-                navController = navController,
-                modifier = Modifier.fillMaxSize() // Ocupar todo el espacio disponible en la caja
+                modifier = Modifier.fillMaxSize(),
+                onClickCard = { navController.navigate(AppScreen.LearnSignScreen.route)}
             )
         }
     }

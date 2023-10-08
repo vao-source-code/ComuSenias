@@ -10,12 +10,12 @@ import com.example.comusenias.presentation.component.gameAction.GameAction
 import com.example.comusenias.presentation.component.gameAction.SignInterpretationStatus
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.FINISH
+import com.example.comusenias.presentation.ui.theme.STEP_FOUR
 import com.example.comusenias.presentation.ui.theme.THE_SIGN_IS
 
 @Composable
 fun InterpretationStatusScreen(navController: NavHostController, modifier: Modifier) {
     val isButtonEnabled = remember { mutableStateOf(false) }
-    val stepFour = 5
     val response: (Boolean) -> Unit = { it ->
             isButtonEnabled.value = it
     }
@@ -25,7 +25,7 @@ fun InterpretationStatusScreen(navController: NavHostController, modifier: Modif
         enabledButton = isButtonEnabled.value,
         title = THE_SIGN_IS,
         titleButton = FINISH,
-        currentSteps = stepFour,
+        currentSteps = STEP_FOUR,
         navController = navController,
         clickButton = { navController.navigate(AppScreen.CongratsPlayScreen.route) },
     ) {
