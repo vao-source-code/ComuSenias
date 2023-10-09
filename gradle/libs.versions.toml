@@ -34,6 +34,7 @@ accompanist = "0.30.0"
 firebaseStorage = "24.7.1"
 commons = "2.8.0"
 kotlinXCoroutinesTest = "1.7.3"
+camerax_version = "1.2.1"
 
 [libraries]
 accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanistPager" }
@@ -80,6 +81,13 @@ accompanist = { module = "com.google.accompanist:accompanist-permissions", versi
 firebaseStorage = { module = "com.google.firebase:firebase-firestore-ktx", version.ref = "firebaseStorage" }
 commons = { module = "commons-io:commons-io", version.ref = "commons" }
 kotlinXCoroutinesTest = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinXCoroutinesTest" }
+camerax_core = {module = "androidx.camera:camera-core" , version.ref = "camerax_version" }
+camera-camera2 = {module = "androidx.camera:camera-camera2" , version.ref = "camerax_version" }
+camera-lifecycle = {module = "androidx.camera:camera-lifecycle",version.ref = "camerax_version"}
+camera-video = {module = "androidx.camera:camera-video",version.ref = "camerax_version"}
+camera-view = {module = "androidx.camera:camera-view",version.ref = "camerax_version"}
+camera-mlkit-vision = {module = "androidx.camera:camera-mlkit-vision",version.ref = "camerax_version"}
+camera-extensions = {module = "androidx.camera:camera-extensions",version.ref = "camerax_version"}
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "androidApplication" }

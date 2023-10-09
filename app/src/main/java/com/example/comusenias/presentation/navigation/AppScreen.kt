@@ -31,6 +31,9 @@ sealed class AppScreen(val route : String) {
     object SpecialistDetailsScreen : AppScreen("specialist_details_screen")
     object ChoseTheLetterPlayScreen : AppScreen("chose_the_letter_play")
 
+    object CameraScreenPermission :AppScreen("camera_screen_permission")
+    object CameraScreen :AppScreen("camera_screen")
+
 
 
 }

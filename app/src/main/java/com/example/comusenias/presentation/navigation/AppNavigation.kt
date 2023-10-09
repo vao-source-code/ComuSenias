@@ -1,5 +1,6 @@
 package com.example.comusenias.presentation.navigation
 
+import PermissionCameraScreen
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -14,6 +15,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.comusenias.presentation.activities.MainActivity
 import com.example.comusenias.presentation.component.specialist.SpecialistDetailsScreen
+import com.example.comusenias.presentation.screen.camera.CameraScreen
+import com.example.comusenias.presentation.screen.camera.TestCamera
 import com.example.comusenias.presentation.screen.gameAction.ChoseTheLetterPlayScreen
 import com.example.comusenias.presentation.screen.home.HomeScreen
 import com.example.comusenias.presentation.screen.gameAction.ChoseTheSignPlayScreen
@@ -58,14 +61,19 @@ private fun GetNavHost(
         }
 
         composable(AppScreen.SplashScreen.route) {
-            SplashScreen(navController)
+           // SplashScreen(navController)
+            TestCamera(navController = navController)
+
         }
 
         composable(AppScreen.PremiumScreen.route) {
             PremiunScreen(navController = navController, modifier = modifier)
         }
-        composable(AppScreen.MainActivity.route) {
-            MainActivity()
+        composable(AppScreen.CameraScreenPermission.route){
+            PermissionCameraScreen(navController = navController)
+        }
+        composable(AppScreen.CameraScreen.route){
+           CameraScreen(navController = navController)
         }
         composable(
             route = AppScreen.ChangeProfileScreen.route,
@@ -107,5 +115,7 @@ private fun GetNavHost(
         composable(AppScreen.ChoseTheLetterPlayScreen.route) {
             ChoseTheLetterPlayScreen(navController = navController)
         }
+
+
     }
 }
