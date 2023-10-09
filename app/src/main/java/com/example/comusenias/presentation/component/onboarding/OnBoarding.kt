@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.comusenias.constants.TestTag
-import com.example.comusenias.domain.models.OnBoardingItem
+import com.example.comusenias.domain.models.onBoarding.OnBoardingItem
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.IMAGE
 import com.example.comusenias.presentation.ui.theme.blackColorApp

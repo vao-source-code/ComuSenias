@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.comusenias.R
-import com.example.comusenias.domain.models.model.UserModel
+import com.example.comusenias.domain.models.users.UserModel
 import com.example.comusenias.presentation.component.specialist.CardHomeSpecialist
 import com.example.comusenias.presentation.component.specialist.CardProfileUser
 import com.example.comusenias.presentation.navigation.AppScreen

@@ -2,7 +2,7 @@ package com.example.comusenias.data.repositories
 
 import com.example.comusenias.constants.FirebaseConstants
 import com.example.comusenias.domain.models.Response
-import com.example.comusenias.domain.models.model.LetterModel
+import com.example.comusenias.domain.models.letter.LetterModel
 import com.example.comusenias.domain.repositories.LetterImageRepository
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.google.firebase.firestore.CollectionReference
@@ -10,7 +10,6 @@ import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.tasks.await
 import java.io.File
 import javax.inject.Inject
 import javax.inject.Named

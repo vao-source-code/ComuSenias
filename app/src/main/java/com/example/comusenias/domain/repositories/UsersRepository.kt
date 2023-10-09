@@ -1,7 +1,7 @@
 package com.example.comusenias.domain.repositories
 
 import com.example.comusenias.domain.models.Response
-import com.example.comusenias.domain.models.model.UserModel
+import com.example.comusenias.domain.models.users.UserModel
 import kotlinx.coroutines.flow.Flow
 import java.io.File
 
