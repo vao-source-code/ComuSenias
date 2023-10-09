@@ -57,9 +57,9 @@ fun CameraScreen(
             recognitionResults.result.forEach {
                 val gestures = it.gestures()
                 val firstGesture = gestures.getOrNull(0)
-                val category = firstGesture?.get(0)?.categoryName() ?: "None"
+                val category = firstGesture?.get(0)?.categoryName() ?: "none"
 
-                if(category=="None") {
+                if(category=="none" || category=="") {
                     Text(
                         text = "Incorrecto", // Puedes personalizar este mensaje
                         fontSize = 20.sp,
@@ -71,7 +71,7 @@ fun CameraScreen(
                 }
                 else{
                     Text(
-                        text = "Letters: $category", // Puedes personalizar este mensaje
+                        text = "Letra: $category", // Puedes personalizar este mensaje
                         fontSize = 20.sp,
                         modifier = Modifier
                             .fillMaxSize()

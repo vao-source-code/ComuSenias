@@ -25,7 +25,7 @@ fun OverlayView(
         for (result in gestureRecognizerResults) {
             val gestures = result.gestures()
             val firstGesture = gestures.getOrNull(0)
-            val category = firstGesture?.get(0)?.categoryName() ?: "None"
+            val category = firstGesture?.get(0)?.categoryName() ?: "none"
 
             val scaleFactor = when (runningMode) {
                 RunningMode.IMAGE, RunningMode.VIDEO -> {
@@ -44,7 +44,7 @@ fun OverlayView(
                 strokeWidth = LANDMARK_STROKE_WIDTH
             }
 
-            val lineColor = if (category == "None") {
+            val lineColor = if (category=="none" || category=="") {
                 Color.Red // Si la categoría es "None", establece el color en rojo
             } else {
                 Color.Green // Si la categoría no es "None", establece el color en verde
