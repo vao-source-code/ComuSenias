@@ -33,7 +33,7 @@ import com.example.comusenias.presentation.ui.theme.SIZE73
 import com.example.comusenias.presentation.ui.theme.SIZE84
 import com.example.comusenias.presentation.ui.theme.borderButtonLetter
 import com.example.comusenias.presentation.ui.theme.greenColorApp
-import com.example.comusenias.presentation.ui.theme.size30
+import com.example.comusenias.presentation.ui.theme.SIZE30
 
 enum class StatusSign {
     NORMAL,
@@ -55,8 +55,8 @@ fun MatchLetter(
 
     Row(
         modifier = Modifier
-            .padding(top = size30.dp),
-        horizontalArrangement = Arrangement.spacedBy(size30.dp)
+            .padding(top = SIZE30.dp),
+        horizontalArrangement = Arrangement.spacedBy(SIZE30.dp)
     ) {
         randomLetters.forEach { letter ->
             ButtonLetter(
