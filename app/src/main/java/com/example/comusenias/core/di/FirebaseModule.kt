@@ -2,6 +2,7 @@ package com.example.comusenias.core.di
 
 import com.example.comusenias.constants.FirebaseConstants.LETTERS_COLLECTION
 import com.example.comusenias.constants.FirebaseConstants.LEVEL_COLLECTION
+import com.example.comusenias.constants.FirebaseConstants.SUB_LEVEL_COLLECTION
 import com.example.comusenias.constants.FirebaseConstants.USERS_COLLECTION
 import com.example.comusenias.data.repositories.AuthRepositoryImpl
 import com.example.comusenias.data.repositories.LetterImageRepositoryImpl
@@ -83,6 +84,12 @@ object FirebaseModule {
     fun providerLevelRef(db: FirebaseFirestore): CollectionReference =
         db.collection(LEVEL_COLLECTION)
 
+    @Provides
+    @Named(SUB_LEVEL_COLLECTION)
+    fun providerSubLevelRef(db: FirebaseFirestore): CollectionReference =
+        db.collection(SUB_LEVEL_COLLECTION)
+
+
     /*----------------------------- Repositories ------------------------------------------------ */
 
     @Provides
@@ -132,5 +139,10 @@ object FirebaseModule {
     @Named(LEVEL_COLLECTION)
     fun providerStorageRefLevel(storage: FirebaseStorage) =
         storage.reference.child(LEVEL_COLLECTION)
+
+    @Provides
+    @Named(SUB_LEVEL_COLLECTION)
+    fun providerStorageRefSubLevel(storage: FirebaseStorage) =
+            storage.reference.child(SUB_LEVEL_COLLECTION)
 
 }
