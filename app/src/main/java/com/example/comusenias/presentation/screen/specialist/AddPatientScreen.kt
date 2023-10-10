@@ -23,8 +23,8 @@ import com.example.comusenias.presentation.component.addPatient.UserProfileConte
 import com.example.comusenias.presentation.component.defaults.app.ButtonApp
 import com.example.comusenias.presentation.ui.theme.AgregaPaciente
 import com.example.comusenias.presentation.ui.theme.SIZE100
-import com.example.comusenias.presentation.ui.theme.SIZE12
-import com.example.comusenias.presentation.ui.theme.SIZE19
+import com.example.comusenias.presentation.ui.theme.SIZE20
+import com.example.comusenias.presentation.ui.theme.SIZE30
 import com.example.comusenias.presentation.ui.theme.SIZE38
 import com.example.comusenias.presentation.ui.theme.SIZE48
 
@@ -48,7 +48,7 @@ fun AddPatientScreen() {
         contentAlignment = Alignment.Center
     ) {
         Column(
-            modifier = Modifier.padding(top = SIZE100.dp),
+            modifier = Modifier.padding(top = SIZE100.dp, start = SIZE30.dp, end = SIZE30.dp, bottom = SIZE20.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
@@ -61,7 +61,7 @@ fun AddPatientScreen() {
             Spacer(modifier = Modifier.height(SIZE48.dp))
 
             Column(
-                modifier = Modifier.padding(start= SIZE19.dp).fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(SIZE38.dp)
             ) {
                 FieldWithIcon(
@@ -85,7 +85,6 @@ fun AddPatientScreen() {
             Spacer(modifier = Modifier.weight(1f))
 
             ButtonApp(titleButton = AgregaPaciente)
-            Spacer(modifier = Modifier.padding(bottom = SIZE12.dp))
         }
     }
 }
