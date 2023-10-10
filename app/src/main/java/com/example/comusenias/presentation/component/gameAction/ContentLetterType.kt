@@ -10,13 +10,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.comusenias.presentation.ui.theme.SIZE36
 import com.example.comusenias.presentation.ui.theme.blackColorApp
-import com.example.comusenias.presentation.ui.theme.size30
+import com.example.comusenias.presentation.ui.theme.SIZE30
 
 @Composable
 fun ContentLetterType(letter: String) {
     Text(
         modifier = Modifier
-            .padding(size30.dp),
+            .padding(SIZE30.dp),
         text = "Letra ${letter.uppercase()}",
         style = TextStyle(
             fontSize = SIZE36.sp,

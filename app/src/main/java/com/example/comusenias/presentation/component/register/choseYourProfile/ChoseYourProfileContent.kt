@@ -18,14 +18,14 @@ import com.example.comusenias.presentation.ui.theme.CHOSE_YOU_PROFILE
 import com.example.comusenias.presentation.ui.theme.ESPECIALIST
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
 import com.example.comusenias.presentation.ui.theme.size20
-import com.example.comusenias.presentation.ui.theme.size30
+import com.example.comusenias.presentation.ui.theme.SIZE30
 
 @Composable
 fun ChoseYourProfileContent(navController : NavHostController){
     Column(
         modifier = Modifier
             .fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(size30.dp)
+        verticalArrangement = Arrangement.spacedBy(SIZE30.dp)
     ) {
         Text(
             modifier = Modifier

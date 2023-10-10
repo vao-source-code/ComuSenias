@@ -39,7 +39,7 @@ import com.example.comusenias.presentation.ui.theme.primaryColorApp
 import com.example.comusenias.presentation.ui.theme.size10
 import com.example.comusenias.presentation.ui.theme.size20
 import com.example.comusenias.presentation.ui.theme.size3
-import com.example.comusenias.presentation.ui.theme.size30
+import com.example.comusenias.presentation.ui.theme.SIZE30
 import com.example.comusenias.presentation.ui.theme.size40
 
 @Composable
@@ -56,7 +56,7 @@ fun SpecialistDetailsScreen(modifier: Modifier, navController: NavHostController
                 text = NAME_KID,
                 modifier = Modifier.padding(size10.dp),
                 color = Color.White,
-                fontSize = size30.sp
+                fontSize = SIZE30.sp
             )
             Box(
                 modifier = Modifier
