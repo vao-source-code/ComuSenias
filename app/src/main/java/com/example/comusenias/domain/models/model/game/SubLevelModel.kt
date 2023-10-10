@@ -5,18 +5,20 @@ import com.google.gson.Gson
 
 
 data class SubLevelModel(
-        val id: String = "",
-        val name: String = "",
-        val image: String = "",
-        val idLevel: String = "",
-        val letter: String = "",
+        var id: String = "",
+        var name: String = "",
+        var idLevel: String = "",
+        var idGame: String = "",
+        var image: String = "",
+        var letter: String = "",
 ) {
     fun toJson(): String = Gson().toJson(SubLevelModel(
             id = id,
             name = name,
             idLevel = idLevel,
+            idGame = idGame,
+            image = if (image != "") LibraryString.encodeURL(image) else "",
             letter = letter,
-            image = if (image != "") LibraryString.encodeURL(image) else ""
     ))
 
     companion object {

@@ -1,14 +1,17 @@
 package com.example.comusenias.core.di
 
+import com.example.comusenias.constants.FirebaseConstants.GAME_COLLECTION
 import com.example.comusenias.constants.FirebaseConstants.LETTERS_COLLECTION
 import com.example.comusenias.constants.FirebaseConstants.LEVEL_COLLECTION
 import com.example.comusenias.constants.FirebaseConstants.SUB_LEVEL_COLLECTION
 import com.example.comusenias.constants.FirebaseConstants.USERS_COLLECTION
 import com.example.comusenias.data.repositories.AuthRepositoryImpl
+import com.example.comusenias.data.repositories.GameRepositoryImp
 import com.example.comusenias.data.repositories.LetterImageRepositoryImpl
 import com.example.comusenias.data.repositories.LevelRepositoryImpl
 import com.example.comusenias.data.repositories.UsersRepositoryImpl
 import com.example.comusenias.domain.repositories.AuthRepository
+import com.example.comusenias.domain.repositories.GameRepository
 import com.example.comusenias.domain.repositories.LetterImageRepository
 import com.example.comusenias.domain.repositories.LevelRepository
 import com.example.comusenias.domain.repositories.UsersRepository
@@ -17,6 +20,9 @@ import com.example.comusenias.domain.use_cases.auth.GetCurrentUserUseCase
 import com.example.comusenias.domain.use_cases.auth.LoginUseCase
 import com.example.comusenias.domain.use_cases.auth.LogoutUseCase
 import com.example.comusenias.domain.use_cases.auth.RegisterUseCase
+import com.example.comusenias.domain.use_cases.game.GameFactory
+import com.example.comusenias.domain.use_cases.game.SearchBySublevelId
+import com.example.comusenias.domain.use_cases.game.SearchGame
 import com.example.comusenias.domain.use_cases.letters.GetImageUseCase
 import com.example.comusenias.domain.use_cases.letters.LettersFactoryUseCases
 import com.example.comusenias.domain.use_cases.letters.SearchImageLetterUseCase
@@ -89,6 +95,10 @@ object FirebaseModule {
     fun providerSubLevelRef(db: FirebaseFirestore): CollectionReference =
         db.collection(SUB_LEVEL_COLLECTION)
 
+    @Provides
+    @Named(GAME_COLLECTION)
+    fun providerGameRef(db: FirebaseFirestore): CollectionReference =
+        db.collection(GAME_COLLECTION)
 
     /*----------------------------- Repositories ------------------------------------------------ */
 
@@ -101,6 +111,9 @@ object FirebaseModule {
     @Provides
     fun providerLevelRepository(impl: LevelRepositoryImpl): LevelRepository = impl
 
+    @Provides
+    fun providerGameRepository(impl: GameRepositoryImp): GameRepository = impl
+
     /*----------------------------- Use Cases --------------------------------------------------- */
     @Provides
     fun providerUsersUseCases(usersRepository: UsersRepository) = UsersFactoryUseCases(
@@ -109,16 +122,22 @@ object FirebaseModule {
         updateUserUseCase = UpdateUserUseCase(usersRepository),
         saveImageUserUseCase = SaveImageUserUseCase(usersRepository)
     )
-
     @Provides
-    fun providerLettersUseCases(letterImageRepository: LetterImageRepository) = LettersFactoryUseCases(
-        getImageUseCase = GetImageUseCase(letterImageRepository),
-        searchImageLetterUseCase = SearchImageLetterUseCase(letterImageRepository)
-    )
+    fun providerLettersUseCases(letterImageRepository: LetterImageRepository) =
+        LettersFactoryUseCases(
+            getImageUseCase = GetImageUseCase(letterImageRepository),
+            searchImageLetterUseCase = SearchImageLetterUseCase(letterImageRepository)
+        )
 
     @Provides
     fun providerLevelUseCases(levelRepository: LevelRepository) = LevelFactoryUseCases(
-        getLevelsUseCase= GetLevelsUseCase(levelRepository)
+        getLevelsUseCase = GetLevelsUseCase(levelRepository)
+    )
+
+    @Provides
+    fun providerGameUseCases(gameRepository: GameRepository) = GameFactory(
+        searchGame = SearchGame(gameRepository),
+        searchBySublevelId = SearchBySublevelId(gameRepository)
     )
 
     /*----------------------------- Storage ----------------------------------------------------- */
@@ -143,6 +162,6 @@ object FirebaseModule {
     @Provides
     @Named(SUB_LEVEL_COLLECTION)
     fun providerStorageRefSubLevel(storage: FirebaseStorage) =
-            storage.reference.child(SUB_LEVEL_COLLECTION)
+        storage.reference.child(SUB_LEVEL_COLLECTION)
 
 }
