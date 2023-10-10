@@ -16,8 +16,9 @@ import com.example.comusenias.presentation.component.defaults.app.ButtonApp
 import com.example.comusenias.presentation.component.register.especialistForm.EspecialistFormContent
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.CONTINUE
-import com.example.comusenias.presentation.ui.theme.size30
+import com.example.comusenias.presentation.ui.theme.SIZE30
 import com.example.comusenias.presentation.ui.theme.SIZE50
+import com.example.comusenias.presentation.ui.theme.SIZE90
 
 @Composable
 fun SpecialistFormScreen(modifier: Modifier, navController: NavHostController) {
@@ -29,7 +30,7 @@ fun SpecialistFormScreen(modifier: Modifier, navController: NavHostController) {
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(start = size30.dp, end = size30.dp, top = size30.dp),
+                .padding(start = SIZE30.dp, end = SIZE30.dp, top = SIZE90.dp),
             verticalArrangement = Arrangement.spacedBy(SIZE50.dp)
         ) {
             AuthenticationHeaderContent()
