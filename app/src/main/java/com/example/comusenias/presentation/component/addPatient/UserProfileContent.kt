@@ -25,7 +25,7 @@ fun UserProfileContent(
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.padding(bottom = SIZE16.dp)
+        modifier = Modifier.padding(top = SIZE16.dp)
     ) {
         Image(
             painter = painterResource(imageResId),
