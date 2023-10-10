@@ -36,10 +36,14 @@ fun CameraScreen(
     val context = LocalContext.current
     val activity = (context as? Activity)
     val lifecycleOwner = LocalLifecycleOwner.current
-    val configuration = LocalConfiguration.current
+
+
     // Recolecta los resultados de reconocimiento del ViewModel
     val recognitionResultsState = viewModel.recognitionResults.collectAsState()
     val recognitionResults = recognitionResultsState.value
+    val configuration = LocalConfiguration.current
+
+
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -54,39 +58,13 @@ fun CameraScreen(
 
 
         if (recognitionResults != null) {
-            recognitionResults.result.forEach {
-                val gestures = it.gestures()
-                val firstGesture = gestures.getOrNull(0)
-                val category = firstGesture?.get(0)?.categoryName() ?: "none"
+            OverlayView(
+                gestureRecognizerResults = recognitionResults,
+                imageHeight = configuration.screenHeightDp,
+                imageWidth = configuration.screenWidthDp,
+                runningMode = runningMode,
+            )
 
-                if(category=="none" || category=="") {
-                    Text(
-                        text = "Incorrecto", // Puedes personalizar este mensaje
-                        fontSize = 20.sp,
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(16.dp),
-                        color = Color.Red // Puedes personalizar el color
-                    )
-                }
-                else{
-                    Text(
-                        text = "Letra: $category", // Puedes personalizar este mensaje
-                        fontSize = 20.sp,
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(16.dp),
-                        color = Color.Green // Puedes personalizar el color
-                    )
-                }
-
-                OverlayView(
-                    gestureRecognizerResults = recognitionResults.result,
-                    imageHeight = configuration.screenHeightDp,
-                    imageWidth = configuration.screenWidthDp,
-                    runningMode = runningMode
-                )
-            }
         } else {
             // En este caso, recognitionResults es nulo, puedes mostrar un mensaje de carga o un indicador visual
             Text(
