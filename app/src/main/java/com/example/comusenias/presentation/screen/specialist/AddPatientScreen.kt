@@ -1,4 +1,4 @@
-package com.example.comusenias.domain
+package com.example.comusenias.presentation.screen.specialist
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
