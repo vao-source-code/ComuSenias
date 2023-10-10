@@ -81,9 +81,7 @@ fun AddPatientScreen() {
                     text = paciente.value.ubicacion
                 )
             }
-
             Spacer(modifier = Modifier.weight(1f))
-
             ButtonApp(titleButton = AgregaPaciente)
         }
     }
