@@ -53,6 +53,8 @@ android {
 }
 
 dependencies {
+    implementation libs.play.services.mlkit.text.recognition.common
+    implementation libs.ui.text.android
     testImplementation 'junit:junit:'
     testImplementation "androidx.arch.core:core-testing:2.2.0"
     testImplementation 'androidx.test:core:1.5.0'
