@@ -11,10 +11,15 @@ import androidx.navigation.NavHostController
 import com.example.comusenias.domain.models.Response
 import com.example.comusenias.presentation.component.defaults.DefaultLoadingProgressIndicator
 import com.example.comusenias.presentation.navigation.AppScreen
+import com.example.comusenias.presentation.ui.theme.LOGIN_ERROR
+import com.example.comusenias.presentation.ui.theme.LOGIN_SUCCESS
 import com.example.comusenias.presentation.view_model.LoginViewModel
 
 @Composable
-fun ResponseStatusLogin(navController : NavHostController , viewModel: LoginViewModel = hiltViewModel()) {
+fun ResponseStatusLogin(
+    navController: NavHostController,
+    viewModel: LoginViewModel = hiltViewModel()
+) {
     when (val loginResponse = viewModel.loginResponse) {
         Response.Loading -> {
             Box(
@@ -31,19 +36,17 @@ fun ResponseStatusLogin(navController : NavHostController , viewModel: LoginView
                         inclusive = true
                     }
                 }
-
             }
-            Toast.makeText(LocalContext.current, "Login Success", Toast.LENGTH_SHORT)
+            Toast.makeText(LocalContext.current, LOGIN_SUCCESS, Toast.LENGTH_SHORT)
                 .show()
         }
 
         is Response.Error -> {
             Toast.makeText(
                 LocalContext.current,
-                loginResponse.exception?.message + "Login Error",
+                loginResponse.exception?.message + LOGIN_ERROR,
                 Toast.LENGTH_SHORT
             ).show()
-
         }
 
         else -> {}

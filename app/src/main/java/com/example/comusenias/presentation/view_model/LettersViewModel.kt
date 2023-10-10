@@ -20,18 +20,15 @@ class LettersViewModel @Inject constructor(
 ) : ViewModel() {
 
     var lettersResponse by mutableStateOf<Response<List<LetterModel>>?>(Response.Loading)
-    var letters by mutableStateOf<LetterModel>(LetterModel())
-
+    var letters by mutableStateOf(LetterModel())
 
     fun searchSpecificLetter(letter: String = AlphabetConstants.Letter.A.toString()) =
         viewModelScope.launch(Dispatchers.IO) {
             lettersUseCase.searchImageLetterUseCase(letter).collect() { response ->
                 lettersResponse = response as Response<List<LetterModel>>?
                 if (response is Response.Success) {
-                    //TODO traigo el primer elemento de la lista ya que se maneja de manera univoca
                     letters = response.data[0]
                 }
             }
         }
-
 }

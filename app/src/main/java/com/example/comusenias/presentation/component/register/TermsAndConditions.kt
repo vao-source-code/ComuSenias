@@ -17,6 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.comusenias.presentation.component.defaults.app.CheckBoxApp
+import com.example.comusenias.presentation.ui.theme.Y
 import com.example.comusenias.presentation.ui.theme.accept
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.conditions
@@ -58,7 +59,7 @@ fun TermsAndConditions(
             fontWeight = FontWeight.Bold
         )
         Text(
-            text = "y",
+            text = Y,
             fontSize = size14.sp,
             fontWeight = FontWeight.Medium,
             color = blackColorApp

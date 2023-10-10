@@ -28,10 +28,10 @@ fun ProfileScreen(
             ShowBottomBar(navController = navController)
         }
     ) { paddingValues ->
-
         Box(
             modifier = modifier
-                .fillMaxSize().padding(paddingValues)
+                .fillMaxSize()
+                .padding(paddingValues)
         ) {
             Column(modifier = Modifier.fillMaxSize()) {
                 ProfileContent(
@@ -42,12 +42,10 @@ fun ProfileScreen(
                         route = AppScreen.ChangeProfileScreen.passUser(viewModel.userData.toJson())
                     )
                 }
-
                 ProfileFooterContent(
                     onClickButton = onClick
                 )
             }
         }
     }
-
 }

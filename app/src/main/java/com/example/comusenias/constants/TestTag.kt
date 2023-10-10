@@ -20,6 +20,7 @@ class TestTag {
         const val TAG_PROFESIONAL_SCREEN = "profesionalScreen"
         const val TAG_CONTENT_CARD_GAME = "contentCardGame"
         const val TAG_LINE_COLOR_CARD = "lineColor"
+        const val TAG_MATCH_SIGN = "matchSign"
 
     }
 }

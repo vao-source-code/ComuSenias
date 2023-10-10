@@ -4,6 +4,7 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateIntAsState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.comusenias.R
 import com.example.comusenias.constants.TestTag
@@ -40,7 +40,10 @@ enum class StatusGame {
 }
 
 @Composable
-fun ContentCardGame(status: StatusGame ) {
+fun ContentCardGame(
+    status: StatusGame,
+    onClickCard: () -> Unit
+) {
     val currentStatus by remember { mutableStateOf(status) }
 
     val lineColor: Color
@@ -84,6 +87,7 @@ fun ContentCardGame(status: StatusGame ) {
             .fillMaxWidth()
             .blur(radius = blurAnimate.value)
             .background(Color.White)
+            .clickable { onClickCard() }
             .testTag(TestTag.TAG_CONTENT_CARD_GAME + currentStatus.name)
     ) {
         CardGame(
@@ -109,16 +113,4 @@ fun ContentCardGame(status: StatusGame ) {
             )
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewContentCard(){
-    Column {
-        ContentCardGame(status = StatusGame.COMPLETED)
-        ContentCardGame(status = StatusGame.IN_PROGRESS)
-        ContentCardGame(status = StatusGame.BLOCKED)
-    }
-
-
 }

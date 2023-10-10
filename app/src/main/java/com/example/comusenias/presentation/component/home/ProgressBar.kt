@@ -14,13 +14,13 @@ import com.example.comusenias.presentation.ui.theme.greenColorApp
 import com.example.comusenias.presentation.ui.theme.size15
 
 @Composable
-fun ProgressBar() {
+fun ProgressBar(progress: Float = 0.7f ) {
     LinearProgressIndicator(
         modifier = Modifier
             .fillMaxWidth()
             .height(size15.dp)
             .clip(RoundedCornerShape(SIZE16.dp)),
-        progress = 0.7f,
+        progress = progress,
         backgroundColor = Color.LightGray,
         color = greenColorApp
     )

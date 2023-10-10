@@ -6,6 +6,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.comusenias.domain.models.Response
 import com.example.comusenias.presentation.component.defaults.DefaultLoadingProgressIndicator
+import com.example.comusenias.presentation.ui.theme.ERROR_UNKNOWN
 import com.example.comusenias.presentation.view_model.ChangeProfileViewModel
 
 @Composable
@@ -15,11 +16,17 @@ fun SaveImageProfile(viewModel: ChangeProfileViewModel = hiltViewModel()) {
         Response.Loading -> {
             DefaultLoadingProgressIndicator()
         }
+
         is Response.Success -> {
             viewModel.onUpdate(response.data)
         }
+
         is Response.Error -> {
-            Toast.makeText(LocalContext.current, response.exception?.message ?: "Error desconcido", Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                LocalContext.current,
+                response.exception?.message ?: ERROR_UNKNOWN,
+                Toast.LENGTH_LONG
+            ).show()
         }
 
         else -> {}

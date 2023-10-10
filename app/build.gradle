@@ -67,6 +67,8 @@ dependencies {
     implementation libs.material3
     implementation libs.constraintlayout.compose
 
+    implementation libs.lottie.compose
+
     implementation libs.accompanist.pager
     implementation libs.accompanist.pager.indicators
 

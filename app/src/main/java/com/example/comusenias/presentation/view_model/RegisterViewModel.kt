@@ -26,33 +26,21 @@ import javax.inject.Inject
 class RegisterViewModel @Inject constructor(
     private val authUseCases: AuthFactoryUseCases, private val usersUseCase: UsersFactoryUseCases
 ) : ViewModel() {
-
-
     var registerResponse by mutableStateOf<Response<FirebaseUser>?>(null)
         private set
 
     var state by mutableStateOf(RegisterState())
         private set
-
     var isUserNameValid: Boolean by mutableStateOf(false)
     var errorUserName: String by mutableStateOf("")
-
     var isEmailValid: Boolean by mutableStateOf(false)
     var errorEmail: String by mutableStateOf("")
-
-
     var isPasswordValid: Boolean by mutableStateOf(false)
     var errorPassword: String by mutableStateOf("")
-
-
     var isConfirmPasswordValid: Boolean by mutableStateOf(false)
     var errorConfirmPassword: String by mutableStateOf("")
-
-
     var isRegisterEnabled = false
-
     var user = UserModel()
-
 
     fun register(user: UserModel) = viewModelScope.launch {
         registerResponse = Response.Loading
@@ -61,7 +49,6 @@ class RegisterViewModel @Inject constructor(
     }
 
     fun onRegister() {
-
         user = UserModel(
             userName = state.userName, email = state.email, password = state.password
         )
@@ -69,7 +56,7 @@ class RegisterViewModel @Inject constructor(
 
     }
 
-    fun enabledRegisterButton() {
+    private fun enabledRegisterButton() {
         isRegisterEnabled =
             isUserNameValid && isEmailValid && isPasswordValid && isConfirmPasswordValid
     }
@@ -123,6 +110,4 @@ class RegisterViewModel @Inject constructor(
     fun onConfirmPasswordInput(confirmPassword: String) {
         state = state.copy(confirmPassword = confirmPassword)
     }
-
-
 }

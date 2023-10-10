@@ -11,7 +11,6 @@ import javax.inject.Inject
 class AuthRepositoryImpl @Inject constructor(private val firebaseAuth: FirebaseAuth) :
     AuthRepository {
 
-
     override val currentUser: FirebaseUser?
         get() = firebaseAuth.currentUser
 
@@ -20,7 +19,6 @@ class AuthRepositoryImpl @Inject constructor(private val firebaseAuth: FirebaseA
             val user = firebaseAuth.signInWithEmailAndPassword(email, password).await()
             Response.Success(user.user!!)
         } catch (e: Exception) {
-            //Implementar un log
             e.printStackTrace()
             Response.Error(e)
         }
@@ -32,7 +30,6 @@ class AuthRepositoryImpl @Inject constructor(private val firebaseAuth: FirebaseA
                 .await()
             Response.Success(user.user!!)
         } catch (e: Exception) {
-            //Implementar un log
             e.printStackTrace()
             Response.Error(e)
         }

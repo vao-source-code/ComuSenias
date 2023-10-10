@@ -9,6 +9,7 @@ import com.example.comusenias.domain.library.LibraryString
 import com.example.comusenias.domain.models.Response
 import com.example.comusenias.domain.models.state.LoginState
 import com.example.comusenias.domain.use_cases.auth.AuthFactoryUseCases
+import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.emptyString
 import com.example.comusenias.presentation.ui.theme.invalidEmail
 import com.example.comusenias.presentation.ui.theme.invalidPassword
@@ -19,27 +20,21 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(private val authUseCases: AuthFactoryUseCases) : ViewModel() {
+class LoginViewModel @Inject constructor(private val authUseCases: AuthFactoryUseCases) :
+    ViewModel() {
 
     var loginResponse by mutableStateOf<Response<FirebaseUser>?>(null)
     var state by mutableStateOf(LoginState())
         private set
-
     var isEmailValid: Boolean by mutableStateOf(false)
-    var errorEmail: String by mutableStateOf("")
-
+    var errorEmail: String by mutableStateOf(EMPTY_STRING)
     var isPasswordValid: Boolean by mutableStateOf(false)
-    var errorPassword: String by mutableStateOf("")
-
+    var errorPassword: String by mutableStateOf(EMPTY_STRING)
     var isLoginEnabled = false
-
     val currentUser = authUseCases.getCurrentUserUseCase()
 
-
     init {
-        if (currentUser != null) {
-            loginResponse = Response.Success(currentUser)
-        }
+        currentUser?.let { loginResponse = Response.Success(it) }
     }
 
     fun enabledLoginButton() {
@@ -60,12 +55,10 @@ class LoginViewModel @Inject constructor(private val authUseCases: AuthFactoryUs
         enabledLoginButton()
     }
 
-
     fun login() = viewModelScope.launch(IO) {
         loginResponse = Response.Loading
         val result = authUseCases.loginUseCase(state.email, state.password)
         loginResponse = result
-
     }
 
     fun onEmailInput(email: String) {

@@ -24,9 +24,13 @@ sealed class AppScreen(val route : String) {
     object ChoseTheSignPlayScreen : AppScreen("chose_the_sign_play")
     object MakeSignPlayScreen : AppScreen("make_sign_play")
     object CongratsPlayScreen : AppScreen("congrats_play")
+    object InterpretationStatusScreen : AppScreen("Interpretation_status_screen")
+
 
     object SpecialistScreen : AppScreen("specialist_screen")
     object SpecialistDetailsScreen : AppScreen("specialist_details_screen")
+    object ChoseTheLetterPlayScreen : AppScreen("chose_the_letter_play")
+
 
 
 }

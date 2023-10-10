@@ -18,8 +18,10 @@ import com.example.comusenias.presentation.component.login.ResponseStatusLogin
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.confirmPassword
 import com.example.comusenias.presentation.ui.theme.emailText
-import com.example.comusenias.presentation.ui.theme.password
-import com.example.comusenias.presentation.ui.theme.register
+import com.example.comusenias.presentation.ui.theme.PASSWORD
+import com.example.comusenias.presentation.ui.theme.REGISTER
+import com.example.comusenias.presentation.ui.theme.SIZE2
+import com.example.comusenias.presentation.ui.theme.SIZE50
 import com.example.comusenias.presentation.ui.theme.size10
 import com.example.comusenias.presentation.view_model.RegisterViewModel
 
@@ -31,14 +33,14 @@ fun RegisterForm(
     val state = viewModel.state
     Column(
         modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(50.dp)
+        verticalArrangement = Arrangement.spacedBy(SIZE50.dp)
     ) {
 
         ResponseStatusLogin(navController =navController)
 
         Column(
             modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(2.dp)
+            verticalArrangement = Arrangement.spacedBy(SIZE2.dp)
         ) {
             TextFieldApp(
                 value = state.email,
@@ -53,7 +55,7 @@ fun RegisterForm(
                 value = state.password,
                 onValueChange = { viewModel.onPasswordInput(it) },
                 validateField = { viewModel.validatePassword() },
-                label = password,
+                label = PASSWORD,
                 errorMsg = viewModel.errorPassword
             )
             TextFieldAppPassword(
@@ -70,7 +72,7 @@ fun RegisterForm(
             verticalArrangement = Arrangement.spacedBy(size10.dp)
         ) {
             ButtonApp(
-                titleButton = register,
+                titleButton = REGISTER,
                 onClickButton = {  navController.navigate(route = AppScreen.ChoseYourProfileScreen.route) },
                 enabledButton = true
             )

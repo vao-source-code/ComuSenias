@@ -23,6 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.comusenias.R
+import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.SIZE12
 import com.example.comusenias.presentation.ui.theme.SIZE16
 import com.example.comusenias.presentation.ui.theme.SIZE24
@@ -30,6 +31,7 @@ import com.example.comusenias.presentation.ui.theme.SIZE27
 import com.example.comusenias.presentation.ui.theme.SIZE28
 import com.example.comusenias.presentation.ui.theme.SIZE36
 import com.example.comusenias.presentation.ui.theme.SIZE90
+import com.example.comusenias.presentation.ui.theme.VOWELS
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.size15
 
@@ -61,7 +63,7 @@ fun CardGame(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Vocales",
+                    text = VOWELS,
                     style = TextStyle(
                         fontSize = SIZE16.sp,
                         lineHeight = SIZE24.sp,
@@ -73,7 +75,7 @@ fun CardGame(
                     modifier = Modifier
                         .size(SIZE36.dp),
                     painter = painterResource(id = icon.value),
-                    contentDescription = "",
+                    contentDescription = EMPTY_STRING,
                     tint = iconColor.value
                 )
             }

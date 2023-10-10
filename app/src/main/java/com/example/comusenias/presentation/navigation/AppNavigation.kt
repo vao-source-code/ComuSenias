@@ -1,4 +1,3 @@
-package com.example.comusenias.presentation.navigation
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,22 +13,26 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.comusenias.presentation.activities.MainActivity
 import com.example.comusenias.presentation.component.specialist.SpecialistDetailsScreen
-import com.example.comusenias.presentation.screen.plays.ChoseTheSignPlayScreen
-import com.example.comusenias.presentation.screen.plays.CongratsPlayScreen
-import com.example.comusenias.presentation.screen.plays.LearnSignScreen
-import com.example.comusenias.presentation.screen.plays.MakeSignPlayScreen
+import com.example.comusenias.presentation.navigation.AppScreen
+import com.example.comusenias.presentation.navigation.authNavGraph
+import com.example.comusenias.presentation.screen.gameAction.ChoseTheLetterPlayScreen
+import com.example.comusenias.presentation.screen.home.HomeScreen
+import com.example.comusenias.presentation.screen.gameAction.ChoseTheSignPlayScreen
+import com.example.comusenias.presentation.screen.gameAction.CongratsPlayScreen
+import com.example.comusenias.presentation.screen.gameAction.InterpretationStatusScreen
+import com.example.comusenias.presentation.screen.gameAction.LearnSignScreen
+import com.example.comusenias.presentation.screen.gameAction.MakeSignPlayScreen
 import com.example.comusenias.presentation.screen.premiun.PremiunScreen
 import com.example.comusenias.presentation.screen.profile.ChangeProfileScreen
 import com.example.comusenias.presentation.screen.profile.ProfileScreen
 import com.example.comusenias.presentation.screen.specialist.SpecialistHomeExample
-import com.example.comusenias.presentation.screen.test.TestLevelScreen
 import com.example.comusenias.presentation.splashScreen.SplashScreen
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppNavigation(
-    navController: NavHostController,
+        navController: NavHostController,
 ) {
     Scaffold { paddingValues ->
         GetNavHost(navController, Modifier.padding(paddingValues))
@@ -38,12 +41,12 @@ fun AppNavigation(
 
 @Composable
 private fun GetNavHost(
-    navController: NavHostController,
-    modifier: Modifier,
+        navController: NavHostController,
+        modifier: Modifier,
 ) {
     NavHost(
-        navController = navController,
-        startDestination = AppScreen.SplashScreen.route
+            navController = navController,
+            startDestination = AppScreen.SplashScreen.route
     ) {
 
         authNavGraph(navController = navController, modifier = modifier)
@@ -52,8 +55,7 @@ private fun GetNavHost(
             ProfileScreen(navController = navController, modifier = modifier)
         }
         composable(AppScreen.HomeScreen.route) {
-           // HomeScreen(navController = navController, modifier = modifier)
-            TestLevelScreen()
+            HomeScreen(navController = navController, modifier = modifier)
         }
 
         composable(AppScreen.SplashScreen.route) {
@@ -67,19 +69,18 @@ private fun GetNavHost(
             MainActivity()
         }
         composable(
-            route = AppScreen.ChangeProfileScreen.route,
-            arguments = listOf(navArgument("user") {
-                type = NavType.StringType
-            })
+                route = AppScreen.ChangeProfileScreen.route,
+                arguments = listOf(navArgument("user") {
+                    type = NavType.StringType
+                })
         ) { user ->
             user.arguments?.getString("user")?.let {
                 ChangeProfileScreen(
-                    modifier = Modifier.fillMaxSize(),
-                    navController = navController,
-                    user = it
+                        modifier = Modifier.fillMaxSize(),
+                        navController = navController,
+                        user = it
                 )
             }
-
         }
 
         composable(AppScreen.SpecialistScreen.route) {
@@ -98,8 +99,13 @@ private fun GetNavHost(
         composable(AppScreen.MakeSignPlayScreen.route) {
             MakeSignPlayScreen(navController = navController, modifier = modifier)
         }
+        composable(AppScreen.InterpretationStatusScreen.route) {
+            InterpretationStatusScreen(navController = navController, modifier = modifier)
+        }
         composable(AppScreen.CongratsPlayScreen.route) {
             CongratsPlayScreen(navController = navController, modifier = modifier)
         }
+        composable(AppScreen.ChoseTheLetterPlayScreen.route) {
+            ChoseTheLetterPlayScreen(navController = navController)
+        }
     }
-}
