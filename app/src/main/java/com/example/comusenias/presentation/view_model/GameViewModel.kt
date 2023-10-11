@@ -6,8 +6,9 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.comusenias.domain.models.model.game.GameModel
-import com.example.comusenias.domain.models.model.game.SubLevelModel
+import com.example.comusenias.domain.models.game.Game
+import com.example.comusenias.domain.models.game.SubLevel
+
 import com.example.comusenias.domain.use_cases.game.GameFactory
 import com.example.comusenias.domain.use_cases.level.LevelFactoryUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,11 +25,11 @@ class GameViewModel @Inject constructor(
 
     /*Traigo los datos de la navegacion anterior el sub nivel para precargar los datos mas rapido */
     val data = savedStateHandle.get<String>("sublevel")
-    val user = SubLevelModel.fromJson(data!!)
-    var state by mutableStateOf(SubLevelModel())
+    val user = SubLevel.fromJson(data!!)
+    var state by mutableStateOf(SubLevel())
         private set
 
-    var game by mutableStateOf<GameModel>(GameModel())
+    var game by mutableStateOf<Game>(Game())
 
 
 
@@ -37,8 +38,9 @@ class GameViewModel @Inject constructor(
             idLevel = state.idLevel,
             id = state.id,
             name = state.name,
-            image = state.image,
+            imageSing = state.imageSing,
             letter = state.letter
+            //TODO ver si falta completar mas datos
         )
         getGameBySubLevelId(state.id)
     }

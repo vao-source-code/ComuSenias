@@ -2,8 +2,8 @@ package com.example.comusenias.data.repositories
 
 import com.example.comusenias.constants.FirebaseConstants
 import com.example.comusenias.domain.models.Response
-import com.example.comusenias.domain.models.model.game.LevelModel
-import com.example.comusenias.domain.models.model.game.SubLevelModel
+import com.example.comusenias.domain.models.game.Level
+import com.example.comusenias.domain.models.game.SubLevel
 import com.example.comusenias.domain.repositories.LevelRepository
 import com.google.firebase.firestore.CollectionReference
 import kotlinx.coroutines.Dispatchers
@@ -21,9 +21,9 @@ class LevelRepositoryImpl @Inject constructor(
     @Named(FirebaseConstants.SUB_LEVEL_COLLECTION) private val subLevelRef: CollectionReference,
 ) : LevelRepository {
 
-    override fun searchLevelById(id: String): Flow<LevelModel> = callbackFlow {
+    override fun searchLevelById(id: String): Flow<Level> = callbackFlow {
         val snapshotListener = levelRef.document(id).addSnapshotListener { snapshot, _ ->
-            val user = snapshot?.toObject(LevelModel::class.java) ?: LevelModel("", "")
+            val user = snapshot?.toObject(Level::class.java) ?: Level()
             trySend(user)
         }
         awaitClose {
@@ -31,11 +31,11 @@ class LevelRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getLevels(): Flow<Response<List<LevelModel>>> = callbackFlow {
+    override fun getLevels(): Flow<Response<List<Level>>> = callbackFlow {
         val snapshotListener = levelRef.addSnapshotListener { snapshot, e ->
             GlobalScope.launch(Dispatchers.IO) {
                 val levelResponse = if (snapshot != null) {
-                    val level = snapshot.toObjects(LevelModel::class.java)
+                    val level = snapshot.toObjects(Level::class.java)
                     snapshot.documents.forEachIndexed { index, document ->
                         level[index].id = document.id
                     }
@@ -46,9 +46,9 @@ class LevelRepositoryImpl @Inject constructor(
                         }
                     }
                     level.forEach { l ->
-                        subLevelRef.whereEqualTo(SubLevelModel.ID_LEVEL, l.id).get().await()
+                        subLevelRef.whereEqualTo(SubLevel.ID_LEVEL, l.id).get().await()
                             .forEach { document ->
-                                l.subLevelModel.add(document.toObject(SubLevelModel::class.java))
+                                l.subLevelModel.add(document.toObject(SubLevel::class.java))
                             }
                     }
                     Response.Success(level)
@@ -63,11 +63,11 @@ class LevelRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun searchSubLevels(idLevel: String): Flow<List<SubLevelModel>> = callbackFlow {
-        val snapshotListener = subLevelRef.whereEqualTo(SubLevelModel.ID_LEVEL, idLevel)
+    override fun searchSubLevels(idLevel: String): Flow<List<SubLevel>> = callbackFlow {
+        val snapshotListener = subLevelRef.whereEqualTo(SubLevel.ID_LEVEL, idLevel)
             .addSnapshotListener { snapshot, _ ->
-                val subLevelModel = snapshot?.toObjects(SubLevelModel::class.java)
-                    ?: ArrayList<SubLevelModel>()
+                val subLevelModel = snapshot?.toObjects(SubLevel::class.java)
+                    ?: ArrayList<SubLevel>()
                 trySend(subLevelModel)
             }
         awaitClose {

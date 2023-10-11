@@ -15,14 +15,14 @@ class LevelTest {
         val images = listOf("a.png", "b.png", "c.png")
 
         val levelModel = Level(
-                levelName = levelName,
+                name = levelName,
                 isCompleted = isCompleted,
                 learnSign = learnSign,
                 subLevel = subLevel,
                 images = images
         )
 
-        assertEquals(levelName, levelModel.levelName)
+        assertEquals(levelName, levelModel.name)
         assertEquals(isCompleted, levelModel.isCompleted)
         assertEquals(learnSign, levelModel.learnSign)
         assertEquals(subLevel, levelModel.subLevel)

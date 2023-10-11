@@ -1,7 +1,7 @@
 package com.example.comusenias.data.repositories
 
 import com.example.comusenias.constants.FirebaseConstants
-import com.example.comusenias.domain.models.model.game.GameModel
+import com.example.comusenias.domain.models.game.Game
 import com.example.comusenias.domain.repositories.GameRepository
 import com.google.firebase.firestore.CollectionReference
 import kotlinx.coroutines.channels.awaitClose
@@ -15,9 +15,9 @@ class GameRepositoryImp @Inject constructor(
         @Named(FirebaseConstants.GAME_COLLECTION) private val gameRef: CollectionReference,
 ) : GameRepository {
 
-    override suspend fun searchGame(idGame: String): Flow<GameModel> = callbackFlow{
+    override suspend fun searchGame(idGame: String): Flow<Game> = callbackFlow{
         val snapshotListener = gameRef.document(idGame).addSnapshotListener { snapshot, _ ->
-            val gameModel = snapshot?.toObject(GameModel::class.java) ?: GameModel()
+            val gameModel = snapshot?.toObject(Game::class.java) ?: Game()
             gameModel.id = snapshot?.id ?: ""
             trySend(gameModel)
         }
@@ -26,9 +26,9 @@ class GameRepositoryImp @Inject constructor(
         }
     }
 
-    override suspend fun searchBySublevelId(idSubLevel : String): Flow<GameModel> = callbackFlow {
+    override suspend fun searchBySublevelId(idSubLevel : String): Flow<Game> = callbackFlow {
         val snapshotListener = sublevelsRef.document(idSubLevel).addSnapshotListener { snapshot, _ ->
-            val gameModel = snapshot?.toObject(GameModel::class.java) ?: GameModel()
+            val gameModel = snapshot?.toObject(Game::class.java) ?: Game()
             gameModel.id = snapshot?.id ?: ""
             trySend(gameModel)
         }

@@ -6,8 +6,8 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.comusenias.domain.models.Response
-import com.example.comusenias.domain.models.model.game.LevelModel
-import com.example.comusenias.domain.models.model.game.SubLevelModel
+import com.example.comusenias.domain.models.game.Level
+import com.example.comusenias.domain.models.game.SubLevel
 import com.example.comusenias.domain.use_cases.level.LevelFactoryUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -19,8 +19,8 @@ class LevelViewModel @Inject constructor(
     private val levelUsesCases: LevelFactoryUseCases,
 ) : ViewModel() {
 
-    var levelsResponse by mutableStateOf<Response<List<LevelModel>>?>(Response.Loading)
-    var levels by mutableStateOf<List<LevelModel>>(listOf())
+    var levelsResponse by mutableStateOf<Response<List<Level>>?>(Response.Loading)
+    var levels by mutableStateOf<List<Level>>(listOf())
 
     init {
         getLevels()
@@ -28,14 +28,14 @@ class LevelViewModel @Inject constructor(
 
     fun getLevels() = viewModelScope.launch(Dispatchers.IO) {
         levelUsesCases.getLevelsUseCase().collect() { response ->
-            levelsResponse = response as Response<List<LevelModel>>?
+            levelsResponse = response as Response<List<Level>>?
             if (response is Response.Success) {
                 levels = response.data
             }
         }
     }
 
-    fun getSubLevels(idLevel: String): List<SubLevelModel> {
+    fun getSubLevels(idLevel: String): List<SubLevel> {
         if (levels.isEmpty()) {
             getLevels()
         }
