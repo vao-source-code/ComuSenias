@@ -48,11 +48,10 @@ class GameViewModelTest {
         Dispatchers.resetMain()
     }
 
-
     @Test
     fun testGetGameBySubLevelId()  {
         // Mock data
-        val subLevelId = "subLevelId"
+        val subLevelId = "id"
         val game = Game() // Replace with appropriate Game object
 
         // Set up the mock behavior for gameUseCases.searchBySublevelId
