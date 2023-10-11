@@ -13,7 +13,6 @@ data class SubLevel(
     var idGame: String = EMPTY_STRING,
     var game: Game? = null,
     var idLevel: String = EMPTY_STRING,
-    var letter: String = EMPTY_STRING,
     //TODO deberia traerse de la base de datos de usuario o simil estos datos
     var isCompleted: StatusGame = StatusGame.IN_PROGRESS,
 ) {
@@ -27,7 +26,6 @@ data class SubLevel(
             idGame = idGame,
             game = game,
             idLevel = idLevel,
-            letter = letter,
             isCompleted = isCompleted
         )
     )

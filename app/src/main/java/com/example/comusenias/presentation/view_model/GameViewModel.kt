@@ -10,7 +10,6 @@ import com.example.comusenias.domain.models.game.Game
 import com.example.comusenias.domain.models.game.SubLevel
 
 import com.example.comusenias.domain.use_cases.game.GameFactory
-import com.example.comusenias.domain.use_cases.level.LevelFactoryUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,9 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GameViewModel @Inject constructor(
-    private val levelUsesCases: LevelFactoryUseCases,
     private val gameUsesCases: GameFactory,
-    private var savedStateHandle: SavedStateHandle,
+    var savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
     /*Traigo los datos de la navegacion anterior el sub nivel para precargar los datos mas rapido */
@@ -32,15 +30,16 @@ class GameViewModel @Inject constructor(
     var game by mutableStateOf<Game>(Game())
 
 
-
     init {
         state = state.copy(
             idLevel = state.idLevel,
             id = state.id,
             name = state.name,
             imageSing = state.imageSing,
-            letter = state.letter
-            //TODO ver si falta completar mas datos
+            learnSign = state.learnSign,
+            idGame = state.idGame,
+            game = state.game,
+            isCompleted = state.isCompleted
         )
         getGameBySubLevelId(state.id)
     }
@@ -48,6 +47,7 @@ class GameViewModel @Inject constructor(
     fun getGameBySubLevelId(id: String) = viewModelScope.launch(Dispatchers.IO) {
         gameUsesCases.searchBySublevelId(id).collect() { response ->
             game = response
+            state.game = game
         }
     }
 }

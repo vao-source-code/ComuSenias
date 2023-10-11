@@ -5,7 +5,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.comusenias.R
 import com.example.comusenias.presentation.component.gameAction.GameAction
 import com.example.comusenias.presentation.component.gameAction.MatchLetter
@@ -38,4 +40,10 @@ fun ChoseTheLetterPlayScreen(navController: NavHostController) {
             responseMatchLetter = onMatchResult
         )
     }
+}
+
+@Composable
+@Preview
+fun ChoseTheLetterPlayScreenPreview() {
+     ChoseTheLetterPlayScreen(navController = rememberNavController())
 }

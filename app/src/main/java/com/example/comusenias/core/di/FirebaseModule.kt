@@ -26,8 +26,8 @@ import com.example.comusenias.domain.use_cases.game.SearchGame
 import com.example.comusenias.domain.use_cases.letters.GetImageUseCase
 import com.example.comusenias.domain.use_cases.letters.LettersFactoryUseCases
 import com.example.comusenias.domain.use_cases.letters.SearchImageLetterUseCase
-import com.example.comusenias.domain.use_cases.level.GetLevelsUseCase
-import com.example.comusenias.domain.use_cases.level.LevelFactoryUseCases
+import com.example.comusenias.domain.use_cases.level.GetLevels
+import com.example.comusenias.domain.use_cases.level.LevelFactory
 import com.example.comusenias.domain.use_cases.users.CreateUserUseCase
 import com.example.comusenias.domain.use_cases.users.GetUserByIdUseCase
 import com.example.comusenias.domain.use_cases.users.SaveImageUserUseCase
@@ -129,8 +129,8 @@ object FirebaseModule {
         )
 
     @Provides
-    fun providerLevelUseCases(levelRepository: LevelRepository) = LevelFactoryUseCases(
-        getLevelsUseCase = GetLevelsUseCase(levelRepository)
+    fun providerLevelUseCases(levelRepository: LevelRepository) = LevelFactory(
+        getLevels = GetLevels(levelRepository)
     )
 
     @Provides

@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.comusenias.domain.models.Response
 import com.example.comusenias.domain.models.game.Level
 import com.example.comusenias.domain.models.game.SubLevel
-import com.example.comusenias.domain.use_cases.level.LevelFactoryUseCases
+import com.example.comusenias.domain.use_cases.level.LevelFactory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LevelViewModel @Inject constructor(
-    private val levelUsesCases: LevelFactoryUseCases,
+    private val levelUsesCases: LevelFactory,
 ) : ViewModel() {
 
     var levelsResponse by mutableStateOf<Response<List<Level>>?>(Response.Loading)
@@ -27,7 +27,7 @@ class LevelViewModel @Inject constructor(
     }
 
     fun getLevels() = viewModelScope.launch(Dispatchers.IO) {
-        levelUsesCases.getLevelsUseCase().collect() { response ->
+        levelUsesCases.getLevels().collect() { response ->
             levelsResponse = response as Response<List<Level>>?
             if (response is Response.Success) {
                 levels = response.data

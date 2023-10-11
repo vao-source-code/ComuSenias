@@ -17,7 +17,18 @@ class ChildrenModelTest {
 
     @Before
     fun setUp() {
-        levels = listOf(Level("1", StatusGame.COMPLETED, listOf(), listOf(), listOf()), Level("2", StatusGame.COMPLETED, listOf(), listOf(), listOf()))
+        levels = listOf(
+                Level(
+                        name = "Level 1",
+                        isCompleted = StatusGame.IN_PROGRESS,
+                        subLevelModel = ArrayList()
+                ),
+                Level(
+                        name = "Level 2",
+                        isCompleted = StatusGame.IN_PROGRESS,
+                        subLevelModel = ArrayList()
+                )
+        )
         observations = listOf(Observation("1", "1", "1"), Observation("2", "2", "2"))
 
 
