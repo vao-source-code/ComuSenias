@@ -13,7 +13,7 @@ import com.example.comusenias.presentation.component.defaults.app.ButtonApp
 import com.example.comusenias.presentation.component.gameAction.CongratsContent
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.CONTINUE
-import com.example.comusenias.presentation.ui.theme.size30
+import com.example.comusenias.presentation.ui.theme.SIZE30
 
 @Composable
 fun CongratsPlayScreen(navController: NavHostController, modifier: Modifier) {
@@ -25,7 +25,7 @@ fun CongratsPlayView(navController: NavHostController, modifier: Modifier) {
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(size30.dp),
+            .padding(SIZE30.dp),
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

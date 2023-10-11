@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.comusenias.domain.library.LibraryPassword
 import com.example.comusenias.domain.library.LibraryString
 import com.example.comusenias.domain.models.Response
-import com.example.comusenias.domain.models.model.UserModel
+import com.example.comusenias.domain.models.users.UserModel
 import com.example.comusenias.domain.models.state.RegisterState
 import com.example.comusenias.domain.use_cases.auth.AuthFactoryUseCases
 import com.example.comusenias.domain.use_cases.users.UsersFactoryUseCases

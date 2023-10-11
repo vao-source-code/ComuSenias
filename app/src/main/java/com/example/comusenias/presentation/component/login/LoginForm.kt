@@ -12,7 +12,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.comusenias.presentation.component.defaults.app.ButtonApp
-import com.example.comusenias.presentation.component.defaults.app.GoogleSignInButton
 import com.example.comusenias.presentation.component.defaults.app.TextFieldApp
 import com.example.comusenias.presentation.component.defaults.app.TextFieldAppPassword
 import com.example.comusenias.presentation.ui.theme.SIZE2
@@ -65,8 +64,6 @@ fun LoginForm(
                 onClickButton = { viewModel.login() },
                 enabledButton = viewModel.isLoginEnabled
             )
-            LineDivisorLogin()
-            GoogleSignInButton()
         }
     }
 }

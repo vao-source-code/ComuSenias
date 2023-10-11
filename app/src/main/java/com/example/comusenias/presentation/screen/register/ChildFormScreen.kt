@@ -14,7 +14,10 @@ import com.example.comusenias.presentation.component.defaults.app.ButtonApp
 import com.example.comusenias.presentation.component.register.childForm.ChildFormContent
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.CONTINUE
-import com.example.comusenias.presentation.ui.theme.size30
+import com.example.comusenias.presentation.ui.theme.SIZE20
+import com.example.comusenias.presentation.ui.theme.SIZE30
+import com.example.comusenias.presentation.ui.theme.SIZE90
+
 @Composable
 fun ChildFormScreen(modifier: Modifier, navController: NavHostController) {
     Box(
@@ -24,7 +27,7 @@ fun ChildFormScreen(modifier: Modifier, navController: NavHostController) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(start = size30.dp, end = size30.dp, top = size30.dp),
+                .padding(start = SIZE30.dp, end = SIZE30.dp, top = SIZE90.dp, bottom = SIZE20.dp),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             AuthenticationHeaderContent()

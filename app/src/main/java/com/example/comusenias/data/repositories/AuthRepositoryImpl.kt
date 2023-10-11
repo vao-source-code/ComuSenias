@@ -1,7 +1,7 @@
 package com.example.comusenias.data.repositories
 
 import com.example.comusenias.domain.models.Response
-import com.example.comusenias.domain.models.model.UserModel
+import com.example.comusenias.domain.models.users.UserModel
 import com.example.comusenias.domain.repositories.AuthRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser

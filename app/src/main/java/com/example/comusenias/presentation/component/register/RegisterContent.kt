@@ -44,7 +44,7 @@ import com.example.comusenias.presentation.ui.theme.size10
 import com.example.comusenias.presentation.ui.theme.size18
 import com.example.comusenias.presentation.ui.theme.size20
 import com.example.comusenias.presentation.ui.theme.size24
-import com.example.comusenias.presentation.ui.theme.size30
+import com.example.comusenias.presentation.ui.theme.SIZE30
 import com.example.comusenias.presentation.view_model.RegisterViewModel
 
 @Composable
@@ -61,7 +61,7 @@ fun RegisterContent(
     ) {
         Text(
             text = REGISTER,
-            fontSize = size30.sp,
+            fontSize = SIZE30.sp,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.primary
         )

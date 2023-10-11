@@ -18,10 +18,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.comusenias.constants.TestTag
 import com.example.comusenias.presentation.component.defaults.app.CheckBoxApp
+import com.example.comusenias.presentation.ui.theme.REMEMBER_ME
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.forgotPassword
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
-import com.example.comusenias.presentation.ui.theme.rememberMe
 import com.example.comusenias.presentation.ui.theme.size10
 import com.example.comusenias.presentation.ui.theme.size14
 
@@ -60,7 +60,7 @@ fun LabelledCheckbox() {
 
         CheckBoxApp(isChecked = isChecked)
         Text(
-            text = rememberMe,
+            text = REMEMBER_ME,
             fontSize = size14.sp,
             fontWeight = FontWeight.Medium,
             color = blackColorApp

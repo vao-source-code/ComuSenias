@@ -1,3 +1,5 @@
+package com.example.comusenias.presentation.navigation
+
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -12,15 +14,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.comusenias.presentation.activities.MainActivity
 import com.example.comusenias.presentation.component.specialist.SpecialistDetailsScreen
-import com.example.comusenias.presentation.navigation.AppScreen
-import com.example.comusenias.presentation.navigation.authNavGraph
 import com.example.comusenias.presentation.screen.gameAction.ChoseTheLetterPlayScreen
+import com.example.comusenias.presentation.screen.home.HomeScreen
 import com.example.comusenias.presentation.screen.gameAction.ChoseTheSignPlayScreen
 import com.example.comusenias.presentation.screen.gameAction.CongratsPlayScreen
 import com.example.comusenias.presentation.screen.gameAction.InterpretationStatusScreen
 import com.example.comusenias.presentation.screen.gameAction.LearnSignScreen
 import com.example.comusenias.presentation.screen.gameAction.MakeSignPlayScreen
-import com.example.comusenias.presentation.screen.home.HomeScreen
+import com.example.comusenias.presentation.screen.notification.NotificationScreen
 import com.example.comusenias.presentation.screen.premiun.PremiunScreen
 import com.example.comusenias.presentation.screen.profile.ChangeProfileScreen
 import com.example.comusenias.presentation.screen.profile.ProfileScreen
@@ -106,6 +107,9 @@ private fun GetNavHost(
         }
         composable(AppScreen.ChoseTheLetterPlayScreen.route) {
             ChoseTheLetterPlayScreen(navController = navController)
+        }
+        composable(AppScreen.NotificationScreen.route) {
+            NotificationScreen(navController = navController, modifier = modifier)
         }
     }
 }
