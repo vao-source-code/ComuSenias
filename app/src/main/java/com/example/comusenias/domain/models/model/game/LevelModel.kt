@@ -15,7 +15,7 @@ data class LevelModel(
         const val ID = "id"
         const val NAME = "name"
         const val SUB_LEVEL = "subLevel"
-
+        const val SUB_LEVEL_MODEL = "subLevelModel"
         fun fromJson(data: String): LevelModel = Gson().fromJson(data, LevelModel::class.java)
 
     }

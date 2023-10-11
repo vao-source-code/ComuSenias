@@ -30,6 +30,8 @@ class GameViewModel @Inject constructor(
 
     var game by mutableStateOf<GameModel>(GameModel())
 
+
+
     init {
         state = state.copy(
             idLevel = state.idLevel,
