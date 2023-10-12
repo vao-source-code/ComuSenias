@@ -92,8 +92,7 @@ object FirebaseModule {
 
     @Provides
     @Named(GAME_COLLECTION)
-    fun providerGameRef(db: FirebaseFirestore): CollectionReference =
-        db.collection(GAME_COLLECTION)
+    fun providerGameRef(db: FirebaseFirestore): CollectionReference = db.collection(GAME_COLLECTION)
 
     /*----------------------------- Repositories ------------------------------------------------ */
 
