@@ -2,8 +2,8 @@ package com.example.comusenias.presentation.view_model
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.comusenias.domain.models.Response
-import com.example.comusenias.domain.models.game.Level
-import com.example.comusenias.domain.models.game.SubLevel
+import com.example.comusenias.domain.models.game.LevelModel
+import com.example.comusenias.domain.models.game.SubLevelModel
 import com.example.comusenias.domain.use_cases.level.LevelFactory
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -27,18 +27,51 @@ class LevelViewModelTest {
     @RelaxedMockK
     private lateinit var levelUsesCases: LevelFactory
 
-    private lateinit var viewModels: LevelViewModel
-
     @get:Rule
     var rule: InstantTaskExecutorRule = InstantTaskExecutorRule()
+
+    private lateinit var viewModels: LevelViewModel
+    private var listLevel = listOf<LevelModel>()
+    private val listSubLevel = arrayListOf<SubLevelModel>()
+    private val listStringSubLevel = arrayListOf<String>()
+
 
     @Before
     fun onBefore() {
         MockKAnnotations.init(this)
         viewModels = LevelViewModel(levelUsesCases = levelUsesCases)
+
+        listSubLevel.add(
+            SubLevelModel(
+                name = "A",
+                image = "image",
+                imageOnly = "imageOnly",
+                randomLetter = "C",
+                randomImage = "randomImage",
+            )
+        )
+        listSubLevel.add(
+            SubLevelModel(
+                name = "E",
+                image = "image",
+                imageOnly = "imageOnly",
+                randomLetter = "E",
+                randomImage = "randomImage",
+
+                )
+        )
+
+        listStringSubLevel.add("1.1")
+        listStringSubLevel.add("1.2")
+
+        listLevel = listOf(
+            LevelModel(
+                id = "1", name = "name", listSubLevel
+            )
+        )
+
         Dispatchers.setMain(Dispatchers.Unconfined)
     }
-
 
     @After
     fun onAfter() {
@@ -47,45 +80,11 @@ class LevelViewModelTest {
 
     @Test
     fun getLevelsTest() {
-        // Mock data
-        val listSubLevel = arrayListOf<SubLevel>()
-        listSubLevel.add(
-            SubLevel(
-                id = "1.1",
-                name = "name",
-                learnSign = "A",
-                imageSing = "image",
-                idGame = "idGame",
-                idLevel = "1"
-            )
-        )
-        listSubLevel.add(
-            SubLevel(
-                id = "1.2",
-                name = "name",
-                learnSign = "E",
-                imageSing = "image",
-                idGame = "idGame",
-                idLevel = "1"
-            )
-        )
-        val listStringSubLevel = arrayListOf<String>()
-        listStringSubLevel.add("1.1")
-        listStringSubLevel.add("1.2")
 
-        val levels = listOf(
-            Level(
-                id = "1",
-                name = "name",
-                listStringSubLevel,
-                listSubLevel
-            )
-        )
-        val result = Response.Success(levels)
+        val result = Response.Success(listLevel)
 
-        coEvery { levelUsesCases.getLevels() } returns object :
-            Flow<Response<List<Level>>> {
-            override suspend fun collect(collector: FlowCollector<Response<List<Level>>>) {
+        coEvery { levelUsesCases.getLevels() } returns object : Flow<Response<List<LevelModel>>> {
+            override suspend fun collect(collector: FlowCollector<Response<List<LevelModel>>>) {
                 collector.emit(result)
             }
         }
@@ -97,7 +96,28 @@ class LevelViewModelTest {
         coVerify { levelUsesCases.getLevels() }
 
         // Assert
-        assertEquals(levels, viewModels.levels)
+        assertEquals(listLevel, viewModels.levels)
+    }
+
+    @Test
+    fun searchNameLevelTest() {
+        val result = Response.Success(listLevel)
+
+        coEvery { levelUsesCases.getLevels() } returns object : Flow<Response<List<LevelModel>>> {
+            override suspend fun collect(collector: FlowCollector<Response<List<LevelModel>>>) {
+                collector.emit(result)
+            }
+        }
+
+        // Call the method to be tested
+        viewModels.getLevels()
+
+        // Verify the results
+        coVerify { levelUsesCases.getLevels() }
+
+        // Assert
+        assertEquals(listLevel, viewModels.levels)
+        assertEquals(listLevel, viewModels.searchLevelByName("name"))
     }
 
 }

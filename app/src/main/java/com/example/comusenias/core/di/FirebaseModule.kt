@@ -6,12 +6,10 @@ import com.example.comusenias.constants.FirebaseConstants.LEVEL_COLLECTION
 import com.example.comusenias.constants.FirebaseConstants.SUB_LEVEL_COLLECTION
 import com.example.comusenias.constants.FirebaseConstants.USERS_COLLECTION
 import com.example.comusenias.data.repositories.AuthRepositoryImpl
-import com.example.comusenias.data.repositories.GameRepositoryImp
 import com.example.comusenias.data.repositories.LetterImageRepositoryImpl
 import com.example.comusenias.data.repositories.LevelRepositoryImpl
 import com.example.comusenias.data.repositories.UsersRepositoryImpl
 import com.example.comusenias.domain.repositories.AuthRepository
-import com.example.comusenias.domain.repositories.GameRepository
 import com.example.comusenias.domain.repositories.LetterImageRepository
 import com.example.comusenias.domain.repositories.LevelRepository
 import com.example.comusenias.domain.repositories.UsersRepository
@@ -20,14 +18,12 @@ import com.example.comusenias.domain.use_cases.auth.GetCurrentUserUseCase
 import com.example.comusenias.domain.use_cases.auth.LoginUseCase
 import com.example.comusenias.domain.use_cases.auth.LogoutUseCase
 import com.example.comusenias.domain.use_cases.auth.RegisterUseCase
-import com.example.comusenias.domain.use_cases.game.GameFactory
-import com.example.comusenias.domain.use_cases.game.SearchBySublevelId
-import com.example.comusenias.domain.use_cases.game.SearchGame
 import com.example.comusenias.domain.use_cases.letters.GetImageUseCase
 import com.example.comusenias.domain.use_cases.letters.LettersFactoryUseCases
 import com.example.comusenias.domain.use_cases.letters.SearchImageLetterUseCase
 import com.example.comusenias.domain.use_cases.level.GetLevels
 import com.example.comusenias.domain.use_cases.level.LevelFactory
+import com.example.comusenias.domain.use_cases.level.SearchLevelName
 import com.example.comusenias.domain.use_cases.users.CreateUserUseCase
 import com.example.comusenias.domain.use_cases.users.GetUserByIdUseCase
 import com.example.comusenias.domain.use_cases.users.SaveImageUserUseCase
@@ -110,9 +106,6 @@ object FirebaseModule {
     @Provides
     fun providerLevelRepository(impl: LevelRepositoryImpl): LevelRepository = impl
 
-    @Provides
-    fun providerGameRepository(impl: GameRepositoryImp): GameRepository = impl
-
     /*----------------------------- Use Cases --------------------------------------------------- */
     @Provides
     fun providerUsersUseCases(usersRepository: UsersRepository) = UsersFactoryUseCases(
@@ -130,13 +123,8 @@ object FirebaseModule {
 
     @Provides
     fun providerLevelUseCases(levelRepository: LevelRepository) = LevelFactory(
-        getLevels = GetLevels(levelRepository)
-    )
-
-    @Provides
-    fun providerGameUseCases(gameRepository: GameRepository) = GameFactory(
-        searchGame = SearchGame(gameRepository),
-        searchBySublevelId = SearchBySublevelId(gameRepository)
+        getLevels = GetLevels(levelRepository),
+        searchLevelName = SearchLevelName(levelRepository)
     )
 
     /*----------------------------- Storage ----------------------------------------------------- */

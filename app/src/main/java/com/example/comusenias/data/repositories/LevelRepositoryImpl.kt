@@ -2,9 +2,10 @@ package com.example.comusenias.data.repositories
 
 import com.example.comusenias.constants.FirebaseConstants
 import com.example.comusenias.domain.models.Response
-import com.example.comusenias.domain.models.game.Level
-import com.example.comusenias.domain.models.game.SubLevel
+import com.example.comusenias.domain.models.game.LevelModel
+import com.example.comusenias.domain.models.game.SubLevelModel
 import com.example.comusenias.domain.repositories.LevelRepository
+import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.google.firebase.firestore.CollectionReference
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -21,9 +22,13 @@ class LevelRepositoryImpl @Inject constructor(
     @Named(FirebaseConstants.SUB_LEVEL_COLLECTION) private val subLevelRef: CollectionReference,
 ) : LevelRepository {
 
-    override fun searchLevelById(id: String): Flow<Level> = callbackFlow {
+    override fun searchLevelById(id: String): Flow<LevelModel> = callbackFlow {
         val snapshotListener = levelRef.document(id).addSnapshotListener { snapshot, _ ->
-            val user = snapshot?.toObject(Level::class.java) ?: Level()
+            val user = snapshot?.toObject(LevelModel::class.java) ?: LevelModel(
+                EMPTY_STRING,
+                EMPTY_STRING,
+                listOf()
+            )
             trySend(user)
         }
         awaitClose {
@@ -31,30 +36,38 @@ class LevelRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getLevels(): Flow<Response<List<Level>>> = callbackFlow {
+    override fun searchLevelName(name: String): Flow<LevelModel> = callbackFlow {
+        val snapshotListener =
+            levelRef.whereEqualTo("name", name).addSnapshotListener { snapshot, _ ->
+                val level = snapshot?.first()?.toObject(LevelModel::class.java) ?: LevelModel(
+                    EMPTY_STRING,
+                    EMPTY_STRING,
+                    listOf()
+                )
+                trySend(level)
+            }
+        awaitClose {
+            snapshotListener.remove()
+        }
+    }
+
+    override fun getLevels(): Flow<Response<List<LevelModel>>> = callbackFlow {
         val snapshotListener = levelRef.addSnapshotListener { snapshot, e ->
             GlobalScope.launch(Dispatchers.IO) {
-                val levelResponse = if (snapshot != null) {
-                    val level = snapshot.toObjects(Level::class.java)
-                    snapshot.documents.forEachIndexed { index, document ->
-                        level[index].id = document.id
-                    }
-                    val idLevelModelArray = ArrayList<String>()
-                    level.forEach { l ->
-                        l.subLevel.forEach { id ->
-                            idLevelModelArray.add(id)
-                        }
-                    }
-                    level.forEach { l ->
-                        subLevelRef.whereEqualTo(SubLevel.ID_LEVEL, l.id).get().await()
+                val levelResponse = snapshot?.let {
+                    val listLevel = snapshot.toObjects(LevelModel::class.java)
+                    listLevel.forEach { level ->
+                        val listSubLevelTemporal = ArrayList<SubLevelModel>()
+                        subLevelRef.whereEqualTo("idLevel", level.id).get().await()
                             .forEach { document ->
-                                l.subLevelModel.add(document.toObject(SubLevel::class.java))
+                                listSubLevelTemporal.add(document.toObject(SubLevelModel::class.java))
                             }
+                        level.subLevel = listSubLevelTemporal
                     }
-                    Response.Success(level)
-                } else {
-                    Response.Error(e)
-                }
+
+                    Response.Success(listLevel)
+                } ?: Response.Error(e)
+
                 trySend(levelResponse)
             }
         }
@@ -63,11 +76,11 @@ class LevelRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun searchSubLevels(idLevel: String): Flow<List<SubLevel>> = callbackFlow {
-        val snapshotListener = subLevelRef.whereEqualTo(SubLevel.ID_LEVEL, idLevel)
+    override fun searchSubLevels(idLevel: String): Flow<List<SubLevelModel>> = callbackFlow {
+        val snapshotListener = subLevelRef.whereEqualTo("idLevel", idLevel)
             .addSnapshotListener { snapshot, _ ->
-                val subLevelModel = snapshot?.toObjects(SubLevel::class.java)
-                    ?: ArrayList<SubLevel>()
+                val subLevelModel = snapshot?.toObjects(SubLevelModel::class.java)
+                    ?: ArrayList<SubLevelModel>()
                 trySend(subLevelModel)
             }
         awaitClose {

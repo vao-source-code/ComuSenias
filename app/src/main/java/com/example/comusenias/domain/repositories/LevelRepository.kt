@@ -1,13 +1,14 @@
 package com.example.comusenias.domain.repositories
 
 import com.example.comusenias.domain.models.Response
-import com.example.comusenias.domain.models.game.Level
-import com.example.comusenias.domain.models.game.SubLevel
+import com.example.comusenias.domain.models.game.LevelModel
+import com.example.comusenias.domain.models.game.SubLevelModel
 
 import kotlinx.coroutines.flow.Flow
 
 interface LevelRepository {
-    fun searchLevelById(id: String): Flow<Level>
-    fun getLevels(): Flow<Response<List<Level>>>
-    fun searchSubLevels(idLevel: String): Flow<List<SubLevel>>
+    fun searchLevelName(name: String): Flow<LevelModel>
+    fun searchLevelById(id: String): Flow<LevelModel>
+    fun getLevels(): Flow<Response<List<LevelModel>>>
+    fun searchSubLevels(idLevel: String): Flow<List<SubLevelModel>>
 }

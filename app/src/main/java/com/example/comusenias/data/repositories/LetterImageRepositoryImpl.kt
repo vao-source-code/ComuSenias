@@ -40,8 +40,8 @@ class LetterImageRepositoryImpl @Inject constructor(
         callbackFlow {
             val snapshotListener = lettersRef.whereEqualTo(LetterModel.FIELD_LETTER, letter)
                 .addSnapshotListener { snapshot, e ->
-                    val postsResponse = if (snapshot != null) {
-                        val putLetter = snapshot.documents.map { document ->
+                    val postsResponse = snapshot?.let { querySnapshot ->
+                        val putLetter = querySnapshot.documents.map { document ->
                             LetterModel(
                                 id = document.id,
                                 letter = document.data?.get(LetterModel.FIELD_LETTER) as String,
@@ -49,9 +49,7 @@ class LetterImageRepositoryImpl @Inject constructor(
                             )
                         }.toMutableList()
                         Response.Success(putLetter)
-                    } else {
-                        Response.Error(e)
-                    }
+                    } ?: Response.Error(e)
                     trySend(postsResponse)
                 }
             awaitClose {
