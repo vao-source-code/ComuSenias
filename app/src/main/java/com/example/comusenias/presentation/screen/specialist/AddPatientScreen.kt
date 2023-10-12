@@ -17,23 +17,24 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.comusenias.R
-import com.example.comusenias.domain.models.model.Paciente
+import com.example.comusenias.domain.models.model.ChildModel
 import com.example.comusenias.presentation.component.addPatient.FieldWithIcon
 import com.example.comusenias.presentation.component.addPatient.UserProfileContent
 import com.example.comusenias.presentation.component.defaults.app.ButtonApp
-import com.example.comusenias.presentation.ui.theme.AgregaPaciente
+import com.example.comusenias.presentation.ui.theme.Agrega_Paciente
 import com.example.comusenias.presentation.ui.theme.SIZE100
 import com.example.comusenias.presentation.ui.theme.SIZE20
 import com.example.comusenias.presentation.ui.theme.SIZE30
 import com.example.comusenias.presentation.ui.theme.SIZE38
 import com.example.comusenias.presentation.ui.theme.SIZE48
+import com.example.comusenias.presentation.ui.theme.USER_PROFILE
 
 
 @Composable
 fun AddPatientScreen() {
-    val paciente = remember {
+    val childrenModel = remember {
         mutableStateOf(
-            Paciente(
+            ChildModel(
                 nombre = "Jose Augusto",
                 edad = 6,
                 tel = 1158548647,
@@ -54,8 +55,8 @@ fun AddPatientScreen() {
         ) {
             UserProfileContent(
                 imageResId = R.drawable.profile_avatar,
-                contentDescription = "User Profile",
-                name = paciente.value.nombre
+                contentDescription = USER_PROFILE,
+                name = childrenModel.value.nombre
             )
 
             Spacer(modifier = Modifier.height(SIZE48.dp))
@@ -66,23 +67,23 @@ fun AddPatientScreen() {
             ) {
                 FieldWithIcon(
                     icon = painterResource(R.drawable.baseline_calendar_month_24),
-                    text = "${paciente.value.edad} años"
+                    text = "${childrenModel.value.edad} años"
                 )
                 FieldWithIcon(
                     icon = painterResource(R.drawable.phone_icon),
-                    text = "${paciente.value.tel}"
+                    text = "${childrenModel.value.tel} "
                 )
                 FieldWithIcon(
                     icon = painterResource(R.drawable.mail_icon),
-                    text = paciente.value.email
+                    text = childrenModel.value.email
                 )
                 FieldWithIcon(
                     icon = painterResource(R.drawable.lugar_icon),
-                    text = paciente.value.ubicacion
+                    text = childrenModel.value.ubicacion
                 )
             }
             Spacer(modifier = Modifier.weight(1f))
-            ButtonApp(titleButton = AgregaPaciente)
+            ButtonApp(titleButton = Agrega_Paciente)
         }
     }
 }
