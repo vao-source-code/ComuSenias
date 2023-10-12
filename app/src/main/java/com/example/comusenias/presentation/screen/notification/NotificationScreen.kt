@@ -27,6 +27,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.comusenias.R
 import com.example.comusenias.domain.models.model.Notification
 import com.example.comusenias.presentation.component.defaults.DefaultTopBar
@@ -37,7 +38,7 @@ import com.example.comusenias.presentation.ui.theme.NOMBRE_NOTIFICATION4
 import com.example.comusenias.presentation.ui.theme.SIZE50
 
 @Composable
-fun NotificationScreen() {
+fun NotificationScreen(navController: NavHostController, modifier: Modifier) {
     Scaffold(
         topBar = {
             DefaultTopBar(
@@ -113,10 +114,5 @@ fun NotificationItem(notification: Notification) {
         Divider(color = Color.Gray, thickness = 0.5.dp)
         Spacer(modifier = Modifier.height(16.dp))
     }
-}
-@Preview(showBackground = true)
-@Composable
-fun NotificationScreenPreview() {
-    NotificationScreen()
 }
 
