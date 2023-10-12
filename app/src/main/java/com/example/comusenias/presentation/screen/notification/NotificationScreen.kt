@@ -1,79 +1,66 @@
 package com.example.comusenias.presentation.screen.notification
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Button
+import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import com.example.comusenias.R
 import com.example.comusenias.domain.models.model.Notification
-import com.example.comusenias.presentation.ui.theme.Aviso
+import com.example.comusenias.presentation.component.defaults.DefaultTopBar
 import com.example.comusenias.presentation.ui.theme.NOMBRE_NOTIFICATION1
 import com.example.comusenias.presentation.ui.theme.NOMBRE_NOTIFICATION2
 import com.example.comusenias.presentation.ui.theme.NOMBRE_NOTIFICATION3
 import com.example.comusenias.presentation.ui.theme.NOMBRE_NOTIFICATION4
-import com.example.comusenias.presentation.ui.theme.SIZE16
-import com.example.comusenias.presentation.ui.theme.SIZE24
-import com.example.comusenias.presentation.ui.theme.Suscribe
-import com.example.comusenias.presentation.ui.theme.Suscribe_Ya
+import com.example.comusenias.presentation.ui.theme.SIZE50
 
 @Composable
-fun NotificationScreen(navController: NavHostController, modifier: Modifier) {
-
-    LazyColumn(modifier = Modifier.padding(SIZE16.dp)) {
-        items(notificationList) { notification ->
-            NotificationItem(notification)
-            Spacer(modifier = Modifier.height(SIZE16.dp))
+fun NotificationScreen() {
+    Scaffold(
+        topBar = {
+            DefaultTopBar(
+                title = "Aviso",
+                upAvailable = true
+            )
         }
-        item {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Image(
-                    painter = painterResource(R.drawable.onboarding1),
-                    contentDescription = null,
-                    modifier = Modifier.size(SIZE24.dp)
-                )
-                Text(
-                    text = Suscribe_Ya,
-                    style = MaterialTheme.typography.subtitle1,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.weight(1f)
-                )
-                Button(
-                    onClick = { /* Handle button click */ },
-                ) {
-                    Text(Suscribe)
+    ) { innerPadding ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
+            LazyColumn(modifier = Modifier.padding(16.dp)) {
+                items(notificationList) { notification ->
+                    NotificationItem(notification)
+
                 }
             }
         }
     }
 }
 val notificationList = listOf(
-    Notification(
-        iconResId = R.drawable.baseline_arrow_back_24,
-        time = 1.0,
-        content = Aviso
-    ),
     Notification(
         iconResId = R.drawable.onboarding2,
         content = NOMBRE_NOTIFICATION1,
@@ -99,43 +86,37 @@ val notificationList = listOf(
 
 @Composable
 fun NotificationItem(notification: Notification) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(SIZE16.dp)
-    ) {
+    Column {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            if (notification == notificationList.first()) {
-
-                Image(
-                    painter = painterResource(notification.iconResId),
-                    contentDescription = null,
-                    modifier = Modifier.size(SIZE16.dp)
+            Image(
+                painter = painterResource(notification.iconResId),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(SIZE50.dp)
+                    .aspectRatio(1f)
+                    .clip(MaterialTheme.shapes.medium)
+                    .scale(1f)
+            )
+            Spacer(modifier = Modifier.width(16.dp))
+            Column {
+                Text(
+                    text = notification.content,
+                    style = MaterialTheme.typography.subtitle1
                 )
-                Spacer(modifier = Modifier.width(30.dp).height(SIZE16.dp))
-                Column {
-                    Modifier.width(SIZE16.dp)
-                    Text(
-                        text = notification.content,
-                        style = MaterialTheme.typography.subtitle1
-                    )
-                }
-            } else {
-                Image(
-                    painter = painterResource(notification.iconResId),
-                    contentDescription = null,
-                    modifier = Modifier.size(SIZE16.dp)
+                Text(
+                    text = notification.time.toString(),
+                    style = MaterialTheme.typography.caption,
+                    textAlign = TextAlign.End
                 )
-                Spacer(modifier = Modifier.width(SIZE16.dp))
-                Column {
-                    Text(
-                        text = notification.content,
-                        style = MaterialTheme.typography.subtitle1
-                    )
-                    Spacer(modifier = Modifier.height(SIZE16.dp))
-                }
             }
         }
+        Divider(color = Color.Gray, thickness = 0.5.dp)
+        Spacer(modifier = Modifier.height(16.dp))
     }
+}
+@Preview(showBackground = true)
+@Composable
+fun NotificationScreenPreview() {
+    NotificationScreen()
 }
 
