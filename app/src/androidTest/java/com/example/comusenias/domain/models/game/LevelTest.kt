@@ -12,7 +12,7 @@ class LevelTest {
         val levelName = "Level 1"
         val isCompleted = StatusGame.IN_PROGRESS
         val learnSign = listOf("A", "B", "C")
-        val subLevel = listOf(
+        val subLevel = arrayListOf<SubLevelModel>(
             SubLevelModel(
                 name = "SubLevel 1",
                 image = learnSign[0],
