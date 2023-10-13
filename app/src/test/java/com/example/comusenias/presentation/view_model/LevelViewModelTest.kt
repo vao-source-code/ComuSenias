@@ -66,7 +66,7 @@ class LevelViewModelTest {
 
         listLevel = listOf(
             LevelModel(
-                id = "1", name = "name", listSubLevel
+                id = "1", name = "name", subLevel = listSubLevel
             )
         )
 
