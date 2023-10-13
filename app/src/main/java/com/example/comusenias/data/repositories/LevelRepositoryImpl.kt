@@ -55,19 +55,24 @@ class LevelRepositoryImpl @Inject constructor(
         val snapshotListener = levelRef.addSnapshotListener { snapshot, e ->
             GlobalScope.launch(Dispatchers.IO) {
                 val levelResponse = snapshot?.let {
-                    val listLevel = snapshot.toObjects(LevelModel::class.java)
-                    listLevel.forEach { level ->
-                        val listSubLevelTemporal = ArrayList<SubLevelModel>()
-                        subLevelRef.whereEqualTo("idLevel", level.id).get().await()
-                            .forEach { document ->
-                                listSubLevelTemporal.add(document.toObject(SubLevelModel::class.java))
-                            }
-                        level.subLevel = listSubLevelTemporal
+                    val level = snapshot.toObjects(LevelModel::class.java)
+                    snapshot.documents.forEachIndexed { index, document ->
+                        level[index].id = document.id
                     }
-
-                    Response.Success(listLevel)
+                    val idLevelModelArray = ArrayList<String>()
+                    level.forEach { l ->
+                        l.subLevel.forEach { id ->
+                            idLevelModelArray.add(id.name)
+                        }
+                    }
+                    level.forEach { l ->
+                        subLevelRef.whereEqualTo("idLevel", l.id).get().await()
+                            .forEach { document ->
+                                l.subLevel.add(document.toObject(SubLevelModel::class.java))
+                            }
+                    }
+                    Response.Success(level)
                 } ?: Response.Error(e)
-
                 trySend(levelResponse)
             }
         }
