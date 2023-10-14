@@ -125,7 +125,7 @@ fun ContentImageGame(
                 shape = RoundedCornerShape(size = SIZE12.dp)
             ),
     ) {
-        if (letterSign.isEmpty()) {
+        if (letterSign.isNotEmpty()) {
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
