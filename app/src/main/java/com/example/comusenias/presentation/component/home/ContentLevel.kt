@@ -14,6 +14,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.comusenias.presentation.ui.theme.LEARN_THE
 import com.example.comusenias.presentation.ui.theme.SIZE12
 import com.example.comusenias.presentation.ui.theme.SIZE2
 import com.example.comusenias.presentation.ui.theme.SIZE24
@@ -22,7 +23,7 @@ import com.example.comusenias.presentation.ui.theme.size13
 import com.example.comusenias.presentation.ui.theme.size20
 
 @Composable
-fun ContentLevel() {
+fun ContentLevel(levelDescription: String) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -32,7 +33,7 @@ fun ContentLevel() {
         horizontalAlignment = Alignment.Start,
     ) {
         Text(
-            text = "Nivel 1",
+            text = LEARN_THE + levelDescription,
             style = TextStyle(
                 fontSize = SIZE24.sp,
                 fontWeight = FontWeight.SemiBold,

@@ -48,7 +48,7 @@ import com.example.comusenias.presentation.ui.theme.size24
 fun TopSectionGameAction(
     letterSign: String,
     title: String,
-    image: Int,
+    image: String,
     currentStep: Int,
     navController: NavHostController
 ) {
@@ -105,8 +105,8 @@ fun TitleGameAction(title: String) {
 
 @Composable
 fun ContentImageGame(
-    image: Int,
-    urlImage: String = "",
+    image: String,
+    urlImage: String = EMPTY_STRING,
     letterSign: String
 ) {
     val painter = rememberAsyncImagePainter(model = urlImage)
@@ -125,9 +125,10 @@ fun ContentImageGame(
                 shape = RoundedCornerShape(size = SIZE12.dp)
             ),
     ) {
-        if (letterSign != ""){
+        if (letterSign.isEmpty()) {
             Text(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .align(Alignment.Center),
                 text = letterSign.uppercase(),
                 style = TextStyle(
@@ -142,7 +143,7 @@ fun ContentImageGame(
             Image(
                 modifier = Modifier
                     .fillMaxSize(),
-                painter = painterResource(id = image),
+                painter = painterResource(id = image.toInt()),
                 contentDescription = EMPTY_STRING,
                 contentScale = ContentScale.Fit
             )

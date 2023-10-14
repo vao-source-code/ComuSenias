@@ -13,7 +13,7 @@ import com.example.comusenias.presentation.ui.theme.SIZE30
 
 @Composable
 fun GameAction(
-    imageSign: Int,
+    imageSign: String,
     letterSign: String = "",
     title: String,
     titleButton: String,
