@@ -100,7 +100,7 @@ private fun GetNavHost(
             MakeSignPlayScreen(navController = navController, modifier = modifier)
         }
         composable(AppScreen.InterpretationStatusScreen.route) {
-           InterpretationStatusScreen(navController = navController, modifier = modifier)
+            InterpretationStatusScreen(navController = navController, modifier = modifier)
         }
         composable(AppScreen.CongratsPlayScreen.route) {
             CongratsPlayScreen(navController = navController, modifier = modifier)

@@ -1,6 +1,6 @@
 package com.example.comusenias.domain.models.users
 
-import com.example.comusenias.domain.models.game.Level
+import com.example.comusenias.domain.models.game.LevelModel
 import com.example.comusenias.domain.models.observation.Observation
 import com.example.comusenias.presentation.component.home.StatusGame
 import junit.framework.TestCase.assertEquals
@@ -12,12 +12,23 @@ class ChildrenModelTest {
     private lateinit var userModel: UserModel
     private lateinit var specialist: SpecialistModel
     private lateinit var childrenModel: ChildrenModel
-    private lateinit var levels: List<Level>
+    private lateinit var levels: List<LevelModel>
     private lateinit var observations: List<Observation>
 
     @Before
     fun setUp() {
-        levels = listOf(Level("1", StatusGame.COMPLETED, listOf(), listOf(), listOf()), Level("2", StatusGame.COMPLETED, listOf(), listOf(), listOf()))
+        levels = listOf(
+            LevelModel(
+                name = "Level 1",
+                isCompleted = StatusGame.IN_PROGRESS,
+                subLevel = ArrayList()
+            ),
+            LevelModel(
+                name = "Level 2",
+                isCompleted = StatusGame.IN_PROGRESS,
+                subLevel = ArrayList()
+            )
+        )
         observations = listOf(Observation("1", "1", "1"), Observation("2", "2", "2"))
 
 

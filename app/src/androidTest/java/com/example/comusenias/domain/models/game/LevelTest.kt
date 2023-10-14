@@ -6,26 +6,40 @@ import org.junit.Test
 
 class LevelTest {
 
+
     @Test
     fun shouldCreateALevelObjectWithAllProperties() {
         val levelName = "Level 1"
         val isCompleted = StatusGame.IN_PROGRESS
         val learnSign = listOf("A", "B", "C")
-        val subLevel = listOf(SubLevel("1", "SubLevel 1", StatusGame.COMPLETED, listOf()), SubLevel("2", "SubLevel 2", StatusGame.IN_PROGRESS, listOf()))
+        val subLevel = arrayListOf<SubLevelModel>(
+            SubLevelModel(
+                name = "SubLevel 1",
+                image = learnSign[0],
+                isCompleted = StatusGame.COMPLETED,
+                imageOnly = "imageOnly",
+                randomLetter = "A",
+                randomImage = "randomImage"
+            ),
+            SubLevelModel(
+                name = "SubLevel 2",
+                image = learnSign[1],
+                imageOnly = "imageOnly",
+                randomLetter = "A",
+                randomImage = "randomImage",
+                isCompleted = StatusGame.COMPLETED
+            )
+        )
         val images = listOf("a.png", "b.png", "c.png")
 
-        val levelModel = Level(
-                levelName = levelName,
-                isCompleted = isCompleted,
-                learnSign = learnSign,
-                subLevel = subLevel,
-                images = images
+        val levelModel = LevelModel(
+            name = levelName,
+            isCompleted = isCompleted,
+            subLevel = subLevel,
         )
 
-        assertEquals(levelName, levelModel.levelName)
+        assertEquals(levelName, levelModel.name)
         assertEquals(isCompleted, levelModel.isCompleted)
-        assertEquals(learnSign, levelModel.learnSign)
         assertEquals(subLevel, levelModel.subLevel)
-        assertEquals(images, levelModel.images)
     }
 }
