@@ -14,12 +14,12 @@ import androidx.navigation.NavHostController
 import com.example.comusenias.presentation.component.defaults.app.ButtonApp
 import com.example.comusenias.presentation.component.defaults.app.TextFieldApp
 import com.example.comusenias.presentation.component.defaults.app.TextFieldAppPassword
+import com.example.comusenias.presentation.ui.theme.PASSWORD
+import com.example.comusenias.presentation.ui.theme.SIZE10
 import com.example.comusenias.presentation.ui.theme.SIZE2
+import com.example.comusenias.presentation.ui.theme.SIZE50
 import com.example.comusenias.presentation.ui.theme.emailText
 import com.example.comusenias.presentation.ui.theme.logIn
-import com.example.comusenias.presentation.ui.theme.PASSWORD
-import com.example.comusenias.presentation.ui.theme.SIZE50
-import com.example.comusenias.presentation.ui.theme.size10
 import com.example.comusenias.presentation.view_model.LoginViewModel
 
 @Composable
@@ -57,7 +57,7 @@ fun LoginForm(
         }
         Column(
             modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(size10.dp)
+            verticalArrangement = Arrangement.spacedBy(SIZE10.dp)
         ) {
             ButtonApp(
                 titleButton = logIn,

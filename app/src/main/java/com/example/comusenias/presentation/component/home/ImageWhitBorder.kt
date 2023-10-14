@@ -15,14 +15,14 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.comusenias.presentation.ui.theme.AVATAR
+import com.example.comusenias.presentation.ui.theme.SIZE5
 import com.example.comusenias.presentation.ui.theme.SIZE64
-import com.example.comusenias.presentation.ui.theme.size5
 
 @Composable
 fun ImageWhitBorder(
     image: Int,
     borderColor: State<Color>,
-    border: Int = size5
+    border: Int = SIZE5
 ) {
     Box(
         modifier = Modifier

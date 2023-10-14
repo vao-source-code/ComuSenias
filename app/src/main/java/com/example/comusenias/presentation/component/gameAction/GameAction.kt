@@ -8,7 +8,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.comusenias.presentation.ui.theme.size08
+import com.example.comusenias.presentation.ui.theme.SIZE08
 import com.example.comusenias.presentation.ui.theme.SIZE30
 
 @Composable
@@ -38,7 +38,7 @@ fun GameAction(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .weight(size08),
+                .weight(SIZE08),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             content()

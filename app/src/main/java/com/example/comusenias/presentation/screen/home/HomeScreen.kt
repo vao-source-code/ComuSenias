@@ -14,15 +14,15 @@ import com.example.comusenias.presentation.component.bottomBar.ShowBottomBar
 import com.example.comusenias.presentation.component.home.ContentHome
 import com.example.comusenias.presentation.component.home.TopBarHome
 import com.example.comusenias.presentation.navigation.AppScreen
-import com.example.comusenias.presentation.ui.theme.size3
+import com.example.comusenias.presentation.ui.theme.SIZE3
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(navController: NavHostController, modifier: Modifier) {
     Scaffold(
         topBar = {
-            Surface(shadowElevation = size3.dp) {
-                TopBarHome(onClick = { navController.navigate(AppScreen.NotificationScreen.route)})
+            Surface(shadowElevation = SIZE3.dp) {
+                TopBarHome(onClick = { navController.navigate(AppScreen.NotificationScreen.route) })
             }
         },
         bottomBar = {

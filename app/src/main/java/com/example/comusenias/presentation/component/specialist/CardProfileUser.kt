@@ -23,11 +23,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.comusenias.presentation.ui.theme.CIRCLE_IMAGE
+import com.example.comusenias.presentation.ui.theme.SIZE10
 import com.example.comusenias.presentation.ui.theme.SIZE100
-import com.example.comusenias.presentation.ui.theme.size10
-import com.example.comusenias.presentation.ui.theme.size24
-import com.example.comusenias.presentation.ui.theme.size3
-import com.example.comusenias.presentation.ui.theme.size40
+import com.example.comusenias.presentation.ui.theme.SIZE24
+import com.example.comusenias.presentation.ui.theme.SIZE3
+import com.example.comusenias.presentation.ui.theme.SIZE40
 
 @Composable
 fun CardProfileUser(image: Int, title: String, onClickCard: () -> Unit) {
@@ -39,23 +39,23 @@ fun CardProfileUser(image: Int, title: String, onClickCard: () -> Unit) {
                 onClickCard()
             }
             .shadow(
-                elevation = size3.dp,
-                shape = RoundedCornerShape(size10.dp),
+                elevation = SIZE3.dp,
+                shape = RoundedCornerShape(SIZE10.dp),
                 spotColor = Color(0x33000000),
                 ambientColor = Color(0x33000000)
             )
             .shadow(
-                elevation = size3.dp,
-                shape = RoundedCornerShape(size10.dp),
+                elevation = SIZE3.dp,
+                shape = RoundedCornerShape(SIZE10.dp),
                 spotColor = Color(0x21000000),
                 ambientColor = Color(0x21000000)
             )
-            .background(Color.White, shape = RoundedCornerShape(size10.dp))
+            .background(Color.White, shape = RoundedCornerShape(SIZE10.dp))
     ) {
         Row(
             modifier = Modifier
                 .fillMaxHeight(),
-            horizontalArrangement = Arrangement.spacedBy(size40.dp),
+            horizontalArrangement = Arrangement.spacedBy(SIZE40.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             CircleImageViewUserSpecialist(image = image)
@@ -82,7 +82,7 @@ fun TitleCardCategoryUserSpecialist(title: String) {
             .fillMaxWidth(),
         text = title,
         color = Color.Black,
-        fontSize = size24.sp,
+        fontSize = SIZE24.sp,
         fontWeight = FontWeight.Bold
     )
 }

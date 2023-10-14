@@ -17,15 +17,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.comusenias.presentation.component.defaults.app.CheckBoxApp
+import com.example.comusenias.presentation.ui.theme.SIZE10
+import com.example.comusenias.presentation.ui.theme.SIZE14
+import com.example.comusenias.presentation.ui.theme.SIZE3
+import com.example.comusenias.presentation.ui.theme.SIZE6
 import com.example.comusenias.presentation.ui.theme.Y
 import com.example.comusenias.presentation.ui.theme.accept
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.conditions
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
-import com.example.comusenias.presentation.ui.theme.size10
-import com.example.comusenias.presentation.ui.theme.size14
-import com.example.comusenias.presentation.ui.theme.size3
-import com.example.comusenias.presentation.ui.theme.size6
 import com.example.comusenias.presentation.ui.theme.terms
 
 @Composable
@@ -36,17 +36,17 @@ fun TermsAndConditions(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = size10.dp),
-        horizontalArrangement = Arrangement.spacedBy(size3.dp),
+            .padding(horizontal = SIZE10.dp),
+        horizontalArrangement = Arrangement.spacedBy(SIZE3.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         val isChecked = remember { mutableStateOf(false) }
 
         CheckBoxApp(isChecked = isChecked)
-        Spacer(modifier = Modifier.width(size6.dp))
+        Spacer(modifier = Modifier.width(SIZE6.dp))
         Text(
             text = accept,
-            fontSize = size14.sp,
+            fontSize = SIZE14.sp,
             fontWeight = FontWeight.Medium,
             color = blackColorApp
         )
@@ -55,12 +55,12 @@ fun TermsAndConditions(
                 .clickable { onClickTerms() },
             text = terms,
             color = primaryColorApp,
-            fontSize = size14.sp,
+            fontSize = SIZE14.sp,
             fontWeight = FontWeight.Bold
         )
         Text(
             text = Y,
-            fontSize = size14.sp,
+            fontSize = SIZE14.sp,
             fontWeight = FontWeight.Medium,
             color = blackColorApp
         )
@@ -69,7 +69,7 @@ fun TermsAndConditions(
                 .clickable { onClickConditions() },
             text = conditions,
             color = primaryColorApp,
-            fontSize = size14.sp,
+            fontSize = SIZE14.sp,
             fontWeight = FontWeight.Bold
         )
     }

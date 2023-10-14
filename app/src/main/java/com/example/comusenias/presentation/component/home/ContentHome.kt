@@ -10,23 +10,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.comusenias.presentation.ui.theme.size1
-import com.example.comusenias.presentation.ui.theme.size14
+import com.example.comusenias.presentation.ui.theme.SIZE1
+import com.example.comusenias.presentation.ui.theme.SIZE14
+
 
 @Composable
 fun ContentHome(
     modifier: Modifier,
     onClickCard: () -> Unit
-    ) {
+) {
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
             .padding(
-                start = size14.dp,
-                end = size14.dp,
+                start = SIZE14.dp,
+                end = SIZE14.dp,
             )
             .background(Color.White),
-        verticalArrangement = Arrangement.spacedBy(size1.dp)
+        verticalArrangement = Arrangement.spacedBy(SIZE1.dp)
     ) {
         item {
             ContentProgressBar()

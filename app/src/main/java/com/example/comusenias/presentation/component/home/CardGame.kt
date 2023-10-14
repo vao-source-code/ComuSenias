@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.sp
 import com.example.comusenias.R
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.SIZE12
+import com.example.comusenias.presentation.ui.theme.SIZE15
 import com.example.comusenias.presentation.ui.theme.SIZE16
 import com.example.comusenias.presentation.ui.theme.SIZE24
 import com.example.comusenias.presentation.ui.theme.SIZE27
@@ -33,7 +34,6 @@ import com.example.comusenias.presentation.ui.theme.SIZE36
 import com.example.comusenias.presentation.ui.theme.SIZE90
 import com.example.comusenias.presentation.ui.theme.VOWELS
 import com.example.comusenias.presentation.ui.theme.blackColorApp
-import com.example.comusenias.presentation.ui.theme.size15
 
 @Composable
 fun CardGame(
@@ -51,7 +51,7 @@ fun CardGame(
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(start = size15.dp, end = SIZE27.dp),
+                .padding(start = SIZE15.dp, end = SIZE27.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(SIZE28.dp)
         ) {

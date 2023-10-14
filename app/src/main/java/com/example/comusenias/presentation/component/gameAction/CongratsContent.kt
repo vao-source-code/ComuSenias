@@ -20,9 +20,9 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.comusenias.R
 import com.example.comusenias.presentation.ui.theme.FINISH_LVL
 import com.example.comusenias.presentation.ui.theme.SIZE100
+import com.example.comusenias.presentation.ui.theme.SIZE24
 import com.example.comusenias.presentation.ui.theme.SIZE300
 import com.example.comusenias.presentation.ui.theme.blackColorApp
-import com.example.comusenias.presentation.ui.theme.size24
 
 @Composable
 fun CongratsContent() {
@@ -42,7 +42,7 @@ fun CongratsContent() {
             modifier = Modifier.fillMaxWidth(),
             text = FINISH_LVL,
             style = TextStyle(
-                fontSize = size24.sp,
+                fontSize = SIZE24.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = blackColorApp,
                 textAlign = TextAlign.Center,

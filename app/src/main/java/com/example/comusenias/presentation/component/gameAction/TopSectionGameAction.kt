@@ -37,12 +37,12 @@ import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.SIZE100
 import com.example.comusenias.presentation.ui.theme.SIZE12
 import com.example.comusenias.presentation.ui.theme.SIZE2
+import com.example.comusenias.presentation.ui.theme.SIZE20
 import com.example.comusenias.presentation.ui.theme.SIZE220
+import com.example.comusenias.presentation.ui.theme.SIZE24
 import com.example.comusenias.presentation.ui.theme.SIZE50
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
-import com.example.comusenias.presentation.ui.theme.size20
-import com.example.comusenias.presentation.ui.theme.size24
 
 @Composable
 fun TopSectionGameAction(
@@ -56,7 +56,7 @@ fun TopSectionGameAction(
         modifier = Modifier
             .fillMaxWidth()
             .background(Color.White),
-        verticalArrangement = Arrangement.spacedBy(size20.dp)
+        verticalArrangement = Arrangement.spacedBy(SIZE20.dp)
     ) {
         CloseAndProgressBar(currentStep = currentStep, navController = navController)
         TitleGameAction(title = title)
@@ -83,7 +83,7 @@ fun CloseAndProgressBar(currentStep: Int = 0, navController: NavHostController) 
             imageVector = Icons.Default.Close,
             contentDescription = CLOSE,
             modifier = Modifier
-                .size(size24.dp)
+                .size(SIZE24.dp)
                 .clickable { navController.navigate(AppScreen.HomeScreen.route) },
         )
         ProgressBar(progress = progress)
@@ -95,7 +95,7 @@ fun TitleGameAction(title: String) {
     Text(
         text = title,
         style = TextStyle(
-            fontSize = size20.sp,
+            fontSize = SIZE20.sp,
             fontWeight = FontWeight.SemiBold,
             color = blackColorApp,
             textAlign = TextAlign.Center,
@@ -127,7 +127,8 @@ fun ContentImageGame(
     ) {
         if (letterSign != ""){
             Text(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .align(Alignment.Center),
                 text = letterSign.uppercase(),
                 style = TextStyle(

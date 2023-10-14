@@ -28,10 +28,10 @@ import com.example.comusenias.domain.models.users.UserModel
 import com.example.comusenias.presentation.component.specialist.CardHomeSpecialist
 import com.example.comusenias.presentation.component.specialist.CardProfileUser
 import com.example.comusenias.presentation.navigation.AppScreen
+import com.example.comusenias.presentation.ui.theme.SIZE10
 import com.example.comusenias.presentation.ui.theme.SIZE26
-import com.example.comusenias.presentation.ui.theme.primaryColorApp
-import com.example.comusenias.presentation.ui.theme.size10
 import com.example.comusenias.presentation.ui.theme.SIZE30
+import com.example.comusenias.presentation.ui.theme.primaryColorApp
 
 @Composable
 fun SpecialistScreen(navController: NavHostController, modifier: Modifier) {
@@ -56,7 +56,7 @@ fun SpecialistHomeExample(navController: NavHostController, modifier: Modifier) 
             Box(
                 Modifier
                     .shadow(
-                        elevation = size10.dp,
+                        elevation = SIZE10.dp,
                         shape = RoundedCornerShape(bottomEnd = SIZE30.dp, bottomStart = SIZE30.dp)
                     )
                     .background(primaryColorApp)
@@ -88,7 +88,7 @@ fun ProfileView(modifier: Modifier, navController: NavHostController) {
         columns = GridCells.Fixed(1),
     ) {
         items(getChapterItem()) { chapter ->
-            Column(modifier = Modifier.padding(size10.dp)) {
+            Column(modifier = Modifier.padding(SIZE10.dp)) {
                 CardExampleDos(
                     user = chapter,
                     navController = navController,

@@ -27,11 +27,11 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.example.comusenias.constants.TestTag
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
+import com.example.comusenias.presentation.ui.theme.SIZE10
 import com.example.comusenias.presentation.ui.theme.SIZE12
 import com.example.comusenias.presentation.ui.theme.SIZE16
+import com.example.comusenias.presentation.ui.theme.SIZE6
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
-import com.example.comusenias.presentation.ui.theme.size10
-import com.example.comusenias.presentation.ui.theme.size6
 
 @Composable
 fun BottomSection(
@@ -63,7 +63,7 @@ fun BottomSection(
 fun BoxScope.Indicators(size: Int, index: Int) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(size6.dp),
+        horizontalArrangement = Arrangement.spacedBy(SIZE6.dp),
         modifier = Modifier.align(Alignment.CenterStart)
     ) {
         repeat(size) {
@@ -80,7 +80,7 @@ fun Indicator(isSelected: Boolean) {
     )
     Box(
         modifier = Modifier
-            .height(size10.dp)
+            .height(SIZE10.dp)
             .width(width.value)
             .clip(CircleShape)
             .background(

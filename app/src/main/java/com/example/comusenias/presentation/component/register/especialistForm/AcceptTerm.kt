@@ -16,9 +16,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.comusenias.presentation.component.defaults.app.CheckBoxApp
 import com.example.comusenias.presentation.ui.theme.ACEPT_TERMS
+import com.example.comusenias.presentation.ui.theme.SIZE10
+import com.example.comusenias.presentation.ui.theme.SIZE14
 import com.example.comusenias.presentation.ui.theme.blackColorApp
-import com.example.comusenias.presentation.ui.theme.size10
-import com.example.comusenias.presentation.ui.theme.size14
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
@@ -26,17 +26,17 @@ fun AcceptTerm() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = size10.dp),
+            .padding(horizontal = SIZE10.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(size10.dp)
+        horizontalArrangement = Arrangement.spacedBy(SIZE10.dp)
     ) {
         val isChecked = remember { mutableStateOf(false) }
 
         CheckBoxApp(isChecked = isChecked)
         Text(
-            modifier = Modifier.padding(top = size14.dp),
+            modifier = Modifier.padding(top = SIZE14.dp),
             text = ACEPT_TERMS,
-            fontSize = size14.sp,
+            fontSize = SIZE14.sp,
             fontWeight = FontWeight.Medium,
             color = blackColorApp
         )

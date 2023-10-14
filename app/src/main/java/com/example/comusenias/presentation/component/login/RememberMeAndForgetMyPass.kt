@@ -19,11 +19,11 @@ import androidx.compose.ui.unit.sp
 import com.example.comusenias.constants.TestTag
 import com.example.comusenias.presentation.component.defaults.app.CheckBoxApp
 import com.example.comusenias.presentation.ui.theme.REMEMBER_ME
+import com.example.comusenias.presentation.ui.theme.SIZE10
+import com.example.comusenias.presentation.ui.theme.SIZE14
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.forgotPassword
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
-import com.example.comusenias.presentation.ui.theme.size10
-import com.example.comusenias.presentation.ui.theme.size14
 
 @Preview(showBackground = true)
 @Composable
@@ -31,7 +31,7 @@ fun RememberMeAndForgetMyPass() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = size10.dp),
+            .padding(horizontal = SIZE10.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         LabelledCheckbox()
@@ -46,7 +46,7 @@ fun ForgetMyPass(onClickText: () -> Unit = {}) {
             .clickable { onClickText() },
         text = forgotPassword,
         color = primaryColorApp,
-        fontSize = size14.sp,
+        fontSize = SIZE14.sp,
         fontWeight = FontWeight.Bold
     )
 }
@@ -61,7 +61,7 @@ fun LabelledCheckbox() {
         CheckBoxApp(isChecked = isChecked)
         Text(
             text = REMEMBER_ME,
-            fontSize = size14.sp,
+            fontSize = SIZE14.sp,
             fontWeight = FontWeight.Medium,
             color = blackColorApp
         )

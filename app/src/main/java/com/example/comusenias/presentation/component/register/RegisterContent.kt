@@ -16,7 +16,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -38,12 +38,12 @@ import com.example.comusenias.presentation.ui.theme.NAME_USER
 import com.example.comusenias.presentation.ui.theme.PASSWORD
 import com.example.comusenias.presentation.ui.theme.REGISTER
 import com.example.comusenias.presentation.ui.theme.REGISTER_TWO
+import com.example.comusenias.presentation.ui.theme.SIZE10
 import com.example.comusenias.presentation.ui.theme.SIZE12
 import com.example.comusenias.presentation.ui.theme.SIZE16
-import com.example.comusenias.presentation.ui.theme.size10
-import com.example.comusenias.presentation.ui.theme.size18
-import com.example.comusenias.presentation.ui.theme.size20
-import com.example.comusenias.presentation.ui.theme.size24
+import com.example.comusenias.presentation.ui.theme.SIZE18
+import com.example.comusenias.presentation.ui.theme.SIZE20
+import com.example.comusenias.presentation.ui.theme.SIZE24
 import com.example.comusenias.presentation.ui.theme.SIZE30
 import com.example.comusenias.presentation.view_model.RegisterViewModel
 
@@ -56,7 +56,7 @@ fun RegisterContent(
 
     val state = viewModel.state
     Column(
-        modifier = modifier.padding(size20.dp),
+        modifier = modifier.padding(SIZE20.dp),
         horizontalAlignment = CenterHorizontally,
     ) {
         Text(
@@ -82,7 +82,7 @@ fun CardFormRegister(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = size24.dp),
+            .padding(top = SIZE24.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface,
             contentColor = MaterialTheme.colorScheme.onSurface
@@ -90,15 +90,15 @@ fun CardFormRegister(
         elevation = CardDefaults.elevatedCardElevation(defaultElevation = 2.dp)
     ) {
 
-        Column(modifier = Modifier.padding(PaddingValues(size10.dp))) {
+        Column(modifier = Modifier.padding(PaddingValues(SIZE10.dp))) {
             Text(
-                modifier = Modifier.padding(top = size24.dp),
-                fontSize = size18.sp,
+                modifier = Modifier.padding(top = SIZE24.dp),
+                fontSize = SIZE18.sp,
                 fontWeight = FontWeight.Bold,
                 text = REGISTER_TWO,
             )
 
-            Spacer(modifier = Modifier.height(size10.dp))
+            Spacer(modifier = Modifier.height(SIZE10.dp))
 
             Text(
                 text = ADD_DATA_FOR_REGISTER,
@@ -107,7 +107,7 @@ fun CardFormRegister(
 
             TextFieldDefault(
                 modifier = Modifier
-                    .padding(top = size20.dp)
+                    .padding(top = SIZE20.dp)
                     .fillMaxWidth(),
                 value = state.userName,
                 onValueChange = { viewModel.onUserNameInput(it) },
@@ -155,7 +155,7 @@ fun CardFormRegister(
                 errorMsg = viewModel.errorConfirmPassword,
                 validateField = { viewModel.validateConfirmPassword() }
             )
-            Spacer(modifier = Modifier.height(size10.dp))
+            Spacer(modifier = Modifier.height(SIZE10.dp))
 
             ButtonDefault(
                 text = REGISTER,

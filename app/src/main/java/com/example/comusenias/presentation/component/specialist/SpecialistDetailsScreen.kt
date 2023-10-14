@@ -33,28 +33,28 @@ import com.example.comusenias.presentation.ui.theme.IMAGE_AVATAR
 import com.example.comusenias.presentation.ui.theme.LETTERS
 import com.example.comusenias.presentation.ui.theme.NAME_KID
 import com.example.comusenias.presentation.ui.theme.NUMBERS
+import com.example.comusenias.presentation.ui.theme.SIZE10
 import com.example.comusenias.presentation.ui.theme.SIZE140
+import com.example.comusenias.presentation.ui.theme.SIZE20
+import com.example.comusenias.presentation.ui.theme.SIZE3
+import com.example.comusenias.presentation.ui.theme.SIZE30
+import com.example.comusenias.presentation.ui.theme.SIZE40
 import com.example.comusenias.presentation.ui.theme.VOWELS
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
-import com.example.comusenias.presentation.ui.theme.size10
-import com.example.comusenias.presentation.ui.theme.size20
-import com.example.comusenias.presentation.ui.theme.size3
-import com.example.comusenias.presentation.ui.theme.SIZE30
-import com.example.comusenias.presentation.ui.theme.size40
 
 @Composable
 fun SpecialistDetailsScreen(modifier: Modifier, navController: NavHostController) {
-    Column(modifier = Modifier.padding(size20.dp)) {
+    Column(modifier = Modifier.padding(SIZE20.dp)) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(bottomEnd = size40.dp, bottomStart = size40.dp))
+                .clip(RoundedCornerShape(bottomEnd = SIZE40.dp, bottomStart = SIZE40.dp))
                 .background(color = primaryColorApp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
                 text = NAME_KID,
-                modifier = Modifier.padding(size10.dp),
+                modifier = Modifier.padding(SIZE10.dp),
                 color = Color.White,
                 fontSize = SIZE30.sp
             )
@@ -73,11 +73,11 @@ fun SpecialistDetailsScreen(modifier: Modifier, navController: NavHostController
             }
         }
 
-        Spacer(modifier = Modifier.size(size10.dp))
+        Spacer(modifier = Modifier.size(SIZE10.dp))
         Divider(
             modifier = Modifier
                 .fillMaxWidth()
-                .size(size3.dp),
+                .size(SIZE3.dp),
             color = Color.Gray
         )
 
@@ -89,10 +89,10 @@ fun SpecialistDetailsScreen(modifier: Modifier, navController: NavHostController
         Divider(
             modifier = Modifier
                 .fillMaxWidth()
-                .size(size3.dp),
+                .size(SIZE3.dp),
             color = Color.Gray
         )
-        Spacer(modifier = Modifier.size(size10.dp))
+        Spacer(modifier = Modifier.size(SIZE10.dp))
 
         CardWithTwoImages(
             imageLeft = R.drawable.details,
@@ -149,12 +149,12 @@ fun CardWithTwoImages(
             .fillMaxWidth()
             .padding(10.dp)
             .shadow(
-                elevation = size3.dp,
-                shape = RoundedCornerShape(size10.dp),
+                elevation = SIZE3.dp,
+                shape = RoundedCornerShape(SIZE10.dp),
                 spotColor = Color(0x21000000),
                 ambientColor = Color(0x21000000)
             )
-            .background(Color.White, RoundedCornerShape(size10.dp)),
+            .background(Color.White, RoundedCornerShape(SIZE10.dp)),
     ) {
         Row(
             modifier = Modifier

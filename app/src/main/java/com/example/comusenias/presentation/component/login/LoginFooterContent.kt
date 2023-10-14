@@ -22,9 +22,10 @@ import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.ComuSeniasTheme
 import com.example.comusenias.presentation.ui.theme.HAVENT_ACCOUNT
 import com.example.comusenias.presentation.ui.theme.REGISTER
-import com.example.comusenias.presentation.ui.theme.size14
-import com.example.comusenias.presentation.ui.theme.size20
-import com.example.comusenias.presentation.ui.theme.size5
+import com.example.comusenias.presentation.ui.theme.SIZE14
+import com.example.comusenias.presentation.ui.theme.SIZE20
+import com.example.comusenias.presentation.ui.theme.SIZE5
+
 
 @Composable
 fun FooterContent(navController: NavHostController, modifier: Modifier) {
@@ -32,15 +33,15 @@ fun FooterContent(navController: NavHostController, modifier: Modifier) {
         modifier = modifier, horizontalArrangement = Arrangement.Center
 
     ) {
-        Text(text = HAVENT_ACCOUNT, fontSize = size14.sp, color = Color.Gray)
-        Spacer(modifier = Modifier.width(size5.dp))
+        Text(text = HAVENT_ACCOUNT, fontSize = SIZE14.sp, color = Color.Gray)
+        Spacer(modifier = Modifier.width(SIZE5.dp))
         Text(
             modifier = Modifier.clickable {
                 navController.navigate(route = AppScreen.RegisterScreen.route)
             },
             text = REGISTER,
             color = MaterialTheme.colorScheme.secondary,
-            fontSize = size14.sp,
+            fontSize = SIZE14.sp,
             fontWeight = FontWeight.Bold
         )
     }
@@ -54,7 +55,7 @@ fun PreviewFooterContent() {
             navController = rememberNavController(),
             Modifier
                 .fillMaxWidth()
-                .padding(bottom = size20.dp)
+                .padding(bottom = SIZE20.dp)
         )
     }
 }

@@ -8,11 +8,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -31,15 +30,15 @@ import com.example.comusenias.presentation.ui.theme.PROFILE_EMAIL
 import com.example.comusenias.presentation.ui.theme.PROFILE_USER
 import com.example.comusenias.presentation.ui.theme.SELECTED_IMAGE
 import com.example.comusenias.presentation.ui.theme.SIZE140
+import com.example.comusenias.presentation.ui.theme.SIZE20
 import com.example.comusenias.presentation.ui.theme.SIZE55
-import com.example.comusenias.presentation.ui.theme.size20
 import com.example.comusenias.presentation.view_model.ProfileViewModel
 
 @Composable
 fun ProfileContent(
     viewModel: ProfileViewModel = hiltViewModel()
 ) {
-    Box(modifier = Modifier.padding(size20.dp)) {
+    Box(modifier = Modifier.padding(SIZE20.dp)) {
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = CenterHorizontally
@@ -77,7 +76,7 @@ fun ProfileContent(
                 hideText = false,
                 readOnly = true,
             )
-            Spacer(modifier = Modifier.height(size20.dp))
+            Spacer(modifier = Modifier.height(SIZE20.dp))
             TextFieldApp(
                 icon = Icons.Default.Email,
                 value = viewModel.userData.email,

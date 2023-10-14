@@ -18,8 +18,8 @@ import com.example.comusenias.constants.TestTag.Companion.TAG_BOX_SPLASH_SCREEN
 import com.example.comusenias.constants.TestTag.Companion.TAG_COLUMN_SPLASH_SCREEN
 import com.example.comusenias.presentation.component.defaults.GetImage
 import com.example.comusenias.presentation.navigation.AppScreen
+import com.example.comusenias.presentation.ui.theme.SIZE150
 import com.example.comusenias.presentation.ui.theme.logoApp
-import com.example.comusenias.presentation.ui.theme.size150
 import kotlinx.coroutines.delay
 
 @Composable
@@ -56,7 +56,7 @@ private fun SetImageSplash() {
     GetImage(
         painter = R.drawable.comu_senias_with_text,
         contentDescription = logoApp,
-        width = size150.dp,
-        height = size150.dp
+        width = SIZE150.dp,
+        height = SIZE150.dp
     )
 }

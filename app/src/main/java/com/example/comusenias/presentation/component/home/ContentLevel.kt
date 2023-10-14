@@ -15,18 +15,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.comusenias.presentation.ui.theme.SIZE12
+import com.example.comusenias.presentation.ui.theme.SIZE13
 import com.example.comusenias.presentation.ui.theme.SIZE2
+import com.example.comusenias.presentation.ui.theme.SIZE20
 import com.example.comusenias.presentation.ui.theme.SIZE24
 import com.example.comusenias.presentation.ui.theme.blackColorApp
-import com.example.comusenias.presentation.ui.theme.size13
-import com.example.comusenias.presentation.ui.theme.size20
+
 
 @Composable
 fun ContentLevel() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = size20.dp, bottom = SIZE12.dp)
+            .padding(top = SIZE20.dp, bottom = SIZE12.dp)
             .background(Color.White),
         verticalArrangement = Arrangement.spacedBy(SIZE2.dp, Alignment.CenterVertically),
         horizontalAlignment = Alignment.Start,
@@ -42,7 +43,7 @@ fun ContentLevel() {
         Text(
             text = "2/5 lecciones completadas",
             style = TextStyle(
-                fontSize = size13.sp,
+                fontSize = SIZE13.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = blackColorApp
             )

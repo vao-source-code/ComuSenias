@@ -24,14 +24,14 @@ import androidx.compose.ui.unit.dp
 import com.example.comusenias.R
 import com.example.comusenias.constants.TestTag
 import com.example.comusenias.presentation.ui.theme.SIZE12
+import com.example.comusenias.presentation.ui.theme.SIZE24
+import com.example.comusenias.presentation.ui.theme.SIZE45
+import com.example.comusenias.presentation.ui.theme.SIZE5
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.cardGray
 import com.example.comusenias.presentation.ui.theme.cardInProgress
 import com.example.comusenias.presentation.ui.theme.greenColorApp
 import com.example.comusenias.presentation.ui.theme.iconColorProgress
-import com.example.comusenias.presentation.ui.theme.size24
-import com.example.comusenias.presentation.ui.theme.size45
-import com.example.comusenias.presentation.ui.theme.size5
 
 enum class StatusGame {
     COMPLETED,
@@ -99,12 +99,12 @@ fun ContentCardGame(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = size45.dp)
+                .padding(start = SIZE45.dp)
         ) {
             Box(
                 modifier = Modifier
-                    .height(size24.dp)
-                    .width(size5.dp)
+                    .height(SIZE24.dp)
+                    .width(SIZE5.dp)
                     .background(
                         color = linecColorAnimate.value,
                         shape = RoundedCornerShape(SIZE12.dp)

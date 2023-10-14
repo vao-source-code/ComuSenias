@@ -13,8 +13,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.comusenias.R
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
+import com.example.comusenias.presentation.ui.theme.SIZE150
 import com.example.comusenias.presentation.ui.theme.greenColorApp
-import com.example.comusenias.presentation.ui.theme.size150
 
 enum class Status {
     LOADING,
@@ -35,7 +35,7 @@ fun SignInterpretationStatus(
 @Composable
 fun CrossfadeIcon(status: Status, response: (Boolean) -> Unit) {
     val modifierSize = Modifier
-        .size(size150.dp)
+        .size(SIZE150.dp)
 
     Crossfade(
         modifier = Modifier

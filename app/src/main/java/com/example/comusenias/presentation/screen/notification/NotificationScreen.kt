@@ -28,6 +28,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.comusenias.R
 import com.example.comusenias.domain.models.model.Notification
 import com.example.comusenias.presentation.component.defaults.DefaultTopBar
@@ -114,5 +115,11 @@ fun NotificationItem(notification: Notification) {
         Divider(color = Color.Gray, thickness = 0.5.dp)
         Spacer(modifier = Modifier.height(16.dp))
     }
+}
+
+@Preview
+@Composable
+fun NotificationItemPreview() {
+    NotificationScreen(navController = rememberNavController(), modifier = Modifier)
 }
 

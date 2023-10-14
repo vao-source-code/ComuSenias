@@ -16,9 +16,9 @@ import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.CHILD
 import com.example.comusenias.presentation.ui.theme.CHOSE_YOU_PROFILE
 import com.example.comusenias.presentation.ui.theme.ESPECIALIST
-import com.example.comusenias.presentation.ui.theme.primaryColorApp
-import com.example.comusenias.presentation.ui.theme.size20
+import com.example.comusenias.presentation.ui.theme.SIZE20
 import com.example.comusenias.presentation.ui.theme.SIZE30
+import com.example.comusenias.presentation.ui.theme.primaryColorApp
 
 @Composable
 fun ChoseYourProfileContent(navController : NavHostController){
@@ -33,7 +33,7 @@ fun ChoseYourProfileContent(navController : NavHostController){
             textAlign = TextAlign.Center,
             text = CHOSE_YOU_PROFILE,
             color = primaryColorApp,
-            fontSize = size20.sp,
+            fontSize = SIZE20.sp,
             fontWeight = FontWeight.Bold
         )
         CardCategoryProfile(

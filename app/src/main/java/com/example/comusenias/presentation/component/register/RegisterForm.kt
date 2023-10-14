@@ -16,13 +16,13 @@ import com.example.comusenias.presentation.component.defaults.app.TextFieldApp
 import com.example.comusenias.presentation.component.defaults.app.TextFieldAppPassword
 import com.example.comusenias.presentation.component.login.ResponseStatusLogin
 import com.example.comusenias.presentation.navigation.AppScreen
-import com.example.comusenias.presentation.ui.theme.confirmPassword
-import com.example.comusenias.presentation.ui.theme.emailText
 import com.example.comusenias.presentation.ui.theme.PASSWORD
 import com.example.comusenias.presentation.ui.theme.REGISTER
+import com.example.comusenias.presentation.ui.theme.SIZE10
 import com.example.comusenias.presentation.ui.theme.SIZE2
 import com.example.comusenias.presentation.ui.theme.SIZE50
-import com.example.comusenias.presentation.ui.theme.size10
+import com.example.comusenias.presentation.ui.theme.confirmPassword
+import com.example.comusenias.presentation.ui.theme.emailText
 import com.example.comusenias.presentation.view_model.RegisterViewModel
 
 @Composable
@@ -69,7 +69,7 @@ fun RegisterForm(
         }
         Column(
             modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(size10.dp)
+            verticalArrangement = Arrangement.spacedBy(SIZE10.dp)
         ) {
             ButtonApp(
                 titleButton = REGISTER,
