@@ -18,8 +18,8 @@ data class SubLevelModel(
         SubLevelModel(
             idLevel,
             name,
-            image = if (image != "") LibraryString.encodeURL(image) else "",
-            imageOnly = if (imageOnly != "") LibraryString.encodeURL(imageOnly) else "",
+           image = if (image != EMPTY_STRING) LibraryString.encodeURL(image) else EMPTY_STRING,
+           imageOnly = if (imageOnly != EMPTY_STRING) LibraryString.encodeURL(imageOnly) else EMPTY_STRING,
             randomLetter,
             randomImage,
             isCompleted

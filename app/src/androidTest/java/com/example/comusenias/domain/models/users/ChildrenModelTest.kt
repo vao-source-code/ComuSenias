@@ -2,7 +2,6 @@ package com.example.comusenias.domain.models.users
 
 import com.example.comusenias.domain.models.game.LevelModel
 import com.example.comusenias.domain.models.observation.Observation
-import com.example.comusenias.presentation.component.home.StatusGame
 import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -17,44 +16,34 @@ class ChildrenModelTest {
 
     @Before
     fun setUp() {
-        levels = listOf(
-            LevelModel(
-                name = "Level 1",
-                isCompleted = StatusGame.IN_PROGRESS,
-                subLevel = ArrayList()
-            ),
-            LevelModel(
-                name = "Level 2",
-                isCompleted = StatusGame.IN_PROGRESS,
-                subLevel = ArrayList()
-            )
-        )
+        levels = listOf(LevelModel("1","1", listOf()))
         observations = listOf(Observation("1", "1", "1"), Observation("2", "2", "2"))
 
-
         userModel = UserModel(
-                userName = "name",
-                password = "password",
-                email = "email",
+            userName = "name",
+            password = "password",
+            email = "email",
         )
 
         specialist = SpecialistModel(
-                userModel,
-                "12.12.2021",
-                "license",
-                "12.12.2021",
-                "speciality",
-                listOf()
+            userModel,
+            "12.12.2021",
+            "license",
+            "12.12.2021",
+            "speciality",
+            listOf()
         )
 
 
         childrenModel = ChildrenModel(
-                userModel = userModel,
-                date = "12.12.2021",
-                specialist = specialist,
-                isPremium = false,
-                levels = levels,
-                observation = observations
+            userModel = userModel,
+            date = "12.12.2021",
+            specialist = specialist,
+            1,
+            1,
+            isPremium = false,
+            levels = levels,
+            observation = observations
         )
     }
 
