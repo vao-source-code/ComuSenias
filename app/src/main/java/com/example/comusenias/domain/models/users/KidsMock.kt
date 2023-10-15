@@ -3,25 +3,28 @@ package com.example.comusenias.domain.models.users
 import com.example.comusenias.R
 import com.example.comusenias.domain.models.game.LevelModel
 import com.example.comusenias.domain.models.game.SubLevelModel
+import io.grpc.internal.SharedResourceHolder.Resource
 
 class KidsMock {
 
-    val subLevel = mutableListOf(
-        SubLevelModel(
-            "id",
-            "A",
-            image = R.drawable.letra_a.toString(),
-            imageOnly = R.drawable.letra_a_solo.toString(),
-            randomLetter = "O",
-            randomImage = R.drawable.sign_o.toString(),
-        ),
-        SubLevelModel(
-            "id",
-            "O",
-            image = R.drawable.sign_o.toString(),
-            imageOnly = R.drawable.sign_o.toString(),
-            randomLetter = "A",
-            randomImage = R.drawable.letra_a_solo.toString(),
+    val subLevel = ArrayList<SubLevelModel>(
+        listOf(
+            SubLevelModel(
+                "id",
+                "A",
+                image = R.drawable.letra_a.toString(),
+                imageOnly = R.drawable.letra_a_solo.toString(),
+                randomLetter = "O",
+                randomImage = R.drawable.sign_o.toString(),
+            ),
+            SubLevelModel(
+                "id",
+                "O",
+                image = R.drawable.sign_o.toString(),
+                imageOnly = R.drawable.sign_o.toString(),
+                randomLetter = "A",
+                randomImage = R.drawable.letra_a_solo.toString(),
+            )
         )
     )
 

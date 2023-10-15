@@ -52,11 +52,11 @@ fun CardGameCheckPoint() {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(SIZE28.dp)
         ) {
-            ImageWhitBorder(
+          /*  ImageWhitBorder(
                 image = R.drawable.diagnostic_category ,
                 borderColor = border,
                 border = 0
-            )
+            )*/
             Column(
                 modifier = Modifier
                     .fillMaxWidth(),

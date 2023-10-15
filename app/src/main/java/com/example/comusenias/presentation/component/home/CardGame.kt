@@ -60,7 +60,7 @@ fun CardGame(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(SIZE28.dp)
         ) {
-            ImageWhitBorder(image = subLevel.image.toInt(), borderColor = lineColor)
+            ImageWhitBorder(image =  subLevel.image, borderColor = lineColor)
             Row(
                 modifier = Modifier
                     .fillMaxWidth(),
@@ -92,5 +92,5 @@ private fun navigateToLearSign(
     navController: NavController,
     subLevel: SubLevelModel
 ) {
-    navController.navigate(AppScreen.LearnSignScreen.createRoute(subLevel.name))
+    navController.navigate(AppScreen.LearnSignScreen.createRoute(subLevel.idLevel))
 }

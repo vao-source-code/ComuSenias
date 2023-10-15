@@ -8,7 +8,7 @@ data class LevelModel(
     var id: String = EMPTY_STRING,
     var name: String = EMPTY_STRING,
     var subLevelId: List<String> = listOf(),
-    var subLevel: MutableList<SubLevelModel> = mutableListOf<SubLevelModel>(),
+    var subLevel: ArrayList<SubLevelModel> = arrayListOf<SubLevelModel>(),
     var isCompleted: StatusGame = StatusGame.IN_PROGRESS,
 ) {
     fun toJson(): String = Gson().toJson(LevelModel(id, name, subLevelId, subLevel))
