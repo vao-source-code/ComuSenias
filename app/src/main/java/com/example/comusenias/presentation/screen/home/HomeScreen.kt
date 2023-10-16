@@ -23,6 +23,8 @@ fun HomeScreen(navController: NavController, modifier: Modifier) {
                 TopBarHome(onClick = { navController.navigate(AppScreen.NotificationScreen.route) })
             }
         },
+
+
         bottomBar = {
             ShowBottomBar(navController = navController)
         }
