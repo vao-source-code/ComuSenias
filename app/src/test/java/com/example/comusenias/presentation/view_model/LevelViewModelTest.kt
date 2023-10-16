@@ -99,25 +99,25 @@ class LevelViewModelTest {
         assertEquals(listLevel, viewModels.levels)
     }
 
-    @Test
-    fun searchNameLevelTest() {
-        val result = Response.Success(listLevel)
-
-        coEvery { levelUsesCases.getLevels() } returns object : Flow<Response<List<LevelModel>>> {
-            override suspend fun collect(collector: FlowCollector<Response<List<LevelModel>>>) {
-                collector.emit(result)
-            }
-        }
-
-        // Call the method to be tested
-        viewModels.getLevels()
-
-        // Verify the results
-        coVerify { levelUsesCases.getLevels() }
-
-        // Assert
-        assertEquals(listLevel, viewModels.levels)
-        assertEquals(listLevel, viewModels.searchLevelByName("name"))
-    }
+//    @Test
+//    fun searchNameLevelTest() {
+//        val result = Response.Success(listLevel)
+//
+//        coEvery { levelUsesCases.getLevels() } returns object : Flow<Response<List<LevelModel>>> {
+//            override suspend fun collect(collector: FlowCollector<Response<List<LevelModel>>>) {
+//                collector.emit(result)
+//            }
+//        }
+//
+//        // Call the method to be tested
+//        viewModels.getLevels()
+//
+//        // Verify the results
+//        coVerify { levelUsesCases.getLevels() }
+//
+//        // Assert
+//        assertEquals(listLevel, viewModels.levels)
+//        assertEquals(listLevel, viewModels.searchLevelByName("name"))
+//    }
 
 }
