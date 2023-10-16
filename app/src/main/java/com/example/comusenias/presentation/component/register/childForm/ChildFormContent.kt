@@ -63,7 +63,9 @@ fun ChildFormContent(
                 label = NUMBER_PHONE,
                 icon = Icons.Default.Phone
             )
-            TermsAndConditions()
+            TermsAndConditions { isCheck ->
+                // Devuelva un boolean si es check
+            }
         }
         ButtonApp(
             titleButton = CONTINUE,
