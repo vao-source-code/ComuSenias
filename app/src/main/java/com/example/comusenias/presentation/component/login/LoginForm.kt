@@ -29,7 +29,7 @@ fun LoginForm(
     navController: NavHostController
 ) {
     val state = viewModel.state
-    ResponseStatus(
+    ResponseStatusAuth(
         navController = navController,
         response = viewModel.loginResponse
         )
@@ -55,7 +55,7 @@ fun LoginForm(
             label = PASSWORD,
             errorMsg = viewModel.errorPassword
         )
-        RememberMeAndForgetMyPass()
+        ForgetMyPass()
         Spacer(modifier = Modifier.height(size10.dp))
         ButtonApp(
             titleButton = LOGIN,

@@ -8,7 +8,6 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.comusenias.presentation.component.profile.ChangeProfileContent
-import com.example.comusenias.presentation.component.profile.ProfileFooterContent
 import com.example.comusenias.presentation.component.profile.ResponseStatusProfile
 import com.example.comusenias.presentation.component.profile.SaveImageProfile
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
@@ -32,7 +31,6 @@ fun ChangeProfileScreen(
                 {
                     changeViewModel.saveImage()
                 }
-            ProfileFooterContent(onClick)
             SaveImageProfile()
             ResponseStatusProfile()
         }

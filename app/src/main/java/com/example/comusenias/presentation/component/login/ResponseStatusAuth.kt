@@ -15,7 +15,7 @@ import com.example.comusenias.presentation.ui.theme.LOGIN_SUCCESS
 import com.google.firebase.auth.FirebaseUser
 
 @Composable
-fun ResponseStatus(
+fun ResponseStatusAuth(
     navController: NavHostController,
     response: Response<FirebaseUser>?
 ) {

@@ -21,18 +21,18 @@ import com.example.comusenias.presentation.ui.theme.size14
 
 @Preview(showBackground = true)
 @Composable
-fun RememberMeAndForgetMyPass() {
+fun ForgetMyPass(onClickText: () -> Unit = {}) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = size10.dp),
         horizontalArrangement = Arrangement.End
     ) {
-        ForgetMyPass { }
+        ForgetMyPassTitle { onClickText() }
     }
 }
 @Composable
-fun ForgetMyPass(onClickText: () -> Unit = {}) {
+fun ForgetMyPassTitle(onClickText: () -> Unit = {}) {
     Text(
         modifier = Modifier
             .testTag(TestTag.TAG_FORGET_MY_PASS)

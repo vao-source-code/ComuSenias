@@ -1,4 +1,4 @@
-package com.example.comusenias.presentation.component.defaults
+package com.example.comusenias.presentation.component.defaults.app
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
