@@ -1,5 +1,6 @@
 package com.example.comusenias.presentation.view_model
 
+import android.util.Log
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.comusenias.domain.models.Response
 import com.example.comusenias.domain.models.game.LevelModel
@@ -99,25 +100,25 @@ class LevelViewModelTest {
         assertEquals(listLevel, viewModels.levels)
     }
 
-//    @Test
-//    fun searchNameLevelTest() {
-//        val result = Response.Success(listLevel)
-//
-//        coEvery { levelUsesCases.getLevels() } returns object : Flow<Response<List<LevelModel>>> {
-//            override suspend fun collect(collector: FlowCollector<Response<List<LevelModel>>>) {
-//                collector.emit(result)
-//            }
-//        }
-//
-//        // Call the method to be tested
-//        viewModels.getLevels()
-//
-//        // Verify the results
-//        coVerify { levelUsesCases.getLevels() }
-//
-//        // Assert
-//        assertEquals(listLevel, viewModels.levels)
-//        assertEquals(listLevel, viewModels.searchLevelByName("name"))
-//    }
+    @Test
+    fun searchNameLevelTest() {
+        val result = Response.Success(listLevel)
+
+        coEvery { levelUsesCases.getLevels() } returns object : Flow<Response<List<LevelModel>>> {
+            override suspend fun collect(collector: FlowCollector<Response<List<LevelModel>>>) {
+                collector.emit(result)
+            }
+        }
+
+        // Call the method to be tested
+        viewModels.getLevels()
+
+        // Verify the results
+        coVerify { levelUsesCases.getLevels() }
+
+        // Assert
+        assertEquals(listLevel, viewModels.levels)
+        assertEquals(listLevel, viewModels.searchLevelByName("name"))
+    }
 
 }
