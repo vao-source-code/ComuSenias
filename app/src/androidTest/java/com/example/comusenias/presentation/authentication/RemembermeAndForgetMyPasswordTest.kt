@@ -10,6 +10,7 @@ import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
 import com.example.comusenias.constants.TestTag
 import com.example.comusenias.presentation.component.defaults.app.CheckBoxApp
 import com.example.comusenias.presentation.component.login.ForgetMyPass
@@ -45,20 +46,34 @@ class RemembermeAndForgetMyPasswordTest {
     }
 
     @Test
-    fun testCheckBoxAppIsOff(){
+    fun testCheckBoxAppIsOn(){
+        var checked = false
+
         composeTestRule.setContent {
-            val isChecked = remember { mutableStateOf(false) }
-            CheckBoxApp(isChecked = isChecked)
+            CheckBoxApp(
+                isChecked = mutableStateOf(checked),
+                onCheckChange = { checked = it }
+            )
         }
         composeTestRule.onNodeWithTag(TestTag.TAG_CHECKBOX_APP).assertIsOff()
+        composeTestRule.onNodeWithTag(TestTag.TAG_CHECKBOX_APP).performClick()
+
+        composeTestRule.onNodeWithTag(TestTag.TAG_CHECKBOX_APP).assertIsOn()
     }
 
     @Test
-    fun testCheckBoxAppIsOn(){
+    fun testCheckBoxAppIsOff(){
+        var checked = true
+
         composeTestRule.setContent {
-            val isChecked = remember { mutableStateOf(true) }
-            CheckBoxApp(isChecked = isChecked)
+            CheckBoxApp(
+                isChecked = mutableStateOf(checked),
+                onCheckChange = { checked = it }
+            )
         }
         composeTestRule.onNodeWithTag(TestTag.TAG_CHECKBOX_APP).assertIsOn()
+        composeTestRule.onNodeWithTag(TestTag.TAG_CHECKBOX_APP).performClick()
+
+        composeTestRule.onNodeWithTag(TestTag.TAG_CHECKBOX_APP).assertIsOff()
     }
 }
