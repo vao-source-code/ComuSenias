@@ -1,6 +1,8 @@
 package com.example.comusenias.presentation.navigation
 
 import android.annotation.SuppressLint
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -28,6 +30,7 @@ import com.example.comusenias.presentation.screen.profile.ProfileScreen
 import com.example.comusenias.presentation.screen.specialist.SpecialistHomeExample
 import com.example.comusenias.presentation.splashScreen.SplashScreen
 
+@RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun AppNavigation(
@@ -38,6 +41,7 @@ fun AppNavigation(
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 private fun GetNavHost(
     navController: NavHostController,
@@ -45,7 +49,7 @@ private fun GetNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = AppScreen.HomeScreen.route
+        startDestination = AppScreen.SplashScreen.route
     ) {
 
         authNavGraph(navController = navController, modifier = modifier)
