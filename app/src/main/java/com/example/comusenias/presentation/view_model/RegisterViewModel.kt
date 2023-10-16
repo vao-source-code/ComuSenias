@@ -73,7 +73,6 @@ class RegisterViewModel @Inject constructor(
         isEmailValid = isValid
         errorEmail = if (isValid) emptyString else invalidEmail
         enabledRegisterButton()
-        Log.v("validateEmail()",isEmailValid.toString())
     }
 
     fun validatePassword() {
@@ -81,7 +80,6 @@ class RegisterViewModel @Inject constructor(
         isPasswordValid = isValid
         errorPassword = if (isValid) emptyString else restrictionPasswordUserAccount
         enabledRegisterButton()
-        Log.v("validatePassword()",isPasswordValid.toString())
     }
 
     fun validateConfirmPassword() {
@@ -89,8 +87,6 @@ class RegisterViewModel @Inject constructor(
         isConfirmPasswordValid = isValid
         errorConfirmPassword = if (isValid) emptyString else passwordDoNotMatch
         enabledRegisterButton()
-        Log.v("validateConfirmPassword()",isConfirmPasswordValid.toString())
-
     }
 
     fun createUser() = viewModelScope.launch {
