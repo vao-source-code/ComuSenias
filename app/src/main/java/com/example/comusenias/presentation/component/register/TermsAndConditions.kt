@@ -42,7 +42,7 @@ fun TermsAndConditions(
     ) {
         val isChecked = remember { mutableStateOf(false) }
 
-        CheckBoxApp(isChecked = isChecked)
+        CheckBoxApp(isChecked = isChecked){}
         Spacer(modifier = Modifier.width(size6.dp))
         Text(
             text = accept,

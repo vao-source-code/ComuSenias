@@ -21,8 +21,7 @@ import com.example.comusenias.presentation.ui.theme.size14
 import com.example.comusenias.presentation.ui.theme.size9
 
 @Composable
-fun SpecialistCheck(
-) {
+fun SpecialistCheck(onCheckChange: (Boolean) -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -32,7 +31,9 @@ fun SpecialistCheck(
     ) {
         val isChecked = remember { mutableStateOf(false) }
 
-        CheckBoxApp(isChecked = isChecked)
+        CheckBoxApp(isChecked = isChecked) { isCheckedValue ->
+            onCheckChange(isCheckedValue)
+        }
         Text(
             text = ESPECIALIST,
             fontSize = size14.sp,

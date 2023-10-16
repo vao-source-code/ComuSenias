@@ -1,5 +1,6 @@
 package com.example.comusenias.presentation.view_model
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -39,7 +40,7 @@ class RegisterViewModel @Inject constructor(
     var errorPassword: String by mutableStateOf("")
     var isConfirmPasswordValid: Boolean by mutableStateOf(false)
     var errorConfirmPassword: String by mutableStateOf("")
-    var isRegisterEnabled = false
+    var isRegisterEnabled = true
     var user = UserModel()
 
     fun register(user: UserModel) = viewModelScope.launch {
@@ -57,8 +58,7 @@ class RegisterViewModel @Inject constructor(
     }
 
     private fun enabledRegisterButton() {
-        isRegisterEnabled =
-            isUserNameValid && isEmailValid && isPasswordValid && isConfirmPasswordValid
+        isRegisterEnabled = isEmailValid && isPasswordValid && isConfirmPasswordValid
     }
 
     fun validateUserName() {
@@ -73,6 +73,7 @@ class RegisterViewModel @Inject constructor(
         isEmailValid = isValid
         errorEmail = if (isValid) emptyString else invalidEmail
         enabledRegisterButton()
+        Log.v("validateEmail()",isEmailValid.toString())
     }
 
     fun validatePassword() {
@@ -80,6 +81,7 @@ class RegisterViewModel @Inject constructor(
         isPasswordValid = isValid
         errorPassword = if (isValid) emptyString else restrictionPasswordUserAccount
         enabledRegisterButton()
+        Log.v("validatePassword()",isPasswordValid.toString())
     }
 
     fun validateConfirmPassword() {
@@ -87,6 +89,8 @@ class RegisterViewModel @Inject constructor(
         isConfirmPasswordValid = isValid
         errorConfirmPassword = if (isValid) emptyString else passwordDoNotMatch
         enabledRegisterButton()
+        Log.v("validateConfirmPassword()",isConfirmPasswordValid.toString())
+
     }
 
     fun createUser() = viewModelScope.launch {

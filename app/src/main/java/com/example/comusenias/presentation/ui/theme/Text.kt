@@ -1,9 +1,9 @@
 package com.example.comusenias.presentation.ui.theme
 
 const val logoApp: String = "Logo de la app"
-    const val EMAIL_TEXT: String = "Correo electrónico"
+const val EMAIL_TEXT: String = "Correo electrónico"
 const val PASSWORD: String = "Contraseña"
-const val confirmPassword: String = "Confirmar contraseña"
+const val CONFIRM_PASS: String = "Confirmar contraseña"
 const val LOGIN: String = "Iniciar Sesion"
 const val forgotPassword: String = "Olvide mi contraseña"
 const val invalidEmail: String = "Email invalido"
