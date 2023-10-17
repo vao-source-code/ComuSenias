@@ -15,6 +15,7 @@ import com.example.comusenias.domain.models.users.SpecialistModel
 import com.example.comusenias.domain.models.users.UserModel
 import com.example.comusenias.domain.use_cases.auth.AuthFactoryUseCases
 import com.example.comusenias.domain.use_cases.shared_preferences.DataUserStorageFactory
+import com.example.comusenias.domain.use_cases.specialist.SpecialistFactory
 import com.example.comusenias.domain.use_cases.users.UsersFactoryUseCases
 import com.example.comusenias.presentation.ui.theme.emptyString
 import com.example.comusenias.presentation.ui.theme.restrictionNameUserAccount
@@ -26,9 +27,10 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class TestSpecialistModel @Inject constructor(
+class TestSpecialistRegisterViewModel @Inject constructor(
     private val authUseCases: AuthFactoryUseCases,
     private val usersUseCase: UsersFactoryUseCases,
+    private val specialistUseCases: SpecialistFactory,
     private val dataUserStorageFactoryUseCases: DataUserStorageFactory,
 ) : ViewModel() {
     var registerResponse by mutableStateOf<Response<FirebaseUser>?>(null)
@@ -83,10 +85,6 @@ class TestSpecialistModel @Inject constructor(
         registerResponse = Response.Loading
         val result = authUseCases.registerUseCase(user)
         registerResponse = result
-
-        if (result is Response.Success) {
-
-        }
     }
 
     fun onRegister() {
