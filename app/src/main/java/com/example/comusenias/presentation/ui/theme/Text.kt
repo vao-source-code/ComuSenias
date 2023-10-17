@@ -1,7 +1,5 @@
 package com.example.comusenias.presentation.ui.theme
 
-import com.example.comusenias.R
-
 const val logoApp: String = "Logo de la app"
 const val emailText: String = "Correo electrónico"
 const val PASSWORD: String = "Contraseña"
@@ -94,7 +92,7 @@ const val THE_SIGN_IS : String = "La seña es..."
 const val FINISH : String = "Finalizar"
 const val WHAT_SIGN_IS : String = "¿Que seña es la letra?"
 const val WHAT_LETTER_IS : String = "¿Que letra es la seña?"
-const val Agrega_Paciente: String = "Confirm"
+const val CONFIRM : String = "Confirmar"
 const val USER_PROFILE: String = "User Profile"
 const val ICON: String = "Icon"
 /*-----------------BUTTONS AND ICONS-----------------*/
