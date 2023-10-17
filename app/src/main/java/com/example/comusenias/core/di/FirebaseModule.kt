@@ -1,5 +1,6 @@
 package com.example.comusenias.core.di
 
+import com.example.comusenias.constants.FirebaseConstants.CHILDREN_COLLECTION
 import com.example.comusenias.constants.FirebaseConstants.GAME_COLLECTION
 import com.example.comusenias.constants.FirebaseConstants.LETTERS_COLLECTION
 import com.example.comusenias.constants.FirebaseConstants.LEVEL_COLLECTION
@@ -20,6 +21,8 @@ import com.example.comusenias.domain.use_cases.auth.GetCurrentUserUseCase
 import com.example.comusenias.domain.use_cases.auth.LoginUseCase
 import com.example.comusenias.domain.use_cases.auth.LogoutUseCase
 import com.example.comusenias.domain.use_cases.auth.RegisterUseCase
+import com.example.comusenias.domain.use_cases.children.ChildrenFactory
+import com.example.comusenias.domain.use_cases.children.CreateChildren
 import com.example.comusenias.domain.use_cases.letters.GetImageUseCase
 import com.example.comusenias.domain.use_cases.letters.LettersFactoryUseCases
 import com.example.comusenias.domain.use_cases.letters.SearchImageLetterUseCase
@@ -78,6 +81,11 @@ object FirebaseModule {
         db.collection(USERS_COLLECTION)
 
     @Provides
+    @Named(CHILDREN_COLLECTION)
+    fun providerChildrenRef(db: FirebaseFirestore): CollectionReference =
+        db.collection(CHILDREN_COLLECTION)
+
+    @Provides
     @Named(LETTERS_COLLECTION)
     fun providerLettersRef(db: FirebaseFirestore): CollectionReference =
         db.collection(LETTERS_COLLECTION)
@@ -132,6 +140,12 @@ object FirebaseModule {
             searchLevelName = SearchLevelName(levelRepository)
         )
 
+    @Provides
+    fun providerChildrenUseCases(usersRepository: ChildrenRepository) =
+        ChildrenFactory(
+            createChildren = CreateChildren(usersRepository),
+        )
+
     /*----------------------------- Storage ----------------------------------------------------- */
     @Provides
     fun providerFirebaseStorage(): FirebaseStorage = FirebaseStorage.getInstance()
@@ -140,6 +154,11 @@ object FirebaseModule {
     @Named(USERS_COLLECTION)
     fun providerStorageRefUsers(storage: FirebaseStorage) =
         storage.reference.child(USERS_COLLECTION)
+
+    @Provides
+    @Named(CHILDREN_COLLECTION)
+    fun providerStorageRefChildren(storage: FirebaseStorage) =
+        storage.reference.child(CHILDREN_COLLECTION)
 
     @Provides
     @Named(LETTERS_COLLECTION)
