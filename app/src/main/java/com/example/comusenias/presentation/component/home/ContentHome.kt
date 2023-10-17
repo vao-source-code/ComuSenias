@@ -11,17 +11,51 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.comusenias.domain.models.users.KidsMock
+import com.example.comusenias.domain.models.Response
+import com.example.comusenias.domain.models.game.LevelModel
+import com.example.comusenias.domain.models.game.SubLevelModel
+import com.example.comusenias.presentation.component.defaults.app.CircularProgressBar
+import com.example.comusenias.presentation.component.defaults.app.ShowRetrySnackBar
+import com.example.comusenias.presentation.ui.theme.ERROR_RETRY_SUB_LEVEL
 import com.example.comusenias.presentation.ui.theme.size1
 import com.example.comusenias.presentation.ui.theme.size14
+import com.example.comusenias.presentation.view_model.LevelViewModel
 
 @Composable
 fun ContentHome(
     modifier: Modifier,
-    navController: NavController
+    navController: NavController,
+    levelViewModel: LevelViewModel
 ) {
-    val subLevel = KidsMock.instance.subLevel
-    val level = KidsMock.instance.levelList.first()
+    val level = levelViewModel.levels
+
+    when (levelViewModel.levelsResponse) {
+        is Response.Loading -> {
+            CircularProgressBar()
+        }
+
+        is Response.Error -> {
+            ShowRetrySnackBar(text = ERROR_RETRY_SUB_LEVEL, onActionClick = {
+                levelViewModel.getLevels()
+            })
+        }
+
+        is Response.Success -> {
+            ShowLazyColumn(level, navController, levelViewModel)
+        }
+
+        else -> {
+            ContentProgressBar()
+        }
+    }
+}
+
+@Composable
+private fun ShowLazyColumn(
+    level: List<LevelModel>,
+    navController: NavController,
+    levelViewModel: LevelViewModel
+) {
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
@@ -36,12 +70,13 @@ fun ContentHome(
             ContentProgressBar()
         }
         item {
-            ContentLevel(level.name)
+            ContentLevel(level[0].name)
         }
         items(
-            items = subLevel,
+            items = getSubLevel(level),
         ) { subLevel ->
             ContentCardGame(
+                level = level[0].id,
                 subLevel = subLevel,
                 navController = navController
             )
@@ -52,12 +87,10 @@ fun ContentHome(
     }
 }
 
-fun statusCards(): List<StatusGame> {
-    return listOf(
-        StatusGame.COMPLETED,
-        StatusGame.COMPLETED,
-        StatusGame.IN_PROGRESS,
-        StatusGame.BLOCKED,
-        StatusGame.BLOCKED
-    )
+fun getSubLevel(level: List<LevelModel>): List<SubLevelModel> {
+    val listSubLevel = mutableListOf<SubLevelModel>()
+    level.forEach {
+        listSubLevel += it.subLevel
+    }
+    return listSubLevel
 }

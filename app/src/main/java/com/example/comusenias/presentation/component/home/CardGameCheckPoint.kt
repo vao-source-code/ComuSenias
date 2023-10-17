@@ -53,7 +53,7 @@ fun CardGameCheckPoint() {
             horizontalArrangement = Arrangement.spacedBy(SIZE28.dp)
         ) {
             ImageWhitBorder(
-                image = R.drawable.diagnostic_category ,
+                image = R.drawable.diagnostic_category.toString(),
                 borderColor = border,
                 border = 0
             )
