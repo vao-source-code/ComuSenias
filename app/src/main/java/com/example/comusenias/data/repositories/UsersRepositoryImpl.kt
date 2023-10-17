@@ -51,8 +51,9 @@ class UsersRepositoryImpl @Inject constructor(
     override suspend fun updateUser(user: UserModel): Response<Boolean> {
         return try {
             val mapImage: MutableMap<String, Any> = HashMap()
-            mapImage["userName"] = user.userName
-            mapImage["image"] = user.image?.let { it } ?: ""
+            //aca tiene que ser email y rol
+            //mapImage["userName"] = user.userName
+            //mapImage["image"] = user.image?.let { it } ?: ""
             usersRef.document(user.id).update(mapImage).await()
             Response.Success(true)
         } catch (e: Exception) {

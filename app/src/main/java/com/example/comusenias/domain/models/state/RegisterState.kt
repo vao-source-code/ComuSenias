@@ -7,4 +7,5 @@ data class RegisterState(
     val email: String = EMPTY_STRING,
     val password: String = EMPTY_STRING,
     val confirmPassword: String = EMPTY_STRING,
+    val rol: String = EMPTY_STRING
 )
