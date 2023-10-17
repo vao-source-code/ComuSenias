@@ -35,15 +35,15 @@ class KidsMock {
 
     val userModel = UserModel(
         id = "1",
-        userName = "Pablo Carballo",
+        //userName = "Pablo Carballo",
         email = "a@a.com",
         password = "Unlam123",
-        image = null,
-        numberPhone = "123456789"
+        //image = null,
+        //numberPhone = "123456789"
     )
 
     val kidMock = ChildrenModel(
-        userModel = userModel,
+        //userModel = userModel,
         date = "12/12/2021",
         specialist = null,
         levelActual = 1,

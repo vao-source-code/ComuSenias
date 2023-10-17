@@ -11,8 +11,8 @@ import com.example.comusenias.domain.library.ComposeFileProvider
 import com.example.comusenias.domain.library.LibraryString
 import com.example.comusenias.domain.library.ResultingActivityHandler
 import com.example.comusenias.domain.models.Response
-import com.example.comusenias.domain.models.users.UserModel
 import com.example.comusenias.domain.models.state.ChangeProfileState
+import com.example.comusenias.domain.models.users.UserModel
 import com.example.comusenias.domain.use_cases.users.UsersFactoryUseCases
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.PATH_IMAGE
@@ -24,6 +24,8 @@ import kotlinx.coroutines.launch
 import java.io.File
 import javax.inject.Inject
 
+
+//TODO deberia ser uno para niño y otro para especialista
 @HiltViewModel
 class ChangeProfileViewModel @Inject constructor(
     private var savedStateHandle: SavedStateHandle,
@@ -50,7 +52,7 @@ class ChangeProfileViewModel @Inject constructor(
 
     init {
         state = state.copy(
-            userName = user.userName, image = user.image
+            //userName = user.userName, image = user.image
         )
     }
 
@@ -62,7 +64,7 @@ class ChangeProfileViewModel @Inject constructor(
         }
         update(
             user = UserModel(
-                id = user.id, userName = state.userName, image = state.image
+                // id = user.id, userName = state.userName, image = state.image
             )
         )
     }
@@ -85,7 +87,7 @@ class ChangeProfileViewModel @Inject constructor(
 
     fun onUpdate(url: String) {
         val myUser = UserModel(
-            id = user.id, userName = state.userName, image = url
+            // id = user.id, userName = state.userName, image = url
         )
         update(myUser)
     }

@@ -15,10 +15,10 @@ import com.example.comusenias.domain.models.users.UserModel
 import com.example.comusenias.domain.use_cases.auth.AuthFactoryUseCases
 import com.example.comusenias.domain.use_cases.children.ChildrenFactory
 import com.example.comusenias.domain.use_cases.users.UsersFactoryUseCases
+import com.example.comusenias.presentation.ui.theme.RESTRICTION_PASSWORD_USER_ACCOUNT
 import com.example.comusenias.presentation.ui.theme.emptyString
 import com.example.comusenias.presentation.ui.theme.invalidEmail
 import com.example.comusenias.presentation.ui.theme.restrictionNameUserAccount
-import com.example.comusenias.presentation.ui.theme.restrictionPasswordUserAccount
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -102,7 +102,7 @@ class TestChildrenRegisterViewModel @Inject constructor(
     fun validateDate() {
         val isValid = LibraryString.validPassword(state.password)
         isDateValid = isValid
-        errorDate = if (isValid) emptyString else restrictionPasswordUserAccount
+        errorDate = if (isValid) emptyString else RESTRICTION_PASSWORD_USER_ACCOUNT
         enabledRegisterButton()
     }
 

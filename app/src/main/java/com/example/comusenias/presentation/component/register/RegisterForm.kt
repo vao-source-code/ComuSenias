@@ -44,7 +44,7 @@ fun RegisterForm(
     ResponseStatus(
         navController = navController,
         response = viewModel.registerResponse
-        )
+    )
 
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -75,11 +75,15 @@ fun RegisterForm(
         )
         SpecialistCheck { isCheckedValue ->
             currentRoute.value = if (isCheckedValue) specilaistFormScreen else childFormScreen
+            viewModel.onSpecialistRoleInput(isCheckedValue)
         }
         Spacer(modifier = Modifier.height(size10.dp))
         ButtonApp(
             titleButton = REGISTER,
-            onClickButton = { navController.navigate(route = currentRoute.value) },
+            onClickButton = {
+                viewModel.onRegister()
+                navController.navigate(route = currentRoute.value)
+            },
             enabledButton = viewModel.isRegisterEnabled
         )
     }

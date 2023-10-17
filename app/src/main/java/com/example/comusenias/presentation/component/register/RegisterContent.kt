@@ -10,13 +10,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -34,17 +33,16 @@ import com.example.comusenias.presentation.ui.theme.ADD_DATA_FOR_REGISTER
 import com.example.comusenias.presentation.ui.theme.CHANGE_PROFILE_CONFIRM_PASSWORD
 import com.example.comusenias.presentation.ui.theme.ComuSeniasTheme
 import com.example.comusenias.presentation.ui.theme.EMAIL
-import com.example.comusenias.presentation.ui.theme.NAME_USER
 import com.example.comusenias.presentation.ui.theme.PASSWORD
 import com.example.comusenias.presentation.ui.theme.REGISTER
 import com.example.comusenias.presentation.ui.theme.REGISTER_TWO
 import com.example.comusenias.presentation.ui.theme.SIZE12
 import com.example.comusenias.presentation.ui.theme.SIZE16
+import com.example.comusenias.presentation.ui.theme.SIZE30
 import com.example.comusenias.presentation.ui.theme.size10
 import com.example.comusenias.presentation.ui.theme.size18
 import com.example.comusenias.presentation.ui.theme.size20
 import com.example.comusenias.presentation.ui.theme.size24
-import com.example.comusenias.presentation.ui.theme.SIZE30
 import com.example.comusenias.presentation.view_model.RegisterViewModel
 
 @Composable
@@ -105,18 +103,6 @@ fun CardFormRegister(
                 fontSize = SIZE12.sp
             )
 
-            TextFieldDefault(
-                modifier = Modifier
-                    .padding(top = size20.dp)
-                    .fillMaxWidth(),
-                value = state.userName,
-                onValueChange = { viewModel.onUserNameInput(it) },
-                label = NAME_USER,
-                keyboardType = KeyboardType.Text,
-                icon = Icons.Default.Person,
-                errorMsg = viewModel.errorUserName,
-                validateField = { viewModel.validateUserName() }
-            )
 
             TextFieldDefault(
                 modifier = Modifier

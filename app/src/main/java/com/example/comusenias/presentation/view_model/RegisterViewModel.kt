@@ -1,23 +1,24 @@
 package com.example.comusenias.presentation.view_model
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.comusenias.constants.PreferencesConstant.PREFERENCE_USER
 import com.example.comusenias.domain.library.LibraryPassword
 import com.example.comusenias.domain.library.LibraryString
 import com.example.comusenias.domain.models.Response
-import com.example.comusenias.domain.models.users.UserModel
 import com.example.comusenias.domain.models.state.RegisterState
+import com.example.comusenias.domain.models.users.Rol
+import com.example.comusenias.domain.models.users.UserModel
 import com.example.comusenias.domain.use_cases.auth.AuthFactoryUseCases
+import com.example.comusenias.domain.use_cases.test.DataUserStorageFactory
 import com.example.comusenias.domain.use_cases.users.UsersFactoryUseCases
+import com.example.comusenias.presentation.ui.theme.RESTRICTION_PASSWORD_USER_ACCOUNT
 import com.example.comusenias.presentation.ui.theme.emptyString
 import com.example.comusenias.presentation.ui.theme.invalidEmail
 import com.example.comusenias.presentation.ui.theme.passwordDoNotMatch
-import com.example.comusenias.presentation.ui.theme.restrictionNameUserAccount
-import com.example.comusenias.presentation.ui.theme.restrictionPasswordUserAccount
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -25,48 +26,43 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
-    private val authUseCases: AuthFactoryUseCases, private val usersUseCase: UsersFactoryUseCases
+    private val authUseCases: AuthFactoryUseCases,
+    private val usersUseCase: UsersFactoryUseCases,
+    private val dataUserStorageFactory: DataUserStorageFactory
 ) : ViewModel() {
     var registerResponse by mutableStateOf<Response<FirebaseUser>?>(null)
         private set
 
     var state by mutableStateOf(RegisterState())
         private set
-    var isUserNameValid: Boolean by mutableStateOf(false)
-    var errorUserName: String by mutableStateOf("")
     var isEmailValid: Boolean by mutableStateOf(false)
     var errorEmail: String by mutableStateOf("")
     var isPasswordValid: Boolean by mutableStateOf(false)
     var errorPassword: String by mutableStateOf("")
     var isConfirmPasswordValid: Boolean by mutableStateOf(false)
     var errorConfirmPassword: String by mutableStateOf("")
-    var isRegisterEnabled = true
+
+    var isSpecialistRole: Boolean by mutableStateOf(false)
+    var isRegisterEnabled: Boolean by mutableStateOf(false)
     var user = UserModel()
 
     fun register(user: UserModel) = viewModelScope.launch {
-        registerResponse = Response.Loading
-        val result = authUseCases.registerUseCase(user)
-        registerResponse = result
+        dataUserStorageFactory.putUserValue(PREFERENCE_USER, user)
     }
 
     fun onRegister() {
         user = UserModel(
-            userName = state.userName, email = state.email, password = state.password
+            email = state.email, password = state.password, rol = state.rol
         )
         register(user)
-
     }
 
     private fun enabledRegisterButton() {
-        isRegisterEnabled = isUserNameValid && isEmailValid && isPasswordValid && isConfirmPasswordValid
+        isRegisterEnabled =
+            isEmailValid && isPasswordValid && isConfirmPasswordValid
     }
 
-    fun validateUserName() {
-        val isValid = LibraryString.validUserName(state.userName)
-        isUserNameValid = isValid
-        errorUserName = if (isValid) emptyString else restrictionNameUserAccount
-        enabledRegisterButton()
-    }
+
 
     fun validateEmail() {
         val isValid = LibraryString.validEmail(state.email)
@@ -78,7 +74,7 @@ class RegisterViewModel @Inject constructor(
     fun validatePassword() {
         val isValid = LibraryString.validPassword(state.password)
         isPasswordValid = isValid
-        errorPassword = if (isValid) emptyString else restrictionPasswordUserAccount
+        errorPassword = if (isValid) emptyString else RESTRICTION_PASSWORD_USER_ACCOUNT
         enabledRegisterButton()
     }
 
@@ -99,9 +95,6 @@ class RegisterViewModel @Inject constructor(
         state = state.copy(email = email)
     }
 
-    fun onUserNameInput(userName: String) {
-        state = state.copy(userName = userName)
-    }
 
     fun onPasswordInput(password: String) {
         state = state.copy(password = password)
@@ -109,5 +102,14 @@ class RegisterViewModel @Inject constructor(
 
     fun onConfirmPasswordInput(confirmPassword: String) {
         state = state.copy(confirmPassword = confirmPassword)
+    }
+
+    fun onSpecialistRoleInput(isSpecialistRole: Boolean) {
+        this.isSpecialistRole = isSpecialistRole
+        state = if (isSpecialistRole) {
+            state.copy(rol = Rol.SPECIALIST.toString())
+        } else {
+            state.copy(rol = Rol.CHILDREN.toString())
+        }
     }
 }

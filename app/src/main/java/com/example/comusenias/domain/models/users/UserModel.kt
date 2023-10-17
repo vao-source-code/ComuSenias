@@ -7,7 +7,7 @@ import com.google.gson.Gson
 data class UserModel(
     var id: String = EMPTY_STRING,
     var email: String = EMPTY_STRING,
-    var rol: String = EMPTY_STRING,
+    var rol: String = Rol.CHILDREN.toString(),
     var password: String = EMPTY_STRING,
 
     ) {
@@ -15,9 +15,9 @@ data class UserModel(
         UserModel(
             id,
             email,
+            rol,
             LibraryPassword.encodePassword(password),
-
-            )
+        )
     )
 
     companion object {
