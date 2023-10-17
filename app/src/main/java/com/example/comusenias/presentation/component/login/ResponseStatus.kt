@@ -6,21 +6,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.comusenias.domain.models.Response
 import com.example.comusenias.presentation.component.defaults.DefaultLoadingProgressIndicator
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.LOGIN_ERROR
 import com.example.comusenias.presentation.ui.theme.LOGIN_SUCCESS
-import com.example.comusenias.presentation.view_model.LoginViewModel
+import com.google.firebase.auth.FirebaseUser
 
 @Composable
-fun ResponseStatusLogin(
+fun ResponseStatus(
     navController: NavHostController,
-    viewModel: LoginViewModel = hiltViewModel()
+    response: Response<FirebaseUser>?
 ) {
-    when (val loginResponse = viewModel.loginResponse) {
+    when (response) {
         Response.Loading -> {
             Box(
                 contentAlignment = Alignment.Center,
@@ -44,7 +43,7 @@ fun ResponseStatusLogin(
         is Response.Error -> {
             Toast.makeText(
                 LocalContext.current,
-                loginResponse.exception?.message + LOGIN_ERROR,
+                response.exception?.message + LOGIN_ERROR,
                 Toast.LENGTH_SHORT
             ).show()
         }

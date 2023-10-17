@@ -1,5 +1,6 @@
 package com.example.comusenias.presentation.view_model
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -39,7 +40,7 @@ class RegisterViewModel @Inject constructor(
     var errorPassword: String by mutableStateOf("")
     var isConfirmPasswordValid: Boolean by mutableStateOf(false)
     var errorConfirmPassword: String by mutableStateOf("")
-    var isRegisterEnabled = false
+    var isRegisterEnabled = true
     var user = UserModel()
 
     fun register(user: UserModel) = viewModelScope.launch {
@@ -57,8 +58,7 @@ class RegisterViewModel @Inject constructor(
     }
 
     private fun enabledRegisterButton() {
-        isRegisterEnabled =
-            isUserNameValid && isEmailValid && isPasswordValid && isConfirmPasswordValid
+        isRegisterEnabled = isUserNameValid && isEmailValid && isPasswordValid && isConfirmPasswordValid
     }
 
     fun validateUserName() {
