@@ -2,6 +2,7 @@ package com.example.comusenias.data.repositories
 
 import android.net.Uri
 import com.example.comusenias.constants.FirebaseConstants.USERS_COLLECTION
+import com.example.comusenias.domain.library.LibraryPassword
 import com.example.comusenias.domain.models.Response
 import com.example.comusenias.domain.models.users.UserModel
 import com.example.comusenias.domain.repositories.UsersRepository
@@ -41,6 +42,7 @@ class UsersRepositoryImpl @Inject constructor(
     override fun getUserById(id: String): Flow<UserModel> = callbackFlow {
         val snapshotListener = usersRef.document(id).addSnapshotListener { snapshot, _ ->
             val user = snapshot?.toObject(UserModel::class.java) ?: UserModel()
+            user.password = LibraryPassword.encodePassword(user.password)
             trySend(user)
         }
         awaitClose {

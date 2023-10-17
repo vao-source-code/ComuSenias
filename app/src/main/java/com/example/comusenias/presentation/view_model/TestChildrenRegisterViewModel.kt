@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.comusenias.constants.PreferencesConstant
 import com.example.comusenias.domain.library.LibraryPassword
 import com.example.comusenias.domain.library.LibraryString
 import com.example.comusenias.domain.models.Response
@@ -14,13 +15,16 @@ import com.example.comusenias.domain.models.users.ChildrenModel
 import com.example.comusenias.domain.models.users.UserModel
 import com.example.comusenias.domain.use_cases.auth.AuthFactoryUseCases
 import com.example.comusenias.domain.use_cases.children.ChildrenFactory
+import com.example.comusenias.domain.use_cases.test.DataUserStorageFactory
 import com.example.comusenias.domain.use_cases.users.UsersFactoryUseCases
-import com.example.comusenias.presentation.ui.theme.RESTRICTION_PASSWORD_USER_ACCOUNT
+import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
+import com.example.comusenias.presentation.ui.theme.INVALID_DATE
+import com.example.comusenias.presentation.ui.theme.INVALID_PHONE
 import com.example.comusenias.presentation.ui.theme.emptyString
-import com.example.comusenias.presentation.ui.theme.invalidEmail
 import com.example.comusenias.presentation.ui.theme.restrictionNameUserAccount
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,7 +32,8 @@ import javax.inject.Inject
 class TestChildrenRegisterViewModel @Inject constructor(
     private val authUseCases: AuthFactoryUseCases,
     private val usersUseCase: UsersFactoryUseCases,
-    private val childrenFactoryUsesCases: ChildrenFactory
+    private val childrenFactoryUsesCases: ChildrenFactory,
+    private val dataUserStorageFactoryUseCases: DataUserStorageFactory
 ) : ViewModel() {
 
     var registerResponse by mutableStateOf<Response<FirebaseUser>?>(null)
@@ -54,55 +59,48 @@ class TestChildrenRegisterViewModel @Inject constructor(
 
     var childrenModel = ChildrenModel()
 
+    init {
+        init()
+    }
+
+    fun init() = viewModelScope.launch(Dispatchers.IO) {
+        user = dataUserStorageFactoryUseCases.getUserValue(PreferencesConstant.PREFERENCE_USER)!!
+    }
+
     fun register(user: UserModel) = viewModelScope.launch {
         registerResponse = Response.Loading
         val result = authUseCases.registerUseCase(user)
         registerResponse = result
 
-        if (registerResponse is Response.Success) {
-            childrenFactoryUsesCases.createChildren(childrenModel)
-        }
     }
 
     fun onRegister() {
-        user = UserModel(
-            email = state.email,
-            password = state.password,
-            rol = state.rol
-        )
-
-        childrenModel = ChildrenModel(
-            name = stateChildren.name,
-            tel = stateChildren.tel,
-            date = stateChildren.date,
-            id = authUseCases.getCurrentUserUseCase()?.uid!!
-        )
         register(user)
     }
 
     private fun enabledRegisterButton() {
-        isRegisterEnabled =
-            isNameValid && isTelValid && isDateValid
+        isRegisterEnabled = true
+        //isNameValid && isTelValid && isDateValid
     }
 
     fun validateName() {
-        val isValid = LibraryString.validUserName(state.userName)
+        val isValid = LibraryString.validUserName(stateChildren.name)
         isNameValid = isValid
         errorName = if (isValid) emptyString else restrictionNameUserAccount
         enabledRegisterButton()
     }
 
     fun validateTel() {
-        val isValid = LibraryString.validEmail(state.email)
+        val isValid = LibraryString.validPhone(stateChildren.tel)
         isTelValid = isValid
-        errorTel = if (isValid) emptyString else invalidEmail
+        errorTel = if (isValid) EMPTY_STRING else INVALID_PHONE
         enabledRegisterButton()
     }
 
     fun validateDate() {
-        val isValid = LibraryString.validPassword(state.password)
+        val isValid = stateChildren.date.isNotEmpty()
         isDateValid = isValid
-        errorDate = if (isValid) emptyString else RESTRICTION_PASSWORD_USER_ACCOUNT
+        errorDate = if (isValid) emptyString else INVALID_DATE
         enabledRegisterButton()
     }
 
@@ -111,6 +109,13 @@ class TestChildrenRegisterViewModel @Inject constructor(
         user.id = authUseCases.getCurrentUserUseCase()?.uid!!
         user.password = LibraryPassword.hashPassword(user.password)
         usersUseCase.createUserUseCase(user)
+        childrenModel = ChildrenModel(
+            name = stateChildren.name,
+            tel = stateChildren.tel,
+            date = stateChildren.date,
+            id = authUseCases.getCurrentUserUseCase()?.uid!!
+        )
+        childrenFactoryUsesCases.createChildren(childrenModel)
 
     }
 

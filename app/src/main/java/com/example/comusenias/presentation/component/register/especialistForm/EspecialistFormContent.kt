@@ -20,12 +20,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.comusenias.presentation.component.defaults.app.ButtonApp
 import com.example.comusenias.presentation.component.defaults.app.TextFieldApp
-import com.example.comusenias.presentation.component.defaults.app.TextFieldDate
 import com.example.comusenias.presentation.component.register.TermsAndConditions
 import com.example.comusenias.presentation.navigation.AppScreen
-import com.example.comusenias.presentation.ui.theme.BIRTHDAY
 import com.example.comusenias.presentation.ui.theme.CONTINUE
-import com.example.comusenias.presentation.ui.theme.EXPIRY_OF_PROFESSIONAL_REGISTRATION
 import com.example.comusenias.presentation.ui.theme.MEDICAL_TITLE
 import com.example.comusenias.presentation.ui.theme.NAME
 import com.example.comusenias.presentation.ui.theme.NUMBER_PHONE
@@ -64,11 +61,11 @@ fun EspecialistFormContent(
                 label = NUMBER_PHONE,
                 icon = Icons.Default.Phone
             )
-            TextFieldDate(
+           /* TextFieldDate(
                 label = BIRTHDAY
             ) { birthday ->
                 // Devuelve en formato string la fecha de nacimiento
-            }
+            }*/
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -83,12 +80,12 @@ fun EspecialistFormContent(
                     label = PROFESSIONAL_REGISTRATION,
                     icon = null
                 )
-                TextFieldDate(
+                /*TextFieldDate(
                     modifier = Modifier.width(SIZE160.dp),
                     label = EXPIRY_OF_PROFESSIONAL_REGISTRATION,
                 ) { expiry ->
                     //Devuelve en formato string la fecha de vencimiento
-                }
+                }*/
             }
             TextFieldApp(
                 value = "",

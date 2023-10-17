@@ -10,8 +10,8 @@ import com.example.comusenias.domain.models.Response
 import com.example.comusenias.domain.models.state.LoginState
 import com.example.comusenias.domain.use_cases.auth.AuthFactoryUseCases
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
+import com.example.comusenias.presentation.ui.theme.INVALID_EMAIL
 import com.example.comusenias.presentation.ui.theme.emptyString
-import com.example.comusenias.presentation.ui.theme.invalidEmail
 import com.example.comusenias.presentation.ui.theme.invalidPassword
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -44,7 +44,7 @@ class LoginViewModel @Inject constructor(private val authUseCases: AuthFactoryUs
     fun validateEmail() {
         val isValid = LibraryString.validEmail(state.email)
         isEmailValid = isValid
-        errorEmail = if (isValid) emptyString else invalidEmail
+        errorEmail = if (isValid) emptyString else INVALID_EMAIL
         enabledLoginButton()
     }
 

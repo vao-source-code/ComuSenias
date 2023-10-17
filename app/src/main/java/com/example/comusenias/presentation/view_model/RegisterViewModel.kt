@@ -15,9 +15,9 @@ import com.example.comusenias.domain.models.users.UserModel
 import com.example.comusenias.domain.use_cases.auth.AuthFactoryUseCases
 import com.example.comusenias.domain.use_cases.test.DataUserStorageFactory
 import com.example.comusenias.domain.use_cases.users.UsersFactoryUseCases
+import com.example.comusenias.presentation.ui.theme.INVALID_EMAIL
 import com.example.comusenias.presentation.ui.theme.RESTRICTION_PASSWORD_USER_ACCOUNT
 import com.example.comusenias.presentation.ui.theme.emptyString
-import com.example.comusenias.presentation.ui.theme.invalidEmail
 import com.example.comusenias.presentation.ui.theme.passwordDoNotMatch
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -67,7 +67,7 @@ class RegisterViewModel @Inject constructor(
     fun validateEmail() {
         val isValid = LibraryString.validEmail(state.email)
         isEmailValid = isValid
-        errorEmail = if (isValid) emptyString else invalidEmail
+        errorEmail = if (isValid) emptyString else INVALID_EMAIL
         enabledRegisterButton()
     }
 

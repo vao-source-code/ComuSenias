@@ -24,6 +24,7 @@ fun TextFieldDate(
     modifier: Modifier = Modifier,
     label: String,
     onValueChange: (String) -> Unit = {},
+    validateField: () -> Unit = {},
 ) {
     val context = LocalContext.current
     val locale = Locale("es", "ES")
@@ -49,8 +50,9 @@ fun TextFieldDate(
         modifier = modifier,
         value = value,
         onValueChange = onValueChange,
+        validateField = validateField,
         label = label,
         clickIcon = { dialog.show() },
-        icon = Icons.Default.DateRange
+        icon = Icons.Default.DateRange,
     )
 }

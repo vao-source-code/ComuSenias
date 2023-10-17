@@ -1,6 +1,5 @@
 package com.example.comusenias.domain.models.users
 
-import com.example.comusenias.domain.library.LibraryPassword
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.google.gson.Gson
 
@@ -16,7 +15,7 @@ data class UserModel(
             id,
             email,
             rol,
-            LibraryPassword.encodePassword(password),
+            password,
         )
     )
 
