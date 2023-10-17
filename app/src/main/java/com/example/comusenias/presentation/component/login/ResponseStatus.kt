@@ -30,6 +30,7 @@ fun ResponseStatus(
 
         is Response.Success -> {
             LaunchedEffect(Unit) {
+                //TODO preguntar aqui si es un niño o un especialista
                 navController.navigate(route = AppScreen.HomeScreen.route) {
                     popUpTo(AppScreen.LoginScreen.route) {
                         inclusive = true
