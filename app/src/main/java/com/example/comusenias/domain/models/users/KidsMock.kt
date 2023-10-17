@@ -46,11 +46,15 @@ class KidsMock {
         userModel = userModel,
         date = "12/12/2021",
         specialist = null,
-        1,
-        1,
+        levelActual = 1,
+        subLevelActual = 1,
         isPremium = false,
         levels = levelList,
-        null
+        observation = null,
+        id = "1",
+        name = "Pablo Carballo",
+        tel = "123456789",
+        idSpecialist = "1"
     )
 
     companion object {
