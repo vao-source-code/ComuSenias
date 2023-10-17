@@ -1,4 +1,4 @@
-package com.example.comusenias.domain.use_cases.test
+package com.example.comusenias.domain.use_cases.shared_preferences
 
 data class DataUserStorageFactory(
     val putUserValue: PutUserValue,

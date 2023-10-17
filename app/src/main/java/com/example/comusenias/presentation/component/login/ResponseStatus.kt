@@ -8,16 +8,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import com.example.comusenias.domain.models.Response
+import com.example.comusenias.domain.models.users.Rol
 import com.example.comusenias.presentation.component.defaults.DefaultLoadingProgressIndicator
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.LOGIN_ERROR
 import com.example.comusenias.presentation.ui.theme.LOGIN_SUCCESS
+import com.example.comusenias.presentation.view_model.LoginViewModel
 import com.google.firebase.auth.FirebaseUser
 
 @Composable
 fun ResponseStatus(
     navController: NavHostController,
-    response: Response<FirebaseUser>?
+    response: Response<FirebaseUser>?,
+    viewModel: LoginViewModel
 ) {
     when (response) {
         Response.Loading -> {
@@ -30,12 +33,18 @@ fun ResponseStatus(
 
         is Response.Success -> {
             LaunchedEffect(Unit) {
-                //TODO preguntar aqui si es un niño o un especialista
-                navController.navigate(route = AppScreen.HomeScreen.route) {
+                val targetRoute = if (viewModel.rol == Rol.CHILDREN.toString()) {
+                    AppScreen.HomeScreen.route
+                } else {
+                    AppScreen.SpecialistScreen.route
+                }
+
+                navController.navigate(route = targetRoute) {
                     popUpTo(AppScreen.LoginScreen.route) {
                         inclusive = true
                     }
                 }
+
             }
             Toast.makeText(LocalContext.current, LOGIN_SUCCESS, Toast.LENGTH_SHORT)
                 .show()

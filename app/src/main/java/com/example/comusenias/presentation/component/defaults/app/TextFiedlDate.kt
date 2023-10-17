@@ -40,6 +40,7 @@ fun TextFieldDate(
             { _, year, month, dayOfMonth ->
                 value = LocalDate.of(year, month + 1, dayOfMonth).toString()
                 onValueChange(value)
+                validateField()
             },
             date.year,
             date.monthValue - 1,

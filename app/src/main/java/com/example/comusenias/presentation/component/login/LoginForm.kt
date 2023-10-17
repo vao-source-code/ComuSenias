@@ -15,7 +15,6 @@ import androidx.navigation.NavHostController
 import com.example.comusenias.presentation.component.defaults.app.ButtonApp
 import com.example.comusenias.presentation.component.defaults.app.TextFieldApp
 import com.example.comusenias.presentation.component.defaults.app.TextFieldAppPassword
-import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.EMAIL_TEXT
 import com.example.comusenias.presentation.ui.theme.LOGIN
 import com.example.comusenias.presentation.ui.theme.PASSWORD
@@ -31,8 +30,9 @@ fun LoginForm(
     val state = viewModel.state
     ResponseStatus(
         navController = navController,
-        response = viewModel.loginResponse
-        )
+        response = viewModel.loginResponse,
+        viewModel = viewModel
+    )
 
     Column(
         modifier = Modifier
@@ -60,7 +60,12 @@ fun LoginForm(
         ButtonApp(
             titleButton = LOGIN,
             enabledButton = viewModel.isLoginEnabled,
-            onClickButton = { navController.navigate(route = AppScreen.HomeScreen.route) },
+            onClickButton = { viewModel.login() },
         )
     }
+    ResponseStatus(
+        navController = navController,
+        response = viewModel.loginResponse,
+        viewModel = viewModel
+    )
 }

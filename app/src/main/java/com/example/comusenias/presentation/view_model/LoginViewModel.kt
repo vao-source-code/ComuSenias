@@ -5,10 +5,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.comusenias.constants.PreferencesConstant.PREFERENCE_ROL_CURRENT
 import com.example.comusenias.domain.library.LibraryString
 import com.example.comusenias.domain.models.Response
 import com.example.comusenias.domain.models.state.LoginState
 import com.example.comusenias.domain.use_cases.auth.AuthFactoryUseCases
+import com.example.comusenias.domain.use_cases.shared_preferences.DataRolStorageFactory
 import com.example.comusenias.domain.use_cases.users.UsersFactoryUseCases
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.INVALID_EMAIL
@@ -23,7 +25,8 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val authUseCases: AuthFactoryUseCases,
-    private val usersUseCase: UsersFactoryUseCases
+    private val usersUseCase: UsersFactoryUseCases,
+    private val dataRolStorageFactory: DataRolStorageFactory
 ) :
     ViewModel() {
 
@@ -36,7 +39,7 @@ class LoginViewModel @Inject constructor(
     var errorPassword: String by mutableStateOf(EMPTY_STRING)
     var isLoginEnabled = false
     val currentUser = authUseCases.getCurrentUserUseCase()
-    var rolActual = ""
+    var rol = ""
 
     init {
         currentUser?.let { loginResponse = Response.Success(it) }
@@ -46,9 +49,14 @@ class LoginViewModel @Inject constructor(
     fun onLogin() = viewModelScope.launch(IO) {
         currentUser?.let {
             usersUseCase.getUserByIdUseCase(it.uid).collect { user ->
-                rolActual = user.rol
+                dataRolStorageFactory.putRolValue(PREFERENCE_ROL_CURRENT, user.rol)
+                rolLogin()
             }
         }
+    }
+
+    fun rolLogin() = viewModelScope.launch(IO) {
+        rol = dataRolStorageFactory.getRolValue(PREFERENCE_ROL_CURRENT) ?: ""
     }
 
     fun enabledLoginButton() {
@@ -73,6 +81,7 @@ class LoginViewModel @Inject constructor(
         loginResponse = Response.Loading
         val result = authUseCases.loginUseCase(state.email, state.password)
         loginResponse = result
+        rolLogin()
     }
 
     fun onEmailInput(email: String) {

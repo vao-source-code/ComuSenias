@@ -15,7 +15,7 @@ import com.example.comusenias.domain.models.users.ChildrenModel
 import com.example.comusenias.domain.models.users.UserModel
 import com.example.comusenias.domain.use_cases.auth.AuthFactoryUseCases
 import com.example.comusenias.domain.use_cases.children.ChildrenFactory
-import com.example.comusenias.domain.use_cases.test.DataUserStorageFactory
+import com.example.comusenias.domain.use_cases.shared_preferences.DataUserStorageFactory
 import com.example.comusenias.domain.use_cases.users.UsersFactoryUseCases
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.INVALID_DATE
@@ -79,8 +79,7 @@ class TestChildrenRegisterViewModel @Inject constructor(
     }
 
     private fun enabledRegisterButton() {
-        isRegisterEnabled = true
-        //isNameValid && isTelValid && isDateValid
+        isRegisterEnabled = isNameValid && isTelValid && isDateValid
     }
 
     fun validateName() {

@@ -13,7 +13,7 @@ import com.example.comusenias.domain.models.state.RegisterState
 import com.example.comusenias.domain.models.users.Rol
 import com.example.comusenias.domain.models.users.UserModel
 import com.example.comusenias.domain.use_cases.auth.AuthFactoryUseCases
-import com.example.comusenias.domain.use_cases.test.DataUserStorageFactory
+import com.example.comusenias.domain.use_cases.shared_preferences.DataUserStorageFactory
 import com.example.comusenias.domain.use_cases.users.UsersFactoryUseCases
 import com.example.comusenias.presentation.ui.theme.INVALID_EMAIL
 import com.example.comusenias.presentation.ui.theme.RESTRICTION_PASSWORD_USER_ACCOUNT

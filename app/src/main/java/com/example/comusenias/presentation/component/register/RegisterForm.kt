@@ -20,7 +20,6 @@ import androidx.navigation.NavHostController
 import com.example.comusenias.presentation.component.defaults.app.ButtonApp
 import com.example.comusenias.presentation.component.defaults.app.TextFieldApp
 import com.example.comusenias.presentation.component.defaults.app.TextFieldAppPassword
-import com.example.comusenias.presentation.component.login.ResponseStatus
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.CONFIRM_PASS
 import com.example.comusenias.presentation.ui.theme.EMAIL_TEXT
@@ -41,10 +40,6 @@ fun RegisterForm(
     var route by remember { mutableStateOf(childFormScreen) }
     val currentRoute = remember { mutableStateOf(route) }
 
-    ResponseStatus(
-        navController = navController,
-        response = viewModel.registerResponse
-    )
 
     Column(
         modifier = Modifier.fillMaxWidth(),

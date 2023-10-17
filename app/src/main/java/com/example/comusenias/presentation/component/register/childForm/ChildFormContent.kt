@@ -77,6 +77,6 @@ fun ChildFormContent(
             onClickButton = { viewModel.onRegister() },
         )
     }
-    ResponseStatusChildrenRegister(navController = navController)
+    ResponseStatusChildrenRegister(navController = navController, viewModel = viewModel)
 
 }
