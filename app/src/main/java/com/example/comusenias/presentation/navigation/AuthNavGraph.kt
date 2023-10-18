@@ -1,5 +1,7 @@
 package com.example.comusenias.presentation.navigation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -8,11 +10,10 @@ import androidx.navigation.navigation
 import com.example.comusenias.presentation.screen.login.LoginScreen
 import com.example.comusenias.presentation.screen.onboarding.OnBoardingScreen
 import com.example.comusenias.presentation.screen.register.ChildFormScreen
-import com.example.comusenias.presentation.screen.register.ChoseYourProfileScreen
-import com.example.comusenias.presentation.screen.register.SpecialistFormScreen
 import com.example.comusenias.presentation.screen.register.RegisterScreen
+import com.example.comusenias.presentation.screen.register.SpecialistFormScreen
 
-
+@RequiresApi(Build.VERSION_CODES.O)
 fun NavGraphBuilder.authNavGraph(navController: NavHostController, modifier: Modifier) {
     navigation(
         route = Graph.AUTHENTICATION,
@@ -22,7 +23,6 @@ fun NavGraphBuilder.authNavGraph(navController: NavHostController, modifier: Mod
         composable(route = AuthScreen.LoginScreen.route) {
             LoginScreen(navController = navController, modifier = modifier)
         }
-
         composable(route = AuthScreen.RegisterScreen.route) {
             RegisterScreen(navController = navController, modifier = modifier)
         }
@@ -32,16 +32,12 @@ fun NavGraphBuilder.authNavGraph(navController: NavHostController, modifier: Mod
         composable(AppScreen.RegisterScreen.route) {
             RegisterScreen(navController = navController, modifier = modifier)
         }
-        composable(AppScreen.ChoseYourProfileScreen.route) {
-            ChoseYourProfileScreen(navController = navController, modifier = modifier)
-        }
         composable(AppScreen.EspecialistFormScreen.route) {
             SpecialistFormScreen(navController = navController, modifier = modifier)
         }
         composable(AppScreen.ChildFormScreen.route) {
             ChildFormScreen(navController = navController, modifier = modifier)
         }
-
     }
 }
 
