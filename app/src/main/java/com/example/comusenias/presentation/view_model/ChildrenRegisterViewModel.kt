@@ -20,8 +20,8 @@ import com.example.comusenias.domain.use_cases.users.UsersFactoryUseCases
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.INVALID_DATE
 import com.example.comusenias.presentation.ui.theme.INVALID_PHONE
+import com.example.comusenias.presentation.ui.theme.RESTRICTION_NAME_USER_ACCOUNT
 import com.example.comusenias.presentation.ui.theme.emptyString
-import com.example.comusenias.presentation.ui.theme.restrictionNameUserAccount
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -73,7 +73,8 @@ class ChildrenRegisterViewModel @Inject constructor(
         registerResponse = result
     }
 
-    fun onRegister() {
+    fun onRegister() = viewModelScope.launch {
+        user = dataUserStorageFactoryUseCases.getUserValue(PreferencesConstant.PREFERENCE_USER)!!
         register(user)
     }
 
@@ -84,7 +85,7 @@ class ChildrenRegisterViewModel @Inject constructor(
     fun validateName() {
         val isValid = LibraryString.validUserName(stateChildren.name)
         isNameValid = isValid
-        errorName = if (isValid) emptyString else restrictionNameUserAccount
+        errorName = if (isValid) emptyString else RESTRICTION_NAME_USER_ACCOUNT
         enabledRegisterButton()
     }
 

@@ -20,8 +20,10 @@ import com.example.comusenias.domain.use_cases.users.UsersFactoryUseCases
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.INVALID_DATE
 import com.example.comusenias.presentation.ui.theme.INVALID_PHONE
+import com.example.comusenias.presentation.ui.theme.RESTRICTION_NAME_USER_ACCOUNT
+import com.example.comusenias.presentation.ui.theme.RESTRICTION_SPECIALIST_ACCOUNT
+import com.example.comusenias.presentation.ui.theme.RESTRICTION_TITLE_MEDICAL_ACCOUNT
 import com.example.comusenias.presentation.ui.theme.emptyString
-import com.example.comusenias.presentation.ui.theme.restrictionNameUserAccount
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
@@ -73,7 +75,6 @@ class SpecialistRegisterViewModel @Inject constructor(
     var specialistModel = SpecialistModel()
     var user = UserModel()
 
-
     init {
         init()
     }
@@ -88,7 +89,8 @@ class SpecialistRegisterViewModel @Inject constructor(
         registerResponse = result
     }
 
-    fun onRegister() {
+    fun onRegister() = viewModelScope.launch {
+        user = dataUserStorageFactoryUseCases.getUserValue(PREFERENCE_USER)!!
         register(user)
     }
 
@@ -101,21 +103,21 @@ class SpecialistRegisterViewModel @Inject constructor(
     fun validateName() {
         val isValid = LibraryString.validUserName(stateSpecialist.name)
         isNameValid = isValid
-        errorName = if (isValid) emptyString else restrictionNameUserAccount
+        errorName = if (isValid) emptyString else RESTRICTION_NAME_USER_ACCOUNT
         enabledRegisterButton()
     }
 
     fun validateSpeciality() {
         val isValid = stateSpecialist.speciality.isNotEmpty()
         isSpecialityValid = isValid
-        errorSpeciality = if (isValid) emptyString else restrictionNameUserAccount
+        errorSpeciality = if (isValid) emptyString else RESTRICTION_SPECIALIST_ACCOUNT
         enabledRegisterButton()
     }
 
     fun validateMedicalLicense() {
         val isValid = stateSpecialist.medicalLicense.isNotEmpty()
         isMedicalLicenseValid = isValid
-        errorMedicalLicense = if (isValid) emptyString else restrictionNameUserAccount
+        errorMedicalLicense = if (isValid) emptyString else RESTRICTION_NAME_USER_ACCOUNT
         enabledRegisterButton()
     }
 
@@ -127,7 +129,7 @@ class SpecialistRegisterViewModel @Inject constructor(
     }
 
     fun validateDate() {
-        val isValid = stateSpecialist.date.isNotEmpty()
+        val isValid = LibraryString.validDateOfBirth(stateSpecialist.date)
         isDate = isValid
         errorDate = if (isValid) emptyString else INVALID_DATE
         enabledRegisterButton()
@@ -143,7 +145,7 @@ class SpecialistRegisterViewModel @Inject constructor(
     fun validateTitleMedical() {
         val isValid = stateSpecialist.titleMedical.isNotEmpty()
         isTitleMedical = isValid
-        errorTitleMedical = if (isValid) emptyString else restrictionNameUserAccount
+        errorTitleMedical = if (isValid) emptyString else RESTRICTION_TITLE_MEDICAL_ACCOUNT
         enabledRegisterButton()
     }
 

@@ -62,21 +62,24 @@ fun EspecialistFormContent(
                 onValueChange = { viewModel.onNameInputChanged(it) },
                 validateField = { viewModel.validateName() },
                 label = NAME,
-                icon = Icons.Default.Person
+                icon = Icons.Default.Person,
+                errorMsg = viewModel.errorName
+
             )
             TextFieldApp(
                 value = state.tel,
                 onValueChange = { viewModel.onTelInputChanged(it) },
                 validateField = { viewModel.validateTel() },
                 label = NUMBER_PHONE,
-                icon = Icons.Default.Phone
+                icon = Icons.Default.Phone,
+                errorMsg = viewModel.errorTelephone
             )
             TextFieldDate(
                 label = BIRTHDAY,
                 onValueChange = { birthday ->
                     viewModel.onDateInputChanged(birthday)
                 },
-                validateField = { viewModel.validateDate() }
+                validateField = { viewModel.validateDate() },
             )
             Row(
                 modifier = Modifier
@@ -91,7 +94,8 @@ fun EspecialistFormContent(
                     onValueChange = { viewModel.onMedicalLicenseInputChanged(it) },
                     validateField = { viewModel.validateMedicalLicense() },
                     label = PROFESSIONAL_REGISTRATION,
-                    icon = null
+                    icon = null,
+                    errorMsg = viewModel.errorMedicalLicense
                 )
                 TextFieldDate(
                     modifier = Modifier.width(SIZE160.dp),
@@ -107,14 +111,16 @@ fun EspecialistFormContent(
                 onValueChange = { viewModel.onTitleMedicalInputChanged(it) },
                 validateField = { viewModel.validateTitleMedical() },
                 label = MEDICAL_TITLE,
-                icon = null
+                icon = null,
+                errorMsg = viewModel.errorTitleMedical
             )
             TextFieldApp(
                 value = state.speciality,
                 onValueChange = { viewModel.onSpecialityInputChanged(it) },
                 validateField = { viewModel.validateSpeciality() },
                 label = SPECIALTY,
-                icon = null
+                icon = null,
+                errorMsg = viewModel.errorSpeciality
             )
             TermsAndConditions { isCheck ->
                 // Devuelva un boolean si es check

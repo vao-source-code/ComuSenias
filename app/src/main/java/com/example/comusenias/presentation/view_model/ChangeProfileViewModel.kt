@@ -16,7 +16,7 @@ import com.example.comusenias.domain.models.users.UserModel
 import com.example.comusenias.domain.use_cases.users.UsersFactoryUseCases
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.PATH_IMAGE
-import com.example.comusenias.presentation.ui.theme.restrictionNameUserAccount
+import com.example.comusenias.presentation.ui.theme.RESTRICTION_NAME_USER_ACCOUNT
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
@@ -108,7 +108,7 @@ class ChangeProfileViewModel @Inject constructor(
             errorUserName = EMPTY_STRING
         } else {
             isUserNameValid = false
-            errorUserName = restrictionNameUserAccount
+            errorUserName = RESTRICTION_NAME_USER_ACCOUNT
         }
     }
 }
