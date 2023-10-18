@@ -29,7 +29,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class TestChildrenRegisterViewModel @Inject constructor(
+class ChildrenRegisterViewModel @Inject constructor(
     private val authUseCases: AuthFactoryUseCases,
     private val usersUseCase: UsersFactoryUseCases,
     private val childrenFactoryUsesCases: ChildrenFactory,
@@ -71,7 +71,6 @@ class TestChildrenRegisterViewModel @Inject constructor(
         registerResponse = Response.Loading
         val result = authUseCases.registerUseCase(user)
         registerResponse = result
-
     }
 
     fun onRegister() {

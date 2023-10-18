@@ -1,4 +1,4 @@
-package com.example.comusenias.presentation.component.register.childForm
+package com.example.comusenias.presentation.component.register.especialistForm
 
 import android.widget.Toast
 import androidx.compose.runtime.Composable
@@ -9,12 +9,12 @@ import androidx.navigation.NavHostController
 import com.example.comusenias.domain.models.Response
 import com.example.comusenias.presentation.component.defaults.DefaultLoadingProgressIndicator
 import com.example.comusenias.presentation.navigation.AppScreen
-import com.example.comusenias.presentation.view_model.ChildrenRegisterViewModel
+import com.example.comusenias.presentation.view_model.SpecialistRegisterViewModel
 
 @Composable
 fun ResponseStatusChildrenRegister(
     navController: NavHostController,
-    viewModel: ChildrenRegisterViewModel = hiltViewModel()
+    viewModel: SpecialistRegisterViewModel = hiltViewModel()
 ) {
     when (val registerResponse = viewModel.registerResponse) {
         is Response.Loading -> {
@@ -26,7 +26,7 @@ fun ResponseStatusChildrenRegister(
                 viewModel.createUser()
                 //Elimino asi el total del historial de atras
                 navController.popBackStack(AppScreen.LoginScreen.route, inclusive = true)
-                navController.navigate(route = AppScreen.HomeScreen.route)
+                navController.navigate(route = AppScreen.SpecialistScreen.route)
             }
         }
 

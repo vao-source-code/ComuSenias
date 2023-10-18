@@ -17,12 +17,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.comusenias.presentation.component.defaults.app.ButtonApp
 import com.example.comusenias.presentation.component.defaults.app.TextFieldApp
+import com.example.comusenias.presentation.component.defaults.app.TextFieldDate
 import com.example.comusenias.presentation.component.register.TermsAndConditions
-import com.example.comusenias.presentation.navigation.AppScreen
+import com.example.comusenias.presentation.ui.theme.BIRTHDAY
 import com.example.comusenias.presentation.ui.theme.CONTINUE
+import com.example.comusenias.presentation.ui.theme.EXPIRY_OF_PROFESSIONAL_REGISTRATION
 import com.example.comusenias.presentation.ui.theme.MEDICAL_TITLE
 import com.example.comusenias.presentation.ui.theme.NAME
 import com.example.comusenias.presentation.ui.theme.NUMBER_PHONE
@@ -32,12 +35,17 @@ import com.example.comusenias.presentation.ui.theme.SIZE2
 import com.example.comusenias.presentation.ui.theme.SIZE20
 import com.example.comusenias.presentation.ui.theme.SIZE64
 import com.example.comusenias.presentation.ui.theme.SPECIALTY
+import com.example.comusenias.presentation.view_model.SpecialistRegisterViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun EspecialistFormContent(
-    navController: NavHostController
+    navController: NavHostController,
+    viewModel: SpecialistRegisterViewModel = hiltViewModel()
 ) {
+
+    val state = viewModel.stateSpecialist
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -50,22 +58,26 @@ fun EspecialistFormContent(
             verticalArrangement = Arrangement.spacedBy(SIZE2.dp)
         ) {
             TextFieldApp(
-                value = "",
-                onValueChange = {},
+                value = state.name,
+                onValueChange = { viewModel.onNameInputChanged(it) },
+                validateField = { viewModel.validateName() },
                 label = NAME,
                 icon = Icons.Default.Person
             )
             TextFieldApp(
-                value = "",
-                onValueChange = {},
+                value = state.tel,
+                onValueChange = { viewModel.onTelInputChanged(it) },
+                validateField = { viewModel.validateTel() },
                 label = NUMBER_PHONE,
                 icon = Icons.Default.Phone
             )
-           /* TextFieldDate(
-                label = BIRTHDAY
-            ) { birthday ->
-                // Devuelve en formato string la fecha de nacimiento
-            }*/
+            TextFieldDate(
+                label = BIRTHDAY,
+                onValueChange = { birthday ->
+                    viewModel.onDateInputChanged(birthday)
+                },
+                validateField = { viewModel.validateDate() }
+            )
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -75,27 +87,32 @@ fun EspecialistFormContent(
             ) {
                 TextFieldApp(
                     modifier = Modifier.width(SIZE160.dp),
-                    value = "",
-                    onValueChange = {},
+                    value = state.medicalLicense,
+                    onValueChange = { viewModel.onMedicalLicenseInputChanged(it) },
+                    validateField = { viewModel.validateMedicalLicense() },
                     label = PROFESSIONAL_REGISTRATION,
                     icon = null
                 )
-                /*TextFieldDate(
+                TextFieldDate(
                     modifier = Modifier.width(SIZE160.dp),
                     label = EXPIRY_OF_PROFESSIONAL_REGISTRATION,
-                ) { expiry ->
-                    //Devuelve en formato string la fecha de vencimiento
-                }*/
+                    onValueChange = { expiration ->
+                        viewModel.onMedicalLicenseExpirationInputChanged(expiration)
+                    },
+                    validateField = { viewModel.validateMedicalLicenseExpirationValid() }
+                )
             }
             TextFieldApp(
-                value = "",
-                onValueChange = {},
+                value = state.titleMedical,
+                onValueChange = { viewModel.onTitleMedicalInputChanged(it) },
+                validateField = { viewModel.validateTitleMedical() },
                 label = MEDICAL_TITLE,
                 icon = null
             )
             TextFieldApp(
-                value = "",
-                onValueChange = {},
+                value = state.speciality,
+                onValueChange = { viewModel.onSpecialityInputChanged(it) },
+                validateField = { viewModel.validateSpeciality() },
                 label = SPECIALTY,
                 icon = null
             )
@@ -105,8 +122,10 @@ fun EspecialistFormContent(
         }
         ButtonApp(
             titleButton = CONTINUE,
-            enabledButton = true,
-            onClickButton = { navController.navigate(route = AppScreen.SpecialistScreen.route) }
+            enabledButton = viewModel.isRegisterEnabled,
+            onClickButton = { viewModel.onRegister() },
         )
     }
+    ResponseStatusChildrenRegister(navController = navController, viewModel = viewModel)
+
 }

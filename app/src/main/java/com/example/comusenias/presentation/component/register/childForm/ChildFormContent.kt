@@ -25,13 +25,13 @@ import com.example.comusenias.presentation.ui.theme.NAME
 import com.example.comusenias.presentation.ui.theme.NUMBER_PHONE
 import com.example.comusenias.presentation.ui.theme.SIZE100
 import com.example.comusenias.presentation.ui.theme.SIZE2
-import com.example.comusenias.presentation.view_model.TestChildrenRegisterViewModel
+import com.example.comusenias.presentation.view_model.ChildrenRegisterViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ChildFormContent(
     navController: NavHostController,
-    viewModel: TestChildrenRegisterViewModel = hiltViewModel()
+    viewModel: ChildrenRegisterViewModel = hiltViewModel()
 ) {
 
     val state = viewModel.stateChildren
