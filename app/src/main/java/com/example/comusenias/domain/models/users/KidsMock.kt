@@ -3,6 +3,7 @@ package com.example.comusenias.domain.models.users
 import com.example.comusenias.R
 import com.example.comusenias.domain.models.game.LevelModel
 import com.example.comusenias.domain.models.game.SubLevelModel
+import com.example.comusenias.presentation.component.home.StatusGame
 
 class KidsMock {
 
@@ -14,6 +15,7 @@ class KidsMock {
             imageOnly = R.drawable.letra_a_solo.toString(),
             randomLetter = "O",
             randomImage = R.drawable.sign_o.toString(),
+
         ),
         SubLevelModel(
             "id",
@@ -22,6 +24,7 @@ class KidsMock {
             imageOnly = R.drawable.sign_o.toString(),
             randomLetter = "A",
             randomImage = R.drawable.letra_a_solo.toString(),
+            isCompleted = StatusGame.IN_PROGRESS
         )
     )
 

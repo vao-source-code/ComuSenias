@@ -7,6 +7,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
+import com.example.comusenias.constants.PreferencesConstant
 import com.example.comusenias.domain.models.Response
 import com.example.comusenias.domain.models.users.Rol
 import com.example.comusenias.presentation.component.defaults.DefaultLoadingProgressIndicator
@@ -33,7 +34,10 @@ fun ResponseStatus(
 
         is Response.Success -> {
             LaunchedEffect(Unit) {
-                val targetRoute = if (viewModel.rol == Rol.CHILDREN.toString()) {
+                val targetRoute = if (viewModel.dataRolStorageFactory.getRolValue(
+                        PreferencesConstant.PREFERENCE_ROL_CURRENT
+                    ) == Rol.CHILDREN.toString()
+                ) {
                     AppScreen.HomeScreen.route
                 } else {
                     AppScreen.SpecialistScreen.route

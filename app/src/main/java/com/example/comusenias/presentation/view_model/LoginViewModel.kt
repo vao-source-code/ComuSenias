@@ -26,7 +26,7 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val authUseCases: AuthFactoryUseCases,
     private val usersUseCase: UsersFactoryUseCases,
-    private val dataRolStorageFactory: DataRolStorageFactory
+    public val dataRolStorageFactory: DataRolStorageFactory
 ) :
     ViewModel() {
 
@@ -39,7 +39,7 @@ class LoginViewModel @Inject constructor(
     var errorPassword: String by mutableStateOf(EMPTY_STRING)
     var isLoginEnabled = false
     val currentUser = authUseCases.getCurrentUserUseCase()
-    var rol = ""
+    var rol: String by mutableStateOf(EMPTY_STRING)
 
     init {
         currentUser?.let { loginResponse = Response.Success(it) }
