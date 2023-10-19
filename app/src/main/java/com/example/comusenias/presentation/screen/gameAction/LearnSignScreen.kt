@@ -29,7 +29,7 @@ fun LearnSignScreen(
         }
 
         is Response.Error -> {
-            ShowRetrySnackBar(text = ERROR_RETRY_SUB_LEVEL, onActionClick = {
+            ShowRetrySnackBar(text = ERROR_RETRY_SUB_LEVEL, true, onActionClick = {
                 levelViewModel.getLevels()
             })
         }

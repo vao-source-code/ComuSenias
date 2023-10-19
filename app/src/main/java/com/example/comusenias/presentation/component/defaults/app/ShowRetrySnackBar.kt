@@ -22,9 +22,10 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun ShowRetrySnackBar(
     text: String,
+    snackbarVisible: Boolean,
     onActionClick: () -> Unit
 ) {
-    var snackbarVisible by remember { mutableStateOf(false) }
+    var snackBar by remember { mutableStateOf(snackbarVisible) }
 
     if (snackbarVisible) {
         Snackbar(
@@ -32,7 +33,7 @@ fun ShowRetrySnackBar(
             action = {
                 TextButton(
                     onClick = {
-                        snackbarVisible = false
+                        snackBar = snackbarVisible
                         onActionClick()
                     }
                 ) {
