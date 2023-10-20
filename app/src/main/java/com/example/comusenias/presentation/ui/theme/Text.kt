@@ -91,8 +91,13 @@ const val THE_SIGN_IS : String = "La seña es..."
 const val FINISH : String = "Finalizar"
 const val WHAT_SIGN_IS : String = "¿Que seña es la letra?"
 const val WHAT_LETTER_IS : String = "¿Que letra es la seña?"
+const val CONFIRM : String = "Confirmar"
+const val USER_PROFILE: String = "User Profile"
+const val ICON: String = "Icon"
 const val LEARN_THE  : String = "Aprendamos las "
 const val BIRTHDAY  : String = "Fecha de Nacimiento"
+const val AGE : String = "Fecha de Nacimiento"
+
 
 /*-----------------BUTTONS AND ICONS-----------------*/
 const val CLOSE : String = "Salir de la pantalla"
