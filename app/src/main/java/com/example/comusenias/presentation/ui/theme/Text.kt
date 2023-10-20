@@ -90,6 +90,8 @@ const val USER_PROFILE: String = "User Profile"
 const val ICON: String = "Icon"
 const val LEARN_THE  : String = "Aprendamos las "
 const val BIRTHDAY  : String = "Fecha de Nacimiento"
+const val AGE : String = "Fecha de Nacimiento"
+
 
 /*-----------------BUTTONS AND ICONS-----------------*/
 const val CLOSE : String = "Salir de la pantalla"
