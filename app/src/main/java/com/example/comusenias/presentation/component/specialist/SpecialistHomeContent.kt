@@ -78,9 +78,7 @@ fun PatientContainer(onClickCard: () -> Unit = {}) {
 
         if (!items.isEmpty()) {
             items(items) { item ->
-                CardProfileUser(user = item) {
-                    
-                }
+                CardProfileUser(user = item,onClickCard)
             }
         } else {
             item {

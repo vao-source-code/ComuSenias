@@ -25,7 +25,7 @@ fun CardProfileUser(user: UserModel, onClickCard: () -> Unit) {
             .padding(16.dp)
             .fillMaxWidth()
             .height(100.dp)
-            .clickable(onClick = onClickCard),
+            .clickable(onClick = { onClickCard() }),
         elevation = 8.dp,
         border = BorderStroke(1.dp, color = Color.LightGray),
         shape = MaterialTheme.shapes.medium

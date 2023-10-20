@@ -31,11 +31,8 @@ sealed class AppScreen(val route: String) {
     object CongratsPlayScreen : AppScreen("congrats_play")
     object InterpretationStatusScreen : AppScreen("Interpretation_status_screen")
     object NotificationScreen : AppScreen("notification_screen")
-
     object SpecialistScreen : AppScreen("specialist_screen")
     object ProfilePatientScreen : AppScreen("profile_patient_screen")
-
-    object SpecialistDetailsScreen : AppScreen("specialist_details_screen")
     object ChoseTheLetterPlayScreen : AppScreen("chose_the_letter_play/{subLevel}") {
         fun createRoute(subLevel: String) = "chose_the_letter_play/$subLevel"
     }
