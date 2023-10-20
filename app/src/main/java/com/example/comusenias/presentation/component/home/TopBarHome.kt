@@ -27,9 +27,18 @@ import com.example.comusenias.presentation.ui.theme.iconColorProgress
 @Preview(showBackground = true)
 
 @Composable
-fun TopBarHome(onClick: () -> Unit = {}) {
+fun TopBarHome(
+    name: String = "",
+    image: Int = R.drawable.profile_avatar,
+    onClick: () -> Unit = {}
+) {
     TopAppBar(
-        title = { ContentHelloUser() },
+        title = {
+            ContentHelloUser(
+                name = name,
+                image = image
+            )
+        },
         backgroundColor = Color.White,
         contentColor = Color.White,
         actions = {
@@ -37,7 +46,7 @@ fun TopBarHome(onClick: () -> Unit = {}) {
                 onClick = { onClick() }
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.notifications ),
+                    painter = painterResource(id = R.drawable.notifications),
                     contentDescription = "",
                     tint = iconColorProgress
                 )
@@ -47,7 +56,10 @@ fun TopBarHome(onClick: () -> Unit = {}) {
 }
 
 @Composable
-fun ContentHelloUser() {
+fun ContentHelloUser(
+    name: String,
+    image: Int
+) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.End),
         verticalAlignment = Alignment.CenterVertically,

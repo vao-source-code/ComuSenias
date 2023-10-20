@@ -15,19 +15,19 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.comusenias.presentation.activities.MainActivity
-import com.example.comusenias.presentation.component.specialist.SpecialistDetailsScreen
 import com.example.comusenias.presentation.screen.gameAction.ChoseTheLetterPlayScreen
-import com.example.comusenias.presentation.screen.home.HomeScreen
 import com.example.comusenias.presentation.screen.gameAction.ChoseTheSignPlayScreen
 import com.example.comusenias.presentation.screen.gameAction.CongratsPlayScreen
 import com.example.comusenias.presentation.screen.gameAction.InterpretationStatusScreen
 import com.example.comusenias.presentation.screen.gameAction.LearnSignScreen
 import com.example.comusenias.presentation.screen.gameAction.MakeSignPlayScreen
+import com.example.comusenias.presentation.screen.home.HomeScreen
 import com.example.comusenias.presentation.screen.notification.NotificationScreen
 import com.example.comusenias.presentation.screen.premiun.PremiunScreen
 import com.example.comusenias.presentation.screen.profile.ChangeProfileScreen
 import com.example.comusenias.presentation.screen.profile.ProfileScreen
-import com.example.comusenias.presentation.screen.specialist.SpecialistHomeExample
+import com.example.comusenias.presentation.screen.specialist.ProfilePatientScreen
+import com.example.comusenias.presentation.screen.specialist.SpecialistScreen
 import com.example.comusenias.presentation.splashScreen.SplashScreen
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -74,11 +74,11 @@ private fun GetNavHost(
         composableChangeProfile(navController)
 
         composable(AppScreen.SpecialistScreen.route) {
-            SpecialistHomeExample(navController = navController, modifier = modifier)
+            SpecialistScreen(navController = navController, modifier = modifier)
         }
 
-        composable(AppScreen.SpecialistDetailsScreen.route) {
-            SpecialistDetailsScreen(navController = navController, modifier = modifier)
+        composable(AppScreen.ProfilePatientScreen.route) {
+            ProfilePatientScreen(navController = navController, modifier = modifier)
         }
 
         composableLearnSign(navController, modifier)

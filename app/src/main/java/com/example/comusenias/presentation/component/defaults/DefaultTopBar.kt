@@ -16,6 +16,7 @@ import androidx.navigation.NavHostController
 import com.example.comusenias.presentation.ui.theme.ComuSeniasTheme
 import com.example.comusenias.presentation.ui.theme.arrowBack
 import com.example.comusenias.presentation.ui.theme.backgroundColorApp
+import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
 import com.example.comusenias.presentation.ui.theme.size19
 import com.example.comusenias.presentation.ui.theme.title
@@ -32,8 +33,8 @@ fun DefaultTopBar(
             Text(text = title, fontSize = size19.sp, color = backgroundColorApp)
         },
         colors = TopAppBarDefaults.smallTopAppBarColors(
-            titleContentColor = Color.White,
-            containerColor = primaryColorApp
+            titleContentColor = blackColorApp,
+            containerColor = Color.White
         ),
         navigationIcon = {
             if (upAvailable) {
@@ -41,7 +42,7 @@ fun DefaultTopBar(
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
                         contentDescription = arrowBack,
-                        tint = backgroundColorApp
+                        tint = blackColorApp
                     )
                 }
             }
