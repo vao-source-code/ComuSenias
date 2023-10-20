@@ -57,7 +57,7 @@ class RegisterViewModel @Inject constructor(
         register(user)
     }
 
-    private fun enabledRegisterButton() {
+    fun enabledRegisterButton() {
         isRegisterEnabled =
             isEmailValid && isPasswordValid && isConfirmPasswordValid
     }

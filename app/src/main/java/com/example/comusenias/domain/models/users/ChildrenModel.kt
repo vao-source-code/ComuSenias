@@ -3,6 +3,7 @@ package com.example.comusenias.domain.models.users
 import com.example.comusenias.domain.models.game.LevelModel
 import com.example.comusenias.domain.models.observation.Observation
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
+import com.google.gson.Gson
 
 data class ChildrenModel(
     var id: String = EMPTY_STRING,
@@ -18,4 +19,24 @@ data class ChildrenModel(
     var isPremium: Boolean = false,
     var levels: List<LevelModel> = listOf(),
     var observation: List<Observation>? = listOf()
-)
+) {
+    fun toJson(): String = Gson().toJson(
+        ChildrenModel(
+            id,
+            email,
+            tel,
+            name,
+            image,
+            date,
+            idSpecialist,
+            specialist,
+            levelActual,
+            subLevelActual,
+            isPremium,
+        )
+    )
+
+    companion object {
+        fun fromJson(data: String): ChildrenModel = Gson().fromJson(data, ChildrenModel::class.java)
+    }
+}

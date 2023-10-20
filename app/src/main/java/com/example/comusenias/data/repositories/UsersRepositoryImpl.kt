@@ -54,7 +54,9 @@ class UsersRepositoryImpl @Inject constructor(
         return try {
             val mapImage: MutableMap<String, Any> = HashMap()
             //aca tiene que ser email y rol
-            //mapImage["userName"] = user.userName
+            mapImage["email"] = user.email
+            mapImage["rol"] = user.rol
+            mapImage["password"] = LibraryPassword.hashPassword(user.password)
             //mapImage["image"] = user.image?.let { it } ?: ""
             usersRef.document(user.id).update(mapImage).await()
             Response.Success(true)

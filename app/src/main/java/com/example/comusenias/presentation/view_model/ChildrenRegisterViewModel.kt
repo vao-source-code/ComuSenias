@@ -109,6 +109,7 @@ class ChildrenRegisterViewModel @Inject constructor(
         user.password = LibraryPassword.hashPassword(user.password)
         usersUseCase.createUserUseCase(user)
         childrenModel = ChildrenModel(
+            email = user.email,
             name = stateChildren.name,
             tel = stateChildren.tel,
             date = stateChildren.date,

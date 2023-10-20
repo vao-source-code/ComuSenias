@@ -58,11 +58,8 @@ class SpecialistRepositoryImpl @Inject constructor(
             val mapImage: MutableMap<String, Any> = HashMap()
             mapImage["name"] = user.name
             mapImage["image"] = user.image?.let { it } ?: ""
-            //TODO poner el resto de los campos
             mapImage["date"] = user.date
-
-
-
+            mapImage["tel"] = user.tel
             specialistRef.document(user.id).update(mapImage).await()
             Response.Success(true)
         } catch (e: Exception) {

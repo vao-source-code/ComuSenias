@@ -123,12 +123,8 @@ dependencies {
     implementation libs.commons
 
     implementation 'com.google.firebase:firebase-storage:20.0.0'
-
-
     //DataStore
     implementation "androidx.datastore:datastore-preferences:1.0.0"
-
-
 }
 kapt {
     correctErrorTypes true

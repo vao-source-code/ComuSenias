@@ -26,6 +26,9 @@ import com.example.comusenias.domain.use_cases.auth.LogoutUseCase
 import com.example.comusenias.domain.use_cases.auth.RegisterUseCase
 import com.example.comusenias.domain.use_cases.children.ChildrenFactory
 import com.example.comusenias.domain.use_cases.children.CreateChildren
+import com.example.comusenias.domain.use_cases.children.GetChildrenById
+import com.example.comusenias.domain.use_cases.children.SaveImageChildren
+import com.example.comusenias.domain.use_cases.children.UpdateChildren
 import com.example.comusenias.domain.use_cases.letters.GetImageUseCase
 import com.example.comusenias.domain.use_cases.letters.LettersFactoryUseCases
 import com.example.comusenias.domain.use_cases.letters.SearchImageLetterUseCase
@@ -158,6 +161,9 @@ object FirebaseModule {
     fun providerChildrenUseCases(usersRepository: ChildrenRepository) =
         ChildrenFactory(
             createChildren = CreateChildren(usersRepository),
+            getChildrenById = GetChildrenById(usersRepository),
+            saveImageChildren = SaveImageChildren(usersRepository),
+            updateChildren = UpdateChildren(usersRepository)
         )
 
     @Provides

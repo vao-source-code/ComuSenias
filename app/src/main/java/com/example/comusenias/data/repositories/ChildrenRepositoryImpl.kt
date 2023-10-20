@@ -48,18 +48,10 @@ class ChildrenRepositoryImpl @Inject constructor(
         return try {
             val mapImage: MutableMap<String, Any> = HashMap()
             mapImage["name"] = user.name
-            mapImage["image"] = user.image?.let { it } ?: ""
-            //TODO poner el resto de los campos
             mapImage["date"] = user.date
-
-            //TODO revisar que anda ok esto
-            // Obtener la lista de observaciones
-            val observations = user.observation
-
-            // Convertir la lista de observaciones a un array de JSON
-            val observationsJSON = observations!!.map { it.toJson() }
-            mapImage["observation"] = observationsJSON
-
+            mapImage["idSpecialist"] = user.idSpecialist
+            mapImage["tel"] = user.tel
+            mapImage["image"] = user.image?.let { it } ?: ""
             childrenRef.document(user.id).update(mapImage).await()
             Response.Success(true)
         } catch (e: Exception) {
