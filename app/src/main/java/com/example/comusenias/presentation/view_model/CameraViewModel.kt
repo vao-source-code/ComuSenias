@@ -1,5 +1,6 @@
 package com.example.comusenias.presentation.view_model
 
+import android.app.Activity
 import android.content.Context
 import androidx.camera.view.PreviewView
 import androidx.lifecycle.LifecycleOwner
@@ -28,9 +29,9 @@ class CameraViewModel @Inject constructor(private val useCases: CameraUseCases):
 
     //Este codigo funciona
     // depues implementamos en jetpack compose en otra parte que es solamente usa la funcionalidad de sacar fotos
-    fun captureAndSave(context: Context){
+    fun captureAndSave(activity: Activity){
         viewModelScope.launch{
-            useCases.captureAndSave(context)
+            useCases.captureAndSave(activity)
         }
     }
 

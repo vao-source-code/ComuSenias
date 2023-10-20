@@ -14,7 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.net.toUri
 import androidx.navigation.NavController
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 import com.example.comusenias.R
 import com.example.comusenias.presentation.component.defaults.ButtonDefault
 import com.example.comusenias.presentation.navigation.AppScreen
@@ -26,6 +29,11 @@ fun TestCamera(navController: NavController) {
         ButtonDefault(text = "Camara", onClick = {
             navController.navigate(AppScreen.CameraScreenPermission.route)
         }, icon = null)
+
+        ButtonDefault(text = "Camera API", onClick = {
+            val galleryScreenRoute = "${AppScreen.GalleryScreen.route}?uriImage=${""}"
+            navController.navigate(galleryScreenRoute)
+        },icon = null)
     }
 }
 

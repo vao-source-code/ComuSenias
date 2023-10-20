@@ -16,9 +16,12 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
+import androidx.navigation.NavController
+import com.example.comusenias.data.api.ApiService
 import com.example.comusenias.data.repositories.GestureRecognizerHelper
 import com.example.comusenias.domain.models.ResultOverlayView
 import com.example.comusenias.domain.repositories.CameraRepository
+import com.example.comusenias.presentation.navigation.AppScreen
 
 import com.google.mediapipe.tasks.vision.core.RunningMode
 import kotlinx.coroutines.flow.Flow
@@ -38,14 +41,15 @@ class CameraRepositoryImpl @Inject constructor(
     private val context: Context,
 ) : CameraRepository, GestureRecognizerHelper.GestureRecognizerListener {
 
+    private lateinit var navController:NavController
 
-    val minHandDetectionConfidence = 0.5f // Cambia esto a la confianza mínima deseada
-    val minHandTrackingConfidence = 0.5f // Cambia esto a la confianza mínima deseada
-    val minHandPresenceConfidence = 0.5f // Cambia esto a la confianza mínima deseada
-    val currentDelegate = GestureRecognizerHelper.DELEGATE_CPU // Cambia esto según tu preferencia de delegado
-    val runningMode = RunningMode.LIVE_STREAM // Cambia esto según tu modo de funcionamiento deseado
+    private val minHandDetectionConfidence = 0.5f // Cambia esto a la confianza mínima deseada
+    private val minHandTrackingConfidence = 0.5f // Cambia esto a la confianza mínima deseada
+    private val minHandPresenceConfidence = 0.5f // Cambia esto a la confianza mínima deseada
+    private val currentDelegate = GestureRecognizerHelper.DELEGATE_CPU // Cambia esto según tu preferencia de delegado
+    private val runningMode = RunningMode.LIVE_STREAM // Cambia esto según tu modo de funcionamiento deseado
 
-    val gestureRecognizerHelper = GestureRecognizerHelper(
+    private val gestureRecognizerHelper = GestureRecognizerHelper(
         minHandDetectionConfidence,
         minHandTrackingConfidence,
         minHandPresenceConfidence,
@@ -62,7 +66,6 @@ class CameraRepositoryImpl @Inject constructor(
 
     init {
         setupImageAnalysis()
-        gestureRecognizerHelper.setListener(this)
     }
 
     override suspend fun captureAndSaveImage(context: Context) {
@@ -93,11 +96,13 @@ class CameraRepositoryImpl @Inject constructor(
             ContextCompat.getMainExecutor(context),
             object : ImageCapture.OnImageSavedCallback {
                 override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+
                     Toast.makeText(
                         context,
                         "Saved image: ${outputFileResults.savedUri}",
                         Toast.LENGTH_SHORT
                     ).show()
+
                 }
 
                 override fun onError(exception: ImageCaptureException) {
@@ -147,7 +152,9 @@ class CameraRepositoryImpl @Inject constructor(
 
     @OptIn(ExperimentalGetImage::class)
     override fun startObjectDetection(): Flow<ResultOverlayView> {
+
         imageAnalysis?.setAnalyzer(Executors.newSingleThreadExecutor()) { imageProxy ->
+            gestureRecognizerHelper.setListener(this)
 
             gestureRecognizerHelper.recognizeLiveStream(imageProxy)
 

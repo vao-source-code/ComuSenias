@@ -12,16 +12,22 @@ import com.example.comusenias.presentation.view_model.CameraViewModel
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
+import com.example.comusenias.R
 import com.google.mediapipe.tasks.vision.core.RunningMode
 
 
@@ -41,7 +47,6 @@ fun CameraScreen(
     // Recolecta los resultados de reconocimiento del ViewModel
     val recognitionResultsState = viewModel.recognitionResults.collectAsState()
     val recognitionResults = recognitionResultsState.value
-    val configuration = LocalConfiguration.current
 
 
     Box(
@@ -56,28 +61,37 @@ fun CameraScreen(
             modifier = Modifier.fillMaxSize()
         )
 
+        OverlayView(
+            resultOverlayView = recognitionResults,
+        )
+        //OverlayView(resultOverlayView =recognitionResults)
 
-        if (recognitionResults != null) {
-            OverlayView(
-                gestureRecognizerResults = recognitionResults,
-                imageHeight = configuration.screenHeightDp,
-                imageWidth = configuration.screenWidthDp,
-                runningMode = runningMode,
-            )
 
-        } else {
-            // En este caso, recognitionResults es nulo, puedes mostrar un mensaje de carga o un indicador visual
-            Text(
-                text = "Cargando resultados...", // Puedes personalizar este mensaje
-                fontSize = 20.sp,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
-                color = Color.Gray // Puedes personalizar el color
-            )
-        }
+        // Botón de captura
+
+        /*  Button(
+              onClick = {
+                  // Lógica para capturar la foto
+                  viewModel.captureAndSave(activity!!)
+              },
+              modifier = Modifier
+                  .align(Alignment.BottomCenter)
+                  .padding(16.dp)
+                  .size(56.dp)
+          ) {
+              Icon(
+                  painter = painterResource(id = R.drawable.baseline_camera_24),
+                  contentDescription = "Capture",
+                  modifier = Modifier.size(32.dp),
+                  tint = Color.White
+              )
+          }*/
+
 
     }
+
+
+
     BackHandler {
         activity?.finish()
     }

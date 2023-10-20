@@ -1,6 +1,7 @@
 package com.example.comusenias.presentation.navigation
 
 import PermissionCameraScreen
+import PermissionGaleryScreen
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -13,9 +14,9 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.comusenias.presentation.activities.MainActivity
 import com.example.comusenias.presentation.component.specialist.SpecialistDetailsScreen
 import com.example.comusenias.presentation.screen.camera.CameraScreen
+import com.example.comusenias.presentation.gallery.GalleryScreen
 import com.example.comusenias.presentation.screen.camera.TestCamera
 import com.example.comusenias.presentation.screen.gameAction.ChoseTheLetterPlayScreen
 import com.example.comusenias.presentation.screen.home.HomeScreen
@@ -28,7 +29,6 @@ import com.example.comusenias.presentation.screen.premiun.PremiunScreen
 import com.example.comusenias.presentation.screen.profile.ChangeProfileScreen
 import com.example.comusenias.presentation.screen.profile.ProfileScreen
 import com.example.comusenias.presentation.screen.specialist.SpecialistHomeExample
-import com.example.comusenias.presentation.splashScreen.SplashScreen
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -61,7 +61,7 @@ private fun GetNavHost(
         }
 
         composable(AppScreen.SplashScreen.route) {
-           // SplashScreen(navController)
+            // SplashScreen(navController)
             TestCamera(navController = navController)
 
         }
@@ -69,12 +69,36 @@ private fun GetNavHost(
         composable(AppScreen.PremiumScreen.route) {
             PremiunScreen(navController = navController, modifier = modifier)
         }
-        composable(AppScreen.CameraScreenPermission.route){
+
+        //Permission Camera
+        composable(AppScreen.CameraScreenPermission.route) {
             PermissionCameraScreen(navController = navController)
         }
-        composable(AppScreen.CameraScreen.route){
-           CameraScreen(navController = navController)
+        composable(AppScreen.CameraScreen.route) {
+            CameraScreen(navController = navController)
         }
+
+
+        //Permission Gallery
+        composable(AppScreen.GaleryScreenPermission.route){
+            PermissionGaleryScreen(navController = navController)
+        }
+        
+        composable(AppScreen.GalleryScreen.route){
+            GalleryScreen(navController = navController)
+        }
+
+        /*composable(
+            route = "${AppScreen.GalleryScreen.route}/{uriImage}",
+            arguments = listOf(navArgument("uriImage") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val uriString = backStackEntry.arguments?.getString("uriImage")
+            val uriImage: Uri? = uriString?.let { Uri.parse(it) }
+            GalleryScreen(navController = navController, uriImage = uriImage)
+        }*/
+
+
+
         composable(
             route = AppScreen.ChangeProfileScreen.route,
             arguments = listOf(navArgument("user") {
@@ -107,7 +131,7 @@ private fun GetNavHost(
             MakeSignPlayScreen(navController = navController, modifier = modifier)
         }
         composable(AppScreen.InterpretationStatusScreen.route) {
-           InterpretationStatusScreen(navController = navController, modifier = modifier)
+            InterpretationStatusScreen(navController = navController, modifier = modifier)
         }
         composable(AppScreen.CongratsPlayScreen.route) {
             CongratsPlayScreen(navController = navController, modifier = modifier)

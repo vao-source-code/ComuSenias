@@ -1,16 +1,34 @@
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Text
+import androidx.compose.material.Button
+import androidx.compose.material.SnackbarDefaults.backgroundColor
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Paint
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.comusenias.domain.models.ResultOverlayView
@@ -20,128 +38,172 @@ import com.google.mediapipe.tasks.vision.handlandmarker.HandLandmarker
 import kotlin.math.max
 import kotlin.math.min
 
-
-
 @Composable
 fun OverlayView(
-    gestureRecognizerResults: ResultOverlayView,
-    imageHeight: Int,
-    imageWidth: Int,
-    runningMode: RunningMode = RunningMode.IMAGE
+    resultOverlayView: ResultOverlayView?,
 ) {
-    val result = gestureRecognizerResults.result
-    val width = gestureRecognizerResults.inputImageWidth
-    val height = gestureRecognizerResults.inputImageHeight
 
-    result.forEach {
-        val gestures = it.gestures()
-        val firstGesture = gestures.getOrNull(0)
-        val category = firstGesture?.get(0)?.categoryName() ?: "none"
-        val landmarksResult = it.landmarks()
+    var score = remember { mutableStateOf<Int>(0) }
+    var timeLeft = remember { mutableStateOf<Int>(60) } // tiempo inicial en segundos
 
 
-        PutTextCategory(text = category)
+    if (resultOverlayView != null) {
+        val density = LocalDensity.current.density
+        val imageHeight = resultOverlayView.inputImageHeight.toFloat()
+        val imageWidth = resultOverlayView.inputImageWidth.toFloat()
+        val scaleFactor = 1f
 
-        Canvas(
-            modifier = Modifier.fillMaxSize()
-        ) {
 
-            val scaleFactor = when (runningMode) {
-                RunningMode.IMAGE, RunningMode.VIDEO -> {
-                    min(size.width / imageWidth.toFloat(), size.height / imageHeight.toFloat())
-                }
-                RunningMode.LIVE_STREAM -> {
-                    max(size.width / imageWidth.toFloat(), size.height / imageHeight.toFloat())
-                }
-            }
+        val result = resultOverlayView.result
 
-            val linePaint = Paint().apply {
-                strokeWidth = LANDMARK_STROKE_WIDTH
-            }
+        result.forEach {
 
-            val pointPaint = Paint().apply {
-                strokeWidth = LANDMARK_STROKE_WIDTH
-            }
 
-            val lineColor = if (category=="none" || category=="") {
-                Color.Red // Si la categoría es "None", establece el color en rojo
-            } else {
-                Color.Green // Si la categoría no es "None", establece el color en verde
-            }
+            val gestures = it.gestures()
+            val firstGesture = gestures.getOrNull(0)
+            val category = firstGesture?.get(0)?.categoryName() ?: "none"
+            val landmarksResult = it.landmarks()
 
-            for (landmark in landmarksResult) {
-                for (normalizedLandmark in landmark) {
-                    val correctedX = (normalizedLandmark.x() * imageWidth * scaleFactor)
-                    val correctedY = (normalizedLandmark.y() * imageHeight * scaleFactor)
 
-                    drawCircle(
-                        color = pointPaint.color,
-                        radius = 5f,
-                        center = Offset(correctedX, correctedY)
-                    )
+            val isCorrect = category != "none" && category.isNotEmpty()
+
+
+            PutTextCategory(text = category, isCorrect)
+
+            Canvas(
+                modifier = Modifier.fillMaxSize()
+            ) {
+
+                /*val scaleFactor = when (runningMode) {
+                    RunningMode.IMAGE, RunningMode.VIDEO -> {
+                        min(size.width / imageWidth.toFloat(), size.height / imageHeight.toFloat())
+                    }
+
+                    RunningMode.LIVE_STREAM -> {
+                        max(size.width / imageWidth.toFloat(), size.height / imageHeight.toFloat())
+                    }
+                }*/
+
+                val linePaint = Paint().apply {
+                    strokeWidth = LANDMARK_STROKE_WIDTH
                 }
 
-                var allConnectionsDetected = true
+                val pointPaint = Paint().apply {
+                    strokeWidth = LANDMARK_STROKE_WIDTH
+                }
 
-                HandLandmarker.HAND_CONNECTIONS.forEach {
-                    val start = landmarksResult[0].get(it!!.start())
-                    val end = landmarksResult[0].get(it.end())
+                val lineColor = if (category == "none" || category == "") {
+                    Color.Red // Si la categoría es "None", establece el color en rojo
+                } else {
+                    Color.Green // Si la categoría no es "None", establece el color en verde
+                }
 
-                    val startX = (start.x() * imageWidth * scaleFactor)
-                    val startY = (start.y() * imageHeight * scaleFactor)
-                    val endX = (end.x() * imageWidth * scaleFactor)
-                    val endY = (end.y() * imageHeight * scaleFactor)
 
-                    if (startX < 0 || startY < 0 || endX < 0 || endY < 0) {
-                        allConnectionsDetected = false
-                    } else {
-                        drawLine(
-                            color = lineColor, // Usa el color determinado por la categoría
-                            strokeWidth = linePaint.strokeWidth,
-                            start = Offset(startX, startY),
-                            end = Offset(endX, endY)
+
+
+
+                for (landmark in landmarksResult) {
+                    for (normalizedLandmark in landmark) {
+
+
+                        val scaledX = normalizedLandmark.x() * size.width * scaleFactor
+                        val scaledY = normalizedLandmark.y() * size.height * scaleFactor
+
+                        // Ajuste adicional para posicionar los puntos de las manos
+                        val xOffset =
+                            (size.width - imageWidth * scaleFactor) / 5  // Ajusta el valor de 20 según sea necesario
+                        val yOffset =
+                            (size.height - imageHeight * scaleFactor) / 20  // Ajusta el valor de 20 según sea necesario
+
+                        drawCircle(
+                            color = Color.Yellow,
+                            center = Offset(scaledX + xOffset, scaledY + yOffset),
+                            radius = 4f * density
                         )
+
+
+                        var allConnectionsDetected = true
+
+
+                        HandLandmarker.HAND_CONNECTIONS.forEach {
+                            val start = landmarksResult[0].get(it!!.start())
+                            val end = landmarksResult[0].get(it.end())
+
+                            val startX = (start.x() * size.width * scaleFactor) + xOffset
+                            val startY = (start.y() * size.height * scaleFactor) + yOffset
+                            val endX = (end.x() * size.width * scaleFactor) + xOffset
+                            val endY = (end.y() * size.height * scaleFactor) + yOffset
+
+                            if (startX < 0 || startY < 0 || endX < 0 || endY < 0) {
+                                allConnectionsDetected = false
+                            } else {
+                                drawLine(
+                                    color = lineColor, // Usa el color determinado por la categoría
+                                    strokeWidth = linePaint.strokeWidth,
+                                    start = Offset(startX, startY),
+                                    end = Offset(endX, endY)
+                                )
+                            }
+                        }
+
+                        if (!allConnectionsDetected) {
+                            drawLine(
+                                color = Color.Red, // Si no se detectaron todas las conexiones, dibuja la línea en rojo
+                                strokeWidth = linePaint.strokeWidth,
+                                start = Offset(0f, 0f),
+                                end = Offset(0f, 0f)
+                            )
+                        }
                     }
                 }
-
-                if (!allConnectionsDetected) {
-                    drawLine(
-                        color = Color.Red, // Si no se detectaron todas las conexiones, dibuja la línea en rojo
-                        strokeWidth = linePaint.strokeWidth,
-                        start = Offset(0f, 0f),
-                        end = Offset(0f, 0f)
-                    )
-                }
             }
 
+
+
         }
+
+    } else {
+        Text(
+            text = "Cargando resultados...", // Personaliza este mensaje según sea necesario
+            color = Color.Gray // Personaliza el color según sea necesario
+        )
     }
 
 
 }
 
 @Composable
-fun PutTextCategory(text: String) {
-    if (text == "none" || text == "") {
-        Text(
-            text = "Incorrecto", // Puedes personalizar este mensaje
-            fontSize = 20.sp,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
-            color = Color.Red // Puedes personalizar el color
-        )
-    } else {
-        Text(
-            text = "Letra: $text", // Puedes personalizar este mensaje
-            fontSize = 20.sp,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
-            color = Color.Green // Puedes personalizar el color
-        )
-    }
+fun PutTextCategory(text: String, isCorrect: Boolean) {
+    Box(
+        contentAlignment = Alignment.BottomCenter,
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
 
+        androidx.compose.material3.Button(
+            onClick = { },
+            modifier = Modifier
+                .height(40.dp)
+                .fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = if (isCorrect) Color.Green else Color.Red,
+                contentColor = Color.White
+            )
+        ) {
+
+            if(isCorrect && text != "none") {
+                Text(text = "Letra:${text}", fontSize = 20.sp)
+            }
+            else{
+                Text(text = "Incorrecto", fontSize = 20.sp)
+            }
+        }
+
+
+
+    }
 }
 
-private const val LANDMARK_STROKE_WIDTH = 8f
+private const val LANDMARK_STROKE_WIDTH = 10f // Puedes ajustar este valor según tus necesidades
+

@@ -13,6 +13,8 @@ interface CameraRepository {
     suspend fun captureAndSaveImage(context: Context)
     suspend fun  showCameraPreview(previewView:PreviewView, lifecycleOwner: LifecycleOwner)
     suspend fun stopCameraPreview()
+
+
     fun startObjectDetection(): Flow<ResultOverlayView>
 
 
