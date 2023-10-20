@@ -31,6 +31,9 @@ class LoginViewModel @Inject constructor(
     ViewModel() {
 
     var loginResponse by mutableStateOf<Response<FirebaseUser>?>(null)
+
+    var loginReset by mutableStateOf<Response<Boolean>?>(null)
+
     var state by mutableStateOf(LoginState())
         private set
     var isEmailValid: Boolean by mutableStateOf(false)
@@ -82,6 +85,18 @@ class LoginViewModel @Inject constructor(
         val result = authUseCases.loginUseCase(state.email, state.password)
         loginResponse = result
         rolLogin()
+    }
+
+    fun resetPassword() = viewModelScope.launch(IO) {
+        loginReset = Response.Loading
+        if (isEmailValid) {
+            val result = authUseCases.resetPasswordUseCase(state.email)
+            loginReset = result
+        } else {
+            errorEmail = INVALID_EMAIL
+        }
+
+
     }
 
     fun onEmailInput(email: String) {

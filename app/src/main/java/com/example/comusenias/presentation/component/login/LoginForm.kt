@@ -34,6 +34,10 @@ fun LoginForm(
         viewModel = viewModel
     )
 
+    ResponsePasswordReset(
+        response = viewModel.loginReset,
+    )
+
     Column(
         modifier = Modifier
             .fillMaxWidth(),
@@ -55,7 +59,7 @@ fun LoginForm(
             label = PASSWORD,
             errorMsg = viewModel.errorPassword
         )
-        RememberMeAndForgetMyPass()
+        RememberMeAndForgetMyPass(viewModel = viewModel)
         Spacer(modifier = Modifier.height(size10.dp))
         ButtonApp(
             titleButton = LOGIN,
@@ -63,9 +67,5 @@ fun LoginForm(
             onClickButton = { viewModel.login() },
         )
     }
-    ResponseStatus(
-        navController = navController,
-        response = viewModel.loginResponse,
-        viewModel = viewModel
-    )
+
 }

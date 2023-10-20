@@ -24,6 +24,7 @@ import com.example.comusenias.domain.use_cases.auth.GetCurrentUserUseCase
 import com.example.comusenias.domain.use_cases.auth.LoginUseCase
 import com.example.comusenias.domain.use_cases.auth.LogoutUseCase
 import com.example.comusenias.domain.use_cases.auth.RegisterUseCase
+import com.example.comusenias.domain.use_cases.auth.ResetPasswordUseCase
 import com.example.comusenias.domain.use_cases.children.ChildrenFactory
 import com.example.comusenias.domain.use_cases.children.CreateChildren
 import com.example.comusenias.domain.use_cases.children.GetChildrenById
@@ -74,7 +75,8 @@ object FirebaseModule {
             getCurrentUserUseCase = GetCurrentUserUseCase(authRepository),
             loginUseCase = LoginUseCase(authRepository),
             logoutUseCase = LogoutUseCase(authRepository),
-            registerUseCase = RegisterUseCase(authRepository)
+            registerUseCase = RegisterUseCase(authRepository),
+            resetPasswordUseCase = ResetPasswordUseCase(authRepository)
         )
 
     /*----------------------------- Firestore --------------------------------------------------- */

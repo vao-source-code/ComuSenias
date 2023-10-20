@@ -20,27 +20,23 @@ class ChildrenModelTest {
         observations = listOf(Observation("1", "1", "1"), Observation("2", "2", "2"))
 
         userModel = UserModel(
-            userName = "name",
             password = "password",
             email = "email",
         )
 
         specialist = SpecialistModel(
-            userModel,
             "12.12.2021",
             "license",
             "12.12.2021",
             "speciality",
-            listOf()
         )
 
 
         childrenModel = ChildrenModel(
-            userModel = userModel,
             date = "12.12.2021",
             specialist = specialist,
-            1,
-            1,
+            idSpecialist = "1",
+            id = "1",
             isPremium = false,
             levels = levels,
             observation = observations
@@ -50,7 +46,6 @@ class ChildrenModelTest {
     @Test
     fun whenCreateChildrenReturnEqualsDates() {
         val date = "12.12.2021"
-        assertEquals(userModel, childrenModel.userModel)
         assertEquals(date, childrenModel.date)
         assertEquals(specialist, childrenModel.specialist)
         assertEquals(false, childrenModel.isPremium)
