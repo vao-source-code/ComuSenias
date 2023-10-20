@@ -54,9 +54,9 @@ fun MatchSign(
             .padding(top = SIZE30.dp),
         horizontalArrangement = Arrangement.spacedBy(SIZE30.dp)
     ) {
-        randomLetters.forEach { sign ->
+        randomLetters.forEach { random ->
             ButtonSign(
-                sign = sign,
+                sign = random,
                 letterCompare = letterCompare,
                 isEnable = isEnableButtonLetter.value
             ) {
@@ -71,7 +71,7 @@ fun MatchSign(
 fun ButtonSign(
     sign: Sign,
     letterCompare: String,
-    isEnable: Boolean ,
+    isEnable: Boolean,
     matchSign: (Boolean) -> Unit
 ) {
     val statusLetter by remember { mutableStateOf(sign.letter) }

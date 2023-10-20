@@ -36,7 +36,7 @@ import com.example.comusenias.presentation.ui.theme.Suscribe
 import com.example.comusenias.presentation.ui.theme.Suscribe_Ya
 
 @Composable
-fun NotificationScreen(navController: NavHostController, modifier: Modifier) {
+fun NotificationScreen(navController: NavHostController) {
 
     LazyColumn(modifier = Modifier.padding(SIZE16.dp)) {
         items(notificationList) { notification ->

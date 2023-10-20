@@ -14,14 +14,20 @@ import com.example.comusenias.presentation.ui.theme.iconColorTextField
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
 
 @Composable
-fun CheckBoxApp(isChecked: MutableState<Boolean>) {
+fun CheckBoxApp(
+    isChecked: MutableState<Boolean>,
+    onCheckChange: (Boolean) -> Unit
+) {
     Checkbox(
         modifier = Modifier
             .testTag(TestTag.TAG_CHECKBOX_APP)
             .height(12.dp)
             .width(12.dp),
         checked = isChecked.value,
-        onCheckedChange = { isChecked.value = it },
+        onCheckedChange = {
+            isChecked.value = it
+            onCheckChange(it)
+        },
         enabled = true,
         colors = CheckboxDefaults.colors(
             checkedColor = primaryColorApp,

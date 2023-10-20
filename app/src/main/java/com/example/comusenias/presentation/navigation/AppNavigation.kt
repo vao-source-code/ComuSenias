@@ -1,12 +1,14 @@
 package com.example.comusenias.presentation.navigation
 
 import android.annotation.SuppressLint
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -28,8 +30,8 @@ import com.example.comusenias.presentation.screen.profile.ProfileScreen
 import com.example.comusenias.presentation.screen.specialist.SpecialistHomeExample
 import com.example.comusenias.presentation.splashScreen.SplashScreen
 
+@RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppNavigation(
     navController: NavHostController,
@@ -39,6 +41,7 @@ fun AppNavigation(
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 private fun GetNavHost(
     navController: NavHostController,
@@ -68,20 +71,7 @@ private fun GetNavHost(
         composable(AppScreen.MainActivity.route) {
             MainActivity()
         }
-        composable(
-            route = AppScreen.ChangeProfileScreen.route,
-            arguments = listOf(navArgument("user") {
-                type = NavType.StringType
-            })
-        ) { user ->
-            user.arguments?.getString("user")?.let {
-                ChangeProfileScreen(
-                    modifier = Modifier.fillMaxSize(),
-                    navController = navController,
-                    user = it
-                )
-            }
-        }
+        composableChangeProfile(navController)
 
         composable(AppScreen.SpecialistScreen.route) {
             SpecialistHomeExample(navController = navController, modifier = modifier)
@@ -90,26 +80,87 @@ private fun GetNavHost(
         composable(AppScreen.SpecialistDetailsScreen.route) {
             SpecialistDetailsScreen(navController = navController, modifier = modifier)
         }
-        composable(AppScreen.LearnSignScreen.route) {
-            LearnSignScreen(navController = navController, modifier = modifier)
-        }
-        composable(AppScreen.ChoseTheSignPlayScreen.route) {
-            ChoseTheSignPlayScreen(navController = navController, modifier = modifier)
-        }
+
+        composableLearnSign(navController, modifier)
+
+        composableChoseTheSignPlay(navController)
+
         composable(AppScreen.MakeSignPlayScreen.route) {
             MakeSignPlayScreen(navController = navController, modifier = modifier)
         }
         composable(AppScreen.InterpretationStatusScreen.route) {
-           InterpretationStatusScreen(navController = navController, modifier = modifier)
+            InterpretationStatusScreen(navController = navController, modifier = modifier)
         }
         composable(AppScreen.CongratsPlayScreen.route) {
             CongratsPlayScreen(navController = navController, modifier = modifier)
         }
-        composable(AppScreen.ChoseTheLetterPlayScreen.route) {
-            ChoseTheLetterPlayScreen(navController = navController)
+        composableChoseTheLetterPlay(navController)
+    }
+}
+
+fun NavGraphBuilder.composableChangeProfile(navController: NavHostController) {
+    composable(
+        route = AppScreen.ChangeProfileScreen.route,
+        arguments = listOf(navArgument("user") {
+            type = NavType.StringType
+        })
+    ) { user ->
+        user.arguments?.getString("user")?.let {
+            ChangeProfileScreen(
+                modifier = Modifier.fillMaxSize(),
+                navController = navController,
+                user = it
+            )
+        }
+    }
+}
+
+private fun NavGraphBuilder.composableLearnSign(
+    navController: NavHostController,
+    modifier: Modifier
+) {
+    composable(
+        AppScreen.LearnSignScreen.route,
+        arguments = listOf(navArgument("subLevel") {
+            type = NavType.StringType
+        })
+    ) { subLevel ->
+        subLevel.arguments?.getString("subLevel")?.let {
+            LearnSignScreen(navController = navController, modifier = modifier, subLevel = it)
+        }
+    }
+}
+
+private fun NavGraphBuilder.composableChoseTheLetterPlay(
+    navController: NavHostController,
+) {
+    composable(
+        AppScreen.ChoseTheLetterPlayScreen.route,
+        arguments = listOf(navArgument("subLevel") {
+            type = NavType.StringType
+        })
+    ) { subLevel ->
+        subLevel.arguments?.getString("subLevel")?.let {
+            ChoseTheLetterPlayScreen(navController = navController, subLevel = it)
+        }
+    }
+}
+
+@SuppressLint("ComposableDestinationInComposeScope")
+private fun NavGraphBuilder.composableChoseTheSignPlay(
+    navController: NavHostController,
+) {
+    composable(
+        AppScreen.ChoseTheSignPlayScreen.route,
+        arguments = listOf(navArgument("subLevel") {
+            type = NavType.StringType
+        })
+    ) { subLevel ->
+        subLevel.arguments?.getString("subLevel")?.let {
+            ChoseTheSignPlayScreen(navController = navController, subLevel = it)
         }
         composable(AppScreen.NotificationScreen.route) {
-            NotificationScreen(navController = navController, modifier = modifier)
+            NotificationScreen(navController = navController)
         }
     }
 }

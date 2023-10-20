@@ -15,8 +15,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.comusenias.domain.models.bottomNavigation.BottomBarItem
 import com.example.comusenias.domain.models.bottomNavigation.getBottomBarItems
@@ -27,7 +27,7 @@ import com.example.comusenias.presentation.ui.theme.SIZE30
 import com.example.comusenias.presentation.ui.theme.SIZE50
 
 @Composable
-fun ShowBottomBar(navController: NavHostController) {
+fun ShowBottomBar(navController: NavController) {
     BottomAppBar(
         modifier = Modifier
             .fillMaxWidth()
@@ -81,7 +81,7 @@ else ImageVector.vectorResource(
 )
 
 private fun navigateTo(
-    navController: NavHostController,
+    navController: NavController,
     screen: BottomBarItem
 ) {
     navController.navigate(screen.route) {

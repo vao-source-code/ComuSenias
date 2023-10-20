@@ -55,6 +55,6 @@ class MatchSignComposableTest {
         composeTestRule.onNodeWithTag(TestTag.TAG_MATCH_SIGN + randomLetter).assertExists()
         composeTestRule.onNodeWithTag(TestTag.TAG_MATCH_SIGN + letter).assertExists()
         composeTestRule.onNodeWithTag(TestTag.TAG_MATCH_SIGN + randomLetter).performClick()
-        assert(isCorrect)
+        assert(!isCorrect)
     }
 }

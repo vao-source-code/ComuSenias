@@ -31,7 +31,8 @@ import com.example.comusenias.presentation.ui.theme.terms
 @Composable
 fun TermsAndConditions(
     onClickTerms: () -> Unit = {},
-    onClickConditions: () -> Unit = {}
+    onClickConditions: () -> Unit = {},
+    onCheckChange: (Boolean) -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -42,7 +43,9 @@ fun TermsAndConditions(
     ) {
         val isChecked = remember { mutableStateOf(false) }
 
-        CheckBoxApp(isChecked = isChecked)
+        CheckBoxApp(isChecked = isChecked) { isCheckedValue ->
+            onCheckChange(isCheckedValue)
+        }
         Spacer(modifier = Modifier.width(size6.dp))
         Text(
             text = accept,

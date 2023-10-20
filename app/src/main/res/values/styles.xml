@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ThemeOverlay.MyApp.Dialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorPrimary">@color/primaryColorApp</item> <!-- button text color -->
+        <item name="android:colorAccent">@color/primaryColorApp</item>
+        <item name="colorAccent">@color/primaryColorApp</item>
+    </style>
+</resources>

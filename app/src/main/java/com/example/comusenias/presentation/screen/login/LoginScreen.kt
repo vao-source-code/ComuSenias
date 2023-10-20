@@ -14,23 +14,26 @@ import com.example.comusenias.presentation.component.login.LoginForm
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.DONT_HAVE_ACCOUNT
 import com.example.comusenias.presentation.ui.theme.REGISTER
-import com.example.comusenias.presentation.view_model.BottomBarViewModel
+import com.example.comusenias.presentation.view_model.LoginViewModel
 
 @Composable
 fun LoginScreen(
     navController: NavHostController,
     modifier: Modifier,
-    bottomBarViewModel: BottomBarViewModel = hiltViewModel()
+    viewModel: LoginViewModel = hiltViewModel()
 ) {
-    bottomBarViewModel.isBottomAppBarVisible.value = true
-
     Box(
         modifier = modifier
             .fillMaxSize()
             .testTag(TestTag.TAG_LOGIN_SCREEN),
     ) {
         AuthenticationContent(
-            content = { LoginForm(navController = navController) },
+            content = {
+                LoginForm(
+                    navController = navController,
+                    viewModel = viewModel
+                )
+            },
             footer = {
                 AuthenticationFooterContent(
                     textOne = DONT_HAVE_ACCOUNT,

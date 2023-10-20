@@ -32,7 +32,7 @@ fun InterpretationStatusScreen(navController: NavHostController, modifier: Modif
     }
 
     GameAction(
-        imageSign = R.drawable.hand_sign,
+        imageSign = R.drawable.hand_sign.toString(),
         enabledButton = isButtonEnabled.value,
         title = THE_SIGN_IS,
         titleButton = FINISH,

@@ -10,14 +10,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.example.comusenias.domain.models.users.KidsMock
 import com.example.comusenias.presentation.ui.theme.size1
 import com.example.comusenias.presentation.ui.theme.size14
 
 @Composable
 fun ContentHome(
     modifier: Modifier,
-    onClickCard: () -> Unit
-    ) {
+    navController: NavController
+) {
+    val subLevel = KidsMock.instance.subLevel
+    val level = KidsMock.instance.levelList.first()
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
@@ -32,12 +36,14 @@ fun ContentHome(
             ContentProgressBar()
         }
         item {
-            ContentLevel()
+            ContentLevel(level.name)
         }
-        items(statusCards()) { statusGame ->
+        items(
+            items = subLevel,
+        ) { subLevel ->
             ContentCardGame(
-                status = statusGame,
-                onClickCard = { onClickCard() }
+                subLevel = subLevel,
+                navController = navController
             )
         }
         item {

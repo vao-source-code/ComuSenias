@@ -45,6 +45,7 @@ const val SIZE130: Int = 130
 const val SIZE140: Int = 140
 const val size150: Int = 150
 const val SIZE150: Int = 150
+const val SIZE160: Int = 160
 const val SIZE220: Int = 220
 const val SIZE300: Int = 300
 const val size250: Int = 250
