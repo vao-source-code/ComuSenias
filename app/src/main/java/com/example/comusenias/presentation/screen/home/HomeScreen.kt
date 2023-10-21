@@ -13,7 +13,7 @@ import com.example.comusenias.presentation.component.bottomBar.ShowBottomBar
 import com.example.comusenias.presentation.component.home.ContentHome
 import com.example.comusenias.presentation.component.home.TopBarHome
 import com.example.comusenias.presentation.navigation.AppScreen
-import com.example.comusenias.presentation.ui.theme.size3
+import com.example.comusenias.presentation.ui.theme.SIZE3
 import com.example.comusenias.presentation.view_model.LevelViewModel
 
 @Composable
@@ -23,7 +23,7 @@ fun HomeScreen(
 ) {
     Scaffold(
         topBar = {
-            Surface(shadowElevation = size3.dp) {
+            Surface(shadowElevation = SIZE3.dp) {
                 TopBarHome(onClick = { navController.navigate(AppScreen.NotificationScreen.route) })
             }
         },

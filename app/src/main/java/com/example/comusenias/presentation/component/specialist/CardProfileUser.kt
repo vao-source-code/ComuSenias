@@ -24,9 +24,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.comusenias.presentation.ui.theme.CIRCLE_IMAGE
 import com.example.comusenias.presentation.ui.theme.SIZE100
+import com.example.comusenias.presentation.ui.theme.SIZE3
 import com.example.comusenias.presentation.ui.theme.size10
 import com.example.comusenias.presentation.ui.theme.size24
-import com.example.comusenias.presentation.ui.theme.size3
 import com.example.comusenias.presentation.ui.theme.size40
 
 @Composable
@@ -39,13 +39,13 @@ fun CardProfileUser(image: Int, title: String, onClickCard: () -> Unit) {
                 onClickCard()
             }
             .shadow(
-                elevation = size3.dp,
+                elevation = SIZE3.dp,
                 shape = RoundedCornerShape(size10.dp),
                 spotColor = Color(0x33000000),
                 ambientColor = Color(0x33000000)
             )
             .shadow(
-                elevation = size3.dp,
+                elevation = SIZE3.dp,
                 shape = RoundedCornerShape(size10.dp),
                 spotColor = Color(0x21000000),
                 ambientColor = Color(0x21000000)

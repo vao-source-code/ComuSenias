@@ -17,6 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.comusenias.presentation.component.defaults.app.CheckBoxApp
+import com.example.comusenias.presentation.ui.theme.SIZE3
 import com.example.comusenias.presentation.ui.theme.Y
 import com.example.comusenias.presentation.ui.theme.accept
 import com.example.comusenias.presentation.ui.theme.blackColorApp
@@ -24,7 +25,6 @@ import com.example.comusenias.presentation.ui.theme.conditions
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
 import com.example.comusenias.presentation.ui.theme.size10
 import com.example.comusenias.presentation.ui.theme.size14
-import com.example.comusenias.presentation.ui.theme.size3
 import com.example.comusenias.presentation.ui.theme.size6
 import com.example.comusenias.presentation.ui.theme.terms
 
@@ -38,7 +38,7 @@ fun TermsAndConditions(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = size10.dp),
-        horizontalArrangement = Arrangement.spacedBy(size3.dp),
+        horizontalArrangement = Arrangement.spacedBy(SIZE3.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         val isChecked = remember { mutableStateOf(false) }
