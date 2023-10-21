@@ -21,8 +21,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.example.comusenias.R
-import com.example.comusenias.domain.models.users.UserModel
+import com.example.comusenias.domain.models.users.ChildrenModel
+import com.example.comusenias.domain.models.users.SpecialistModel
 import com.example.comusenias.presentation.component.home.TopBarHome
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.DONT_YOU_HAVE_PATIENTS
@@ -35,16 +35,18 @@ import com.example.comusenias.presentation.ui.theme.size15
 import com.example.comusenias.presentation.ui.theme.size3
 
 @Composable
-fun SpecialistHomeContent(navController: NavHostController, modifier: Modifier) {
+fun SpecialistHomeContent(
+    navController: NavHostController,
+    specialist: SpecialistModel
+) {
 
     Scaffold(
         topBar = {
             Surface(shadowElevation = size3.dp) {
                 TopBarHome(
-                    name = "Dr. Gutierrez",
-                    image = R.drawable.diagnostic_category,
-                    onClick = { navController.navigate(AppScreen.NotificationScreen.route) }
-                )
+                    name = specialist.userModel.userName,
+                    image = specialist.userModel.image
+                ) { navController.navigate(AppScreen.NotificationScreen.route) }
             }
         },
         floatingActionButton = {
@@ -57,6 +59,7 @@ fun SpecialistHomeContent(navController: NavHostController, modifier: Modifier) 
                 .padding(paddingValues)
         ) {
             PatientContainer(
+                patients = specialist.childrenInCharge,
                 onClickCard = { navController.navigate(AppScreen.ProfilePatientScreen.route) }
             )
         }
@@ -64,8 +67,11 @@ fun SpecialistHomeContent(navController: NavHostController, modifier: Modifier) 
 }
 
 @Composable
-fun PatientContainer(onClickCard: () -> Unit = {}) {
-    val items = remember { getChapterItem() }
+fun PatientContainer(
+    patients: List<ChildrenModel>?,
+    onClickCard: () -> Unit = {}
+) {
+    val getPatients = remember { patients }
 
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -75,28 +81,19 @@ fun PatientContainer(onClickCard: () -> Unit = {}) {
         item {
             Title()
         }
-
-        if (!items.isEmpty()) {
-            items(items) { item ->
-                CardProfileUser(user = item,onClickCard)
-            }
-        } else {
-            item {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(top = SIZE220.dp),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = DONT_YOU_HAVE_PATIENTS,
-                        style = TextStyle(
-                            fontSize = SIZE16.sp,
-                            fontWeight = FontWeight.Normal,
-                            color = blackColorApp
+        getPatients.let {
+            if (it != null) {
+                if (it.isNotEmpty()) {
+                    items(it) { patient ->
+                        CardProfileUser(
+                            user = patient,
+                            onClickCard = onClickCard
                         )
-                    )
+                    }
+                }
+            } else {
+                item {
+                    DontYouHavePatients()
                 }
             }
         }
@@ -117,16 +114,22 @@ fun Title() {
     )
 }
 
-fun getChapterItem(): List<UserModel> {
-    return listOf(
-        UserModel(id = "1", userName = "Alberto Wirstes", image = ""),
-        UserModel(id = "2", userName = "Sabrina Gomez", image = ""),
-        UserModel(id = "3", userName = "Norma Gonzales", image = ""),
-        UserModel(id = "4", userName = "Nicolas Orue", image = ""),
-        UserModel(id = "5", userName = "Esther Segovia", image = ""),
-        UserModel(id = "6", userName = "Juan Carnizo", image = ""),
-        UserModel(id = "7", userName = "Victor Alvarez", image = ""),
-        UserModel(id = "8", userName = "Karina Gomez", image = ""),
-        UserModel(id = "9", userName = "Daniel Arribas", image = ""),
-    )
+@Composable
+fun DontYouHavePatients() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = SIZE220.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = DONT_YOU_HAVE_PATIENTS,
+            style = TextStyle(
+                fontSize = SIZE16.sp,
+                fontWeight = FontWeight.Normal,
+                color = blackColorApp
+            )
+        )
+    }
 }

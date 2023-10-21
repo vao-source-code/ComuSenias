@@ -20,7 +20,7 @@ fun HomeScreen(navController: NavController, modifier: Modifier) {
     Scaffold(
         topBar = {
             Surface(shadowElevation = size3.dp) {
-                TopBarHome(onClick = { navController.navigate(AppScreen.NotificationScreen.route) })
+                TopBarHome { navController.navigate(AppScreen.NotificationScreen.route) }
             }
         },
         bottomBar = {
