@@ -4,7 +4,6 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateIntAsState
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,8 +20,10 @@ import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.comusenias.R
 import com.example.comusenias.constants.TestTag
+import com.example.comusenias.domain.models.game.SubLevelModel
 import com.example.comusenias.presentation.ui.theme.SIZE12
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.cardGray
@@ -33,16 +34,11 @@ import com.example.comusenias.presentation.ui.theme.size24
 import com.example.comusenias.presentation.ui.theme.size45
 import com.example.comusenias.presentation.ui.theme.size5
 
-enum class StatusGame {
-    COMPLETED,
-    IN_PROGRESS,
-    BLOCKED
-}
-
 @Composable
 fun ContentCardGame(
-    status: StatusGame,
-    onClickCard: () -> Unit
+    status: StatusGame = StatusGame.BLOCKED,
+    subLevel: SubLevelModel,
+    navController: NavController
 ) {
     val currentStatus by remember { mutableStateOf(status) }
 
@@ -60,6 +56,7 @@ fun ContentCardGame(
             iconImage = R.drawable.check_circle
             blur = 0
         }
+
         StatusGame.IN_PROGRESS -> {
             lineColor = cardGray
             backgroundColorCard = cardInProgress
@@ -67,6 +64,7 @@ fun ContentCardGame(
             blur = 0
             iconImage = R.drawable.time_icon
         }
+
         StatusGame.BLOCKED -> {
             lineColor = cardGray
             backgroundColorCard = Color.White
@@ -87,14 +85,15 @@ fun ContentCardGame(
             .fillMaxWidth()
             .blur(radius = blurAnimate.value)
             .background(Color.White)
-            .clickable { onClickCard() }
             .testTag(TestTag.TAG_CONTENT_CARD_GAME + currentStatus.name)
     ) {
         CardGame(
             lineColor = linecColorAnimate,
             backgroundCard = backgroundColorCardAnimate,
             iconColor = iconColorAnimate,
-            icon = iconAnimate
+            icon = iconAnimate,
+            subLevel = subLevel,
+            navController = navController
         )
         Box(
             modifier = Modifier
@@ -113,4 +112,10 @@ fun ContentCardGame(
             )
         }
     }
+}
+
+enum class StatusGame {
+    COMPLETED,
+    IN_PROGRESS,
+    BLOCKED
 }

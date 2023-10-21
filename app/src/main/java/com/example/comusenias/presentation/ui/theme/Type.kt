@@ -8,31 +8,30 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.example.comusenias.R
 
-val montserrat = FontFamily(
-    Font(R.font.montserrat_bold, FontWeight.Bold),
-    Font(R.font.montserrat_medium, FontWeight.Medium),
-    Font(R.font.montserrat_semibold, FontWeight.SemiBold),
-    Font(R.font.montserrat_regular, FontWeight.Normal)
-
+val lato = FontFamily(
+    Font(R.font.lato_bold, FontWeight.Bold),
+    Font(R.font.lato_regular, FontWeight.Medium),
+    Font(R.font.lato_semibold, FontWeight.SemiBold),
+    Font(R.font.lato_regular, FontWeight.Normal)
 )
 // Set of Material typography styles to start with
 val Typography = Typography(
     bodyLarge = TextStyle(
-        fontFamily = montserrat,
+        fontFamily = lato,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.5.sp
     ),
     titleLarge = TextStyle(
-        fontFamily = montserrat,
+        fontFamily = lato,
         fontWeight = FontWeight.Normal,
         fontSize = 22.sp,
         lineHeight = 28.sp,
         letterSpacing = 0.sp
     ),
     labelSmall = TextStyle(
-        fontFamily = montserrat,
+        fontFamily = lato,
         fontWeight = FontWeight.Medium,
         fontSize = 11.sp,
         lineHeight = 16.sp,

@@ -9,11 +9,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.comusenias.presentation.ui.theme.size08
-import com.example.comusenias.presentation.ui.theme.size30
+import com.example.comusenias.presentation.ui.theme.SIZE30
 
 @Composable
 fun GameAction(
-    imageSign: Int,
+    imageSign: String,
     letterSign: String = "",
     title: String,
     titleButton: String,
@@ -26,7 +26,7 @@ fun GameAction(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(size30.dp)
+            .padding(SIZE30.dp)
     ) {
         TopSectionGameAction(
             letterSign =letterSign,

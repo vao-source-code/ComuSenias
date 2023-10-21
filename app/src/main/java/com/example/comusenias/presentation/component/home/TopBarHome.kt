@@ -27,14 +27,14 @@ import com.example.comusenias.presentation.ui.theme.iconColorProgress
 @Preview(showBackground = true)
 
 @Composable
-fun TopBarHome() {
+fun TopBarHome(onClick: () -> Unit = {}) {
     TopAppBar(
         title = { ContentHelloUser() },
         backgroundColor = Color.White,
         contentColor = Color.White,
         actions = {
             IconButton(
-                onClick = { /* doSomething() */ }
+                onClick = { onClick() }
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.notifications ),

@@ -31,7 +31,7 @@ import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.SIZE26
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
 import com.example.comusenias.presentation.ui.theme.size10
-import com.example.comusenias.presentation.ui.theme.size30
+import com.example.comusenias.presentation.ui.theme.SIZE30
 
 @Composable
 fun SpecialistScreen(navController: NavHostController, modifier: Modifier) {
@@ -57,7 +57,7 @@ fun SpecialistHomeExample(navController: NavHostController, modifier: Modifier) 
                 Modifier
                     .shadow(
                         elevation = size10.dp,
-                        shape = RoundedCornerShape(bottomEnd = size30.dp, bottomStart = size30.dp)
+                        shape = RoundedCornerShape(bottomEnd = SIZE30.dp, bottomStart = SIZE30.dp)
                     )
                     .background(primaryColorApp)
             ) {

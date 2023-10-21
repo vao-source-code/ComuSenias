@@ -1,7 +1,6 @@
 package com.example.comusenias.presentation.component.defaults.app
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -15,7 +14,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.comusenias.R
 import com.example.comusenias.presentation.ui.theme.iconApp
-import com.example.comusenias.presentation.ui.theme.size10
 import com.example.comusenias.presentation.ui.theme.size130
 
 @Preview(showBackground = true)
@@ -25,7 +23,6 @@ fun AuthenticationHeaderContent() {
         modifier = Modifier
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(size10.dp)
     ) {
         HeaderImage()
     }

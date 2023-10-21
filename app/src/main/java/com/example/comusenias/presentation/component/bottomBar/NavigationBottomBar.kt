@@ -15,19 +15,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.comusenias.domain.models.bottomNavigation.BottomBarItem
 import com.example.comusenias.domain.models.bottomNavigation.getBottomBarItems
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
 import com.example.comusenias.presentation.ui.theme.size24
-import com.example.comusenias.presentation.ui.theme.size30
+import com.example.comusenias.presentation.ui.theme.SIZE30
 import com.example.comusenias.presentation.ui.theme.SIZE50
 
 @Composable
-fun ShowBottomBar(navController: NavHostController) {
+fun ShowBottomBar(navController: NavController) {
     BottomAppBar(
         modifier = Modifier
             .fillMaxWidth()
@@ -48,7 +48,7 @@ fun ShowBottomBar(navController: NavHostController) {
                             item = item
                         ),
                         contentDescription = item.route,
-                        modifier = if (currentRoute == item.route) Modifier.size(size30.dp) else Modifier.size(
+                        modifier = if (currentRoute == item.route) Modifier.size(SIZE30.dp) else Modifier.size(
                             size24.dp
                         ),
                         tint = if (currentRoute == item.route) primaryColorApp else Color.Black
@@ -81,7 +81,7 @@ else ImageVector.vectorResource(
 )
 
 private fun navigateTo(
-    navController: NavHostController,
+    navController: NavController,
     screen: BottomBarItem
 ) {
     navController.navigate(screen.route) {
