@@ -15,6 +15,7 @@ import com.example.comusenias.presentation.component.gameAction.MatchSign
 import com.example.comusenias.presentation.component.home.ContentProgressBar
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.CONTINUE
+import com.example.comusenias.presentation.ui.theme.ERROR_RETRY_SUB_LEVEL
 import com.example.comusenias.presentation.ui.theme.STEP_TREE
 import com.example.comusenias.presentation.ui.theme.WHAT_SIGN_IS
 import com.example.comusenias.presentation.view_model.LevelViewModel
@@ -26,7 +27,7 @@ fun ChoseTheSignPlayScreen(
     subLevel: String,
     levelViewModel: LevelViewModel
 ) {
-    val subLevel = levelViewModel.getSubLevelById(level, subLevel)
+    val subLevelViewModel = levelViewModel.getSubLevelById(level, subLevel)
 
     val isButtonEnabled = remember { mutableStateOf(true) }
     val onMatchResult: (Boolean) -> Unit = {
@@ -40,19 +41,18 @@ fun ChoseTheSignPlayScreen(
 
         is Response.Error -> {
             Snackbar {
-                Text(text = "Error")
+                Text(text = ERROR_RETRY_SUB_LEVEL)
             }
         }
 
         is Response.Success -> {
-            ShowChoseTheSign(subLevel, isButtonEnabled, navController, onMatchResult)
+            ShowChoseTheSign(subLevelViewModel, isButtonEnabled, navController, onMatchResult)
         }
 
         else -> {
             ContentProgressBar()
         }
     }
-
 }
 
 @Composable

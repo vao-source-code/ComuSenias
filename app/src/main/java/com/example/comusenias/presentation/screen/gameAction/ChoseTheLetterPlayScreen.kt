@@ -14,7 +14,7 @@ import com.example.comusenias.presentation.component.gameAction.MatchLetter
 import com.example.comusenias.presentation.component.home.ContentProgressBar
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.CONTINUE
-import com.example.comusenias.presentation.ui.theme.ERROR_RETRY_SUB_LEVEL
+import com.example.comusenias.presentation.ui.theme.ERROR_RETRY_LEVEL
 import com.example.comusenias.presentation.ui.theme.STEP_TWO
 import com.example.comusenias.presentation.ui.theme.WHAT_LETTER_IS
 import com.example.comusenias.presentation.view_model.LevelViewModel
@@ -26,7 +26,7 @@ fun ChoseTheLetterPlayScreen(
     subLevel: String,
     levelViewModel: LevelViewModel
 ) {
-    val subLevel = levelViewModel.getSubLevelById(level, subLevel)
+    val subLevelViewModel = levelViewModel.getSubLevelById(level, subLevel)
     val isButtonEnabled = remember { mutableStateOf(false) }
     val onMatchResult: (Boolean) -> Unit = {
         isButtonEnabled.value = true
@@ -38,13 +38,13 @@ fun ChoseTheLetterPlayScreen(
         }
 
         is Response.Error -> {
-            ShowRetrySnackBar(text = ERROR_RETRY_SUB_LEVEL, true, onActionClick = {
+            ShowRetrySnackBar(text = ERROR_RETRY_LEVEL, true, onActionClick = {
                 levelViewModel.getLevels()
             })
         }
 
         is Response.Success -> {
-            ShowScreenChoseTheLetter(subLevel, isButtonEnabled, navController, level, onMatchResult)
+            ShowScreenChoseTheLetter(subLevelViewModel, isButtonEnabled, navController, level, onMatchResult)
         }
 
         else -> {

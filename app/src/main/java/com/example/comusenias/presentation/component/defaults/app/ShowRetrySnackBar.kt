@@ -18,6 +18,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.comusenias.presentation.ui.theme.RETRY
+import com.example.comusenias.presentation.ui.theme.SIZE16
 
 @Composable
 fun ShowRetrySnackBar(
@@ -38,10 +40,10 @@ fun ShowRetrySnackBar(
                     }
                 ) {
                     Text(
-                        text = "REINTENTAR",
+                        text = RETRY,
                         style = MaterialTheme.typography.button.copy(
                             fontWeight = FontWeight.Bold,
-                            fontSize = 16.sp,
+                            fontSize = SIZE16.sp,
                             color = Color.White
                         )
                     )
@@ -51,7 +53,7 @@ fun ShowRetrySnackBar(
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
-                    .padding(16.dp)
+                    .padding(SIZE16.dp)
             ) {
                 Text(
                     text = text,

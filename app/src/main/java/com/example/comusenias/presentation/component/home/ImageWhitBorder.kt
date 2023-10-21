@@ -14,6 +14,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.comusenias.presentation.ui.theme.AVATAR
+import com.example.comusenias.presentation.ui.theme.SIZE08
 import com.example.comusenias.presentation.ui.theme.SIZE64
 import com.example.comusenias.presentation.ui.theme.size08
 import com.example.comusenias.presentation.ui.theme.size5
@@ -36,7 +37,7 @@ fun ImageWhitBorder(
         AsyncImage(
             modifier = Modifier
                 .fillMaxSize()
-                .clip(shape = RoundedCornerShape(size08.dp)),
+                .clip(shape = RoundedCornerShape(SIZE08.dp)),
             model = image,
             contentScale = ContentScale.Crop,
             contentDescription = AVATAR

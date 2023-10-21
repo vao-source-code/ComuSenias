@@ -16,7 +16,7 @@ import com.example.comusenias.domain.models.game.LevelModel
 import com.example.comusenias.domain.models.game.SubLevelModel
 import com.example.comusenias.presentation.component.defaults.app.CircularProgressBar
 import com.example.comusenias.presentation.component.defaults.app.ShowRetrySnackBar
-import com.example.comusenias.presentation.ui.theme.ERROR_RETRY_SUB_LEVEL
+import com.example.comusenias.presentation.ui.theme.ERROR_RETRY_LEVEL
 import com.example.comusenias.presentation.ui.theme.size1
 import com.example.comusenias.presentation.ui.theme.size14
 import com.example.comusenias.presentation.view_model.LevelViewModel
@@ -35,7 +35,7 @@ fun ContentHome(
         }
 
         is Response.Error -> {
-            ShowRetrySnackBar(text = ERROR_RETRY_SUB_LEVEL, true, onActionClick = {
+            ShowRetrySnackBar(text = ERROR_RETRY_LEVEL, true, onActionClick = {
                 levelViewModel.getLevels()
             })
         }

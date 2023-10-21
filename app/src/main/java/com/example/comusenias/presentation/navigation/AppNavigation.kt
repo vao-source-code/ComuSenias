@@ -30,6 +30,10 @@ import com.example.comusenias.presentation.screen.profile.ChangeProfileScreen
 import com.example.comusenias.presentation.screen.profile.ProfileScreen
 import com.example.comusenias.presentation.screen.specialist.SpecialistHomeExample
 import com.example.comusenias.presentation.splashScreen.SplashScreen
+import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
+import com.example.comusenias.presentation.ui.theme.LEVEL
+import com.example.comusenias.presentation.ui.theme.SUB_LEVEL
+import com.example.comusenias.presentation.ui.theme.USER
 import com.example.comusenias.presentation.view_model.LevelViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -112,11 +116,11 @@ private fun GetNavHost(
 fun NavGraphBuilder.composableChangeProfile(navController: NavHostController) {
     composable(
         route = AppScreen.ChangeProfileScreen.route,
-        arguments = listOf(navArgument("user") {
+        arguments = listOf(navArgument(USER) {
             type = NavType.StringType
         })
     ) { user ->
-        user.arguments?.getString("user")?.let {
+        user.arguments?.getString(USER)?.let {
             ChangeProfileScreen(
                 modifier = Modifier.fillMaxSize(),
                 navController = navController,
@@ -133,14 +137,14 @@ private fun NavGraphBuilder.composableLearnSign(
     composable(
         AppScreen.LearnSignScreen.route,
         arguments = listOf(
-            navArgument("level") {
+            navArgument(LEVEL) {
                 type = NavType.StringType
-            }, navArgument("subLevel") {
+            }, navArgument(SUB_LEVEL) {
                 type = NavType.StringType
             })
     ) {
-        val level = it.arguments?.getString("level") ?: ""
-        val subLevel = it.arguments?.getString("subLevel") ?: ""
+        val level = it.arguments?.getString(LEVEL) ?: EMPTY_STRING
+        val subLevel = it.arguments?.getString(SUB_LEVEL) ?: EMPTY_STRING
         LearnSignScreen(
             navController = navController,
             level = level,
@@ -157,14 +161,14 @@ private fun NavGraphBuilder.composableChoseTheLetterPlay(
     composable(
         AppScreen.ChoseTheLetterPlayScreen.route,
         arguments = listOf(
-            navArgument("level") {
+            navArgument(LEVEL) {
                 type = NavType.StringType
-            }, navArgument("subLevel") {
+            }, navArgument(SUB_LEVEL) {
                 type = NavType.StringType
             })
     ) {
-        val level = it.arguments?.getString("level") ?: ""
-        val subLevel = it.arguments?.getString("subLevel") ?: ""
+        val level = it.arguments?.getString(LEVEL) ?: EMPTY_STRING
+        val subLevel = it.arguments?.getString(SUB_LEVEL) ?: EMPTY_STRING
         ChoseTheLetterPlayScreen(
             navController = navController,
             level,
@@ -183,14 +187,14 @@ private fun NavGraphBuilder.composableChoseTheSignPlay(
     composable(
         AppScreen.ChoseTheSignPlayScreen.route,
         arguments = listOf(
-            navArgument("level") {
+            navArgument(LEVEL) {
                 type = NavType.StringType
-            }, navArgument("subLevel") {
+            }, navArgument(SUB_LEVEL) {
                 type = NavType.StringType
             })
     ) {
-        val level = it.arguments?.getString("level") ?: ""
-        val subLevel = it.arguments?.getString("subLevel") ?: ""
+        val level = it.arguments?.getString(LEVEL) ?: EMPTY_STRING
+        val subLevel = it.arguments?.getString(SUB_LEVEL) ?: EMPTY_STRING
         ChoseTheSignPlayScreen(navController = navController, level, subLevel, levelViewModel)
     }
 }

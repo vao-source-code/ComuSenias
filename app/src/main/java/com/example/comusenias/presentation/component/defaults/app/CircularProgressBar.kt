@@ -10,6 +10,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
+import com.example.comusenias.presentation.ui.theme.SIZE16
+import com.example.comusenias.presentation.ui.theme.SIZE3
+import com.example.comusenias.presentation.ui.theme.SIZE50
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
 
 @Composable
@@ -20,11 +23,11 @@ fun CircularProgressBar() {
     ) {
         CircularProgressIndicator(
             modifier = Modifier
-                .size(50.dp)
-                .padding(16.dp)
+                .size(SIZE50.dp)
+                .padding(SIZE16.dp)
                 .testTag("CircularProgressIndicator"),
             color = primaryColorApp,
-            strokeWidth = 3.dp
+            strokeWidth = SIZE3.dp
         )
     }
 }
