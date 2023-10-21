@@ -32,7 +32,7 @@ import com.example.comusenias.presentation.ui.theme.SIZE220
 import com.example.comusenias.presentation.ui.theme.SIZE24
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.size15
-import com.example.comusenias.presentation.ui.theme.size3
+import com.example.comusenias.presentation.ui.theme.SIZE3
 
 @Composable
 fun SpecialistHomeContent(
@@ -42,7 +42,7 @@ fun SpecialistHomeContent(
 
     Scaffold(
         topBar = {
-            Surface(shadowElevation = size3.dp) {
+            Surface(shadowElevation = SIZE3.dp) {
                 TopBarHome(
                     name = specialist.userModel.userName,
                     image = specialist.userModel.image
