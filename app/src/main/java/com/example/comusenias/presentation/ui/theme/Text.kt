@@ -104,4 +104,6 @@ const val CHANGE_PROFILE_CONFIRM_PASSWORD = "Confirmar Contraseña"
 /*-----------------PROFILE CONTENT -----------------*/
 const val PROFILE_USER = "Nombre del Usuario"
 const val PROFILE_EMAIL = "Correo electrónico"
-
+/*-----------------OBSERVATIONS -----------------*/
+const val DATE_One = "2003/12/20"
+const val CARD_DESCRIPTION = "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using"
