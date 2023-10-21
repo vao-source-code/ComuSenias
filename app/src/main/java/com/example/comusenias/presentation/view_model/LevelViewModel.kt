@@ -9,6 +9,7 @@ import com.example.comusenias.domain.models.Response
 import com.example.comusenias.domain.models.game.LevelModel
 import com.example.comusenias.domain.models.game.SubLevelModel
 import com.example.comusenias.domain.use_cases.level.LevelFactory
+import com.example.comusenias.presentation.ui.theme.ERROR_UNKNOWN
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -28,7 +29,7 @@ class LevelViewModel @Inject constructor(
 
     fun getLevels() = viewModelScope.launch(Dispatchers.IO) {
         levelUsesCases.getLevels().collect() { response ->
-            levelsResponse = response as Response<List<LevelModel>>?
+            levelsResponse = response
             if (response is Response.Success) {
                 levels = response.data
             }
@@ -54,4 +55,19 @@ class LevelViewModel @Inject constructor(
         return list
     }
 
+    fun getSubLevelById(idLevel: String, nameSubLevel: String): SubLevelModel? {
+        levelsResponse = Response.Loading
+        levels.forEach {
+            if (it.id == idLevel) {
+                it.subLevel.forEach { subLevel ->
+                    if (subLevel.name == nameSubLevel) {
+                        levelsResponse = Response.Success(levels)
+                        return subLevel
+                    }
+                }
+            }
+        }
+        levelsResponse = Response.Error(exception = Exception(ERROR_UNKNOWN))
+        return null
+    }
 }

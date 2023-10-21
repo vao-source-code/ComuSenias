@@ -17,7 +17,7 @@ fun ContentLetterType(letter: String) {
     Text(
         modifier = Modifier
             .padding(SIZE30.dp),
-        text = "Letra ${letter.uppercase()}",
+        text = letter.uppercase(),
         style = TextStyle(
             fontSize = SIZE36.sp,
             fontWeight = FontWeight.Medium,

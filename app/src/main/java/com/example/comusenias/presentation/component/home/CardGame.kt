@@ -43,6 +43,7 @@ fun CardGame(
     backgroundCard: State<Color>,
     iconColor: State<Color>,
     icon: State<Int>,
+    level: String,
     subLevel: SubLevelModel,
     navController: NavController
 ) {
@@ -54,7 +55,7 @@ fun CardGame(
     ) {
         Row(
             modifier = Modifier
-                .clickable { navigateToLearSign(navController, subLevel) }
+                .clickable { navigateToLearSign(navController, level, subLevel) }
                 .fillMaxSize()
                 .padding(start = size15.dp, end = SIZE27.dp),
             verticalAlignment = Alignment.CenterVertically,
@@ -90,7 +91,8 @@ fun CardGame(
 
 private fun navigateToLearSign(
     navController: NavController,
+    level: String,
     subLevel: SubLevelModel
 ) {
-    navController.navigate(AppScreen.LearnSignScreen.createRoute(subLevel.name))
+    navController.navigate(AppScreen.LearnSignScreen.createRoute(level, subLevel.name))
 }

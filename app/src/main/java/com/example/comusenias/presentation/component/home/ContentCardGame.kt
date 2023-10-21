@@ -37,6 +37,7 @@ import com.example.comusenias.presentation.ui.theme.size5
 @Composable
 fun ContentCardGame(
     status: StatusGame = StatusGame.BLOCKED,
+    level: String,
     subLevel: SubLevelModel,
     navController: NavController
 ) {
@@ -92,6 +93,7 @@ fun ContentCardGame(
             backgroundCard = backgroundColorCardAnimate,
             iconColor = iconColorAnimate,
             icon = iconAnimate,
+            level = level,
             subLevel = subLevel,
             navController = navController
         )

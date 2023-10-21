@@ -86,7 +86,7 @@ class DataClassUtil {
                 medicalLicense = "example_license_number",
                 medicalLicenseExpiration = "2024-10-21",
                 speciality = "Pediatrics",
-                childrenInCharge = 
+                childrenInCharge =
                 listOf(
                     childrenModel,
                     childrenModel,

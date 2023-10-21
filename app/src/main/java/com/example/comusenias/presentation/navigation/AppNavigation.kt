@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -29,6 +30,11 @@ import com.example.comusenias.presentation.screen.profile.ProfileScreen
 import com.example.comusenias.presentation.screen.specialist.ProfilePatientScreen
 import com.example.comusenias.presentation.screen.specialist.SpecialistScreen
 import com.example.comusenias.presentation.splashScreen.SplashScreen
+import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
+import com.example.comusenias.presentation.ui.theme.LEVEL
+import com.example.comusenias.presentation.ui.theme.SUB_LEVEL
+import com.example.comusenias.presentation.ui.theme.USER
+import com.example.comusenias.presentation.view_model.LevelViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -47,6 +53,8 @@ private fun GetNavHost(
     navController: NavHostController,
     modifier: Modifier,
 ) {
+    val levelViewModel: LevelViewModel = hiltViewModel()
+
     NavHost(
         navController = navController,
         startDestination = AppScreen.SplashScreen.route
@@ -58,7 +66,10 @@ private fun GetNavHost(
             ProfileScreen(navController = navController, modifier = modifier)
         }
         composable(AppScreen.HomeScreen.route) {
-            HomeScreen(navController = navController, modifier = modifier)
+            HomeScreen(
+                navController = navController,
+                levelViewModel = levelViewModel
+            )
         }
 
         composable(AppScreen.SplashScreen.route) {
@@ -81,9 +92,9 @@ private fun GetNavHost(
             ProfilePatientScreen(navController = navController, modifier = modifier)
         }
 
-        composableLearnSign(navController, modifier)
+        composableLearnSign(navController, levelViewModel)
 
-        composableChoseTheSignPlay(navController)
+        composableChoseTheSignPlay(navController, levelViewModel)
 
         composable(AppScreen.MakeSignPlayScreen.route) {
             MakeSignPlayScreen(navController = navController, modifier = modifier)
@@ -94,18 +105,22 @@ private fun GetNavHost(
         composable(AppScreen.CongratsPlayScreen.route) {
             CongratsPlayScreen(navController = navController, modifier = modifier)
         }
-        composableChoseTheLetterPlay(navController)
+        composableChoseTheLetterPlay(navController, levelViewModel)
+
+        composable(AppScreen.NotificationScreen.route) {
+            NotificationScreen(navController = navController)
+        }
     }
 }
 
 fun NavGraphBuilder.composableChangeProfile(navController: NavHostController) {
     composable(
         route = AppScreen.ChangeProfileScreen.route,
-        arguments = listOf(navArgument("user") {
+        arguments = listOf(navArgument(USER) {
             type = NavType.StringType
         })
     ) { user ->
-        user.arguments?.getString("user")?.let {
+        user.arguments?.getString(USER)?.let {
             ChangeProfileScreen(
                 modifier = Modifier.fillMaxSize(),
                 navController = navController,
@@ -117,50 +132,69 @@ fun NavGraphBuilder.composableChangeProfile(navController: NavHostController) {
 
 private fun NavGraphBuilder.composableLearnSign(
     navController: NavHostController,
-    modifier: Modifier
+    levelViewModel: LevelViewModel
 ) {
     composable(
         AppScreen.LearnSignScreen.route,
-        arguments = listOf(navArgument("subLevel") {
-            type = NavType.StringType
-        })
-    ) { subLevel ->
-        subLevel.arguments?.getString("subLevel")?.let {
-            LearnSignScreen(navController = navController, modifier = modifier, subLevel = it)
-        }
+        arguments = listOf(
+            navArgument(LEVEL) {
+                type = NavType.StringType
+            }, navArgument(SUB_LEVEL) {
+                type = NavType.StringType
+            })
+    ) {
+        val level = it.arguments?.getString(LEVEL) ?: EMPTY_STRING
+        val subLevel = it.arguments?.getString(SUB_LEVEL) ?: EMPTY_STRING
+        LearnSignScreen(
+            navController = navController,
+            level = level,
+            subLevel = subLevel,
+            levelViewModel = levelViewModel
+        )
     }
 }
 
 private fun NavGraphBuilder.composableChoseTheLetterPlay(
     navController: NavHostController,
+    levelViewModel: LevelViewModel
 ) {
     composable(
         AppScreen.ChoseTheLetterPlayScreen.route,
-        arguments = listOf(navArgument("subLevel") {
-            type = NavType.StringType
-        })
-    ) { subLevel ->
-        subLevel.arguments?.getString("subLevel")?.let {
-            ChoseTheLetterPlayScreen(navController = navController, subLevel = it)
-        }
+        arguments = listOf(
+            navArgument(LEVEL) {
+                type = NavType.StringType
+            }, navArgument(SUB_LEVEL) {
+                type = NavType.StringType
+            })
+    ) {
+        val level = it.arguments?.getString(LEVEL) ?: EMPTY_STRING
+        val subLevel = it.arguments?.getString(SUB_LEVEL) ?: EMPTY_STRING
+        ChoseTheLetterPlayScreen(
+            navController = navController,
+            level,
+            subLevel,
+            levelViewModel = levelViewModel
+        )
+
     }
 }
 
 @SuppressLint("ComposableDestinationInComposeScope")
 private fun NavGraphBuilder.composableChoseTheSignPlay(
     navController: NavHostController,
+    levelViewModel: LevelViewModel
 ) {
     composable(
         AppScreen.ChoseTheSignPlayScreen.route,
-        arguments = listOf(navArgument("subLevel") {
-            type = NavType.StringType
-        })
-    ) { subLevel ->
-        subLevel.arguments?.getString("subLevel")?.let {
-            ChoseTheSignPlayScreen(navController = navController, subLevel = it)
-        }
-        composable(AppScreen.NotificationScreen.route) {
-            NotificationScreen(navController = navController)
-        }
+        arguments = listOf(
+            navArgument(LEVEL) {
+                type = NavType.StringType
+            }, navArgument(SUB_LEVEL) {
+                type = NavType.StringType
+            })
+    ) {
+        val level = it.arguments?.getString(LEVEL) ?: EMPTY_STRING
+        val subLevel = it.arguments?.getString(SUB_LEVEL) ?: EMPTY_STRING
+        ChoseTheSignPlayScreen(navController = navController, level, subLevel, levelViewModel)
     }
 }
