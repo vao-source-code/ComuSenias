@@ -13,14 +13,14 @@ import org.junit.Test
 class MatchSignComposableTest {
     @get:Rule
     val composeTestRule = createComposeRule()
-    val letter = "a"
-    val randomLetter = "o"
+    private val letter = "a"
+    private val randomLetter = "o"
 
     @Test
     fun testWhenMatchSignIsIncorrect() {
         var isCorrect = true
-        val sign = Sign(imageResource = R.drawable.letra_a_solo, letter = letter)
-        val randomSign = Sign(imageResource = R.drawable.sign_o, letter = randomLetter)
+        val sign = Sign(imageResource = R.drawable.letra_a_solo.toString(), letter = letter)
+        val randomSign = Sign(imageResource = R.drawable.sign_o.toString(), letter = randomLetter)
 
         composeTestRule.setContent {
             MatchSign(
@@ -40,8 +40,8 @@ class MatchSignComposableTest {
     @Test
     fun testWhenMatchSignCorrect() {
         var isCorrect = false
-        val sign = Sign(imageResource = R.drawable.letra_a_solo, letter = letter)
-        val randomSign = Sign(imageResource = R.drawable.sign_o, letter = randomLetter)
+        val sign = Sign(imageResource = R.drawable.letra_a_solo.toString(), letter = letter)
+        val randomSign = Sign(imageResource = R.drawable.sign_o.toString(), letter = randomLetter)
 
         composeTestRule.setContent {
             MatchSign(

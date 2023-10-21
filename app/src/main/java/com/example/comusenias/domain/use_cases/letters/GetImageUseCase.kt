@@ -5,5 +5,5 @@ import javax.inject.Inject
 
 class GetImageUseCase @Inject constructor(private val repository: LetterImageRepository) {
 
-    suspend operator fun invoke(letra: String ) = repository.getLetterImage(letra)
+    suspend operator fun invoke(letter: String ) = repository.getLetterImage(letter)
 }

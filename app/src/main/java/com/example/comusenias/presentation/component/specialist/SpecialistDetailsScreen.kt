@@ -38,7 +38,7 @@ import com.example.comusenias.presentation.ui.theme.VOWELS
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
 import com.example.comusenias.presentation.ui.theme.size10
 import com.example.comusenias.presentation.ui.theme.size20
-import com.example.comusenias.presentation.ui.theme.size3
+import com.example.comusenias.presentation.ui.theme.SIZE3
 import com.example.comusenias.presentation.ui.theme.SIZE30
 import com.example.comusenias.presentation.ui.theme.size40
 
@@ -77,19 +77,19 @@ fun SpecialistDetailsScreen(modifier: Modifier, navController: NavHostController
         Divider(
             modifier = Modifier
                 .fillMaxWidth()
-                .size(size3.dp),
+                .size(SIZE3.dp),
             color = Color.Gray
         )
 
-        textDetails(icono = R.drawable.icon_calendar, text = "6 años")
-        textDetails(icono = R.drawable.icon_call, text = "1122334545")
-        textDetails(icono = R.drawable.icon_email, text = "test@gmail.com")
-        textDetails(icono = R.drawable.icon_map, text = "Ubicacion")
+        TextDetails(icono = R.drawable.icon_calendar, text = "6 años")
+        TextDetails(icono = R.drawable.icon_call, text = "1122334545")
+        TextDetails(icono = R.drawable.icon_email, text = "test@gmail.com")
+        TextDetails(icono = R.drawable.icon_map, text = "Ubicacion")
 
         Divider(
             modifier = Modifier
                 .fillMaxWidth()
-                .size(size3.dp),
+                .size(SIZE3.dp),
             color = Color.Gray
         )
         Spacer(modifier = Modifier.size(size10.dp))
@@ -115,7 +115,7 @@ fun SpecialistDetailsScreen(modifier: Modifier, navController: NavHostController
 }
 
 @Composable
-fun textDetails(icono: Int, text: String) {
+fun TextDetails(icono: Int, text: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -149,7 +149,7 @@ fun CardWithTwoImages(
             .fillMaxWidth()
             .padding(10.dp)
             .shadow(
-                elevation = size3.dp,
+                elevation = SIZE3.dp,
                 shape = RoundedCornerShape(size10.dp),
                 spotColor = Color(0x21000000),
                 ambientColor = Color(0x21000000)

@@ -24,6 +24,7 @@ class ContentCardGameTest {
         composeTestRule.setContent {
             ContentCardGame(
                 StatusGame.COMPLETED,
+                "",
                 subLevel,
                 mockNavController
             )
@@ -37,6 +38,7 @@ class ContentCardGameTest {
         composeTestRule.setContent {
             ContentCardGame(
                 StatusGame.IN_PROGRESS,
+                "",
                 subLevel,
                 mockNavController
             )
@@ -50,6 +52,7 @@ class ContentCardGameTest {
         composeTestRule.setContent {
             ContentCardGame(
                 StatusGame.BLOCKED,
+                "",
                 subLevel,
                 mockNavController
             )

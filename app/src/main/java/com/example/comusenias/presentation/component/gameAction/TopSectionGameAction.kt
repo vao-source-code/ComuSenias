@@ -1,6 +1,5 @@
 package com.example.comusenias.presentation.component.gameAction
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -22,18 +21,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import coil.compose.rememberAsyncImagePainter
+import coil.compose.AsyncImage
 import com.example.comusenias.presentation.component.home.ProgressBar
 import com.example.comusenias.presentation.navigation.AppScreen
+import com.example.comusenias.presentation.ui.theme.AVATAR
 import com.example.comusenias.presentation.ui.theme.CLOSE
-import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.SIZE100
 import com.example.comusenias.presentation.ui.theme.SIZE12
 import com.example.comusenias.presentation.ui.theme.SIZE2
@@ -106,11 +104,8 @@ fun TitleGameAction(title: String) {
 @Composable
 fun ContentImageGame(
     image: String,
-    urlImage: String = EMPTY_STRING,
     letterSign: String
 ) {
-    val painter = rememberAsyncImagePainter(model = urlImage)
-
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -137,15 +132,14 @@ fun ContentImageGame(
                     color = blackColorApp,
                     textAlign = TextAlign.Center,
                 )
-
             )
         } else {
-            Image(
+            AsyncImage(
                 modifier = Modifier
                     .fillMaxSize(),
-                painter = painterResource(id = image.toInt()),
-                contentDescription = EMPTY_STRING,
-                contentScale = ContentScale.Fit
+                model = image,
+                contentScale = ContentScale.Fit,
+                contentDescription = AVATAR
             )
         }
     }
