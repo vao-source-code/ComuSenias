@@ -10,10 +10,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface CameraRepository {
 
-    suspend fun captureAndSaveImage(context: Context): Uri?
+    suspend fun captureAndSaveImage(context: Context)
     suspend fun showCameraPreview(previewView: PreviewView, lifecycleOwner: LifecycleOwner)
     suspend fun stopCameraPreview()
     fun startObjectDetection(): Flow<ResultOverlayView>
-
-
+    suspend fun sendImageToServer(imageUri: Uri)
 }

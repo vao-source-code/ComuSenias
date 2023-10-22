@@ -48,8 +48,6 @@ fun CameraScreen(
     val recognitionResults = recognitionResultsState.value
 
 
-
-
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -122,5 +120,12 @@ fun CameraScreen(
     DisposableEffect(Unit) {
         viewModel.startObjectDetection()
         onDispose { /* Limpieza si es necesario */ }
+    }
+
+    if (viewModel.response) {
+        Log.d("CameraScreen", "response")
+        viewModel.sendImageToServer()
+    } else {
+        Log.d("CameraScreen", "no response")
     }
 }

@@ -20,6 +20,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
+import com.example.comusenias.core.di.RetrofitModule
+import com.example.comusenias.data.api.ApiService
 import com.example.comusenias.data.repositories.GestureRecognizerHelper
 import com.example.comusenias.domain.models.ResultOverlayView
 import com.example.comusenias.domain.repositories.CameraRepository
@@ -27,6 +29,10 @@ import com.google.mediapipe.tasks.vision.core.RunningMode
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.concurrent.Executors
@@ -70,7 +76,7 @@ class CameraRepositoryImpl @Inject constructor(
 
     var uri: Uri by mutableStateOf(Uri.EMPTY)
 
-    override suspend fun captureAndSaveImage(context: Context): Uri? {
+    override suspend fun captureAndSaveImage(context: Context) {
         val name = SimpleDateFormat(
             "yyyy-MM-dd-HH-mm-ss-SSS",
             Locale.ENGLISH
@@ -93,33 +99,33 @@ class CameraRepositoryImpl @Inject constructor(
             contentValues
         ).build()
 
+        val capture = object : ImageCapture.OnImageSavedCallback {
+            override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+                Toast.makeText(
+                    context,
+                    "Saved image: ${outputFileResults.savedUri}",
+                    //TODO armar post
+                    Toast.LENGTH_SHORT
+                ).show()
+                uri = outputFileResults.savedUri!!
+            }
+
+            override fun onError(exception: ImageCaptureException) {
+                Toast.makeText(
+                    context,
+                    "Some error occurred: ${exception.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
         imageCapture.takePicture(
             outputOptions,
             ContextCompat.getMainExecutor(context),
-            object : ImageCapture.OnImageSavedCallback {
-                override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                    Toast.makeText(
-                        context,
-                        "Saved image: ${outputFileResults.savedUri}",
-                        //TODO armar post
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    uri = outputFileResults.savedUri!!
-
-
-                }
-
-                override fun onError(exception: ImageCaptureException) {
-                    Toast.makeText(
-                        context,
-                        "Some error occurred: ${exception.message}",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            })
+            capture
+        )
         Toast.makeText(context, uri.toString(), Toast.LENGTH_SHORT).show()
         Log.d("uri", uri.toString())
-        return uri
     }
 
     override suspend fun showCameraPreview(
@@ -171,6 +177,17 @@ class CameraRepositoryImpl @Inject constructor(
 
     }
 
+    override suspend fun sendImageToServer(imageUri: Uri) {
+        val file = File(imageUri.path)
+        val requestFile = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
+        val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
+        val retrofit = RetrofitModule.provideApiService()
+        val service = retrofit!!.create(ApiService::class.java)
+        val call = service.uploadFile(body)
+
+
+    }
+
     override fun onError(error: String, errorCode: Int) {
         Log.e("ErrorLandmarks", "Error En Deteccion de Landmarks")
     }
@@ -191,5 +208,6 @@ class CameraRepositoryImpl @Inject constructor(
             ResultOverlayView(results, inputImageHeight, inputImageWidth)
 
     }
+
 
 }
