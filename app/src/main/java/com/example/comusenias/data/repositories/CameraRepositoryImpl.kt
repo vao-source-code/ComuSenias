@@ -1,5 +1,6 @@
 import android.content.ContentValues
 import android.content.Context
+import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.util.Log
@@ -14,17 +15,18 @@ import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import com.example.comusenias.data.repositories.GestureRecognizerHelper
 import com.example.comusenias.domain.models.ResultOverlayView
 import com.example.comusenias.domain.repositories.CameraRepository
-
 import com.google.mediapipe.tasks.vision.core.RunningMode
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
-
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.concurrent.Executors
@@ -42,7 +44,8 @@ class CameraRepositoryImpl @Inject constructor(
     val minHandDetectionConfidence = 0.5f // Cambia esto a la confianza mínima deseada
     val minHandTrackingConfidence = 0.5f // Cambia esto a la confianza mínima deseada
     val minHandPresenceConfidence = 0.5f // Cambia esto a la confianza mínima deseada
-    val currentDelegate = GestureRecognizerHelper.DELEGATE_CPU // Cambia esto según tu preferencia de delegado
+    val currentDelegate =
+        GestureRecognizerHelper.DELEGATE_CPU // Cambia esto según tu preferencia de delegado
     val runningMode = RunningMode.LIVE_STREAM // Cambia esto según tu modo de funcionamiento deseado
 
     val gestureRecognizerHelper = GestureRecognizerHelper(
@@ -65,7 +68,9 @@ class CameraRepositoryImpl @Inject constructor(
         gestureRecognizerHelper.setListener(this)
     }
 
-    override suspend fun captureAndSaveImage(context: Context) {
+    var uri: Uri by mutableStateOf(Uri.EMPTY)
+
+    override suspend fun captureAndSaveImage(context: Context): Uri? {
         val name = SimpleDateFormat(
             "yyyy-MM-dd-HH-mm-ss-SSS",
             Locale.ENGLISH
@@ -96,8 +101,12 @@ class CameraRepositoryImpl @Inject constructor(
                     Toast.makeText(
                         context,
                         "Saved image: ${outputFileResults.savedUri}",
+                        //TODO armar post
                         Toast.LENGTH_SHORT
                     ).show()
+                    uri = outputFileResults.savedUri!!
+
+
                 }
 
                 override fun onError(exception: ImageCaptureException) {
@@ -108,6 +117,9 @@ class CameraRepositoryImpl @Inject constructor(
                     ).show()
                 }
             })
+        Toast.makeText(context, uri.toString(), Toast.LENGTH_SHORT).show()
+        Log.d("uri", uri.toString())
+        return uri
     }
 
     override suspend fun showCameraPreview(
@@ -175,7 +187,8 @@ class CameraRepositoryImpl @Inject constructor(
         val updatedResults = currentResults + ResultOverlayView(results, inputImageHeight, inputImageWidth)
         recognitionResultsMutableFlow.value = updatedResults*/
 
-        recognitionResultsMutableFlow.value = ResultOverlayView(results,inputImageHeight,inputImageWidth)
+        recognitionResultsMutableFlow.value =
+            ResultOverlayView(results, inputImageHeight, inputImageWidth)
 
     }
 

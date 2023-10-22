@@ -2,29 +2,35 @@ package com.example.comusenias.presentation.screen.camera
 
 import OverlayView
 import android.app.Activity
+import android.os.Build
+import android.util.Log
 import androidx.activity.compose.BackHandler
+import androidx.annotation.RequiresApi
 import androidx.camera.view.PreviewView
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalLifecycleOwner
-import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.comusenias.presentation.view_model.CameraViewModel
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.comusenias.presentation.view_model.CameraViewModel
 import com.google.mediapipe.tasks.vision.core.RunningMode
+import kotlinx.coroutines.delay
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CameraScreen(
     viewModel: CameraViewModel = hiltViewModel(),
@@ -40,6 +46,10 @@ fun CameraScreen(
     // Recolecta los resultados de reconocimiento del ViewModel
     val recognitionResultsState = viewModel.recognitionResults.collectAsState()
     val recognitionResults = recognitionResultsState.value
+
+
+
+
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -51,6 +61,7 @@ fun CameraScreen(
             },
             modifier = Modifier.fillMaxSize()
         )
+
 
 
         if (recognitionResults != null) {
@@ -68,8 +79,7 @@ fun CameraScreen(
                             .padding(16.dp),
                         color = Color.Red // Puedes personalizar el color
                     )
-                }
-                else{
+                } else{
                     Text(
                         text = "Letters: $category", // Puedes personalizar este mensaje
                         fontSize = 20.sp,
@@ -97,6 +107,11 @@ fun CameraScreen(
                     .padding(16.dp),
                 color = Color.Gray // Puedes personalizar el color
             )
+        }
+        LaunchedEffect(key1 = true) {
+            delay(5000)  // the delay of 3 seconds
+            viewModel.captureAndSave(activity!!)
+            Log.d("CameraScreen", "captureAndSave")
         }
 
     }

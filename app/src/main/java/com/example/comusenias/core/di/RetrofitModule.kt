@@ -15,9 +15,17 @@ object RetrofitModule {
     @Provides
     fun provideApiService(): ApiService? {
         return Retrofit.Builder()
-            .baseUrl("https://api.example.com/")
+            .baseUrl("https:/192.168.0.77:8000/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(ApiService::class.java)
+    }
+
+    @Provides
+    fun getRetrofit(): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl("https://dog.ceo/api/breed/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
     }
 }
