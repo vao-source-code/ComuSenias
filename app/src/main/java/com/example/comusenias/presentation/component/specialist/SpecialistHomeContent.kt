@@ -60,7 +60,7 @@ fun SpecialistHomeContent(
         ) {
             PatientContainer(
                 patients = specialist.childrenInCharge,
-                onClickCard = { navController.navigate(AppScreen.ProfilePatientScreen.route) }
+                navController = navController
             )
         }
     }
@@ -69,7 +69,7 @@ fun SpecialistHomeContent(
 @Composable
 fun PatientContainer(
     patients: List<ChildrenModel>?,
-    onClickCard: () -> Unit = {}
+    navController: NavHostController
 ) {
     val getPatients = remember { patients }
 
@@ -87,7 +87,7 @@ fun PatientContainer(
                     items(it) { patient ->
                         CardProfileUser(
                             user = patient,
-                            onClickCard = onClickCard
+                            onClickCard = { navController.navigate(AppScreen.ProfilePatientScreen.route) }
                         )
                     }
                 }

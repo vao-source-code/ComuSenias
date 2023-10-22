@@ -1,10 +1,13 @@
 package com.example.comusenias.presentation.component.specialist
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
@@ -20,37 +23,54 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.comusenias.R
+import com.example.comusenias.presentation.screen.specialist.DataClassUtil
 import com.example.comusenias.presentation.ui.theme.IMAGE_EDIT_BUTTON
 import com.example.comusenias.presentation.ui.theme.SELECTED_IMAGE
 import com.example.comusenias.presentation.ui.theme.SIZE140
+import com.example.comusenias.presentation.ui.theme.SIZE16
 import com.example.comusenias.presentation.ui.theme.SIZE20
 import com.example.comusenias.presentation.ui.theme.SIZE24
+import com.example.comusenias.presentation.ui.theme.SIZE26
+import com.example.comusenias.presentation.ui.theme.SIZE36
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 
 @Composable
 fun PatientProfileContent() {
+    val patient = DataClassUtil.createSpecialistModelExample().childrenInCharge?.get(0)!!
+
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
-        ContentTopProfile()
-        TabsPage()
+        ContentTopProfile(
+            userImage = patient.userModel.image,
+            name = patient.userModel.userName
+        )
+        Spacer(modifier = Modifier.height(SIZE36.dp))
+        TabsPage(
+            tabContent = listOf(
+                { ChildData(patient = patient ) },
+                { /* Composable para Progreso */ },
+                { /* Composable para Observaciones */ }
+            )
+        )
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun ContentTopProfile(
-    userImage: Any? = "",
-    name: String = "Agusto Fernandez",
+    userImage: String?,
+    name: String ,
 ) {
     Column(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = SIZE26.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(SIZE16.dp)
     ) {
         ImageProfile(userImage = userImage)
         UserName(name = name)
@@ -58,8 +78,7 @@ fun ContentTopProfile(
 }
 
 @Composable
-fun ImageProfile(userImage: Any?, editable: Boolean = false) {
-    val image = R.drawable.profile_avatar
+fun ImageProfile(userImage: String?, editable: Boolean = false) {
     Column(
         modifier = Modifier
             .width(SIZE140.dp),
@@ -70,11 +89,10 @@ fun ImageProfile(userImage: Any?, editable: Boolean = false) {
                 .fillMaxWidth()
                 .height(SIZE140.dp)
                 .clip(CircleShape),
-            contentScale = ContentScale.Crop,
             model = userImage,
+            contentScale = ContentScale.Crop,
             contentDescription = SELECTED_IMAGE,
-            placeholder = painterResource(id = image),
-            error = painterResource(id = image)
+            error = painterResource(id = R.drawable.profile_avatar)
         )
         if (editable) {
             Icon(
