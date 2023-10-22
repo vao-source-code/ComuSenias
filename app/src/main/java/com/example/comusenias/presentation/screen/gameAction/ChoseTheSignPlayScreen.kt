@@ -13,6 +13,7 @@ import com.example.comusenias.presentation.component.defaults.app.CircularProgre
 import com.example.comusenias.presentation.component.gameAction.GameAction
 import com.example.comusenias.presentation.component.gameAction.MatchSign
 import com.example.comusenias.presentation.component.home.ContentProgressBar
+import com.example.comusenias.presentation.extensions.validation.selectedOption
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.CONTINUE
 import com.example.comusenias.presentation.ui.theme.ERROR_RETRY_SUB_LEVEL
@@ -31,7 +32,7 @@ fun ChoseTheSignPlayScreen(
 
     val isButtonEnabled = remember { mutableStateOf(true) }
     val onMatchResult: (Boolean) -> Unit = {
-        isButtonEnabled.value = true
+        isButtonEnabled.value = it
     }
 
     when (levelViewModel.levelsResponse) {
@@ -64,7 +65,7 @@ private fun ShowChoseTheSign(
 ) {
     subLevel?.let {
         val sign = Sign(imageResource = it.imageOnly, letter = it.name)
-        val randomSign = Sign(imageResource = it.randomImage, letter = it.randomLetter)
+        val randomSign = Sign(imageResource = it.randomImageOnly, letter = it.randomLetter)
         GameAction(
             imageSign = it.image,
             letterSign = it.name,
@@ -73,13 +74,18 @@ private fun ShowChoseTheSign(
             enabledButton = isButtonEnabled.value,
             currentSteps = STEP_TREE,
             navController = navController,
-            clickButton = { navController.navigate(AppScreen.MakeSignPlayScreen.route) },
+            clickButton = {
+                navController.navigate(AppScreen.MakeSignPlayScreen.route)
+                selectedOption(
+                    it.imageOnly,
+                    getLevelViewModel
+                )
+            },
         ) {
             MatchSign(
                 sign = sign,
                 randomSign = randomSign,
-                letterCompare = it.name,
-                responseMatchLetter = onMatchResult
+                onMatchResult = onMatchResult
             )
         }
     }

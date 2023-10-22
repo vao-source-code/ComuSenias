@@ -40,7 +40,7 @@ import com.example.comusenias.presentation.ui.theme.REGISTER
 import com.example.comusenias.presentation.ui.theme.REGISTER_TWO
 import com.example.comusenias.presentation.ui.theme.SIZE12
 import com.example.comusenias.presentation.ui.theme.SIZE16
-import com.example.comusenias.presentation.ui.theme.size10
+import com.example.comusenias.presentation.ui.theme.SIZE10
 import com.example.comusenias.presentation.ui.theme.size18
 import com.example.comusenias.presentation.ui.theme.size20
 import com.example.comusenias.presentation.ui.theme.size24
@@ -53,8 +53,6 @@ fun RegisterContent(
     modifier: Modifier,
     viewModel: RegisterViewModel = hiltViewModel()
 ) {
-
-    val state = viewModel.state
     Column(
         modifier = modifier.padding(size20.dp),
         horizontalAlignment = CenterHorizontally,
@@ -90,7 +88,7 @@ fun CardFormRegister(
         elevation = CardDefaults.elevatedCardElevation(defaultElevation = 2.dp)
     ) {
 
-        Column(modifier = Modifier.padding(PaddingValues(size10.dp))) {
+        Column(modifier = Modifier.padding(PaddingValues(SIZE10.dp))) {
             Text(
                 modifier = Modifier.padding(top = size24.dp),
                 fontSize = size18.sp,
@@ -98,7 +96,7 @@ fun CardFormRegister(
                 text = REGISTER_TWO,
             )
 
-            Spacer(modifier = Modifier.height(size10.dp))
+            Spacer(modifier = Modifier.height(SIZE10.dp))
 
             Text(
                 text = ADD_DATA_FOR_REGISTER,
@@ -155,7 +153,7 @@ fun CardFormRegister(
                 errorMsg = viewModel.errorConfirmPassword,
                 validateField = { viewModel.validateConfirmPassword() }
             )
-            Spacer(modifier = Modifier.height(size10.dp))
+            Spacer(modifier = Modifier.height(SIZE10.dp))
 
             ButtonDefault(
                 text = REGISTER,

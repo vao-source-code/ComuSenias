@@ -17,13 +17,12 @@ import com.example.comusenias.domain.models.game.SubLevelModel
 import com.example.comusenias.presentation.component.defaults.app.CircularProgressBar
 import com.example.comusenias.presentation.component.defaults.app.ShowRetrySnackBar
 import com.example.comusenias.presentation.ui.theme.ERROR_RETRY_LEVEL
-import com.example.comusenias.presentation.ui.theme.size1
+import com.example.comusenias.presentation.ui.theme.SIZE1
 import com.example.comusenias.presentation.ui.theme.size14
 import com.example.comusenias.presentation.view_model.LevelViewModel
 
 @Composable
 fun ContentHome(
-    modifier: Modifier,
     navController: NavController,
     levelViewModel: LevelViewModel
 ) {
@@ -64,7 +63,7 @@ private fun ShowLazyColumn(
                 end = size14.dp,
             )
             .background(Color.White),
-        verticalArrangement = Arrangement.spacedBy(size1.dp)
+        verticalArrangement = Arrangement.spacedBy(SIZE1.dp)
     ) {
         item {
             ContentProgressBar()

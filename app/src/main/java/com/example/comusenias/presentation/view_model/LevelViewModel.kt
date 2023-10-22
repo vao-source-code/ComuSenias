@@ -1,5 +1,6 @@
 package com.example.comusenias.presentation.view_model
 
+import android.annotation.SuppressLint
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -15,6 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@SuppressLint("MutableCollectionMutableState")
 @HiltViewModel
 class LevelViewModel @Inject constructor(
     private val levelUsesCases: LevelFactory,
@@ -22,6 +24,8 @@ class LevelViewModel @Inject constructor(
 
     var levelsResponse by mutableStateOf<Response<List<LevelModel>>?>(Response.Loading)
     var levels by mutableStateOf<List<LevelModel>>(listOf())
+    var choiceOfOption by mutableStateOf<MutableList<Boolean>>(mutableListOf())
+    var onOptionSelected by mutableStateOf("")
 
     init {
         getLevels()

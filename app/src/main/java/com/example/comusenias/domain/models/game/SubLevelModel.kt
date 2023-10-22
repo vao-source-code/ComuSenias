@@ -12,6 +12,7 @@ data class SubLevelModel(
     val imageOnly: String = EMPTY_STRING,
     var randomLetter: String = EMPTY_STRING,
     var randomImage: String = EMPTY_STRING,
+    var randomImageOnly: String = EMPTY_STRING,
     var isCompleted: StatusGame = StatusGame.BLOCKED,
 ) {
     fun toJson(): String = Gson().toJson(
@@ -22,8 +23,8 @@ data class SubLevelModel(
            imageOnly = if (imageOnly != EMPTY_STRING) LibraryString.encodeURL(imageOnly) else EMPTY_STRING,
             randomLetter,
             randomImage,
+            randomImageOnly,
             isCompleted
-
         )
     )
 

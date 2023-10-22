@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.sp
 import com.example.comusenias.constants.TestTag
 import com.example.comusenias.presentation.ui.theme.forgotPassword
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
-import com.example.comusenias.presentation.ui.theme.size10
+import com.example.comusenias.presentation.ui.theme.SIZE10
 import com.example.comusenias.presentation.ui.theme.size14
 
 @Preview(showBackground = true)
@@ -25,7 +25,7 @@ fun RememberMeAndForgetMyPass() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = size10.dp),
+            .padding(horizontal = SIZE10.dp),
         horizontalArrangement = Arrangement.End
     ) {
         ForgetMyPass { }

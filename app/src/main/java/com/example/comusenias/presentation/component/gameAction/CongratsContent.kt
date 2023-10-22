@@ -18,7 +18,10 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.comusenias.R
-import com.example.comusenias.presentation.ui.theme.FINISH_LVL
+import com.example.comusenias.presentation.extensions.validation.getChoicesSelected
+import com.example.comusenias.presentation.screen.gameAction.getLevelViewModel
+import com.example.comusenias.presentation.ui.theme.CONGRATS_TEXT
+import com.example.comusenias.presentation.ui.theme.ERROR_CONGRATS_TEXT
 import com.example.comusenias.presentation.ui.theme.SIZE100
 import com.example.comusenias.presentation.ui.theme.SIZE300
 import com.example.comusenias.presentation.ui.theme.blackColorApp
@@ -26,7 +29,8 @@ import com.example.comusenias.presentation.ui.theme.size24
 
 @Composable
 fun CongratsContent() {
-    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.animation_congrats))
+    val congratsImage by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.animation_congrats))
+    val congratsErrorImage by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.dino_error))
 
     Column(
         modifier = Modifier
@@ -35,12 +39,12 @@ fun CongratsContent() {
     ) {
         LottieAnimation(
             modifier = Modifier.height(SIZE300.dp),
-            composition = composition,
+            composition = if (getChoicesSelected(getLevelViewModel)) congratsImage else congratsErrorImage,
             iterations = LottieConstants.IterateForever,
         )
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = FINISH_LVL,
+            text = if (getChoicesSelected(getLevelViewModel)) CONGRATS_TEXT else ERROR_CONGRATS_TEXT,
             style = TextStyle(
                 fontSize = size24.sp,
                 fontWeight = FontWeight.SemiBold,

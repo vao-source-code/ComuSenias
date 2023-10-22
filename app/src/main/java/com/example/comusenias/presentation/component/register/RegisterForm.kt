@@ -27,7 +27,7 @@ import com.example.comusenias.presentation.ui.theme.EMAIL_TEXT
 import com.example.comusenias.presentation.ui.theme.PASSWORD
 import com.example.comusenias.presentation.ui.theme.REGISTER
 import com.example.comusenias.presentation.ui.theme.SIZE2
-import com.example.comusenias.presentation.ui.theme.size10
+import com.example.comusenias.presentation.ui.theme.SIZE10
 import com.example.comusenias.presentation.view_model.RegisterViewModel
 
 @Composable
@@ -37,8 +37,8 @@ fun RegisterForm(
 ) {
     val state = viewModel.state
     val childFormScreen = AppScreen.ChildFormScreen.route
-    val specilaistFormScreen = AppScreen.EspecialistFormScreen.route
-    var route by remember { mutableStateOf(childFormScreen) }
+    val specialistFormScreen = AppScreen.EspecialistFormScreen.route
+    val route by remember { mutableStateOf(childFormScreen) }
     val currentRoute = remember { mutableStateOf(route) }
 
     ResponseStatus(
@@ -74,9 +74,9 @@ fun RegisterForm(
             errorMsg = viewModel.errorConfirmPassword
         )
         SpecialistCheck { isCheckedValue ->
-            currentRoute.value = if (isCheckedValue) specilaistFormScreen else childFormScreen
+            currentRoute.value = if (isCheckedValue) specialistFormScreen else childFormScreen
         }
-        Spacer(modifier = Modifier.height(size10.dp))
+        Spacer(modifier = Modifier.height(SIZE10.dp))
         ButtonApp(
             titleButton = REGISTER,
             onClickButton = { navController.navigate(route = currentRoute.value) },

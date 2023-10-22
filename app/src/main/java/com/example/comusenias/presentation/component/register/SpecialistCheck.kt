@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.sp
 import com.example.comusenias.presentation.component.defaults.app.CheckBoxApp
 import com.example.comusenias.presentation.ui.theme.ESPECIALIST
 import com.example.comusenias.presentation.ui.theme.blackColorApp
-import com.example.comusenias.presentation.ui.theme.size10
+import com.example.comusenias.presentation.ui.theme.SIZE10
 import com.example.comusenias.presentation.ui.theme.size14
 import com.example.comusenias.presentation.ui.theme.size9
 
@@ -25,7 +25,7 @@ fun SpecialistCheck(onCheckChange: (Boolean) -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = size10.dp),
+            .padding(horizontal = SIZE10.dp),
         horizontalArrangement = Arrangement.spacedBy(size9.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {

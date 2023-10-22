@@ -26,7 +26,6 @@ class MatchSignComposableTest {
             MatchSign(
                 sign = sign,
                 randomSign = randomSign,
-                letterCompare = sign.letter
             ) {
                 isCorrect = it
             }
