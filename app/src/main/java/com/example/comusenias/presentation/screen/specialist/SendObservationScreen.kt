@@ -46,6 +46,7 @@ fun SendObservationScreen(navController: NavHostController, modifier: Modifier) 
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
+
         }
     }
 }
