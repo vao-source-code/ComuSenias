@@ -12,7 +12,7 @@ import com.example.comusenias.domain.models.users.ChildrenModel
 import com.example.comusenias.domain.models.users.SpecialistModel
 import com.example.comusenias.domain.models.users.UserModel
 import com.example.comusenias.presentation.component.home.StatusGame
-import com.example.comusenias.presentation.component.specialist.SpecialistHomeContent
+import com.example.comusenias.presentation.component.specialist.home.SpecialistHomeContent
 
 @Composable
 fun SpecialistScreen(navController: NavHostController, modifier: Modifier) {
@@ -31,7 +31,7 @@ class DataClassUtil {
             val observation = Observation(
                 id = "observation_id",
                 dateObservation = "2023-10-21",
-                observation = "Example observation"
+                observation = "Example observation Example observation Example observation Example observationExample observation Example observation Example observation Example observation Example observation Example observation Example observation"
             )
 
             val subLevelModel = SubLevelModel(
@@ -77,7 +77,26 @@ class DataClassUtil {
                 subLevelActual = 2,
                 isPremium = true,
                 levels = listOf(levelModel),
-                observation = listOf(observation)
+                observation = listOf(
+                    observation,
+                    observation,
+                    observation,
+                    observation,
+                    observation,
+                    observation,
+                    observation,
+                    observation,
+                    observation,
+                    observation,
+                    observation,
+                    observation,
+                    observation,
+                    observation,
+                    observation,
+                    observation,
+                    observation,
+                    observation
+                    )
             )
 
             return  SpecialistModel(
@@ -88,6 +107,14 @@ class DataClassUtil {
                 speciality = "Pediatrics",
                 childrenInCharge =
                 listOf(
+                    childrenModel,
+                    childrenModel,
+                    childrenModel,
+                    childrenModel,
+                    childrenModel,
+                    childrenModel,
+                    childrenModel,
+                    childrenModel,
                     childrenModel,
                     childrenModel,
                     childrenModel,

@@ -5,11 +5,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
-import com.example.comusenias.presentation.component.specialist.PatientProfileContent
+import com.example.comusenias.presentation.component.specialist.profilePatient.PatientProfileContent
 
 @Composable
 fun ProfilePatientScreen(navController: NavHostController, modifier: Modifier) {
     Box(modifier = modifier.fillMaxSize()) {
-        PatientProfileContent()
+        PatientProfileContent(navController = navController)
     }
 }

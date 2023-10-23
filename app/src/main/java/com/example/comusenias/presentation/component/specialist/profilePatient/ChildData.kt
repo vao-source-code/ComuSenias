@@ -1,8 +1,9 @@
-package com.example.comusenias.presentation.component.specialist
+package com.example.comusenias.presentation.component.specialist.profilePatient
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -12,11 +13,14 @@ import com.example.comusenias.domain.models.users.ChildrenModel
 import com.example.comusenias.presentation.component.addPatient.FieldWithIcon
 import com.example.comusenias.presentation.ui.theme.AGE
 import com.example.comusenias.presentation.ui.theme.SIZE12
+import com.example.comusenias.presentation.ui.theme.size10
 
 @Composable
 fun ChildData(patient: ChildrenModel) {
     Column(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = size10.dp),
         verticalArrangement = Arrangement.spacedBy(SIZE12.dp)
     ) {
         FieldWithIcon(

@@ -1,4 +1,4 @@
-package com.example.comusenias.presentation.component.specialist
+package com.example.comusenias.presentation.component.specialist.profilePatient
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,6 +25,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.comusenias.R
 import com.example.comusenias.presentation.screen.specialist.DataClassUtil
@@ -39,8 +40,9 @@ import com.example.comusenias.presentation.ui.theme.SIZE36
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 
 @Composable
-fun PatientProfileContent() {
+fun PatientProfileContent(navController: NavController) {
     val patient = DataClassUtil.createSpecialistModelExample().childrenInCharge?.get(0)!!
+    val observations = patient.observation!!
 
     Column(
         modifier = Modifier.fillMaxSize()
@@ -52,9 +54,14 @@ fun PatientProfileContent() {
         Spacer(modifier = Modifier.height(SIZE36.dp))
         TabsPage(
             tabContent = listOf(
-                { ChildData(patient = patient ) },
-                { /* Composable para Progreso */ },
-                { /* Composable para Observaciones */ }
+                { ChildData(patient = patient) },
+                { },
+                {
+                    ObservationsScreen(
+                        observations = observations,
+                        navController = navController
+                    )
+                }
             )
         )
     }
@@ -113,7 +120,7 @@ fun UserName(name: String) {
         text = name,
         style = TextStyle(
             fontSize = SIZE20.sp,
-            fontWeight = FontWeight.Normal,
+            fontWeight = FontWeight.Medium,
             color = blackColorApp
         )
     )

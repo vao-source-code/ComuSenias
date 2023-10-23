@@ -1,4 +1,4 @@
-package com.example.comusenias.presentation.component.specialist
+package com.example.comusenias.presentation.component.specialist.profilePatient
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,7 +19,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.comusenias.presentation.ui.theme.SIZE16
-import com.example.comusenias.presentation.ui.theme.SIZE26
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.size10
 import com.example.comusenias.presentation.ui.theme.size14
@@ -54,7 +53,7 @@ fun TabsPage(
                 modifier = Modifier
                     .padding(paddingValues)
                     .fillMaxWidth()
-                    .padding(top = SIZE26.dp, start = size14.dp, end = size14.dp),
+                    .padding(horizontal = size14.dp),
             ) {
                 tabContent[tabIndex]()
             }

@@ -21,7 +21,6 @@ fun ProfileFooterContent(onClickButton: () -> Unit?) {
     ) {
         ButtonApp(
             titleButton = UPDATE_DATA,
-            icon = null,
             onClickButton = {
                 onClickButton()
             }

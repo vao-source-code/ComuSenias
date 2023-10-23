@@ -1,4 +1,4 @@
-package com.example.comusenias.presentation.component.specialist
+package com.example.comusenias.presentation.component.specialist.home
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -33,6 +34,9 @@ import com.example.comusenias.presentation.ui.theme.size10
 
 @Composable
 fun CardProfileUser(user: ChildrenModel, onClickCard: () -> Unit) {
+    val image = user.userModel.image
+    val name = remember { user.userModel.userName }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -45,7 +49,7 @@ fun CardProfileUser(user: ChildrenModel, onClickCard: () -> Unit) {
             horizontalArrangement = Arrangement.spacedBy(SIZE36.dp)
         ) {
             AsyncImage(
-                model = user.userModel.image,
+                model = image,
                 contentDescription = PROFILE_USER,
                 modifier = Modifier
                     .size(SIZE50.dp),
@@ -53,7 +57,7 @@ fun CardProfileUser(user: ChildrenModel, onClickCard: () -> Unit) {
                 error = painterResource(R.drawable.profile_avatar)
             )
             Text(
-                text = user.userModel.userName,
+                text = name,
                 style = TextStyle(
                     fontSize = SIZE16.sp,
                     fontWeight = FontWeight.Normal,

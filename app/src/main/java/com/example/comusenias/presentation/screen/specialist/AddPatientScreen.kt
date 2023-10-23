@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.comusenias.presentation.component.addPatient.UserProfileContent
 import com.example.comusenias.presentation.component.defaults.app.ButtonApp
-import com.example.comusenias.presentation.component.specialist.ChildData
+import com.example.comusenias.presentation.component.specialist.profilePatient.ChildData
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.CONFIRM
 import com.example.comusenias.presentation.ui.theme.FLOAT01

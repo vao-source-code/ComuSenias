@@ -28,6 +28,7 @@ import com.example.comusenias.presentation.screen.premiun.PremiunScreen
 import com.example.comusenias.presentation.screen.profile.ChangeProfileScreen
 import com.example.comusenias.presentation.screen.profile.ProfileScreen
 import com.example.comusenias.presentation.screen.specialist.ProfilePatientScreen
+import com.example.comusenias.presentation.screen.specialist.SendObservationScreen
 import com.example.comusenias.presentation.screen.specialist.SpecialistScreen
 import com.example.comusenias.presentation.splashScreen.SplashScreen
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
@@ -90,6 +91,10 @@ private fun GetNavHost(
 
         composable(AppScreen.ProfilePatientScreen.route) {
             ProfilePatientScreen(navController = navController, modifier = modifier)
+        }
+
+        composable(AppScreen.SendObservationScreen.route) {
+            SendObservationScreen(navController = navController,modifier = modifier)
         }
 
         composableLearnSign(navController, levelViewModel)
