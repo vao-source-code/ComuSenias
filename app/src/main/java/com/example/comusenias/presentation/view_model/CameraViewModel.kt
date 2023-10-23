@@ -49,6 +49,13 @@ class CameraViewModel @Inject constructor(private val useCases: CameraUseCases):
         }
     }
 
+    fun stopCameraPreview(){
+        viewModelScope.launch {
+            useCases.stopCameraPreview()
+        }
+    }
+
+
 
 
 }

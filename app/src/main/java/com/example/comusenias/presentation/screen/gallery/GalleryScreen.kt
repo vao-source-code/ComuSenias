@@ -43,16 +43,24 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
 import java.io.FileOutputStream
+import javax.inject.Inject
 
 @Composable
 fun GalleryScreen(
     viewModel: GalleryViewModel = hiltViewModel(),
     navController: NavController,
-    path: String
+    path: String,
 ) {
 
 
     val context = LocalContext.current
+
+    val preferenceManager = remember { PreferenceManager(context) }
+
+    var isChecked by remember { mutableStateOf(preferenceManager.getBoolean("key_boolean", false)) }
+
+
+
 
     val vowelsResponse = viewModel.vowelsResults.collectAsState()
 
@@ -106,6 +114,8 @@ fun GalleryScreen(
 
                     viewModel.postGallery(body)
                 }
+
+
             } ?: run {
                 Image(
                     painter = defaultImage,
@@ -127,6 +137,8 @@ fun GalleryScreen(
 
         Button(
             onClick = {
+                isChecked = true
+                preferenceManager.saveBoolean("key_boolean",isChecked)
                 navController.navigate(AppScreen.CameraScreenPermission.route)
             },
             modifier = Modifier
@@ -166,6 +178,8 @@ fun bitmapToFile(bitmap: Bitmap, context: Context): File {
     outputStream.close()
     return file
 }
+
+
 
 
 

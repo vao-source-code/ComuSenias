@@ -30,7 +30,7 @@ fun TestCamera(navController: NavController) {
             navController.navigate(AppScreen.CameraScreenPermission.route)
         }, icon = null)
 
-        ButtonDefault(text = "Camera API", onClick = {
+        ButtonDefault(text = "API", onClick = {
             navController.navigate(AppScreen.GalleryScreen.route)
         },icon = null)
     }

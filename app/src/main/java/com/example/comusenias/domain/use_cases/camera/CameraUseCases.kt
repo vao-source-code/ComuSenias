@@ -17,6 +17,6 @@ class CameraUseCases @Inject constructor(private val customCameraRepository: Cam
 
     fun startObjectDetection() = customCameraRepository.startObjectDetection()
 
-
+    suspend fun stopCameraPreview() = customCameraRepository.stopCameraPreview()
 
 }

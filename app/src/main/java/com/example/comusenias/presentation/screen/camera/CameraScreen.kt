@@ -2,7 +2,9 @@ package com.example.comusenias.presentation.screen.camera
 
 import OverlayView
 import android.app.Activity
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.BackHandler
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.camera.view.PreviewView
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -16,6 +18,10 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,6 +31,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
 import com.example.comusenias.R
+import com.example.comusenias.presentation.navigation.AppScreen
+import com.example.comusenias.presentation.screen.gallery.PreferenceManager
 
 
 @Composable
@@ -36,6 +44,14 @@ fun CameraScreen(
     val context = LocalContext.current
     val activity = (context as? Activity)
     val lifecycleOwner = LocalLifecycleOwner.current
+
+
+
+
+    val preferenceManager = remember { PreferenceManager(context) }
+
+    val isChecked by remember { mutableStateOf(preferenceManager.getBoolean("key_boolean", false)) }
+
 
 
     // Recolecta los resultados de reconocimiento del ViewModel
@@ -55,40 +71,43 @@ fun CameraScreen(
             modifier = Modifier.fillMaxSize()
         )
 
-        // Aca tenemos qe poer un sharedPref para saber si estamos en la captura tiene que desabilitar la deteccion de imegenes , por el contrario habilitar la deteccion pero desaparece el boton de captura
-        //OverlayView(resultOverlayView = recognitionResults)
 
+        if(!isChecked){
+            OverlayView(resultOverlayView = recognitionResults)
+        }
+        else {
+            preferenceManager.removeKey("key_boolean")
 
-        // Botón de captura
+            // Botón de captura
+            Button(
+                onClick = {
+                    viewModel.captureAndSave(navController!!)
+                },
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(16.dp)
+                    .size(56.dp)
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.baseline_camera_24),
+                    contentDescription = "Capture",
+                    modifier = Modifier.size(15.dp),
+                    tint = Color.White
+                )
 
-        Button(
-            onClick = {
-                viewModel.captureAndSave(navController!!)
-            },
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(16.dp)
-                .size(56.dp)
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.baseline_camera_24),
-                contentDescription = "Capture",
-                modifier = Modifier.size(15.dp),
-                tint = Color.White
-            )
-
+            }
         }
 
 
     }
 
-
-
-
+    BackHandler {
+        activity?.finish()
+    }
 
     DisposableEffect(Unit) {
         viewModel.startObjectDetection()
-        onDispose { /* Limpieza si es necesario */ }
+        onDispose { }
     }
 }
 
