@@ -1,6 +1,7 @@
 package com.example.comusenias.presentation.view_model
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -10,6 +11,7 @@ import com.example.comusenias.domain.models.Response
 import com.example.comusenias.domain.models.game.LevelModel
 import com.example.comusenias.domain.models.game.SubLevelModel
 import com.example.comusenias.domain.use_cases.level.LevelFactory
+import com.example.comusenias.presentation.component.home.StatusGame
 import com.example.comusenias.presentation.ui.theme.ERROR_UNKNOWN
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -40,6 +42,48 @@ class LevelViewModel @Inject constructor(
                 levels = response.data
             }
         }
+    }
+
+    private fun getNewStatusLevel(current: LevelModel, previous: LevelModel?): StatusGame {
+        return when {
+            previous == null && current.isCompleted != StatusGame.COMPLETED -> StatusGame.IN_PROGRESS
+
+            previous != null && previous.isCompleted == StatusGame.COMPLETED
+                    && current.isCompleted != StatusGame.COMPLETED -> StatusGame.IN_PROGRESS
+
+            else -> current.isCompleted
+        }
+    }
+
+    private fun getNewStatusSubLevel(current: SubLevelModel, previous: SubLevelModel?): StatusGame {
+        return when {
+            previous == null && current.isCompleted != StatusGame.COMPLETED -> StatusGame.IN_PROGRESS
+
+            previous != null && previous.isCompleted == StatusGame.COMPLETED
+                    && current.isCompleted == StatusGame.BLOCKED -> StatusGame.IN_PROGRESS
+
+            previous != null && previous.isCompleted == StatusGame.COMPLETED
+                    && current.isCompleted != StatusGame.COMPLETED -> StatusGame.IN_PROGRESS
+
+            else -> current.isCompleted
+        }
+    }
+
+    fun adjustIsCompleted(lista: List<LevelModel>): List<LevelModel> {
+        var previousLevel: LevelModel? = null
+        var previousSubLevel: SubLevelModel? = null
+        for (index in lista.indices) {
+            val level = lista[index]
+            level.isCompleted = getNewStatusLevel(level, previousLevel)
+            previousLevel = level
+
+            for (index in level.subLevel.indices) {
+                val subLevel = level.subLevel[index]
+                subLevel.isCompleted = getNewStatusSubLevel(subLevel, previousSubLevel)
+                previousSubLevel = subLevel
+            }
+        }
+        return lista
     }
 
     fun getLevelsByName(nameLevel: String): List<SubLevelModel> {

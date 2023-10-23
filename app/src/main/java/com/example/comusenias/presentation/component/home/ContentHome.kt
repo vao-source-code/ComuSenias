@@ -57,6 +57,7 @@ private fun ShowLazyColumn(
     navController: NavController,
     levelViewModel: LevelViewModel
 ) {
+    val adjustLevel = levelViewModel.adjustIsCompleted(level)
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
@@ -74,7 +75,7 @@ private fun ShowLazyColumn(
             ContentLevel(level[0].name)
         }
         items(
-            items = getSubLevel(level),
+            items = getSubLevel(adjustLevel),
         ) { subLevel ->
             ContentCardGame(
                 status = subLevel.isCompleted,
