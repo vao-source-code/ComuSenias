@@ -35,6 +35,7 @@ import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okio.Utf8
 import java.io.File
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
@@ -110,8 +111,9 @@ class CameraRepositoryImpl @Inject constructor(
                     // Inicia un nuevo contexto de coroutine en el hilo de fondo
 
                     val savedUri = outputFileResults.savedUri
-                    val uriString = savedUri?.path
-                    navController.navigate(AppScreen.GalleryScreen.createRoute(savedUri?.path!!))
+                    val encodedUrl = URLEncoder.encode(savedUri.toString(), "UTF-8")
+
+                    navController.navigate(AppScreen.GalleryScreen.createRoute(encodedUrl))
 
 
                     Log.d("SavedImage" ,"${outputFileResults.savedUri}")
@@ -135,21 +137,7 @@ class CameraRepositoryImpl @Inject constructor(
     }
 
 
-    private fun getRealPathFromURI(uri: Uri): String {
-        val cursor = context.contentResolver.query(uri, null, null, null, null)
-        cursor?.use { cursor ->
-            if (cursor.moveToFirst()) {
-                val dataIndex = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA)
-                if (dataIndex != -1) {
-                    val path = cursor.getString(dataIndex)
-                    if (path != null) {
-                        return path
-                    }
-                }
-            }
-        }
-        return uri.path ?: ""
-    }
+
 
     override suspend fun showCameraPreview(
         previewView: PreviewView,
@@ -219,17 +207,5 @@ class CameraRepositoryImpl @Inject constructor(
             ResultOverlayView(results, inputImageHeight, inputImageWidth)
 
     }
-
-    private fun isValidDestinationInGraph(destination: String, navController: NavController): Boolean {
-        val graph = navController.graph
-        return graph.findNode(destination) != null
-    }
-
-
-
-
-
-
-
 
 }

@@ -15,9 +15,10 @@ class GalleryRepositoryImpl @Inject constructor(private val apiService: ApiServi
         if (response.isSuccessful) {
             val responseBody = response.body()
             // Do something with the response body
+            Log.d("Retrofit", "Response Body: ${response.body()!!.letra}")
+
             return VowelsResponse(responseBody!!.letra,responseBody.image_base64)
 
-            Log.d("Retrofit", "Response Body: ${response.body()}")
         } else {
             // Handle unsuccessful response
             Log.d("Retrofit", "Unsuccessful response: ${response.code()}")

@@ -3,6 +3,8 @@ package com.example.comusenias.presentation.screen.gallery
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Matrix
+import android.media.ExifInterface
 import android.net.Uri
 import android.util.Base64
 import android.util.Log
@@ -46,17 +48,13 @@ import java.io.FileOutputStream
 fun GalleryScreen(
     viewModel: GalleryViewModel = hiltViewModel(),
     navController: NavController,
-    path:String
+    path: String
 ) {
+
 
     val context = LocalContext.current
 
-    Log.d("UriGalleryScreen", path.toString())
-
     val vowelsResponse = viewModel.vowelsResults.collectAsState()
-
-    val base64Image = remember { mutableStateOf<Bitmap?>(null) }
-
 
     // Estado para almacenar la imagen por defecto
     val defaultImage = painterResource(R.drawable.correct_image)
@@ -64,19 +62,15 @@ fun GalleryScreen(
     // Estado para almacenar la imagen cargada desde el archivo
     val loadedImage = remember { mutableStateOf<Bitmap?>(null) }
 
-    // Cargar la imagen desde el archivo al inicio
-    LaunchedEffect(true) {
-        loadedImage.value = loadBitmapFromFile(context)
-    }
 
-    // Observar cambios en la URL y actualizar el valor en la vista
-    val currentBackStackEntry by navController.currentBackStackEntryAsState()
-    val url = currentBackStackEntry?.arguments?.getString("url")
-    Log.d("UrlRecibido",url.toString())
+    // Cargar la imagen desde el archivo al inicio
+
+    LaunchedEffect(path) {
+        loadedImage.value = loadBitmapFromUri(context, Uri.parse(path))
+    }
 
 
     // Estado para determinar si se debe mostrar la imagen por defecto o la cargada desde el archivo
-    val showDefaultImage = loadedImage.value == null
 
     Column(
         modifier = Modifier
@@ -93,28 +87,18 @@ fun GalleryScreen(
                 .background(color = Color.Gray)
                 .padding(4.dp)
         ) {
+            loadedImage.value?.let { bitmap ->
 
-            if (showDefaultImage) {
+                val imageBitmap = bitmap.asImageBitmap()
+
                 Image(
-                    painter = defaultImage,
+                    bitmap = imageBitmap,
                     contentDescription = null,
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.FillBounds
                 )
-            } else {
-                loadedImage.value?.let { bitmap ->
-                    Image(
-                        bitmap = bitmap.asImageBitmap(),
-                        contentDescription = null,
-                        modifier = Modifier.fillMaxSize(),
-                        contentScale = ContentScale.FillBounds
-                    )
-                }
-            }
 
-            /*imageUri.value?.let { uri ->
-                val bitmap = loadBitmapFromUri(uri)
-                bitmap?.let { bitmap ->
+                bitmap.let { bitmap ->
                     val file = bitmapToFile(bitmap, LocalContext.current)
                     val requestFile =
                         RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
@@ -129,67 +113,41 @@ fun GalleryScreen(
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.FillBounds
                 )
-            }*
-            if (base64Image.value != null) {
-                Image(
-                    bitmap = base64Image.value!!.asImageBitmap(),
-                    contentDescription = null,
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.FillBounds
-                )
-            } else {
-                // Utiliza la imagen por defecto si no hay imagen base64
-                Image(
-                    painter = defaultImage,
-                    contentDescription = null,
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.FillBounds
-                )
-            }*/
-
+            }
 
         }
 
 
-        if(vowelsResponse.value?.letra == null){
+        if (vowelsResponse.value?.letra == null) {
             Text("Letra:")
-        }else{
+        } else {
             Text("Letra:${vowelsResponse.value?.letra}")
         }
 
 
         Button(
-             onClick = {
-                 navController.navigate(AppScreen.CameraScreen.route)
-             },
-             modifier = Modifier
-                 .padding(16.dp)
-                 .fillMaxWidth()
-         ) {
-             Text("Sacar Foto")
-         }
-    }
-}
-
-fun loadBitmapFromFile(context: Context): Bitmap? {
-    return try {
-        val file = File(context.filesDir, "image.jpg")
-        BitmapFactory.decodeFile(file.absolutePath)
-    } catch (e: Exception) {
-        Log.e("GalleryScreen", "Error al cargar la imagen desde el almacenamiento interno", e)
-        null
+            onClick = {
+                navController.navigate(AppScreen.CameraScreenPermission.route)
+            },
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth()
+        ) {
+            Text("Sacar Foto")
+        }
     }
 }
 
 
-@Composable
-fun loadBitmapFromUri(uri: Uri): Bitmap? {
-    val context = LocalContext.current
+fun loadBitmapFromUri(
+    context: Context,
+    uri: Uri
+): Bitmap? {
     val contentResolver = context.contentResolver
     return try {
         val parcelFileDescriptor = contentResolver.openFileDescriptor(uri, "r")
         val fileDescriptor = parcelFileDescriptor?.fileDescriptor
-        val image = android.graphics.BitmapFactory.decodeFileDescriptor(fileDescriptor)
+        val image = BitmapFactory.decodeFileDescriptor(fileDescriptor)
         parcelFileDescriptor?.close()
         image
     } catch (e: Exception) {
@@ -197,6 +155,7 @@ fun loadBitmapFromUri(uri: Uri): Bitmap? {
         null
     }
 }
+
 
 fun bitmapToFile(bitmap: Bitmap, context: Context): File {
     val filesDir = context.filesDir
@@ -206,16 +165,6 @@ fun bitmapToFile(bitmap: Bitmap, context: Context): File {
     outputStream.flush()
     outputStream.close()
     return file
-}
-
-fun decodeBase64ToBitmap(input: String?): Bitmap? {
-    return try {
-        val decodedBytes = Base64.decode(input, Base64.DEFAULT)
-        BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
-    } catch (e: Exception) {
-        Log.e("GalleryScreen", "Error al decodificar Base64 a Bitmap", e)
-        null
-    }
 }
 
 

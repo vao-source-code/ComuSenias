@@ -55,7 +55,7 @@ fun CameraScreen(
             modifier = Modifier.fillMaxSize()
         )
 
-
+        // Aca tenemos qe poer un sharedPref para saber si estamos en la captura tiene que desabilitar la deteccion de imegenes , por el contrario habilitar la deteccion pero desaparece el boton de captura
         //OverlayView(resultOverlayView = recognitionResults)
 
 
@@ -84,9 +84,7 @@ fun CameraScreen(
 
 
 
-    BackHandler {
-        activity?.onBackPressed()
-    }
+
 
     DisposableEffect(Unit) {
         viewModel.startObjectDetection()
