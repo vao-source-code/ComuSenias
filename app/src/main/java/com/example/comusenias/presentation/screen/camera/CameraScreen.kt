@@ -4,6 +4,7 @@ import OverlayView
 import android.app.Activity
 import android.os.Build
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.annotation.RequiresApi
 import androidx.camera.view.PreviewView
@@ -25,6 +26,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.comusenias.domain.models.Response
+import com.example.comusenias.presentation.component.defaults.DefaultLoadingProgressIndicator
 import com.example.comusenias.presentation.view_model.CameraViewModel
 import com.google.mediapipe.tasks.vision.core.RunningMode
 import kotlinx.coroutines.delay
@@ -122,10 +125,27 @@ fun CameraScreen(
         onDispose { /* Limpieza si es necesario */ }
     }
 
-    if (viewModel.response) {
-        Log.d("CameraScreen", "response")
-        viewModel.sendImageToServer()
-    } else {
-        Log.d("CameraScreen", "no response")
+    when (val registerResponse = viewModel.response) {
+        is Response.Loading -> {
+            DefaultLoadingProgressIndicator()
+        }
+
+        is Response.Success -> {
+            LaunchedEffect(Unit) {
+                // viewModel.sendImageToServer()
+            }
+        }
+
+        is Response.Error -> {
+            Toast.makeText(
+                LocalContext.current,
+                registerResponse.exception?.message,
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
+        else -> {}
     }
+
+
 }

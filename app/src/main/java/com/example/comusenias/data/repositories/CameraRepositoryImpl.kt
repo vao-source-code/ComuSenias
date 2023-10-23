@@ -15,24 +15,26 @@ import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import com.example.comusenias.core.di.RetrofitModule
+import com.example.comusenias.core.di.SPManager
 import com.example.comusenias.data.api.ApiService
 import com.example.comusenias.data.repositories.GestureRecognizerHelper
+import com.example.comusenias.domain.models.Response
 import com.example.comusenias.domain.models.ResultOverlayView
 import com.example.comusenias.domain.repositories.CameraRepository
 import com.google.mediapipe.tasks.vision.core.RunningMode
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
+import java.net.URLEncoder
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.concurrent.Executors
@@ -69,14 +71,16 @@ class CameraRepositoryImpl @Inject constructor(
     // Create a MutableStateFlow to emit recognition results
     private val recognitionResultsMutableFlow = MutableStateFlow<ResultOverlayView?>(null)
 
+    private lateinit var spManager: SPManager
+
     init {
         setupImageAnalysis()
         gestureRecognizerHelper.setListener(this)
+        spManager = SPManager(context)
     }
 
-    var uri: Uri by mutableStateOf(Uri.EMPTY)
 
-    override suspend fun captureAndSaveImage(context: Context) {
+    override suspend fun captureAndSaveImage(context: Context): Response<Boolean> {
         val name = SimpleDateFormat(
             "yyyy-MM-dd-HH-mm-ss-SSS",
             Locale.ENGLISH
@@ -107,7 +111,14 @@ class CameraRepositoryImpl @Inject constructor(
                     //TODO armar post
                     Toast.LENGTH_SHORT
                 ).show()
-                uri = outputFileResults.savedUri!!
+
+                val savedUri = outputFileResults.savedUri
+                val uriString = savedUri?.path
+                val encodedUrl = URLEncoder.encode(savedUri.toString(), "UTF-8")
+
+                GlobalScope.launch {
+                    sendImageToServer(outputFileResults.savedUri!!)
+                }
             }
 
             override fun onError(exception: ImageCaptureException) {
@@ -124,8 +135,7 @@ class CameraRepositoryImpl @Inject constructor(
             ContextCompat.getMainExecutor(context),
             capture
         )
-        Toast.makeText(context, uri.toString(), Toast.LENGTH_SHORT).show()
-        Log.d("uri", uri.toString())
+        return Response.Success(true)
     }
 
     override suspend fun showCameraPreview(
@@ -178,7 +188,12 @@ class CameraRepositoryImpl @Inject constructor(
     }
 
     override suspend fun sendImageToServer(imageUri: Uri) {
-        val file = File(imageUri.path)
+
+        val savedUri = imageUri
+        val uriString = savedUri?.path
+        val encodedUrl = URLEncoder.encode(savedUri.toString(), "UTF-8")
+
+        val file = File(savedUri.path.toString())
         val requestFile = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
         val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
         val retrofit = RetrofitModule.provideApiService()
