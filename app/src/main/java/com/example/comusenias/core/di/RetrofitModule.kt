@@ -1,5 +1,6 @@
 package com.example.comusenias.core.di
 
+import android.annotation.SuppressLint
 import android.content.Context
 import com.example.comusenias.data.api.ApiService
 import dagger.Module
@@ -27,6 +28,8 @@ import javax.net.ssl.X509TrustManager
 @Module
 object RetrofitModule {
 
+    const val  BASE_URL_LOCALHOST = "http://172.16.219.187:8000"
+    const val  BASE_URL_EMULADOR = "http://10.0.2.2:8000"
 
     @Provides
     @Singleton
@@ -34,13 +37,16 @@ object RetrofitModule {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY) // Establece el nivel de logging
 
-        val trustAllCerts: Array<TrustManager> = arrayOf<TrustManager>(object : X509TrustManager {
+        val trustAllCerts: Array<TrustManager> = arrayOf<TrustManager>(@SuppressLint("CustomX509TrustManager")
+        object : X509TrustManager {
+            @SuppressLint("TrustAllX509TrustManager")
             override fun checkClientTrusted(
                 chain: Array<out X509Certificate>?,
                 authType: String?
             ) {
             }
 
+            @SuppressLint("TrustAllX509TrustManager")
             override fun checkServerTrusted(
                 chain: Array<out X509Certificate>?,
                 authType: String?
@@ -59,9 +65,9 @@ object RetrofitModule {
             .addInterceptor(loggingInterceptor)
             .sslSocketFactory(sslContext.socketFactory, trustAllCerts[0] as X509TrustManager)
             .hostnameVerifier { _, _ -> true }
-            .connectTimeout(60, TimeUnit.SECONDS) // Cambiar el tiempo de espera de conexión a 60 segundos
-            .readTimeout(60, TimeUnit.SECONDS) // Cambiar el tiempo de espera de lectura a 60 segundos
-            .writeTimeout(60, TimeUnit.SECONDS) // Cambiar el tiempo de espera de escritura a 60 segundos// Ajusta el valor del tiempo de espera según sea necesario
+            .connectTimeout(30, TimeUnit.SECONDS) // Ajusta el tiempo de espera de conexión a 30 segundos
+            .readTimeout(30, TimeUnit.SECONDS) // Ajusta el tiempo de espera de lectura a 30 segundos
+            .writeTimeout(30, TimeUnit.SECONDS) // Ajusta el tiempo de espera de escritura a 30 segundos
             .build()
 
         //Todo Ignore el certificado de confianza usando el metodo sslSocketFactory
@@ -70,7 +76,7 @@ object RetrofitModule {
     @Singleton
     fun provideApiService(okHttpClient: OkHttpClient): ApiService {
         return Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:8000")
+            .baseUrl(BASE_URL_LOCALHOST)
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()

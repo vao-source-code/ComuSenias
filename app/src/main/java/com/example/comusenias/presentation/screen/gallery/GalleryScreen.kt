@@ -19,13 +19,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
@@ -59,26 +62,18 @@ fun GalleryScreen(
 
     var isChecked by remember { mutableStateOf(preferenceManager.getBoolean("key_boolean", false)) }
 
-
-
-
     val vowelsResponse = viewModel.vowelsResults.collectAsState()
 
-    // Estado para almacenar la imagen por defecto
     val defaultImage = painterResource(R.drawable.correct_image)
 
-    // Estado para almacenar la imagen cargada desde el archivo
     val loadedImage = remember { mutableStateOf<Bitmap?>(null) }
 
 
-    // Cargar la imagen desde el archivo al inicio
 
     LaunchedEffect(path) {
         loadedImage.value = loadBitmapFromUri(context, Uri.parse(path))
     }
 
-
-    // Estado para determinar si se debe mostrar la imagen por defecto o la cargada desde el archivo
 
     Column(
         modifier = Modifier
@@ -102,8 +97,9 @@ fun GalleryScreen(
                 Image(
                     bitmap = imageBitmap,
                     contentDescription = null,
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.fillMaxSize().rotate(270F),
                     contentScale = ContentScale.FillBounds
+
                 )
 
                 bitmap.let { bitmap ->
@@ -111,6 +107,7 @@ fun GalleryScreen(
                     val requestFile =
                         RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
                     val body = MultipartBody.Part.createFormData("image", file.name, requestFile)
+
 
                     viewModel.postGallery(body)
                 }
@@ -128,12 +125,14 @@ fun GalleryScreen(
         }
 
 
-        if (vowelsResponse.value?.letra == null) {
-            Text("Letra:")
-        } else {
+
+
+        if (vowelsResponse.value == null) {
+            Text("Letra: ")
+        }
+        else{
             Text("Letra:${vowelsResponse.value?.letra}")
         }
-
 
         Button(
             onClick = {
@@ -151,6 +150,8 @@ fun GalleryScreen(
 }
 
 
+
+
 fun loadBitmapFromUri(
     context: Context,
     uri: Uri
@@ -159,7 +160,23 @@ fun loadBitmapFromUri(
     return try {
         val parcelFileDescriptor = contentResolver.openFileDescriptor(uri, "r")
         val fileDescriptor = parcelFileDescriptor?.fileDescriptor
-        val image = BitmapFactory.decodeFileDescriptor(fileDescriptor)
+        var image = BitmapFactory.decodeFileDescriptor(fileDescriptor)
+
+        // Obtén la orientación de la imagen del ExifInterface
+        val exif = ExifInterface(fileDescriptor!!)
+        val orientation = exif.getAttributeInt(
+            ExifInterface.TAG_ORIENTATION,
+            ExifInterface.ORIENTATION_UNDEFINED
+        )
+        val matrix = Matrix()
+        when (orientation) {
+            ExifInterface.ORIENTATION_ROTATE_90 -> matrix.postRotate(90F)
+            ExifInterface.ORIENTATION_ROTATE_180 -> matrix.postRotate(180F)
+            ExifInterface.ORIENTATION_ROTATE_270 -> matrix.postRotate(270F)
+        }
+        // Gira la imagen según la orientación
+        image = Bitmap.createBitmap(image, 0, 0, image.width, image.height, matrix, true)
+
         parcelFileDescriptor?.close()
         image
     } catch (e: Exception) {
