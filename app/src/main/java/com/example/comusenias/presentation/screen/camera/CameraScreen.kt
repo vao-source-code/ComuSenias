@@ -5,7 +5,6 @@ import android.app.Activity
 import androidx.activity.compose.BackHandler
 import androidx.camera.view.PreviewView
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.comusenias.presentation.view_model.CameraViewModel
@@ -13,7 +12,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.Text
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.DisposableEffect
@@ -24,19 +22,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
 import com.example.comusenias.R
-import com.google.mediapipe.tasks.vision.core.RunningMode
 
 
 @Composable
 fun CameraScreen(
     viewModel: CameraViewModel = hiltViewModel(),
     navController: NavController? = null,
-    runningMode: RunningMode = RunningMode.LIVE_STREAM // Parámetro opcional con valor por defecto
-
 ) {
 
     val context = LocalContext.current
@@ -61,31 +55,29 @@ fun CameraScreen(
             modifier = Modifier.fillMaxSize()
         )
 
-        OverlayView(
-            resultOverlayView = recognitionResults,
-        )
-        //OverlayView(resultOverlayView =recognitionResults)
+
+        //OverlayView(resultOverlayView = recognitionResults)
 
 
         // Botón de captura
 
-        /*  Button(
-              onClick = {
-                  // Lógica para capturar la foto
-                  viewModel.captureAndSave(activity!!)
-              },
-              modifier = Modifier
-                  .align(Alignment.BottomCenter)
-                  .padding(16.dp)
-                  .size(56.dp)
-          ) {
-              Icon(
-                  painter = painterResource(id = R.drawable.baseline_camera_24),
-                  contentDescription = "Capture",
-                  modifier = Modifier.size(32.dp),
-                  tint = Color.White
-              )
-          }*/
+        Button(
+            onClick = {
+                viewModel.captureAndSave(navController!!)
+            },
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(16.dp)
+                .size(56.dp)
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.baseline_camera_24),
+                contentDescription = "Capture",
+                modifier = Modifier.size(15.dp),
+                tint = Color.White
+            )
+
+        }
 
 
     }
@@ -93,7 +85,7 @@ fun CameraScreen(
 
 
     BackHandler {
-        activity?.finish()
+        activity?.onBackPressed()
     }
 
     DisposableEffect(Unit) {
@@ -101,3 +93,4 @@ fun CameraScreen(
         onDispose { /* Limpieza si es necesario */ }
     }
 }
+

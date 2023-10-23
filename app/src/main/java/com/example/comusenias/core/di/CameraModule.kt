@@ -8,12 +8,13 @@ import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.navigation.NavController
+import com.example.comusenias.data.api.ApiService
 import com.example.comusenias.domain.repositories.CameraRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineScope
 import javax.inject.Singleton
 
 
@@ -49,20 +50,22 @@ object CameraModule {
             Surface.ROTATION_90
         ).build()
 
+
+
     @Provides
     fun provideCameraRepository(
         cameraProvider: ProcessCameraProvider,
         cameraSelector: CameraSelector,
         preview: Preview,
         imageCapture: ImageCapture,
-        context: Context
+        context: Context,
     ): CameraRepository {
         return CameraRepositoryImpl(
             cameraProvider,
             cameraSelector,
             preview,
             imageCapture,
-            context
+            context,
         )
     }
 }

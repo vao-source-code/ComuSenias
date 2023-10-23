@@ -1,3 +1,5 @@
+import android.content.Context
+import android.media.MediaPlayer
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -28,9 +30,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.comusenias.R
 import com.example.comusenias.domain.models.ResultOverlayView
 import com.google.mediapipe.tasks.vision.core.RunningMode
 import com.google.mediapipe.tasks.vision.gesturerecognizer.GestureRecognizerResult
@@ -193,6 +197,7 @@ fun PutTextCategory(text: String, isCorrect: Boolean) {
         ) {
 
             if(isCorrect && text != "none") {
+               // PlaySound(LocalContext.current, text) // Este metodo se usa para reproducir
                 Text(text = "Letra:${text}", fontSize = 20.sp)
             }
             else{
@@ -207,3 +212,34 @@ fun PutTextCategory(text: String, isCorrect: Boolean) {
 
 private const val LANDMARK_STROKE_WIDTH = 10f // Puedes ajustar este valor según tus necesidades
 
+/*@Composable
+fun PlaySound(context: Context, text: String ) {
+    val mediaPlayer = remember {
+        MediaPlayer()
+    }
+
+    mediaPlayer.reset()
+    val assetFileDescriptor = context.resources.openRawResourceFd(getSoundResourceId(text))
+    mediaPlayer.setDataSource(
+        assetFileDescriptor.fileDescriptor,
+        assetFileDescriptor.startOffset,
+        assetFileDescriptor.length
+    )
+    mediaPlayer.prepare()
+    val playbackParams = mediaPlayer.playbackParams
+    playbackParams.speed = 0.5f // Reducir la velocidad a la mitad
+    mediaPlayer.playbackParams = playbackParams
+    mediaPlayer.start()
+}*/
+
+/*private fun getSoundResourceId(text: String): Int {
+    return when (text) {
+        "A" -> R.raw.a
+        "E" -> R.raw.e
+        "I" -> R.raw.i
+        "O" -> R.raw.o
+        "U" -> R.raw.u
+         // Este es el sonido predeterminado en caso de que no haya un sonido específico para la letra detectada
+        else -> {0}
+    }
+}*/

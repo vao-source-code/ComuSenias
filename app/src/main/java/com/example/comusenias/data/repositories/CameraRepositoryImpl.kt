@@ -1,5 +1,6 @@
 import android.content.ContentValues
 import android.content.Context
+import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.util.Log
@@ -24,14 +25,25 @@ import com.example.comusenias.domain.repositories.CameraRepository
 import com.example.comusenias.presentation.navigation.AppScreen
 
 import com.google.mediapipe.tasks.vision.core.RunningMode
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.File
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.concurrent.Executors
 import javax.inject.Inject
+import kotlin.coroutines.CoroutineContext
 
 class CameraRepositoryImpl @Inject constructor(
     private val cameraProvider: ProcessCameraProvider,
@@ -39,15 +51,14 @@ class CameraRepositoryImpl @Inject constructor(
     private val preview: Preview,
     private val imageCapture: ImageCapture,
     private val context: Context,
-) : CameraRepository, GestureRecognizerHelper.GestureRecognizerListener {
+) : CameraRepository, GestureRecognizerHelper.GestureRecognizerListener{
 
-    private lateinit var navController:NavController
 
-    private val minHandDetectionConfidence = 0.5f // Cambia esto a la confianza mínima deseada
-    private val minHandTrackingConfidence = 0.5f // Cambia esto a la confianza mínima deseada
-    private val minHandPresenceConfidence = 0.5f // Cambia esto a la confianza mínima deseada
-    private val currentDelegate = GestureRecognizerHelper.DELEGATE_CPU // Cambia esto según tu preferencia de delegado
-    private val runningMode = RunningMode.LIVE_STREAM // Cambia esto según tu modo de funcionamiento deseado
+    private val minHandDetectionConfidence = 0.5f
+    private val minHandTrackingConfidence = 0.5f
+    private val minHandPresenceConfidence = 0.5f
+    private val currentDelegate = GestureRecognizerHelper.DELEGATE_CPU
+    private val runningMode = RunningMode.LIVE_STREAM
 
     private val gestureRecognizerHelper = GestureRecognizerHelper(
         minHandDetectionConfidence,
@@ -58,17 +69,17 @@ class CameraRepositoryImpl @Inject constructor(
         context
     )
 
+
     private var imageAnalysis: ImageAnalysis? = null
 
-
-    // Create a MutableStateFlow to emit recognition results
     private val recognitionResultsMutableFlow = MutableStateFlow<ResultOverlayView?>(null)
+
 
     init {
         setupImageAnalysis()
     }
 
-    override suspend fun captureAndSaveImage(context: Context) {
+    override suspend fun captureAndSaveImage(navController: NavController) {
         val name = SimpleDateFormat(
             "yyyy-MM-dd-HH-mm-ss-SSS",
             Locale.ENGLISH
@@ -96,14 +107,22 @@ class CameraRepositoryImpl @Inject constructor(
             ContextCompat.getMainExecutor(context),
             object : ImageCapture.OnImageSavedCallback {
                 override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+                    // Inicia un nuevo contexto de coroutine en el hilo de fondo
+
+                    val savedUri = outputFileResults.savedUri
+                    val uriString = savedUri?.path
+                    navController.navigate(AppScreen.GalleryScreen.createRoute(savedUri?.path!!))
+
+
+                    Log.d("SavedImage" ,"${outputFileResults.savedUri}")
 
                     Toast.makeText(
                         context,
                         "Saved image: ${outputFileResults.savedUri}",
                         Toast.LENGTH_SHORT
                     ).show()
-
                 }
+
 
                 override fun onError(exception: ImageCaptureException) {
                     Toast.makeText(
@@ -113,6 +132,23 @@ class CameraRepositoryImpl @Inject constructor(
                     ).show()
                 }
             })
+    }
+
+
+    private fun getRealPathFromURI(uri: Uri): String {
+        val cursor = context.contentResolver.query(uri, null, null, null, null)
+        cursor?.use { cursor ->
+            if (cursor.moveToFirst()) {
+                val dataIndex = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA)
+                if (dataIndex != -1) {
+                    val path = cursor.getString(dataIndex)
+                    if (path != null) {
+                        return path
+                    }
+                }
+            }
+        }
+        return uri.path ?: ""
     }
 
     override suspend fun showCameraPreview(
@@ -142,6 +178,9 @@ class CameraRepositoryImpl @Inject constructor(
         }
     }
 
+
+
+
     private fun setupImageAnalysis() {
         imageAnalysis = ImageAnalysis.Builder()
             .setTargetAspectRatio(AspectRatio.RATIO_4_3)
@@ -158,7 +197,6 @@ class CameraRepositoryImpl @Inject constructor(
 
             gestureRecognizerHelper.recognizeLiveStream(imageProxy)
 
-            // Cierra el ImageProxy
             imageProxy.close()
 
         }
@@ -172,18 +210,26 @@ class CameraRepositoryImpl @Inject constructor(
 
     override fun onResults(resultBundle: GestureRecognizerHelper.ResultBundle) {
 
-        // Aquí obtienes los resultados del GestureRecognizer
         val results = resultBundle.results
         val inputImageHeight = resultBundle.inputImageHeight
         val inputImageWidth = resultBundle.inputImageWidth
 
-        // Agregar el nuevo resultado a la lista existente
-        /*val currentResults = recognitionResultsMutableFlow.value
-        val updatedResults = currentResults + ResultOverlayView(results, inputImageHeight, inputImageWidth)
-        recognitionResultsMutableFlow.value = updatedResults*/
 
-        recognitionResultsMutableFlow.value = ResultOverlayView(results,inputImageHeight,inputImageWidth)
+        recognitionResultsMutableFlow.value =
+            ResultOverlayView(results, inputImageHeight, inputImageWidth)
 
     }
+
+    private fun isValidDestinationInGraph(destination: String, navController: NavController): Boolean {
+        val graph = navController.graph
+        return graph.findNode(destination) != null
+    }
+
+
+
+
+
+
+
 
 }

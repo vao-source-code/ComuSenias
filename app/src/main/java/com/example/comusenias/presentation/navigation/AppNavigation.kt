@@ -3,6 +3,7 @@ package com.example.comusenias.presentation.navigation
 import PermissionCameraScreen
 import PermissionGaleryScreen
 import android.annotation.SuppressLint
+import android.net.Uri
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -15,8 +16,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.comusenias.presentation.component.specialist.SpecialistDetailsScreen
+import com.example.comusenias.presentation.screen.gallery.GalleryScreen
 import com.example.comusenias.presentation.screen.camera.CameraScreen
-import com.example.comusenias.presentation.gallery.GalleryScreen
 import com.example.comusenias.presentation.screen.camera.TestCamera
 import com.example.comusenias.presentation.screen.gameAction.ChoseTheLetterPlayScreen
 import com.example.comusenias.presentation.screen.home.HomeScreen
@@ -29,6 +30,7 @@ import com.example.comusenias.presentation.screen.premiun.PremiunScreen
 import com.example.comusenias.presentation.screen.profile.ChangeProfileScreen
 import com.example.comusenias.presentation.screen.profile.ProfileScreen
 import com.example.comusenias.presentation.screen.specialist.SpecialistHomeExample
+import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -83,19 +85,20 @@ private fun GetNavHost(
         composable(AppScreen.GaleryScreenPermission.route){
             PermissionGaleryScreen(navController = navController)
         }
-        
-        composable(AppScreen.GalleryScreen.route){
-            GalleryScreen(navController = navController)
+
+
+        composable(
+            AppScreen.GalleryScreen.route, arguments = listOf(
+                navArgument("path") {
+                    type = NavType.StringType
+                }
+            )
+        ) {
+            val path = it.arguments?.getString("path") ?: EMPTY_STRING
+            GalleryScreen(navController = navController,path = path)
         }
 
-        /*composable(
-            route = "${AppScreen.GalleryScreen.route}/{uriImage}",
-            arguments = listOf(navArgument("uriImage") { type = NavType.StringType })
-        ) { backStackEntry ->
-            val uriString = backStackEntry.arguments?.getString("uriImage")
-            val uriImage: Uri? = uriString?.let { Uri.parse(it) }
-            GalleryScreen(navController = navController, uriImage = uriImage)
-        }*/
+
 
 
 

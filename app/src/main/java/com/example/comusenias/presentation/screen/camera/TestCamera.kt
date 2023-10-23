@@ -31,8 +31,7 @@ fun TestCamera(navController: NavController) {
         }, icon = null)
 
         ButtonDefault(text = "Camera API", onClick = {
-            val galleryScreenRoute = "${AppScreen.GalleryScreen.route}?uriImage=${""}"
-            navController.navigate(galleryScreenRoute)
+            navController.navigate(AppScreen.GalleryScreen.route)
         },icon = null)
     }
 }

@@ -1,4 +1,4 @@
-package com.example.comusenias.presentation.gallery
+package com.example.comusenias.presentation.screen.gallery
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -32,11 +32,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.res.painterResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.comusenias.R
 import com.example.comusenias.presentation.navigation.AppScreen
-import com.example.comusenias.presentation.view_model.CameraViewModel
 import com.example.comusenias.presentation.view_model.GalleryViewModel
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -47,34 +46,37 @@ import java.io.FileOutputStream
 fun GalleryScreen(
     viewModel: GalleryViewModel = hiltViewModel(),
     navController: NavController,
+    path:String
 ) {
+
+    val context = LocalContext.current
+
+    Log.d("UriGalleryScreen", path.toString())
 
     val vowelsResponse = viewModel.vowelsResults.collectAsState()
 
     val base64Image = remember { mutableStateOf<Bitmap?>(null) }
 
-    /*LaunchedEffect(vowelsResponse.value?.image_base64) {
-        // Actualiza la imagen base64 en la vista
-        base64Image.value = decodeBase64ToBitmap(vowelsResponse.value?.image_base64)
-    }*/
 
-
-    // Estado para almacenar la URI de la imagen seleccionada o capturada.
-    val imageUri = remember { mutableStateOf<Uri?>(null) }
-
-    val getContent =
-        rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()) { uri ->
-            // Here you can do something with the selected URI, like updating the image in your UI
-            imageUri.value = uri
-        }
     // Estado para almacenar la imagen por defecto
     val defaultImage = painterResource(R.drawable.correct_image)
 
+    // Estado para almacenar la imagen cargada desde el archivo
+    val loadedImage = remember { mutableStateOf<Bitmap?>(null) }
 
-    LaunchedEffect(vowelsResponse.value?.image_base64) {
-        // Decodificar la cadena base64 a un objeto Bitmap y asignarla al estado base64Image
-        base64Image.value = decodeBase64ToBitmap(vowelsResponse.value?.image_base64)
+    // Cargar la imagen desde el archivo al inicio
+    LaunchedEffect(true) {
+        loadedImage.value = loadBitmapFromFile(context)
     }
+
+    // Observar cambios en la URL y actualizar el valor en la vista
+    val currentBackStackEntry by navController.currentBackStackEntryAsState()
+    val url = currentBackStackEntry?.arguments?.getString("url")
+    Log.d("UrlRecibido",url.toString())
+
+
+    // Estado para determinar si se debe mostrar la imagen por defecto o la cargada desde el archivo
+    val showDefaultImage = loadedImage.value == null
 
     Column(
         modifier = Modifier
@@ -92,7 +94,25 @@ fun GalleryScreen(
                 .padding(4.dp)
         ) {
 
-            imageUri.value?.let { uri ->
+            if (showDefaultImage) {
+                Image(
+                    painter = defaultImage,
+                    contentDescription = null,
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.FillBounds
+                )
+            } else {
+                loadedImage.value?.let { bitmap ->
+                    Image(
+                        bitmap = bitmap.asImageBitmap(),
+                        contentDescription = null,
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.FillBounds
+                    )
+                }
+            }
+
+            /*imageUri.value?.let { uri ->
                 val bitmap = loadBitmapFromUri(uri)
                 bitmap?.let { bitmap ->
                     val file = bitmapToFile(bitmap, LocalContext.current)
@@ -109,7 +129,7 @@ fun GalleryScreen(
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.FillBounds
                 )
-            }
+            }*
             if (base64Image.value != null) {
                 Image(
                     bitmap = base64Image.value!!.asImageBitmap(),
@@ -125,7 +145,7 @@ fun GalleryScreen(
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.FillBounds
                 )
-            }
+            }*/
 
 
         }
@@ -138,19 +158,7 @@ fun GalleryScreen(
         }
 
 
-        // Botón para seleccionar una imagen de la galería.
         Button(
-            onClick = {
-                getContent.launch("image/*")
-            },
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth()
-        ) {
-            Text("Seleccionar de la galería")
-        }
-
-        /* Button(
              onClick = {
                  navController.navigate(AppScreen.CameraScreen.route)
              },
@@ -159,9 +167,20 @@ fun GalleryScreen(
                  .fillMaxWidth()
          ) {
              Text("Sacar Foto")
-         }*/
+         }
     }
 }
+
+fun loadBitmapFromFile(context: Context): Bitmap? {
+    return try {
+        val file = File(context.filesDir, "image.jpg")
+        BitmapFactory.decodeFile(file.absolutePath)
+    } catch (e: Exception) {
+        Log.e("GalleryScreen", "Error al cargar la imagen desde el almacenamiento interno", e)
+        null
+    }
+}
+
 
 @Composable
 fun loadBitmapFromUri(uri: Uri): Bitmap? {
@@ -198,5 +217,6 @@ fun decodeBase64ToBitmap(input: String?): Bitmap? {
         null
     }
 }
+
 
 

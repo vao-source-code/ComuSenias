@@ -36,7 +36,11 @@ sealed class AppScreen(val route : String) {
     object CameraScreen :AppScreen("camera_screen")
 
     object GaleryScreenPermission :AppScreen("galery_screen_permission")
-    object GalleryScreen:AppScreen("gallery_screen")
+
+    object GalleryScreen : AppScreen("gallery_screen/{path}") {
+        fun createRoute(path: String) = "gallery_screen/${path}"
+
+    }
 
 
 }
