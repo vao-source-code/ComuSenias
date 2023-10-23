@@ -110,6 +110,33 @@ private fun GetNavHost(
         composable(AppScreen.NotificationScreen.route) {
             NotificationScreen(navController = navController)
         }
+
+        //Permission Camera
+        composable(AppScreen.CameraScreenPermission.route) {
+            PermissionCameraScreen(navController = navController)
+        }
+        composable(AppScreen.CameraScreen.route) {
+            CameraScreen(navController = navController)
+        }
+
+
+        //Permission Gallery
+        composable(AppScreen.GaleryScreenPermission.route){
+            PermissionGaleryScreen(navController = navController)
+        }
+
+
+        composable(
+            AppScreen.GalleryScreen.route, arguments = listOf(
+                navArgument("path") {
+                    type = NavType.StringType
+                }
+            )
+        ) {
+            val path = it.arguments?.getString("path") ?: EMPTY_STRING
+            GalleryScreen(navController = navController,path = path)
+        }
+
     }
 }
 
