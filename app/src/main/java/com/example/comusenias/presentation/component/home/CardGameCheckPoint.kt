@@ -31,7 +31,7 @@ import com.example.comusenias.presentation.ui.theme.SIZE90
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.cardColorCheckPoint
 import com.example.comusenias.presentation.ui.theme.cardGray
-import com.example.comusenias.presentation.ui.theme.size15
+import com.example.comusenias.presentation.ui.theme.SIZE15
 import com.example.comusenias.presentation.ui.theme.size18
 import com.example.comusenias.presentation.ui.theme.size7
 
@@ -48,7 +48,7 @@ fun CardGameCheckPoint() {
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(start = size15.dp, end = size18.dp),
+                .padding(start = SIZE15.dp, end = size18.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(SIZE28.dp)
         ) {

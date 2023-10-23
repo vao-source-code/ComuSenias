@@ -21,13 +21,15 @@ import com.example.comusenias.presentation.ui.theme.SIZE1
 import com.example.comusenias.presentation.ui.theme.size14
 import com.example.comusenias.presentation.view_model.LevelViewModel
 
+lateinit var getLevelViewModel: LevelViewModel
+
 @Composable
 fun ContentHome(
     navController: NavController,
     levelViewModel: LevelViewModel
 ) {
     val level = levelViewModel.levels
-
+    getLevelViewModel = levelViewModel
     when (levelViewModel.levelsResponse) {
         is Response.Loading -> {
             CircularProgressBar()
@@ -75,6 +77,7 @@ private fun ShowLazyColumn(
             items = getSubLevel(level),
         ) { subLevel ->
             ContentCardGame(
+                status = subLevel.isCompleted,
                 level = level[0].id,
                 subLevel = subLevel,
                 navController = navController

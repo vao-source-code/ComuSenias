@@ -18,8 +18,8 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.comusenias.R
+import com.example.comusenias.presentation.component.home.getLevelViewModel
 import com.example.comusenias.presentation.extensions.validation.getChoicesSelected
-import com.example.comusenias.presentation.screen.gameAction.getLevelViewModel
 import com.example.comusenias.presentation.ui.theme.CONGRATS_TEXT
 import com.example.comusenias.presentation.ui.theme.ERROR_CONGRATS_TEXT
 import com.example.comusenias.presentation.ui.theme.SIZE100

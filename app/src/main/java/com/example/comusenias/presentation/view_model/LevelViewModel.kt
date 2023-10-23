@@ -26,6 +26,8 @@ class LevelViewModel @Inject constructor(
     var levels by mutableStateOf<List<LevelModel>>(listOf())
     var choiceOfOption by mutableStateOf<MutableList<Boolean>>(mutableListOf())
     var onOptionSelected by mutableStateOf("")
+    var levelSelected by mutableStateOf("")
+    var subLevelModel by mutableStateOf("")
 
     init {
         getLevels()
@@ -40,7 +42,7 @@ class LevelViewModel @Inject constructor(
         }
     }
 
-    fun getSubLevelsByName(nameLevel: String): List<SubLevelModel> {
+    fun getLevelsByName(nameLevel: String): List<SubLevelModel> {
         levels.forEach {
             if (it.name == nameLevel) {
                 return it.subLevel

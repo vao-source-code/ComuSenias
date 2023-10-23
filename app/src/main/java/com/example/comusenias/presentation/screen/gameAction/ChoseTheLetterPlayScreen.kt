@@ -12,6 +12,7 @@ import com.example.comusenias.presentation.component.defaults.app.ShowRetrySnack
 import com.example.comusenias.presentation.component.gameAction.GameAction
 import com.example.comusenias.presentation.component.gameAction.MatchLetter
 import com.example.comusenias.presentation.component.home.ContentProgressBar
+import com.example.comusenias.presentation.component.home.getLevelViewModel
 import com.example.comusenias.presentation.extensions.validation.selectedOption
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.CONTINUE
@@ -20,7 +21,6 @@ import com.example.comusenias.presentation.ui.theme.STEP_TWO
 import com.example.comusenias.presentation.ui.theme.WHAT_LETTER_IS
 import com.example.comusenias.presentation.view_model.LevelViewModel
 
-lateinit var getLevelViewModel: LevelViewModel
 
 @Composable
 fun ChoseTheLetterPlayScreen(
@@ -29,8 +29,9 @@ fun ChoseTheLetterPlayScreen(
     subLevel: String,
     levelViewModel: LevelViewModel
 ) {
-    getLevelViewModel = levelViewModel
-    val subLevelViewModel = levelViewModel.getSubLevelById(level, subLevel)
+    getLevelViewModel.levelSelected = level
+    getLevelViewModel.subLevelModel = subLevel
+    val subLevelViewModel = getLevelViewModel.getSubLevelById(level, subLevel)
     val isButtonEnabled = remember { mutableStateOf(false) }
     val onMatchResult: (Boolean) -> Unit = {
         isButtonEnabled.value = it

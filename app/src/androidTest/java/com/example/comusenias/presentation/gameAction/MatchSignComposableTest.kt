@@ -7,8 +7,13 @@ import com.example.comusenias.R
 import com.example.comusenias.constants.TestTag
 import com.example.comusenias.presentation.component.gameAction.MatchSign
 import com.example.comusenias.presentation.screen.gameAction.Sign
+import com.example.comusenias.presentation.view_model.LevelViewModel
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.mockito.Mock
+import org.mockito.Mockito
+import org.mockito.MockitoAnnotations
 
 class MatchSignComposableTest {
     @get:Rule
@@ -16,8 +21,17 @@ class MatchSignComposableTest {
     private val letter = "a"
     private val randomLetter = "o"
 
+    @Mock
+    private lateinit var levelViewModel: LevelViewModel
+
+    @Before
+    fun setUp() {
+        MockitoAnnotations.initMocks(this)
+       levelViewModel = Mockito.mock(LevelViewModel::class.java)
+    }
+
     @Test
-    fun testWhenMatchSignIsIncorrect() {
+    fun  testWhenMatchSignIsIncorrect() {
         var isCorrect = true
         val sign = Sign(imageResource = R.drawable.letra_a_solo.toString(), letter = letter)
         val randomSign = Sign(imageResource = R.drawable.sign_o.toString(), letter = randomLetter)
@@ -46,7 +60,6 @@ class MatchSignComposableTest {
             MatchSign(
                 sign = sign,
                 randomSign = randomSign,
-                letterCompare = sign.letter
             ) {
                 isCorrect = it
             }

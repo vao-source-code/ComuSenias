@@ -9,8 +9,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.comusenias.domain.models.game.SubLevelModel
 import com.example.comusenias.presentation.component.defaults.app.ButtonApp
 import com.example.comusenias.presentation.component.gameAction.CongratsContent
+import com.example.comusenias.presentation.component.home.StatusGame
+import com.example.comusenias.presentation.component.home.getLevelViewModel
+import com.example.comusenias.presentation.extensions.validation.getChoicesSelected
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.CONTINUE
 import com.example.comusenias.presentation.ui.theme.SIZE30
@@ -19,6 +23,7 @@ import com.example.comusenias.presentation.ui.theme.SIZE30
 fun CongratsPlayScreen(navController: NavHostController, modifier: Modifier) {
     CongratsPlayView(navController = navController, modifier)
 }
+
 @Composable
 fun CongratsPlayView(navController: NavHostController, modifier: Modifier) {
 
@@ -29,10 +34,28 @@ fun CongratsPlayView(navController: NavHostController, modifier: Modifier) {
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-         CongratsContent()
+        CongratsContent()
         ButtonApp(
             titleButton = CONTINUE,
-            onClickButton = { navController.navigate(AppScreen.HomeScreen.route) }
+            onClickButton = {
+                navController.navigate(AppScreen.HomeScreen.route)
+                setStatusGame()
+            }
         )
     }
+}
+
+private fun setStatusGame() {
+    if (getChoicesSelected(getLevelViewModel)) {
+        getSubLevel()?.let {
+            it.isCompleted = StatusGame.COMPLETED
+        }
+    }
+}
+
+private fun getSubLevel(): SubLevelModel? {
+    return getLevelViewModel.getSubLevelById(
+        getLevelViewModel.levelSelected,
+        getLevelViewModel.subLevelModel
+    )
 }

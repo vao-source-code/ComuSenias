@@ -13,6 +13,7 @@ import com.example.comusenias.presentation.component.defaults.app.CircularProgre
 import com.example.comusenias.presentation.component.gameAction.GameAction
 import com.example.comusenias.presentation.component.gameAction.MatchSign
 import com.example.comusenias.presentation.component.home.ContentProgressBar
+import com.example.comusenias.presentation.component.home.getLevelViewModel
 import com.example.comusenias.presentation.extensions.validation.selectedOption
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.CONTINUE
