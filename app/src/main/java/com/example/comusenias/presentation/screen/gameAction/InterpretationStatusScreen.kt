@@ -26,6 +26,7 @@ fun InterpretationStatusScreen(navController: NavHostController, modifier: Modif
         isButtonEnabled.value = it
     }
 
+
     LaunchedEffect(Unit) {
         delay(5000)
         status = Status.CORRECT

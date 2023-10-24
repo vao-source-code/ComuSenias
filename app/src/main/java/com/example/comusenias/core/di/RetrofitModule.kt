@@ -1,6 +1,5 @@
 package com.example.comusenias.core.di
 
-import android.content.Context
 import com.example.comusenias.data.api.ApiService
 import dagger.Module
 import dagger.Provides
@@ -10,16 +9,12 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.InputStream
-import java.security.KeyStore
 import java.security.SecureRandom
-import java.security.cert.CertificateFactory
 import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 import javax.net.ssl.SSLContext
 import javax.net.ssl.TrustManager
-import javax.net.ssl.TrustManagerFactory
 import javax.net.ssl.X509TrustManager
 
 
@@ -70,7 +65,7 @@ object RetrofitModule {
     @Singleton
     fun provideApiService(okHttpClient: OkHttpClient): ApiService {
         return Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:8000")
+            .baseUrl("http://192.168.0.95:8000")
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()

@@ -1,23 +1,11 @@
 import android.Manifest
-import android.net.Uri
-import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
-
-
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
-import androidx.navigation.navArgument
 import com.example.comusenias.presentation.navigation.AppScreen
 
 @Composable
@@ -39,6 +27,7 @@ fun RequestPermissions(
 
     DisposableEffect(Unit) {
         requestPermissionLauncher.launch(
+            //TODO ver que esto falla en android 33
             arrayOf(
                 android.Manifest.permission.CAMERA,
                 android.Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -85,21 +74,13 @@ fun RequestPermissionsGallery(
     DisposableEffect(Unit) {
         requestPermissionLauncher.launch(
             arrayOf(
+                //TODO ver que esto falla en android 33
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.READ_EXTERNAL_STORAGE
             )
         )
         onDispose { /* Hacer algo cuando se desecha el efecto */ }
     }
-    /*val galleryPermissionLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent()
-    ) { uri: Uri? ->
-        if (uri != null) {
-            onPermissionGranted(uri)
-        } else {
-            onPermissionDenied()
-        }
-    }*/
 
     DisposableEffect(Unit) {
         onDispose { /* Hacer algo cuando se desecha el efecto */ }

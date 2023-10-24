@@ -1,6 +1,5 @@
 import android.content.ContentValues
 import android.content.Context
-import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.util.Log
@@ -18,33 +17,19 @@ import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavController
-import com.example.comusenias.data.api.ApiService
 import com.example.comusenias.data.repositories.GestureRecognizerHelper
 import com.example.comusenias.domain.models.ResultOverlayView
 import com.example.comusenias.domain.repositories.CameraRepository
 import com.example.comusenias.presentation.navigation.AppScreen
-
 import com.google.mediapipe.tasks.vision.core.RunningMode
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.launch
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import okio.Utf8
-import java.io.File
 import java.net.URLEncoder
-import java.nio.charset.StandardCharsets
-
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.concurrent.Executors
 import javax.inject.Inject
-import kotlin.coroutines.CoroutineContext
 
 class CameraRepositoryImpl @Inject constructor(
     private val cameraProvider: ProcessCameraProvider,

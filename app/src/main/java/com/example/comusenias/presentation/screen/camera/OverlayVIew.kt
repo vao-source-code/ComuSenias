@@ -1,54 +1,31 @@
-import android.content.Context
-import android.media.MediaPlayer
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
-import androidx.compose.material.SnackbarDefaults.backgroundColor
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Paint
-import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.graphics.nativeCanvas
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.comusenias.R
 import com.example.comusenias.domain.models.ResultOverlayView
-import com.google.mediapipe.tasks.vision.core.RunningMode
-import com.google.mediapipe.tasks.vision.gesturerecognizer.GestureRecognizerResult
+import com.example.comusenias.presentation.view_model.CameraViewModel
+import com.example.comusenias.presentation.view_model.LevelViewModel
 import com.google.mediapipe.tasks.vision.handlandmarker.HandLandmarker
-import kotlin.math.max
-import kotlin.math.min
 
 @Composable
 fun OverlayView(
     resultOverlayView: ResultOverlayView?,
+    cameraViewModel: CameraViewModel,
+    levelViewModel: LevelViewModel
 ) {
-
-    var score = remember { mutableStateOf<Int>(0) }
-    var timeLeft = remember { mutableStateOf<Int>(60) } // tiempo inicial en segundos
 
 
     if (resultOverlayView != null) {
@@ -63,16 +40,21 @@ fun OverlayView(
         result.forEach {
 
 
+            //Trae los datos que se estan detectando de la mano de manera constante y comparar si es correcto o no
             val gestures = it.gestures()
             val firstGesture = gestures.getOrNull(0)
             val category = firstGesture?.get(0)?.categoryName() ?: "none"
             val landmarksResult = it.landmarks()
 
-
-            val isCorrect = category != "none" && category.isNotEmpty()
-
-
+            //verifico si es correcto o no contra el dato que tengo
+            val isCorrect = category.isNotEmpty() && category != "none" && category.equals(
+                levelViewModel.subLevelModel,
+                ignoreCase = true
+            )
+            levelViewModel.letterCamera = category
             PutTextCategory(text = category, isCorrect)
+
+
 
             Canvas(
                 modifier = Modifier.fillMaxSize()
@@ -101,10 +83,6 @@ fun OverlayView(
                 } else {
                     Color.Green // Si la categoría no es "None", establece el color en verde
                 }
-
-
-
-
 
                 for (landmark in landmarksResult) {
                     for (normalizedLandmark in landmark) {
@@ -196,13 +174,15 @@ fun PutTextCategory(text: String, isCorrect: Boolean) {
             )
         ) {
 
-            if(isCorrect && text != "none") {
-               // PlaySound(LocalContext.current, text) // Este metodo se usa para reproducir
+            if (isCorrect) {
+                // PlaySound(LocalContext.current, text) // Este metodo se usa para reproducir
+                // aca se debe ir a la siguiente pantalla y pasar el dato
                 Text(text = "Letra:${text}", fontSize = 20.sp)
-            }
-            else{
+            } else {
                 Text(text = "Incorrecto", fontSize = 20.sp)
             }
+
+
         }
 
 
