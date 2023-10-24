@@ -2,7 +2,6 @@ package com.example.comusenias.presentation.screen.camera
 
 import OverlayView
 import android.app.Activity
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.layout.Box
@@ -17,7 +16,6 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.comusenias.presentation.extensions.validation.selectedOption
 import com.example.comusenias.presentation.view_model.CameraViewModel
 import com.example.comusenias.presentation.view_model.LevelViewModel
 import kotlinx.coroutines.delay
@@ -64,8 +62,6 @@ fun CameraScreen(
 
         LaunchedEffect(key1 = Unit) {
             delay(5000)
-            Log.d("CameraScreen", levelViewModel.letterCamera)
-            selectedOption(levelViewModel.letterCamera, levelViewModel)
             viewModel.captureAndSave(navController!!)
         }
     }

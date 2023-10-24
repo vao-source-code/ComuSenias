@@ -39,7 +39,7 @@ fun CongratsContent() {
     ) {
         LottieAnimation(
             modifier = Modifier.height(SIZE300.dp),
-            composition = if (getChoicesSelected(getLevelViewModel)) congratsImage else congratsErrorImage,
+            composition = if (getChoicesSelected(getLevelViewModel) && getLevelViewModel.validateLetterCamera()) congratsImage else congratsErrorImage,
             iterations = LottieConstants.IterateForever,
         )
         Text(
