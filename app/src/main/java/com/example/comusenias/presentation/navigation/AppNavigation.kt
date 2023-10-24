@@ -1,5 +1,6 @@
 package com.example.comusenias.presentation.navigation
 
+import PermissionCameraScreen
 import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -17,13 +18,15 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.comusenias.presentation.activities.MainActivity
 import com.example.comusenias.presentation.component.specialist.SpecialistDetailsScreen
+import com.example.comusenias.presentation.screen.camera.CameraScreen
+import com.example.comusenias.presentation.screen.gallery.GalleryScreen
 import com.example.comusenias.presentation.screen.gameAction.ChoseTheLetterPlayScreen
-import com.example.comusenias.presentation.screen.home.HomeScreen
 import com.example.comusenias.presentation.screen.gameAction.ChoseTheSignPlayScreen
 import com.example.comusenias.presentation.screen.gameAction.CongratsPlayScreen
 import com.example.comusenias.presentation.screen.gameAction.InterpretationStatusScreen
 import com.example.comusenias.presentation.screen.gameAction.LearnSignScreen
 import com.example.comusenias.presentation.screen.gameAction.MakeSignPlayScreen
+import com.example.comusenias.presentation.screen.home.HomeScreen
 import com.example.comusenias.presentation.screen.notification.NotificationScreen
 import com.example.comusenias.presentation.screen.premiun.PremiunScreen
 import com.example.comusenias.presentation.screen.profile.ChangeProfileScreen
@@ -97,10 +100,26 @@ private fun GetNavHost(
         composableChoseTheSignPlay(navController, levelViewModel)
 
         composable(AppScreen.MakeSignPlayScreen.route) {
-            MakeSignPlayScreen(navController = navController, modifier = modifier)
+            MakeSignPlayScreen(
+                navController = navController,
+                modifier = modifier,
+                levelViewModel = levelViewModel
+            )
+            //PermissionCameraScreen(navController = navController)
+
         }
-        composable(AppScreen.InterpretationStatusScreen.route) {
-            InterpretationStatusScreen(navController = navController, modifier = modifier)
+        composable(AppScreen.InterpretationStatusScreen.route, arguments = listOf(
+            navArgument("path") {
+                type = NavType.StringType
+            }
+        )
+        ) {
+            val path = it.arguments?.getString("path") ?: EMPTY_STRING
+            InterpretationStatusScreen(
+                navController = navController,
+                modifier = modifier,
+                path = path
+            )
         }
         composable(AppScreen.CongratsPlayScreen.route) {
             CongratsPlayScreen(navController = navController, modifier = modifier)
@@ -110,6 +129,38 @@ private fun GetNavHost(
         composable(AppScreen.NotificationScreen.route) {
             NotificationScreen(navController = navController)
         }
+
+        composable(AppScreen.CameraScreen.route) {
+            CameraScreen(navController = navController, levelViewModel = levelViewModel)
+        }
+
+        //Permission Camera
+        composable(AppScreen.CameraScreenPermission.route) {
+            PermissionCameraScreen(navController = navController)
+        }
+
+
+        //Permission Gallery
+        composable(AppScreen.GaleryScreenPermission.route) {
+            PermissionCameraScreen(navController = navController)
+        }
+
+
+        composable(
+            AppScreen.GalleryScreen.route, arguments = listOf(
+                navArgument("path") {
+                    type = NavType.StringType
+                }
+            )
+        ) {
+            val path = it.arguments?.getString("path") ?: EMPTY_STRING
+            GalleryScreen(
+                navController = navController,
+                path = path,
+                levelViewModel = levelViewModel
+            )
+        }
+
     }
 }
 
@@ -197,4 +248,5 @@ private fun NavGraphBuilder.composableChoseTheSignPlay(
         val subLevel = it.arguments?.getString(SUB_LEVEL) ?: EMPTY_STRING
         ChoseTheSignPlayScreen(navController = navController, level, subLevel, levelViewModel)
     }
+
 }

@@ -1,7 +1,6 @@
 package com.example.comusenias.presentation.view_model
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -30,6 +29,7 @@ class LevelViewModel @Inject constructor(
     var onOptionSelected by mutableStateOf("")
     var levelSelected by mutableStateOf("")
     var subLevelModel by mutableStateOf("")
+    var letterCamera by mutableStateOf("")
 
     init {
         getLevels()
@@ -40,6 +40,7 @@ class LevelViewModel @Inject constructor(
             levelsResponse = response
             if (response is Response.Success) {
                 levels = response.data
+
             }
         }
     }
@@ -119,5 +120,9 @@ class LevelViewModel @Inject constructor(
         }
         levelsResponse = Response.Error(exception = Exception(ERROR_UNKNOWN))
         return null
+    }
+
+    fun validateLetterCamera(): Boolean {
+        return letterCamera.equals(subLevelModel, ignoreCase = true)
     }
 }
