@@ -108,8 +108,18 @@ private fun GetNavHost(
             //PermissionCameraScreen(navController = navController)
 
         }
-        composable(AppScreen.InterpretationStatusScreen.route) {
-            InterpretationStatusScreen(navController = navController, modifier = modifier)
+        composable(AppScreen.InterpretationStatusScreen.route, arguments = listOf(
+            navArgument("path") {
+                type = NavType.StringType
+            }
+        )
+        ) {
+            val path = it.arguments?.getString("path") ?: EMPTY_STRING
+            InterpretationStatusScreen(
+                navController = navController,
+                modifier = modifier,
+                path = path
+            )
         }
         composable(AppScreen.CongratsPlayScreen.route) {
             CongratsPlayScreen(navController = navController, modifier = modifier)

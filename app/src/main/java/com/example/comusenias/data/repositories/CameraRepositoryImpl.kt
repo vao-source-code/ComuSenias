@@ -3,6 +3,7 @@ import android.content.Context
 import android.os.Build
 import android.provider.MediaStore
 import android.util.Log
+import android.view.Surface
 import android.widget.Toast
 import androidx.annotation.OptIn
 import androidx.camera.core.AspectRatio
@@ -37,7 +38,7 @@ class CameraRepositoryImpl @Inject constructor(
     private val preview: Preview,
     private val imageCapture: ImageCapture,
     private val context: Context,
-) : CameraRepository, GestureRecognizerHelper.GestureRecognizerListener{
+) : CameraRepository, GestureRecognizerHelper.GestureRecognizerListener {
 
 
     private val minHandDetectionConfidence = 0.5f
@@ -57,9 +58,7 @@ class CameraRepositoryImpl @Inject constructor(
 
 
     private var imageAnalysis: ImageAnalysis? = null
-
     private val recognitionResultsMutableFlow = MutableStateFlow<ResultOverlayView?>(null)
-
 
     init {
         setupImageAnalysis()
@@ -67,8 +66,7 @@ class CameraRepositoryImpl @Inject constructor(
 
     override suspend fun captureAndSaveImage(navController: NavController) {
         val name = SimpleDateFormat(
-            "yyyy-MM-dd-HH-mm-ss-SSS",
-            Locale.ENGLISH
+            "yyyy-MM-dd-HH-mm-ss-SSS", Locale.ENGLISH
         ).format(System.currentTimeMillis())
 
         val contentValues = ContentValues().apply {
@@ -76,67 +74,51 @@ class CameraRepositoryImpl @Inject constructor(
             put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
             if (Build.VERSION.SDK_INT > 28) {
                 put(
-                    MediaStore.MediaColumns.RELATIVE_PATH,
-                    "Pictures/My-Camera-App-Images"
+                    MediaStore.MediaColumns.RELATIVE_PATH, "Pictures/My-Camera-App-Images"
                 )
             }
         }
 
         val outputOptions = ImageCapture.OutputFileOptions.Builder(
-            context.contentResolver,
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-            contentValues
+            context.contentResolver, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues
         ).build()
 
+        imageCapture.targetRotation = Surface.ROTATION_0
         imageCapture.takePicture(
             outputOptions,
             ContextCompat.getMainExecutor(context),
             object : ImageCapture.OnImageSavedCallback {
                 override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                    // Inicia un nuevo contexto de coroutine en el hilo de fondo
 
+                    // Inicia un nuevo contexto de coroutine en el hilo de fondo
                     val savedUri = outputFileResults.savedUri
                     val encodedUrl = URLEncoder.encode(savedUri.toString(), "UTF-8")
-
-                    navController.navigate(AppScreen.GalleryScreen.createRoute(encodedUrl))
-
-
-                    Log.d("SavedImage" ,"${outputFileResults.savedUri}")
-
-                    Toast.makeText(
-                        context,
-                        "Saved image: ${outputFileResults.savedUri}",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    navController.navigate(
+                        AppScreen.InterpretationStatusScreen.createRoute(
+                            encodedUrl
+                        )
+                    )
+                    Log.d("SavedImage", "${outputFileResults.savedUri}")
                 }
 
 
                 override fun onError(exception: ImageCaptureException) {
                     Toast.makeText(
-                        context,
-                        "Some error occurred: ${exception.message}",
-                        Toast.LENGTH_SHORT
+                        context, "Some error occurred: ${exception.message}", Toast.LENGTH_SHORT
                     ).show()
                 }
             })
     }
 
 
-
-
     override suspend fun showCameraPreview(
-        previewView: PreviewView,
-        lifecycleOwner: LifecycleOwner
+        previewView: PreviewView, lifecycleOwner: LifecycleOwner
     ) {
         preview.setSurfaceProvider(previewView.surfaceProvider)
         try {
             cameraProvider.unbindAll()
             cameraProvider.bindToLifecycle(
-                lifecycleOwner,
-                cameraSelector,
-                preview,
-                imageAnalysis,
-                imageCapture
+                lifecycleOwner, cameraSelector, preview, imageAnalysis, imageCapture
             )
         } catch (e: Exception) {
             e.printStackTrace()
@@ -152,14 +134,10 @@ class CameraRepositoryImpl @Inject constructor(
     }
 
 
-
-
     private fun setupImageAnalysis() {
-        imageAnalysis = ImageAnalysis.Builder()
-            .setTargetAspectRatio(AspectRatio.RATIO_4_3)
+        imageAnalysis = ImageAnalysis.Builder().setTargetAspectRatio(AspectRatio.RATIO_4_3)
             .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
-            .setOutputImageFormat(ImageAnalysis.OUTPUT_IMAGE_FORMAT_RGBA_8888)
-            .build()
+            .setOutputImageFormat(ImageAnalysis.OUTPUT_IMAGE_FORMAT_RGBA_8888).build()
     }
 
     @OptIn(ExperimentalGetImage::class)

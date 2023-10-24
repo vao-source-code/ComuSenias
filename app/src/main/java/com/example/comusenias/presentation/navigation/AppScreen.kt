@@ -20,13 +20,18 @@ sealed class AppScreen(val route: String) {
     object LearnSignScreen : AppScreen("learn_sign/{level}/{subLevel}") {
         fun createRoute(level: String, subLevel: String) = "learn_sign/${level}/${subLevel}"
     }
+
     object ChoseTheSignPlayScreen : AppScreen("chose_the_sign_play/{level}/{subLevel}") {
         fun createRoute(level: String, subLevel: String) =
             "chose_the_sign_play/${level}/${subLevel}"
     }
+
     object MakeSignPlayScreen : AppScreen("make_sign_play")
     object CongratsPlayScreen : AppScreen("congrats_play")
-    object InterpretationStatusScreen : AppScreen("Interpretation_status_screen")
+    object InterpretationStatusScreen : AppScreen("Interpretation_status_screen/{path}") {
+        fun createRoute(path: String) = "Interpretation_status_screen/${path}"
+    }
+
     object NotificationScreen : AppScreen("notification_screen")
     object SpecialistScreen : AppScreen("specialist_screen")
     object SpecialistDetailsScreen : AppScreen("specialist_details_screen")
@@ -35,7 +40,7 @@ sealed class AppScreen(val route: String) {
             "chose_the_letter_play/${level}/${subLevel}"
     }
 
-    object CameraScreenPermission :AppScreen("camera_screen_permission")
+    object CameraScreenPermission : AppScreen("camera_screen_permission")
 
     object CameraScreen :AppScreen("camera_screen")
 

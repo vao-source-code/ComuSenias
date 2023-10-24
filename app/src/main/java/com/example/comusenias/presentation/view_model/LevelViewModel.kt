@@ -120,4 +120,8 @@ class LevelViewModel @Inject constructor(
         levelsResponse = Response.Error(exception = Exception(ERROR_UNKNOWN))
         return null
     }
+
+    fun validateLetterCamera(): Boolean {
+        return letterCamera.equals(subLevelModel, ignoreCase = true)
+    }
 }
