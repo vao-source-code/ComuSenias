@@ -16,6 +16,7 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.comusenias.presentation.component.gameAction.CounterAction
 import com.example.comusenias.presentation.view_model.CameraViewModel
 import com.example.comusenias.presentation.view_model.LevelViewModel
 import kotlinx.coroutines.delay
@@ -42,6 +43,7 @@ fun CameraScreen(
         levelViewModel = levelViewModel
     )
 
+
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -66,6 +68,8 @@ fun CameraScreen(
         }
     }
 
+    CounterAction()
+
     BackHandler {
         activity?.finish()
     }
@@ -75,4 +79,5 @@ fun CameraScreen(
         onDispose { }
     }
 }
+
 
