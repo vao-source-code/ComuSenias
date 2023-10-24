@@ -10,7 +10,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.comusenias.domain.models.game.SubLevelModel
 import com.example.comusenias.presentation.component.defaults.app.ButtonApp
 import com.example.comusenias.presentation.component.gameAction.CongratsContent
 import com.example.comusenias.presentation.component.home.StatusGame
@@ -50,25 +49,16 @@ fun CongratsPlayView(navController: NavHostController, modifier: Modifier) {
         onDispose { }
     }
 }
+
+/**
+ * Actualiza el estado del subnivel en el ViewModel basándose en los choices seleccionados en el LevelViewModel.
+ * Si los choices seleccionados son correctos, el estado se establece en COMPLETED.
+ * En caso contrario, el estado se establece en IN_PROGRESS.
+ */
 fun setStatusBySubLevel() {
-    getSubLevelViewModel.subLevel.status = StatusGame.COMPLETED
-    getSubLevelViewModel.subLevel.idSubLevel.let {
-        getSubLevelViewModel.updateSubLevel(getSubLevelViewModel.subLevel)
-    }
-}
-
-
-private fun setStatusGame() {
-    if (getChoicesSelected(getLevelViewModel)) {
-        getSubLevel()?.let {
-            it.isCompleted = StatusGame.COMPLETED
-        }
-    }
-}
-
-private fun getSubLevel(): SubLevelModel? {
-    return getLevelViewModel.getSubLevelById(
-        getLevelViewModel.levelSelected,
-        getLevelViewModel.subLevelModel
-    )
+    val subLevel = getSubLevelViewModel.subLevel
+    val status =
+        if (getChoicesSelected(getLevelViewModel)) StatusGame.COMPLETED else StatusGame.IN_PROGRESS
+    subLevel.status = status
+    getSubLevelViewModel.updateSubLevel(subLevel)
 }
