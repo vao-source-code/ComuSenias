@@ -97,6 +97,9 @@ const val BIRTHDAY: String = "Fecha de Nacimiento"
 const val LEVEL: String = "level"
 const val SUB_LEVEL: String = "subLevel"
 const val USER: String = "user"
+const val SUBLEVEL_TABLE: String = "subLevel_table"
+const val SUBLEVEL_ID: String = "idSubLevel"
+const val STATUS: String = "status"
 
 
 /*-----------------BUTTONS AND ICONS-----------------*/

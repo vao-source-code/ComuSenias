@@ -34,6 +34,7 @@ accompanist = "0.30.0"
 firebaseStorage = "24.7.1"
 commons = "2.8.0"
 kotlinXCoroutinesTest = "1.7.3"
+room = "2.5.0"
 
 [libraries]
 accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanistPager" }
@@ -80,6 +81,9 @@ accompanist = { module = "com.google.accompanist:accompanist-permissions", versi
 firebaseStorage = { module = "com.google.firebase:firebase-firestore-ktx", version.ref = "firebaseStorage" }
 commons = { module = "commons-io:commons-io", version.ref = "commons" }
 kotlinXCoroutinesTest = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinXCoroutinesTest" }
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "androidApplication" }

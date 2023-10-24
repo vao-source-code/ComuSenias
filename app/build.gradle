@@ -122,7 +122,12 @@ dependencies {
     implementation libs.accompanist
     implementation libs.commons
 
+    implementation libs.room.runtime
+    kapt libs.room.compiler
+    implementation libs.room.ktx
+
     implementation 'com.google.firebase:firebase-storage:20.0.0'
+    testImplementation "org.mockito:mockito-inline:3.11.2"
 
 }
 kapt {

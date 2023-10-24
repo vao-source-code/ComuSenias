@@ -12,9 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
@@ -25,7 +22,6 @@ import com.example.comusenias.R
 import com.example.comusenias.constants.TestTag
 import com.example.comusenias.domain.models.game.SubLevelModel
 import com.example.comusenias.presentation.ui.theme.SIZE12
-import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.cardGray
 import com.example.comusenias.presentation.ui.theme.cardInProgress
 import com.example.comusenias.presentation.ui.theme.greenColorApp
@@ -36,20 +32,18 @@ import com.example.comusenias.presentation.ui.theme.size5
 
 @Composable
 fun ContentCardGame(
-    status: StatusGame = StatusGame.BLOCKED,
+    status: StatusGame,
     level: String,
     subLevel: SubLevelModel,
     navController: NavController
 ) {
-    val currentStatus by remember { mutableStateOf(status) }
-
     val lineColor: Color
     val backgroundColorCard: Color
     val iconColor: Color
     val blur: Int
     val iconImage: Int
 
-    when (currentStatus) {
+    when (status) {
         StatusGame.COMPLETED -> {
             lineColor = greenColorApp
             backgroundColorCard = Color.White
@@ -65,14 +59,21 @@ fun ContentCardGame(
             blur = 0
             iconImage = R.drawable.time_icon
         }
-
         StatusGame.BLOCKED -> {
+            lineColor = cardGray
+            backgroundColorCard = cardInProgress
+            iconColor = iconColorProgress
+            blur = 0
+            iconImage = R.drawable.time_icon
+        }
+
+        /*StatusGame.BLOCKED -> {
             lineColor = cardGray
             backgroundColorCard = Color.White
             iconColor = blackColorApp
             iconImage = R.drawable.padlock
             blur = 3
-        }
+        }*/
     }
 
     val linecColorAnimate = animateColorAsState(lineColor, label = "")
@@ -86,7 +87,7 @@ fun ContentCardGame(
             .fillMaxWidth()
             .blur(radius = blurAnimate.value)
             .background(Color.White)
-            .testTag(TestTag.TAG_CONTENT_CARD_GAME + currentStatus.name)
+            .testTag(TestTag.TAG_CONTENT_CARD_GAME + status.name)
     ) {
         CardGame(
             lineColor = linecColorAnimate,

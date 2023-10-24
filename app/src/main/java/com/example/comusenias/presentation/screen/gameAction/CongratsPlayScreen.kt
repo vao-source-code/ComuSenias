@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -14,6 +15,7 @@ import com.example.comusenias.presentation.component.defaults.app.ButtonApp
 import com.example.comusenias.presentation.component.gameAction.CongratsContent
 import com.example.comusenias.presentation.component.home.StatusGame
 import com.example.comusenias.presentation.component.home.getLevelViewModel
+import com.example.comusenias.presentation.component.home.getSubLevelViewModel
 import com.example.comusenias.presentation.extensions.validation.getChoicesSelected
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.CONTINUE
@@ -39,11 +41,22 @@ fun CongratsPlayView(navController: NavHostController, modifier: Modifier) {
             titleButton = CONTINUE,
             onClickButton = {
                 navController.navigate(AppScreen.HomeScreen.route)
-                setStatusGame()
+                setStatusBySubLevel()
             }
         )
     }
+    DisposableEffect(Unit) {
+        getSubLevelViewModel.fetchSubLevel(getLevelViewModel.subLevelModel)
+        onDispose { }
+    }
 }
+fun setStatusBySubLevel() {
+    getSubLevelViewModel.subLevel.status = StatusGame.COMPLETED
+    getSubLevelViewModel.subLevel.idSubLevel.let {
+        getSubLevelViewModel.updateSubLevel(getSubLevelViewModel.subLevel)
+    }
+}
+
 
 private fun setStatusGame() {
     if (getChoicesSelected(getLevelViewModel)) {
