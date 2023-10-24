@@ -45,7 +45,8 @@ fun CardGame(
     icon: State<Int>,
     level: String,
     subLevel: SubLevelModel,
-    navController: NavController
+    navController: NavController,
+    status : StatusGame
 ) {
     Card(
         modifier = Modifier
@@ -55,7 +56,9 @@ fun CardGame(
     ) {
         Row(
             modifier = Modifier
-                .clickable { navigateToLearSign(navController, level, subLevel) }
+                .clickable(enabled = status != StatusGame.BLOCKED) {
+                    navigateToLearSign(navController, level, subLevel)
+                }
                 .fillMaxSize()
                 .padding(start = SIZE15.dp, end = SIZE27.dp),
             verticalAlignment = Alignment.CenterVertically,

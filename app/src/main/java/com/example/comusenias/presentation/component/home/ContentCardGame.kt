@@ -90,7 +90,8 @@ fun ContentCardGame(
             icon = iconAnimate,
             level = level,
             subLevel = subLevel,
-            navController = navController
+            navController = navController,
+            status = status
         )
         Box(
             modifier = Modifier
