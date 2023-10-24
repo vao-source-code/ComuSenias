@@ -123,6 +123,6 @@ class LevelViewModel @Inject constructor(
     }
 
     fun validateLetterCamera(): Boolean {
-        return letterCamera.equals(subLevelModel, ignoreCase = true)
+        return onOptionSelected.equals(subLevelModel, ignoreCase = true)
     }
 }

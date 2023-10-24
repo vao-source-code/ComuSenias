@@ -15,7 +15,6 @@ import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.comusenias.domain.library.LibraryDebugger.appIsDebuggable
 import com.example.comusenias.domain.models.ResultOverlayView
 import com.example.comusenias.presentation.view_model.CameraViewModel
 import com.example.comusenias.presentation.view_model.LevelViewModel
@@ -52,10 +51,7 @@ fun OverlayView(
                 levelViewModel.subLevelModel,
                 ignoreCase = true
             )
-            levelViewModel.letterCamera = category
-
-            if (appIsDebuggable())
-                PutTextCategory(text = category, isCorrect)
+            levelViewModel.onOptionSelected = category
 
             Canvas(
                 modifier = Modifier.fillMaxSize()

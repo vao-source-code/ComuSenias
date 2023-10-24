@@ -22,7 +22,6 @@ import kotlinx.coroutines.delay
 fun InterpretationStatusScreen(
     navController: NavHostController, modifier: Modifier, path: String,
 ) {
-
     var status by remember { mutableStateOf(Status.LOADING) }
     val isButtonEnabled = remember { mutableStateOf(false) }
     val response: (Boolean) -> Unit = { it ->
@@ -31,10 +30,8 @@ fun InterpretationStatusScreen(
 
     LaunchedEffect(Unit) {
         delay(5000)
-        status = if (getLevelViewModel.validateLetterCamera())
-            Status.CORRECT
-        else
-            Status.INCORRECT
+        status = if (getLevelViewModel.validateLetterCamera()) Status.CORRECT else Status.INCORRECT
+        getLevelViewModel.choiceOfOption.add(status == Status.CORRECT)
     }
 
     GameAction(
