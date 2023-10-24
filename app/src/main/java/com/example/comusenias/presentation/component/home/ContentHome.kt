@@ -92,7 +92,7 @@ private fun ShowLazyColumn(
             items = getSubLevel(adjustLevel),
         ) { subLevel ->
             ContentCardGame(
-                status = getStatusForRoom(subLevelsEntity.value, subLevel),
+                status = getStatusSubLevel(subLevelsEntity.value, subLevel),
                 level = level[0].id,
                 subLevel = subLevel,
                 navController = navController
@@ -105,16 +105,27 @@ private fun ShowLazyColumn(
 }
 
 /**
- * Obtiene el Status del subnivel.
+ * Esta función determina el estado de juego para un subnivel específico.
  *
- * @param sublevelsEntity la lista de entidades de subniveles.
- * @param sublevel el modelo de subnivel.
- * @return el estado del juego para el subnivel. Si no se encuentra ninguna entidad de subnivel
- *         con el mismo nombre que el subnivel proporcionado, se devuelve [StatusGame.BLOCKED].
+ * @param sublevelsEntity La lista de todos los subniveles disponibles en el juego. Cada subnivel es una entidad que contiene su id y estado actual.
+ * @param sublevel El subnivel para el que se debe determinar el estado de juego.
+ *
+ * @return El estado de juego para el subnivel especificado. Puede ser uno de los siguientes:
+ * - StatusGame.IN_PROGRESS: Si el subnivel es el próximo subnivel después del último subnivel completado.
+ * - StatusGame.BLOCKED: Si el subnivel está después del próximo subnivel después del último subnivel completado.
+ * - El estado actual del subnivel: Si el subnivel no está después del último subnivel completado.
+ * - StatusGame.BLOCKED: Si el subnivel no se encuentra en la lista de subniveles.
  */
-fun getStatusForRoom(sublevelsEntity: List<SubLevelEntity>, sublevel: SubLevelModel): StatusGame {
-    return sublevelsEntity.firstOrNull { it.idSubLevel == sublevel.name }?.status
-        ?: StatusGame.BLOCKED
+fun getStatusSubLevel(sublevelsEntity: List<SubLevelEntity>, sublevel: SubLevelModel): StatusGame {
+    val statusList = sublevelsEntity.map { it.status }
+    val lastCompletedIndex = statusList.indexOfLast { it == StatusGame.COMPLETED }
+    val currentIndex = sublevelsEntity.indexOfFirst { it.idSubLevel == sublevel.name }
+
+    return when {
+        lastCompletedIndex != -1 && currentIndex == lastCompletedIndex + 1 -> StatusGame.IN_PROGRESS
+        lastCompletedIndex != -1 && currentIndex > lastCompletedIndex + 1 -> StatusGame.BLOCKED
+        else -> sublevelsEntity.getOrNull(currentIndex)?.status ?: StatusGame.BLOCKED
+    }
 }
 
 /**

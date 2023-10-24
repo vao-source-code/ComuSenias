@@ -22,6 +22,7 @@ import com.example.comusenias.R
 import com.example.comusenias.constants.TestTag
 import com.example.comusenias.domain.models.game.SubLevelModel
 import com.example.comusenias.presentation.ui.theme.SIZE12
+import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.cardGray
 import com.example.comusenias.presentation.ui.theme.cardInProgress
 import com.example.comusenias.presentation.ui.theme.greenColorApp
@@ -59,21 +60,14 @@ fun ContentCardGame(
             blur = 0
             iconImage = R.drawable.time_icon
         }
-        StatusGame.BLOCKED -> {
-            lineColor = cardGray
-            backgroundColorCard = cardInProgress
-            iconColor = iconColorProgress
-            blur = 0
-            iconImage = R.drawable.time_icon
-        }
 
-        /*StatusGame.BLOCKED -> {
+        StatusGame.BLOCKED -> {
             lineColor = cardGray
             backgroundColorCard = Color.White
             iconColor = blackColorApp
             iconImage = R.drawable.padlock
             blur = 3
-        }*/
+        }
     }
 
     val linecColorAnimate = animateColorAsState(lineColor, label = "")
