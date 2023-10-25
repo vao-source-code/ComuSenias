@@ -7,6 +7,7 @@ import com.example.comusenias.presentation.component.defaults.app.CircularProgre
 import com.example.comusenias.presentation.component.defaults.app.ShowRetrySnackBar
 import com.example.comusenias.presentation.component.gameAction.ContentLetterType
 import com.example.comusenias.presentation.component.gameAction.GameAction
+import com.example.comusenias.presentation.component.home.getLevelViewModel
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.CONTINUE
 import com.example.comusenias.presentation.ui.theme.ERROR_RETRY_LEVEL
@@ -23,6 +24,7 @@ fun LearnSignScreen(
 ) {
 
     val subLevelViewModel = levelViewModel.getSubLevelById(level, subLevel)
+    getLevelViewModel.choiceOfOption.clear()
 
     when (levelViewModel.levelsResponse) {
         is Response.Loading -> {
