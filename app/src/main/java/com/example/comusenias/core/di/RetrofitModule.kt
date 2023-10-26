@@ -54,9 +54,9 @@ object RetrofitModule {
             .addInterceptor(loggingInterceptor)
             .sslSocketFactory(sslContext.socketFactory, trustAllCerts[0] as X509TrustManager)
             .hostnameVerifier { _, _ -> true }
-            .connectTimeout(60, TimeUnit.SECONDS) // Cambiar el tiempo de espera de conexión a 60 segundos
-            .readTimeout(60, TimeUnit.SECONDS) // Cambiar el tiempo de espera de lectura a 60 segundos
-            .writeTimeout(60, TimeUnit.SECONDS) // Cambiar el tiempo de espera de escritura a 60 segundos// Ajusta el valor del tiempo de espera según sea necesario
+            .connectTimeout(60, TimeUnit.SECONDS)
+            .readTimeout(60, TimeUnit.SECONDS)
+            .writeTimeout(60, TimeUnit.SECONDS)
             .build()
 
         //Todo Ignore el certificado de confianza usando el metodo sslSocketFactory

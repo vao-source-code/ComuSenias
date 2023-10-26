@@ -105,7 +105,6 @@ private fun GetNavHost(
                 modifier = modifier,
                 levelViewModel = levelViewModel
             )
-            //PermissionCameraScreen(navController = navController)
 
         }
         composable(AppScreen.InterpretationStatusScreen.route, arguments = listOf(

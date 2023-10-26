@@ -3,20 +3,11 @@ package com.example.comusenias.presentation.screen.gallery
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
-import kotlinx.coroutines.flow.map
-
-
 
 class PreferenceManager(private val context: Context) {
 
     private fun getSharedPreferences(): SharedPreferences {
-        return context.getSharedPreferences("my_preference", Context.MODE_PRIVATE)
+        return context.getSharedPreferences("my_preference", MODE_PRIVATE)
     }
     fun saveString(key: String, value: String) {
         val editor = getSharedPreferences().edit()

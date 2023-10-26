@@ -66,7 +66,7 @@ fun CrossfadeIcon(status: Status, response: (Boolean) -> Unit) {
 
             Status.INCORRECT -> {
                 Image(
-                    painter = painterResource(id = R.drawable.correct_image),
+                    painter = painterResource(id = R.drawable.incorrect_image),
                     contentDescription = EMPTY_STRING,
                     modifier = modifierSize
                         .testTag(Status.INCORRECT.name),

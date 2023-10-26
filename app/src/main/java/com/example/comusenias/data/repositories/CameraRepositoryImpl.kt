@@ -22,7 +22,6 @@ import com.example.comusenias.data.repositories.GestureRecognizerHelper
 import com.example.comusenias.domain.models.ResultOverlayView
 import com.example.comusenias.domain.repositories.CameraRepository
 import com.example.comusenias.presentation.navigation.AppScreen
-import com.google.mediapipe.tasks.vision.core.RunningMode
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
@@ -38,30 +37,15 @@ class CameraRepositoryImpl @Inject constructor(
     private val preview: Preview,
     private val imageCapture: ImageCapture,
     private val context: Context,
+    private val gestureRecognizerHelper: GestureRecognizerHelper
 ) : CameraRepository, GestureRecognizerHelper.GestureRecognizerListener {
-
-
-    private val minHandDetectionConfidence = 0.5f
-    private val minHandTrackingConfidence = 0.5f
-    private val minHandPresenceConfidence = 0.5f
-    private val currentDelegate = GestureRecognizerHelper.DELEGATE_CPU
-    private val runningMode = RunningMode.LIVE_STREAM
-
-    private val gestureRecognizerHelper = GestureRecognizerHelper(
-        minHandDetectionConfidence,
-        minHandTrackingConfidence,
-        minHandPresenceConfidence,
-        currentDelegate,
-        runningMode,
-        context
-    )
-
 
     private var imageAnalysis: ImageAnalysis? = null
     private val recognitionResultsMutableFlow = MutableStateFlow<ResultOverlayView?>(null)
 
     init {
         setupImageAnalysis()
+        gestureRecognizerHelper.setListener(this)
     }
 
     override suspend fun captureAndSaveImage(navController: NavController) {
@@ -90,9 +74,9 @@ class CameraRepositoryImpl @Inject constructor(
             object : ImageCapture.OnImageSavedCallback {
                 override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
 
-                    // Inicia un nuevo contexto de coroutine en el hilo de fondo
                     val savedUri = outputFileResults.savedUri
                     val encodedUrl = URLEncoder.encode(savedUri.toString(), "UTF-8")
+
                     navController.navigate(
                         AppScreen.InterpretationStatusScreen.createRoute(
                             encodedUrl
@@ -104,10 +88,13 @@ class CameraRepositoryImpl @Inject constructor(
 
                 override fun onError(exception: ImageCaptureException) {
                     Toast.makeText(
-                        context, "Some error occurred: ${exception.message}", Toast.LENGTH_SHORT
+                        context,
+                        "Some error occurred: ${exception.message}",
+                        Toast.LENGTH_SHORT
                     ).show()
                 }
-            })
+            }
+        )
     }
 
 
@@ -144,7 +131,6 @@ class CameraRepositoryImpl @Inject constructor(
     override fun startObjectDetection(): Flow<ResultOverlayView> {
 
         imageAnalysis?.setAnalyzer(Executors.newSingleThreadExecutor()) { imageProxy ->
-            gestureRecognizerHelper.setListener(this)
 
             gestureRecognizerHelper.recognizeLiveStream(imageProxy)
 

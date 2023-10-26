@@ -12,15 +12,15 @@ import javax.inject.Inject
 class GalleryRepositoryImpl @Inject constructor(private val apiService: ApiService):GalleryRepository {
     override suspend fun showVowels(filePart: MultipartBody.Part): VowelsResponse {
         val response = apiService.uploadFile(filePart)
+
         if (response.isSuccessful) {
             val responseBody = response.body()
-            // Do something with the response body
+
             Log.d("Retrofit", "Response Body: ${response.body()!!.letra}")
 
             return VowelsResponse(responseBody!!.letra,responseBody.image_base64)
 
         } else {
-            // Handle unsuccessful response
             Log.d("Retrofit", "Unsuccessful response: ${response.code()}")
         }
         return VowelsResponse("","")

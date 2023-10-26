@@ -9,6 +9,7 @@ import androidx.camera.core.ImageCapture
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import com.example.comusenias.data.api.ApiService
+import com.example.comusenias.data.repositories.GestureRecognizerHelper
 import com.example.comusenias.domain.repositories.CameraRepository
 import dagger.Module
 import dagger.Provides
@@ -50,7 +51,12 @@ object CameraModule {
             Surface.ROTATION_90
         ).build()
 
-
+    @Provides
+    fun provideGestureRecognizerHelper(
+        context: Context
+    ): GestureRecognizerHelper {
+        return GestureRecognizerHelper(context = context)
+    }
 
     @Provides
     fun provideCameraRepository(
@@ -59,6 +65,7 @@ object CameraModule {
         preview: Preview,
         imageCapture: ImageCapture,
         context: Context,
+        gestureRecognizerHelper: GestureRecognizerHelper
     ): CameraRepository {
         return CameraRepositoryImpl(
             cameraProvider,
@@ -66,6 +73,7 @@ object CameraModule {
             preview,
             imageCapture,
             context,
+            gestureRecognizerHelper
         )
     }
 }

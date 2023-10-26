@@ -31,8 +31,7 @@ class CameraViewModel @Inject constructor(
         }
     }
 
-    //Este codigo funciona
-    // depues implementamos en jetpack compose en otra parte que es solamente usa la funcionalidad de sacar fotos
+
     fun captureAndSave(navController: NavController) {
         viewModelScope.launch {
             useCases.captureAndSave(navController)
@@ -53,6 +52,5 @@ class CameraViewModel @Inject constructor(
             useCases.stopCameraPreview()
         }
     }
-
 
 }

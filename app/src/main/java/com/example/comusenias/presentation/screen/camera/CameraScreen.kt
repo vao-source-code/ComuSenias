@@ -33,15 +33,8 @@ fun CameraScreen(
     val activity = (context as? Activity)
     val lifecycleOwner = LocalLifecycleOwner.current
 
-    // Recolecta los resultados de reconocimiento del ViewModel
     val recognitionResultsState = viewModel.recognitionResults.collectAsState()
     val recognitionResults = recognitionResultsState.value
-
-    OverlayView(
-        resultOverlayView = recognitionResults,
-        cameraViewModel = viewModel,
-        levelViewModel = levelViewModel
-    )
 
 
     Box(
@@ -58,7 +51,6 @@ fun CameraScreen(
 
         OverlayView(
             resultOverlayView = recognitionResults,
-            cameraViewModel = viewModel,
             levelViewModel = levelViewModel
         )
 

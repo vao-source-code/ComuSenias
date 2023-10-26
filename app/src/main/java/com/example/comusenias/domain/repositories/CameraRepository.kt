@@ -15,7 +15,6 @@ interface CameraRepository {
     suspend fun captureAndSaveImage(navController: NavController)
     suspend fun  showCameraPreview(previewView:PreviewView, lifecycleOwner: LifecycleOwner)
     suspend fun stopCameraPreview()
-
     fun startObjectDetection(): Flow<ResultOverlayView>
 
 
