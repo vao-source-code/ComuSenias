@@ -13,7 +13,6 @@ import com.example.comusenias.presentation.screen.register.ChildFormScreen
 import com.example.comusenias.presentation.screen.register.RegisterScreen
 import com.example.comusenias.presentation.screen.register.SpecialistFormScreen
 
-
 @RequiresApi(Build.VERSION_CODES.O)
 fun NavGraphBuilder.authNavGraph(navController: NavHostController, modifier: Modifier) {
     navigation(
@@ -22,11 +21,10 @@ fun NavGraphBuilder.authNavGraph(navController: NavHostController, modifier: Mod
     ) {
 
         composable(route = AuthScreen.LoginScreen.route) {
-            LoginScreen(navController= navController , modifier = modifier)
+            LoginScreen(navController = navController, modifier = modifier)
         }
-
         composable(route = AuthScreen.RegisterScreen.route) {
-            RegisterScreen(navController= navController, modifier = modifier)
+            RegisterScreen(navController = navController, modifier = modifier)
         }
         composable(AppScreen.OnboardingScreen.route) {
             OnBoardingScreen(navController = navController, modifier = modifier)
@@ -44,8 +42,6 @@ fun NavGraphBuilder.authNavGraph(navController: NavHostController, modifier: Mod
 }
 
 sealed class AuthScreen(val route: String) {
-
     object LoginScreen : AuthScreen("login_screen")
     object RegisterScreen : AuthScreen("register_screen")
-
 }

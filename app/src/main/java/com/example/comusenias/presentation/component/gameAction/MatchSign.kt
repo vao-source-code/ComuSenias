@@ -2,7 +2,6 @@ package com.example.comusenias.presentation.component.gameAction
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -22,8 +21,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.example.comusenias.constants.TestTag
 import com.example.comusenias.presentation.screen.gameAction.Sign
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
@@ -115,8 +114,8 @@ fun ButtonSign(
             }
             .testTag(TestTag.TAG_MATCH_SIGN + sign.letter)
     ) {
-        Image(
-            painter = painterResource(statusImage),
+        AsyncImage(
+            model = statusImage,
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Fit

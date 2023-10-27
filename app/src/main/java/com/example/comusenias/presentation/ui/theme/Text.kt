@@ -43,6 +43,7 @@ const val passwordDoNotMatch = "Las contraseñas no coinciden"
 const val emptyString = ""
 const val ENTER: String = "Ingresa"
 const val SKIP: String = "Saltar"
+const val RETRY: String = "REINTENTAR"
 const val IMAGE: String = "Imagen"
 const val IMAGE_AVATAR: String = "image avatar"
 const val IMAGE_EDIT_BUTTON: String = "image edit button"
@@ -95,8 +96,14 @@ const val CONFIRM : String = "Confirmar"
 const val USER_PROFILE: String = "User Profile"
 const val ICON: String = "Icon"
 const val LEARN_THE  : String = "Aprendamos las "
+const val ERROR_RETRY_LEVEL  : String = "Error al cargar el nivel"
+const val ERROR_RETRY_SUB_LEVEL  : String = "Error al cargar el sub nivel"
 const val BIRTHDAY  : String = "Fecha de Nacimiento"
 const val AGE : String = "Fecha de Nacimiento"
+
+const val LEVEL  : String = "level"
+const val SUB_LEVEL  : String = "subLevel"
+const val USER  : String = "user"
 
 
 /*-----------------BUTTONS AND ICONS-----------------*/
