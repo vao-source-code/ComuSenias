@@ -28,7 +28,7 @@ fun LoginForm(
     navController: NavHostController
 ) {
     val state = viewModel.state
-    ResponseStatus(
+    ResponseStatusLogin(
         navController = navController,
         response = viewModel.loginResponse,
         viewModel = viewModel

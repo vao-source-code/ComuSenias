@@ -1,11 +1,9 @@
 package com.example.comusenias.domain.library
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
-import java.time.LocalDate
-import java.time.format.DateTimeParseException
+import java.text.SimpleDateFormat
+import java.util.Date
 
 object LibraryString {
     private const val regexEmail =
@@ -22,14 +20,27 @@ object LibraryString {
 
     fun validPhone(phone: String) = phone.matches(regexPhone.toRegex())
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun validDateOfBirth(dateOfBirth: String): Boolean {
+        val dateFormat = SimpleDateFormat("dd-MM-yyyy")
         return try {
-            val parsedDate = LocalDate.parse(dateOfBirth)
-            val currentDate = LocalDate.now()
-            !parsedDate.isAfter(currentDate)
-        } catch (e: DateTimeParseException) {
+            val dateOfBirthAsDate = dateFormat.parse(dateOfBirth)
+            val currentDate = Date()
+            dateOfBirthAsDate.before(currentDate)
+        } catch (e: Exception) {
+            e.printStackTrace()
             false
+        }
+    }
+
+    fun validateRegistrationExpirationDate(expirationDate: String): Boolean {
+        val dateFormat = SimpleDateFormat("dd-MM-yyyy")
+        return try {
+            val expirationDateAsDate = dateFormat.parse(expirationDate)
+            val currentDate = Date()
+            expirationDateAsDate.after(currentDate)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return false
         }
     }
 

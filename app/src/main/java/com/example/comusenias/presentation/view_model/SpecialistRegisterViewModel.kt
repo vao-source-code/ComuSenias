@@ -1,6 +1,9 @@
 package com.example.comusenias.presentation.view_model
 
-import androidx.compose.runtime.State
+import android.content.Intent
+import android.net.Uri
+import androidx.activity.result.ActivityResultLauncher
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -23,6 +26,8 @@ import com.example.comusenias.presentation.ui.theme.INVALID_PHONE
 import com.example.comusenias.presentation.ui.theme.RESTRICTION_NAME_USER_ACCOUNT
 import com.example.comusenias.presentation.ui.theme.RESTRICTION_SPECIALIST_ACCOUNT
 import com.example.comusenias.presentation.ui.theme.RESTRICTION_TITLE_MEDICAL_ACCOUNT
+import com.example.comusenias.presentation.ui.theme.URL_POLICY_PRIVACY
+import com.example.comusenias.presentation.ui.theme.URL_TERMS_CONDITIONS
 import com.example.comusenias.presentation.ui.theme.emptyString
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -38,40 +43,29 @@ class SpecialistRegisterViewModel @Inject constructor(
     private val specialistUseCases: SpecialistFactory,
     private val dataUserStorageFactoryUseCases: DataUserStorageFactory,
 ) : ViewModel() {
+
     var registerResponse by mutableStateOf<Response<FirebaseUser>?>(null)
         private set
-
     var stateSpecialist by mutableStateOf(SpecialistModel())
         private set
-
     var state by mutableStateOf(RegisterState())
         private set
-
-    private val _isCheckedRol = mutableStateOf(false)
-    val isCheckedRol: State<Boolean> = _isCheckedRol
-
+    var isCheckedTermsPolicy: Boolean by mutableStateOf(false)
     var isNameValid: Boolean by mutableStateOf(false)
     var errorName: String by mutableStateOf("")
-
     var isMedicalLicenseValid: Boolean by mutableStateOf(false)
     var errorMedicalLicense: String by mutableStateOf("")
-
     var isMedicalLicenseExpirationValid: Boolean by mutableStateOf(false)
     var errormedicalLicenseExpiration: String by mutableStateOf("")
-
     var isSpecialityValid: Boolean by mutableStateOf(false)
     var errorSpeciality: String by mutableStateOf("")
-
     var isTitleMedical: Boolean by mutableStateOf(false)
     var errorTitleMedical: String by mutableStateOf("")
-
     var isDate: Boolean by mutableStateOf(false)
     var errorDate: String by mutableStateOf("")
-
     var isTelValid: Boolean by mutableStateOf(false)
     var errorTelephone: String by mutableStateOf("")
-
-    var isRegisterEnabled = false
+    var isRegisterEnabled: Boolean by mutableStateOf(false)
     var specialistModel = SpecialistModel()
     var user = UserModel()
 
@@ -94,10 +88,10 @@ class SpecialistRegisterViewModel @Inject constructor(
         register(user)
     }
 
-    private fun enabledRegisterButton() {
+    fun enabledRegisterButton() {
         isRegisterEnabled =
-            isNameValid && isNameValid && isSpecialityValid && isMedicalLicenseExpirationValid &&
-                    isMedicalLicenseValid && isTitleMedical && isDate && isTelValid
+            isNameValid && isSpecialityValid && isMedicalLicenseExpirationValid &&
+                    isMedicalLicenseValid && isTitleMedical && isDate && isTelValid && isCheckedTermsPolicy
     }
 
     fun validateName() {
@@ -136,9 +130,10 @@ class SpecialistRegisterViewModel @Inject constructor(
     }
 
     fun validateMedicalLicenseExpirationValid() {
-        val isValid = stateSpecialist.medicalLicenseExpiration.isNotEmpty()
+        val isValid =
+            LibraryString.validateRegistrationExpirationDate(stateSpecialist.medicalLicenseExpiration)
         isMedicalLicenseExpirationValid = isValid
-        errorMedicalLicense = if (isValid) emptyString else INVALID_DATE
+        errormedicalLicenseExpiration = if (isValid) emptyString else INVALID_DATE
         enabledRegisterButton()
     }
 
@@ -194,5 +189,29 @@ class SpecialistRegisterViewModel @Inject constructor(
         stateSpecialist = stateSpecialist.copy(titleMedical = titleMedical)
     }
 
+    fun onClickTerms(openLink: ActivityResultLauncher<Intent>) {
+        val uri = Uri.parse(URL_TERMS_CONDITIONS)
+        val customTabsIntent = CustomTabsIntent.Builder()
+            .setShowTitle(false) // Ocultar el título de la página
+            .build()
+        val intent = customTabsIntent.intent
+        intent.data = uri
+        openLink.launch(intent)
+    }
+
+    fun onClickConditions(openLink: ActivityResultLauncher<Intent>) {
+        val uri = Uri.parse(URL_POLICY_PRIVACY)
+        val customTabsIntent = CustomTabsIntent.Builder()
+            .setShowTitle(false) // Ocultar el título de la página
+            .build()
+        val intent = customTabsIntent.intent
+        intent.data = uri
+        openLink.launch(intent)
+    }
+
+    fun onCheckTermsAndConditions(check: Boolean) {
+        this.isCheckedTermsPolicy = check
+        enabledRegisterButton()
+    }
 
 }

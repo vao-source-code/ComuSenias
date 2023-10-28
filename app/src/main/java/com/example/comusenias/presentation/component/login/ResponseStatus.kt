@@ -18,10 +18,8 @@ import com.example.comusenias.presentation.view_model.LoginViewModel
 import com.google.firebase.auth.FirebaseUser
 
 @Composable
-fun ResponseStatus(
-    navController: NavHostController,
-    response: Response<FirebaseUser>?,
-    viewModel: LoginViewModel
+fun ResponseStatusLogin(
+    navController: NavHostController, response: Response<FirebaseUser>?, viewModel: LoginViewModel
 ) {
     when (response) {
         Response.Loading -> {
@@ -34,13 +32,21 @@ fun ResponseStatus(
 
         is Response.Success -> {
             LaunchedEffect(Unit) {
-                val targetRoute = if (viewModel.dataRolStorageFactory.getRolValue(
-                        PreferencesConstant.PREFERENCE_ROL_CURRENT
-                    ) == Rol.CHILDREN.toString()
-                ) {
-                    AppScreen.HomeScreen.route
-                } else {
-                    AppScreen.SpecialistScreen.route
+
+                val targetRoute = when (viewModel.dataRolStorageFactory.getRolValue(
+                    PreferencesConstant.PREFERENCE_ROL_CURRENT
+                )) {
+                    Rol.CHILDREN.toString() -> {
+                        AppScreen.HomeScreen.route
+                    }
+
+                    Rol.SPECIALIST.toString() -> {
+                        AppScreen.SpecialistScreen.route
+                    }
+
+                    else -> {
+                        AppScreen.HomeScreen.route
+                    }
                 }
 
                 navController.navigate(route = targetRoute) {
@@ -50,15 +56,12 @@ fun ResponseStatus(
                 }
 
             }
-            Toast.makeText(LocalContext.current, LOGIN_SUCCESS, Toast.LENGTH_SHORT)
-                .show()
+            Toast.makeText(LocalContext.current, LOGIN_SUCCESS, Toast.LENGTH_SHORT).show()
         }
 
         is Response.Error -> {
             Toast.makeText(
-                LocalContext.current,
-                response.exception?.message + LOGIN_ERROR,
-                Toast.LENGTH_SHORT
+                LocalContext.current, response.exception?.message + LOGIN_ERROR, Toast.LENGTH_SHORT
             ).show()
         }
 

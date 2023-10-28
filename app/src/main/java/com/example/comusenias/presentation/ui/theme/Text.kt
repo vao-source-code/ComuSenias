@@ -1,6 +1,10 @@
 package com.example.comusenias.presentation.ui.theme
 
 const val logoApp: String = "Logo de la app"
+const val URL_TERMS_CONDITIONS: String =
+    "https://vao-source-code.github.io/terms_and_conditions_comusenias/"
+const val URL_POLICY_PRIVACY: String =
+    "https://vao-source-code.github.io/policy-privacy-comusenias/"
 const val EMAIL_TEXT: String = "Correo electrónico"
 const val PASSWORD: String = "Contraseña"
 const val CONFIRM_PASS: String = "Confirmar contraseña"

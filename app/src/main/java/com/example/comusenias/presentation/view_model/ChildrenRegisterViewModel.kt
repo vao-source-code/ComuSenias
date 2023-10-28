@@ -1,6 +1,9 @@
 package com.example.comusenias.presentation.view_model
 
-import androidx.compose.runtime.State
+import android.content.Intent
+import android.net.Uri
+import androidx.activity.result.ActivityResultLauncher
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -21,6 +24,8 @@ import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.INVALID_DATE
 import com.example.comusenias.presentation.ui.theme.INVALID_PHONE
 import com.example.comusenias.presentation.ui.theme.RESTRICTION_NAME_USER_ACCOUNT
+import com.example.comusenias.presentation.ui.theme.URL_POLICY_PRIVACY
+import com.example.comusenias.presentation.ui.theme.URL_TERMS_CONDITIONS
 import com.example.comusenias.presentation.ui.theme.emptyString
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -38,25 +43,19 @@ class ChildrenRegisterViewModel @Inject constructor(
 
     var registerResponse by mutableStateOf<Response<FirebaseUser>?>(null)
         private set
-
     var state by mutableStateOf(RegisterState())
         private set
-
     var stateChildren by mutableStateOf(ChildrenModel())
         private set
-
-    private val _isCheckedRol = mutableStateOf(false)
-    val isCheckedRol: State<Boolean> = _isCheckedRol
-
+    var isCheckedTermsPolicy: Boolean by mutableStateOf(false)
     var isNameValid: Boolean by mutableStateOf(false)
     var errorName: String by mutableStateOf("")
     var isTelValid: Boolean by mutableStateOf(false)
     var errorTel: String by mutableStateOf("")
     var isDateValid: Boolean by mutableStateOf(false)
     var errorDate: String by mutableStateOf("")
-    var isRegisterEnabled = false
+    var isRegisterEnabled: Boolean by mutableStateOf(false)
     var user = UserModel()
-
     var childrenModel = ChildrenModel()
 
     init {
@@ -79,7 +78,7 @@ class ChildrenRegisterViewModel @Inject constructor(
     }
 
     private fun enabledRegisterButton() {
-        isRegisterEnabled = isNameValid && isTelValid && isDateValid
+        isRegisterEnabled = isNameValid && isTelValid && isDateValid && isCheckedTermsPolicy
     }
 
     fun validateName() {
@@ -103,7 +102,6 @@ class ChildrenRegisterViewModel @Inject constructor(
         enabledRegisterButton()
     }
 
-
     fun createUser() = viewModelScope.launch {
         user.id = authUseCases.getCurrentUserUseCase()?.uid!!
         user.password = LibraryPassword.hashPassword(user.password)
@@ -116,7 +114,6 @@ class ChildrenRegisterViewModel @Inject constructor(
             id = authUseCases.getCurrentUserUseCase()?.uid!!
         )
         childrenFactoryUsesCases.createChildren(childrenModel)
-
     }
 
     fun onNameInputChanged(name: String) {
@@ -131,5 +128,24 @@ class ChildrenRegisterViewModel @Inject constructor(
         stateChildren = stateChildren.copy(date = date)
     }
 
+    fun onClickTerms(openLink: ActivityResultLauncher<Intent>) {
+        val uri = Uri.parse(URL_TERMS_CONDITIONS)
+        val customTabsIntent = CustomTabsIntent.Builder().setShowTitle(false).build()
+        val intent = customTabsIntent.intent
+        intent.data = uri
+        openLink.launch(intent)
+    }
 
+    fun onClickConditions(openLink: ActivityResultLauncher<Intent>) {
+        val uri = Uri.parse(URL_POLICY_PRIVACY)
+        val customTabsIntent = CustomTabsIntent.Builder().setShowTitle(false).build()
+        val intent = customTabsIntent.intent
+        intent.data = uri
+        openLink.launch(intent)
+    }
+
+    fun onCheckTermsAndConditions(check: Boolean) {
+        this.isCheckedTermsPolicy = check
+        enabledRegisterButton()
+    }
 }

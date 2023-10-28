@@ -1,6 +1,8 @@
 package com.example.comusenias.presentation.component.register.childForm
 
 import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -35,7 +37,8 @@ fun ChildFormContent(
 ) {
 
     val state = viewModel.stateChildren
-
+    val openLink =
+        rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {}
 
     Column(
         modifier = Modifier
@@ -67,9 +70,12 @@ fun ChildFormContent(
                 label = NUMBER_PHONE,
                 icon = Icons.Default.Phone
             )
-            TermsAndConditions { isCheck ->
-                // Devuelva un boolean si es check
-            }
+            TermsAndConditions(
+                onClickTerms = { viewModel.onClickTerms(openLink) },
+                onClickConditions = { viewModel.onClickConditions(openLink) },
+                onCheckChange = {
+                    viewModel.onCheckTermsAndConditions(it)
+                })
         }
         ButtonApp(
             titleButton = CONTINUE,

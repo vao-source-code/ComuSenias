@@ -1,6 +1,8 @@
 package com.example.comusenias.presentation.component.register.especialistForm
 
 import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -45,6 +47,8 @@ fun EspecialistFormContent(
 ) {
 
     val state = viewModel.stateSpecialist
+    val openLink =
+        rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {}
 
     Column(
         modifier = Modifier
@@ -122,9 +126,12 @@ fun EspecialistFormContent(
                 icon = null,
                 errorMsg = viewModel.errorSpeciality
             )
-            TermsAndConditions { isCheck ->
-                // Devuelva un boolean si es check
-            }
+            TermsAndConditions(
+                onClickTerms = { viewModel.onClickTerms(openLink) },
+                onClickConditions = { viewModel.onClickConditions(openLink) },
+                onCheckChange = {
+                    viewModel.onCheckTermsAndConditions(it)
+                })
         }
         ButtonApp(
             titleButton = CONTINUE,
