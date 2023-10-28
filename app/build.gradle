@@ -163,15 +163,10 @@ dependencies {
     implementation libs.camera.video
 
     // Mediapipe Library
-    implementation 'com.google.mediapipe:tasks-vision:0.10.0'
+    implementation libs.mediapipe.task
 
-
-    //SharedPref
-    implementation "androidx.datastore:datastore-preferences:1.0.0"
-
-
-    
-
+    //Datastore
+    implementation libs.datastore.preferences
 }
 kapt {
     correctErrorTypes true

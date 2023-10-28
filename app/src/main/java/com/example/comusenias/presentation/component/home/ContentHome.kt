@@ -120,6 +120,10 @@ fun getStatusSubLevel(sublevelsEntity: List<SubLevelEntity>, sublevel: SubLevelM
     val lastCompletedIndex = statusList.indexOfLast { it == StatusGame.COMPLETED }
     val currentIndex = sublevelsEntity.indexOfFirst { it.idSubLevel == sublevel.name }
 
+    if (statusList.all { it == StatusGame.BLOCKED }) {
+        sublevelsEntity.getOrNull(0)?.status = StatusGame.IN_PROGRESS
+    }
+
     return when {
         lastCompletedIndex != -1 && currentIndex == lastCompletedIndex + 1 -> StatusGame.IN_PROGRESS
         lastCompletedIndex != -1 && currentIndex > lastCompletedIndex + 1 -> StatusGame.BLOCKED

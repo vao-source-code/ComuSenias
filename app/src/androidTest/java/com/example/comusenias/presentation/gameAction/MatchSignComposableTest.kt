@@ -26,7 +26,7 @@ class MatchSignComposableTest {
 
     @Before
     fun setUp() {
-        MockitoAnnotations.initMocks(this)
+//        MockitoAnnotations.initMocks(this)
        levelViewModel = Mockito.mock(LevelViewModel::class.java)
     }
 
