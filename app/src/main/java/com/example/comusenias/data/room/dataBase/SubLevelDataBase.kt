@@ -12,6 +12,7 @@ import com.example.comusenias.domain.models.room.SubLevelEntity
 @Database(
     entities = [SubLevelEntity::class],
     version = 1,
+    exportSchema = true
 )
 /**
  * Define el DAO de subniveles que se utilizará para interactuar con los datos de los subniveles en la base de datos.
