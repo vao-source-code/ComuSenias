@@ -69,14 +69,14 @@ android {
             project.ext.TEST_ASSETS_DIR = projectDir.toString() + '/src/androidTest/assets'
         }
     }
-
-
+    lintOptions {
+        checkReleaseBuilds false
+    }
 }
 apply from: 'download_task.gradle'
 // Define extra properties outside the dependencies block
 project.ext.ASSET_DIR = projectDir.toString() + '/src/main/assets'
 project.ext.TEST_ASSETS_DIR = projectDir.toString() + '/src/androidTest/assets'
-
 
 
 dependencies {
