@@ -2,9 +2,9 @@ package com.example.comusenias.core.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.comusenias.data.repositories.SubLevelRepositoryImpl
-import com.example.comusenias.data.repositories.room.SubLevelDao
-import com.example.comusenias.data.repositories.room.SubLevelDataBase
+import com.example.comusenias.data.repositories.firebase.SubLevelRepositoryImpl
+import com.example.comusenias.data.room.dao.SubLevelDao
+import com.example.comusenias.data.room.dataBase.SubLevelDataBase
 import com.example.comusenias.domain.repositories.SubLevelRepository
 import dagger.Module
 import dagger.Provides

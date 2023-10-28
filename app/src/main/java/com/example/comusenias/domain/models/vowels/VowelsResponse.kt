@@ -1,4 +1,4 @@
-package com.example.comusenias.domain.models
+package com.example.comusenias.domain.models.vowels
 
 data class VowelsResponse(
     val letra: String,

@@ -1,4 +1,4 @@
-package com.example.comusenias.data.repositories.room
+package com.example.comusenias.data.room.dao
 
 import androidx.room.Dao
 import androidx.room.Delete

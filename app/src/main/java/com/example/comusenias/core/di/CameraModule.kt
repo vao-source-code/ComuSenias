@@ -1,6 +1,6 @@
 package com.example.comusenias.core.di
 
-import CameraRepositoryImpl
+import com.example.comusenias.data.repositories.firebase.CameraRepositoryImpl
 import android.app.Application
 import android.content.Context
 import android.view.Surface
@@ -8,26 +8,21 @@ import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
-import com.example.comusenias.data.api.ApiService
-import com.example.comusenias.data.repositories.GestureRecognizerHelper
+import com.example.comusenias.data.repositories.firebase.GestureRecognizerHelper
 import com.example.comusenias.domain.repositories.CameraRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.CoroutineScope
 import javax.inject.Singleton
-
 
 @InstallIn(SingletonComponent::class)
 @Module
 object CameraModule {
-
     @Singleton
     @Provides
-    fun provideApplicationContext(application: Application): Context {
-        return application.applicationContext
-    }
+    fun provideApplicationContext(application: Application): Context =
+        application.applicationContext
 
     @Singleton
     @Provides
@@ -54,9 +49,8 @@ object CameraModule {
     @Provides
     fun provideGestureRecognizerHelper(
         context: Context
-    ): GestureRecognizerHelper {
-        return GestureRecognizerHelper(context = context)
-    }
+    ): GestureRecognizerHelper =
+        GestureRecognizerHelper(context = context)
 
     @Provides
     fun provideCameraRepository(
@@ -66,8 +60,8 @@ object CameraModule {
         imageCapture: ImageCapture,
         context: Context,
         gestureRecognizerHelper: GestureRecognizerHelper
-    ): CameraRepository {
-        return CameraRepositoryImpl(
+    ): CameraRepository =
+        CameraRepositoryImpl(
             cameraProvider,
             cameraSelector,
             preview,
@@ -75,8 +69,4 @@ object CameraModule {
             context,
             gestureRecognizerHelper
         )
-    }
 }
-
-
-

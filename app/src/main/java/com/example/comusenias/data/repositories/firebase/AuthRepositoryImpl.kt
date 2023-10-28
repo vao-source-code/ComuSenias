@@ -1,6 +1,6 @@
-package com.example.comusenias.data.repositories
+package com.example.comusenias.data.repositories.firebase
 
-import com.example.comusenias.domain.models.Response
+import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.models.users.UserModel
 import com.example.comusenias.domain.repositories.AuthRepository
 import com.google.firebase.auth.FirebaseAuth

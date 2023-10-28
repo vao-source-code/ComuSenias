@@ -2,7 +2,7 @@ package com.example.comusenias.presentation.screen.gameAction
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
-import com.example.comusenias.domain.models.Response
+import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.presentation.component.defaults.app.CircularProgressBar
 import com.example.comusenias.presentation.component.defaults.app.ShowRetrySnackBar
 import com.example.comusenias.presentation.component.gameAction.ContentLetterType

@@ -4,11 +4,13 @@ import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 
+//TODO: 1. Revisar esta clase
 class PreferenceManager(private val context: Context) {
 
     private fun getSharedPreferences(): SharedPreferences {
         return context.getSharedPreferences("my_preference", MODE_PRIVATE)
     }
+
     fun saveString(key: String, value: String) {
         val editor = getSharedPreferences().edit()
         editor.putString(key, value)
@@ -35,10 +37,3 @@ class PreferenceManager(private val context: Context) {
         return getSharedPreferences().getBoolean(key, defaultValue)
     }
 }
-
-
-
-
-
-
-

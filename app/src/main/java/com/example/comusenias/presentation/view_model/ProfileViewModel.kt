@@ -6,7 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.comusenias.domain.models.users.UserModel
-import com.example.comusenias.domain.use_cases.auth.AuthFactoryUseCases
+import com.example.comusenias.domain.models.auth.AuthFactory
 import com.example.comusenias.domain.use_cases.users.UsersFactoryUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val authUsesCases: AuthFactoryUseCases, private val useCases: UsersFactoryUseCases
+    private val authUsesCases: AuthFactory, private val useCases: UsersFactoryUseCases
 ) : ViewModel() {
 
     var userData by mutableStateOf(UserModel())

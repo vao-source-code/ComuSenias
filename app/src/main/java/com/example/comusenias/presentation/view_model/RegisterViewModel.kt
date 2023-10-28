@@ -7,10 +7,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.comusenias.domain.library.LibraryPassword
 import com.example.comusenias.domain.library.LibraryString
-import com.example.comusenias.domain.models.Response
+import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.models.users.UserModel
 import com.example.comusenias.domain.models.state.RegisterState
-import com.example.comusenias.domain.use_cases.auth.AuthFactoryUseCases
+import com.example.comusenias.domain.models.auth.AuthFactory
 import com.example.comusenias.domain.use_cases.users.UsersFactoryUseCases
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.invalidEmail
@@ -24,7 +24,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
-    private val authUseCases: AuthFactoryUseCases, private val usersUseCase: UsersFactoryUseCases
+    private val authUseCases: AuthFactory, private val usersUseCase: UsersFactoryUseCases
 ) : ViewModel() {
     var registerResponse by mutableStateOf<Response<FirebaseUser>?>(null)
         private set
@@ -53,11 +53,11 @@ class RegisterViewModel @Inject constructor(
             userName = state.userName, email = state.email, password = state.password
         )
         register(user)
-
     }
 
     private fun enabledRegisterButton() {
-        isRegisterEnabled = isUserNameValid && isEmailValid && isPasswordValid && isConfirmPasswordValid
+        isRegisterEnabled =
+            isUserNameValid && isEmailValid && isPasswordValid && isConfirmPasswordValid
     }
 
     fun validateUserName() {

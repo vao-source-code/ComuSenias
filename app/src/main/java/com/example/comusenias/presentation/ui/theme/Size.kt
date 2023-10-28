@@ -1,7 +1,7 @@
 package com.example.comusenias.presentation.ui.theme
 
 const val size08: Float = 0.8f
-const val SIZE08 : Int = 8
+const val SIZE08: Int = 8
 const val SIZE1: Int = 1
 const val SIZE2: Int = 2
 const val SIZE3: Int = 3
@@ -49,4 +49,13 @@ const val STEP_ONE: Int = 1
 const val STEP_TWO: Int = 2
 const val STEP_TREE: Int = 3
 const val STEP_FOUR: Int = 4
+
+const val DELEGATE_CPU = 0
+const val DELEGATE_GPU = 1
+const val DEFAULT_HAND_DETECTION_CONFIDENCE = 0.5F
+const val DEFAULT_HAND_TRACKING_CONFIDENCE = 0.5F
+const val DEFAULT_HAND_PRESENCE_CONFIDENCE = 0.5F
+const val OTHER_ERROR = 0
+const val LANDMARK_STROKE_WIDTH = 10f
+
 

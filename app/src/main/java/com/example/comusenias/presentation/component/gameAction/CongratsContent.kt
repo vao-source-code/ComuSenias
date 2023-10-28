@@ -13,6 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.airbnb.lottie.LottieComposition
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
@@ -39,12 +40,12 @@ fun CongratsContent() {
     ) {
         LottieAnimation(
             modifier = Modifier.height(SIZE300.dp),
-            composition = if (getChoicesSelected(getLevelViewModel)) congratsImage else congratsErrorImage,
+            composition = showImage(congratsImage, congratsErrorImage),
             iterations = LottieConstants.IterateForever,
         )
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = if (getChoicesSelected(getLevelViewModel)) CONGRATS_TEXT else ERROR_CONGRATS_TEXT,
+            text = showText(),
             style = TextStyle(
                 fontSize = size24.sp,
                 fontWeight = FontWeight.SemiBold,
@@ -54,3 +55,13 @@ fun CongratsContent() {
         )
     }
 }
+
+@Composable
+private fun showText() =
+    if (getChoicesSelected(getLevelViewModel)) CONGRATS_TEXT else ERROR_CONGRATS_TEXT
+
+@Composable
+private fun showImage(
+    congratsImage: LottieComposition?,
+    congratsErrorImage: LottieComposition?
+) = if (getChoicesSelected(getLevelViewModel)) congratsImage else congratsErrorImage

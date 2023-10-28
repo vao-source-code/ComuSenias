@@ -13,7 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.comusenias.domain.models.Response
+import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.models.game.LevelModel
 import com.example.comusenias.domain.models.game.SubLevelModel
 import com.example.comusenias.domain.models.room.SubLevelEntity
@@ -23,10 +23,10 @@ import com.example.comusenias.presentation.ui.theme.ERROR_RETRY_LEVEL
 import com.example.comusenias.presentation.ui.theme.SIZE1
 import com.example.comusenias.presentation.ui.theme.size14
 import com.example.comusenias.presentation.view_model.LevelViewModel
-import com.example.comusenias.presentation.view_model.SubLevelRoomViewModel
+import com.example.comusenias.presentation.view_model.SubLevelViewModel
 
 lateinit var getLevelViewModel: LevelViewModel
-lateinit var getSubLevelViewModel: SubLevelRoomViewModel
+lateinit var getSubLevelViewModel: SubLevelViewModel
 
 @Composable
 fun ContentHome(
@@ -62,8 +62,7 @@ private fun ShowLazyColumn(
     navController: NavController,
     levelViewModel: LevelViewModel
 ) {
-    val adjustLevel = levelViewModel.adjustIsCompleted(level)
-    val subLevelViewModel: SubLevelRoomViewModel = hiltViewModel()
+    val subLevelViewModel: SubLevelViewModel = hiltViewModel()
     getSubLevelViewModel = subLevelViewModel
 
     val subLevelsEntity = getSubLevelViewModel.subLevels.collectAsState(
@@ -89,7 +88,7 @@ private fun ShowLazyColumn(
             ContentLevel(level[0].name)
         }
         items(
-            items = getSubLevel(adjustLevel),
+            items = getSubLevel(level),
         ) { subLevel ->
             ContentCardGame(
                 status = getStatusSubLevel(subLevelsEntity.value, subLevel),
@@ -105,7 +104,7 @@ private fun ShowLazyColumn(
 }
 
 /**
- * Esta función determina el estado de juego para un subnivel específico.
+ * Ddetermina el estado de juego para un subnivel específico.
  *
  * @param sublevelsEntity La lista de todos los subniveles disponibles en el juego. Cada subnivel es una entidad que contiene su id y estado actual.
  * @param sublevel El subnivel para el que se debe determinar el estado de juego.

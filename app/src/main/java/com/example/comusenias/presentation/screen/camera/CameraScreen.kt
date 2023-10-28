@@ -21,18 +21,15 @@ import com.example.comusenias.presentation.view_model.CameraViewModel
 import com.example.comusenias.presentation.view_model.LevelViewModel
 import kotlinx.coroutines.delay
 
-
 @Composable
 fun CameraScreen(
     levelViewModel: LevelViewModel,
     viewModel: CameraViewModel = hiltViewModel(),
     navController: NavController? = null,
 ) {
-
     val context = LocalContext.current
     val activity = (context as? Activity)
     val lifecycleOwner = LocalLifecycleOwner.current
-
     val recognitionResultsState = viewModel.recognitionResults.collectAsState()
     val recognitionResults = recognitionResultsState.value
 
@@ -71,5 +68,3 @@ fun CameraScreen(
         onDispose { }
     }
 }
-
-

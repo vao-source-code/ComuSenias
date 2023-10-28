@@ -1,7 +1,8 @@
-package com.example.comusenias.data.repositories.room
+package com.example.comusenias.data.room.dataBase
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import com.example.comusenias.data.room.dao.SubLevelDao
 import com.example.comusenias.domain.models.room.SubLevelEntity
 
 /**

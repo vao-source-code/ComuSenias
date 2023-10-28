@@ -20,10 +20,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,6 +35,15 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.comusenias.R
 import com.example.comusenias.presentation.navigation.AppScreen
+import com.example.comusenias.presentation.ui.theme.CHILD_FILE
+import com.example.comusenias.presentation.ui.theme.ERROR_TAKE_PHOTO
+import com.example.comusenias.presentation.ui.theme.FIELD_IMAGES
+import com.example.comusenias.presentation.ui.theme.GALLERY_SCREEN
+import com.example.comusenias.presentation.ui.theme.KEY_BOOLEAN
+import com.example.comusenias.presentation.ui.theme.LETRA
+import com.example.comusenias.presentation.ui.theme.MULTI_PART_FROM_DATA
+import com.example.comusenias.presentation.ui.theme.SIZE16
+import com.example.comusenias.presentation.ui.theme.TAKE_PHOTO
 import com.example.comusenias.presentation.view_model.GalleryViewModel
 import com.example.comusenias.presentation.view_model.LevelViewModel
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -52,41 +59,24 @@ fun GalleryScreen(
     navController: NavController,
     path: String,
 ) {
-
-
     val context = LocalContext.current
-
     val preferenceManager = remember { PreferenceManager(context) }
-
-    var isChecked by remember { mutableStateOf(preferenceManager.getBoolean("key_boolean", false)) }
-
-
     val vowelsResponse = viewModel.vowelsResults.collectAsState()
-
-    // Estado para almacenar la imagen por defecto
     val defaultImage = painterResource(R.drawable.correct_image)
-
-    // Estado para almacenar la imagen cargada desde el archivo
     val loadedImage = remember { mutableStateOf<Bitmap?>(null) }
 
-
     // Cargar la imagen desde el archivo al inicio
-
     LaunchedEffect(path) {
         loadedImage.value = loadBitmapFromUri(context, Uri.parse(path))
     }
 
-
-    // Estado para determinar si se debe mostrar la imagen por defecto o la cargada desde el archivo
-
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(SIZE16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        // ImageView para mostrar la imagen seleccionada o capturada.
         Box(
             modifier = Modifier
                 .size(200.dp)
@@ -95,26 +85,14 @@ fun GalleryScreen(
                 .padding(4.dp)
         ) {
             loadedImage.value?.let { bitmap ->
-
                 val imageBitmap = bitmap.asImageBitmap()
-
                 Image(
                     bitmap = imageBitmap,
                     contentDescription = null,
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.FillBounds
                 )
-
-                bitmap.let { bitmap ->
-                    val file = bitmapToFile(bitmap, LocalContext.current)
-                    val requestFile =
-                        RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
-                    val body = MultipartBody.Part.createFormData("image", file.name, requestFile)
-
-                    viewModel.postGallery(body)
-                }
-
-
+                BitmapToMapAndPostGallery(bitmap, viewModel)
             } ?: run {
                 Image(
                     painter = defaultImage,
@@ -123,33 +101,77 @@ fun GalleryScreen(
                     contentScale = ContentScale.FillBounds
                 )
             }
-
         }
-
 
         if (vowelsResponse.value?.letra == null) {
-            Text("Letra:")
+            Text("${LETRA}:")
         } else {
-            Text("Letra:${vowelsResponse.value?.letra}")
+            Text("${LETRA}:${vowelsResponse.value?.letra}")
         }
-
 
         Button(
             onClick = {
-                isChecked = true
-                preferenceManager.saveBoolean("key_boolean",isChecked)
+                preferenceManager.saveBoolean(KEY_BOOLEAN, true)
                 navController.navigate(AppScreen.CameraScreenPermission.route)
             },
             modifier = Modifier
-                .padding(16.dp)
+                .padding(SIZE16.dp)
                 .fillMaxWidth()
         ) {
-            Text("Sacar Foto")
+            Text(TAKE_PHOTO)
         }
     }
 }
 
+/**
+ * Función que maneja el proceso de convertir un [Bitmap] en un archivo y luego
+ * lo publica en una galería utilizando un [GalleryViewModel].
+ *
+ * @param bitmap El [Bitmap] que se convertirá y publicará en la galería.
+ * @param viewModel El [GalleryViewModel] que maneja la publicación de la imagen en la galería.
+ *
+ * Esta función realiza las siguientes acciones:
+ * 1. Convierte el [Bitmap] en un archivo utilizando la función [bitmapToFile].
+ * 2. Crea un [RequestBody] a partir del archivo, especificando "multipart/form-data" como el tipo de medio.
+ * 3. Crea una [MultipartBody.Part] a partir del [RequestBody], utilizando "image" como el nombre de la parte
+ *    y el nombre del archivo como el nombre del archivo.
+ * 4. Llama a la función [postGallery] del [GalleryViewModel] con la [MultipartBody.Part] creada.
+ *
+ * Esta función es componible, por lo que puede utilizarse en el kit de herramientas de interfaz de usuario Compose
+ * para realizar su funcionalidad como parte de la composición de la interfaz de usuario.
+ */
+@Composable
+private fun BitmapToMapAndPostGallery(
+    bitmap: Bitmap,
+    viewModel: GalleryViewModel
+) {
+    bitmap.let {
+        val file = bitmapToFile(bitmap, LocalContext.current)
+        val requestFile =
+            RequestBody.create(MULTI_PART_FROM_DATA.toMediaTypeOrNull(), file)
+        val body =
+            MultipartBody.Part.createFormData(FIELD_IMAGES, file.name, requestFile)
+        viewModel.postGallery(body)
+    }
+}
 
+
+/**
+ * Función que carga un [Bitmap] a partir de un [Uri].
+ *
+ * @param context El [Context] usado para obtener el [ContentResolver].
+ * @param uri El [Uri] de la imagen que se desea cargar.
+ *
+ * @return Un [Bitmap] si la imagen se carga correctamente, o un [Bitmap] vacío en caso de error.
+ *
+ * Esta función realiza las siguientes acciones:
+ * 1. Obtiene una instancia de [ParcelFileDescriptor] a partir del [Uri] proporcionado.
+ * 2. Decodifica la imagen usando [BitmapFactory.decodeFileDescriptor].
+ * 3. Cierra el [ParcelFileDescriptor].
+ * 4. Devuelve la imagen decodificada.
+ *
+ * En caso de error durante la carga de la imagen, se registra el error en Logcat bajo la etiqueta "GalleryScreen".
+ */
 fun loadBitmapFromUri(
     context: Context,
     uri: Uri
@@ -162,19 +184,33 @@ fun loadBitmapFromUri(
         parcelFileDescriptor?.close()
         image
     } catch (e: Exception) {
-        Log.e("GalleryScreen", "Error al cargar la imagen desde URI: $uri", e)
-        null
+        Log.e(GALLERY_SCREEN, "$ERROR_TAKE_PHOTO $uri", e)
+        Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
     }
 }
 
-
+/**
+ * Convierte un [Bitmap] en un [File].
+ *
+ * @param bitmap El [Bitmap] que se desea convertir en [File].
+ * @param context El [Context] usado para obtener el directorio de archivos.
+ *
+ * @return Un [File] que representa la imagen.
+ *
+ * Esta función realiza las siguientes acciones:
+ * 1. Crea un nuevo archivo en el directorio de archivos del contexto con el nombre "image.jpg".
+ * 2. Abre un [FileOutputStream] para el nuevo archivo.
+ * 3. Comprime el [Bitmap] en formato JPEG al 100% de calidad y escribe los bytes comprimidos en el [FileOutputStream].
+ * 4. Limpia el [FileOutputStream] para asegurarse de que todos los bytes se escriben en el archivo.
+ * 5. Cierra el [FileOutputStream].
+ * 6. Devuelve el archivo creado.
+ */
 fun bitmapToFile(bitmap: Bitmap, context: Context): File {
-    val filesDir = context.filesDir
-    val file = File(filesDir, "image.jpg")
-    val outputStream = FileOutputStream(file)
-    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
-    outputStream.flush()
-    outputStream.close()
+    val file = File(context.filesDir, CHILD_FILE)
+    FileOutputStream(file).use { outputStream ->
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+        outputStream.flush()
+    }
     return file
 }
 

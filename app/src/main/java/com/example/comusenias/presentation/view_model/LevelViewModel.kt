@@ -6,12 +6,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.comusenias.domain.models.Response
+import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.models.game.LevelModel
 import com.example.comusenias.domain.models.game.SubLevelModel
 import com.example.comusenias.domain.use_cases.level.LevelFactory
-import com.example.comusenias.presentation.component.home.StatusGame
-import com.example.comusenias.presentation.ui.theme.ERROR_UNKNOWN
+import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
+import com.example.comusenias.presentation.ui.theme.NOT_RESPONSE_SUB_LEVEL
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -26,100 +26,65 @@ class LevelViewModel @Inject constructor(
     var levelsResponse by mutableStateOf<Response<List<LevelModel>>?>(Response.Loading)
     var levels by mutableStateOf<List<LevelModel>>(listOf())
     var choiceOfOption by mutableStateOf<MutableList<Boolean>>(mutableListOf())
-    var onOptionSelected by mutableStateOf("")
-    var levelSelected by mutableStateOf("")
-    var subLevelModel by mutableStateOf("")
-    var letterCamera by mutableStateOf("")
+    var onOptionSelected by mutableStateOf(EMPTY_STRING)
+    var levelSelected by mutableStateOf(EMPTY_STRING)
+    var subLevelModel by mutableStateOf(EMPTY_STRING)
 
     init {
         getLevels()
     }
 
+    /**
+     * Obtiene una lista de niveles utilizando el caso de uso [levelUsesCases.getLevels].
+     *
+     * Esta función se lanza en [Dispatchers.IO] porque la operación de obtener niveles es potencialmente de larga duración.
+     *
+     * Los resultados se recogen en un flujo y se almacenan en [levelsResponse]. Si la respuesta es un éxito, la lista de niveles se almacena en [levels].
+     */
     fun getLevels() = viewModelScope.launch(Dispatchers.IO) {
-        levelUsesCases.getLevels().collect() { response ->
+        levelUsesCases.getLevels().collect { response ->
             levelsResponse = response
             if (response is Response.Success) {
                 levels = response.data
-
             }
         }
     }
 
-    private fun getNewStatusLevel(current: LevelModel, previous: LevelModel?): StatusGame {
-        return when {
-            previous == null && current.isCompleted != StatusGame.COMPLETED -> StatusGame.IN_PROGRESS
-
-            previous != null && previous.isCompleted == StatusGame.COMPLETED
-                    && current.isCompleted != StatusGame.COMPLETED -> StatusGame.IN_PROGRESS
-
-            else -> current.isCompleted
-        }
-    }
-
-    private fun getNewStatusSubLevel(current: SubLevelModel, previous: SubLevelModel?): StatusGame {
-        return when {
-            previous == null && current.isCompleted != StatusGame.COMPLETED -> StatusGame.IN_PROGRESS
-
-            previous != null && previous.isCompleted == StatusGame.COMPLETED
-                    && current.isCompleted == StatusGame.BLOCKED -> StatusGame.IN_PROGRESS
-
-            previous != null && previous.isCompleted == StatusGame.COMPLETED
-                    && current.isCompleted != StatusGame.COMPLETED -> StatusGame.IN_PROGRESS
-
-            else -> current.isCompleted
-        }
-    }
-
-    fun adjustIsCompleted(lista: List<LevelModel>): List<LevelModel> {
-        var previousLevel: LevelModel? = null
-        var previousSubLevel: SubLevelModel? = null
-        for (index in lista.indices) {
-            val level = lista[index]
-            level.isCompleted = getNewStatusLevel(level, previousLevel)
-            previousLevel = level
-
-            for (index in level.subLevel.indices) {
-                val subLevel = level.subLevel[index]
-                subLevel.isCompleted = getNewStatusSubLevel(subLevel, previousSubLevel)
-                previousSubLevel = subLevel
-            }
-        }
-        return lista
-    }
-
-    fun getLevelsByName(nameLevel: String): List<SubLevelModel> {
-        levels.forEach {
-            if (it.name == nameLevel) {
-                return it.subLevel
-            }
-        }
-        return listOf()
-    }
-
+    /**
+     * Busca niveles por su nombre.
+     *
+     * @param nameLevel El nombre del nivel que se busca.
+     *
+     * @return Una lista de [LevelModel] que coincide con el nombre proporcionado.
+     *
+     * Esta función recorre la lista [levels] y devuelve una nueva lista que contiene solo los elementos cuyo nombre coincide con [nameLevel].
+     */
     fun searchLevelByName(nameLevel: String): List<LevelModel> {
-        val list = ArrayList<LevelModel>()
-        levels.forEach {
-            if (it.name == nameLevel) {
-                list.add(it)
-            }
-        }
-        return list
+        return levels.filter { it.name == nameLevel }
     }
 
-    fun getSubLevelById(idLevel: String, nameSubLevel: String): SubLevelModel? {
+    /**
+     * Obtiene un subnivel a partir de su identificador y nombre.
+     *
+     * @param idLevel El identificador del nivel que contiene el subnivel.
+     * @param nameSubLevel El nombre del subnivel que se busca.
+     *
+     * @return El [SubLevelModel] del subnivel si se encuentra.
+     * @throws Exception si no se encuentra el subnivel.
+     *
+     * Esta función realiza las siguientes acciones:
+     * 1. Establece [levelsResponse] a [Response.Loading].
+     * 2. Busca en la lista [levels] un nivel con el identificador [idLevel] y, dentro de ese nivel, un subnivel con el nombre [nameSubLevel].
+     * 3. Establece [levelsResponse] a [Response.Success] con la lista [levels] si se encuentra el subnivel, o a [Response.Error] con una excepción si no se encuentra.
+     * 4. Devuelve el [SubLevelModel] del subnivel si se encuentra, o lanza una excepción si no se encuentra.
+     */
+    fun getSubLevelById(idLevel: String, nameSubLevel: String): SubLevelModel {
         levelsResponse = Response.Loading
-        levels.forEach {
-            if (it.id == idLevel) {
-                it.subLevel.forEach { subLevel ->
-                    if (subLevel.name == nameSubLevel) {
-                        levelsResponse = Response.Success(levels)
-                        return subLevel
-                    }
-                }
-            }
-        }
-        levelsResponse = Response.Error(exception = Exception(ERROR_UNKNOWN))
-        return null
+        val subLevel = levels.find { it.id == idLevel }?.subLevel?.find { it.name == nameSubLevel }
+        levelsResponse = if (subLevel != null) Response.Success(levels) else Response.Error(
+            exception = Exception(NOT_RESPONSE_SUB_LEVEL)
+        )
+        return subLevel ?: throw Exception(NOT_RESPONSE_SUB_LEVEL)
     }
 
     fun validateLetterCamera(): Boolean {

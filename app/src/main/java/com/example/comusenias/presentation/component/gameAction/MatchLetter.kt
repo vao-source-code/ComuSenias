@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.comusenias.constants.TestTag
 import com.example.comusenias.presentation.component.home.getLevelViewModel
-import com.example.comusenias.presentation.extensions.BorderStyleGames
+import com.example.comusenias.presentation.extensions.borderStyle.BorderStyleGames
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.SIZE1
 import com.example.comusenias.presentation.ui.theme.SIZE12
@@ -104,17 +104,22 @@ fun ButtonLetter(
     }
 }
 
+/**
+ * Devuelve la letra seleccionada basada en el índice del botón seleccionado.
+ *
+ * @param selectedButtonIndex Índice del botón seleccionado.
+ * @param letters Lista de letras.
+ * @return La letra en el índice seleccionado, o una cadena vacía si no se ha seleccionado ningún botón.
+ */
 @Composable
-fun getSelectedLetter(
-    selectedButtonIndex: MutableState<Int>,
-    letters: List<String>
-): String {
-    return if (selectedButtonIndex.value != -1) {
-        letters[selectedButtonIndex.value]
-    } else {
-        EMPTY_STRING
-    }
-}
+fun getSelectedLetter(selectedButtonIndex: MutableState<Int>, letters: List<String>): String =
+    if (selectedButtonIndex.value != -1) letters[selectedButtonIndex.value] else EMPTY_STRING
 
+/**
+ * Valida si se ha seleccionado algún botón.
+ *
+ * @param selectedButtonIndex Índice del botón seleccionado.
+ * @return Verdadero si se ha seleccionado algún botón, falso en caso contrario.
+ */
 fun validateButton(selectedButtonIndex: MutableState<Int>): Boolean =
     selectedButtonIndex.value != -1

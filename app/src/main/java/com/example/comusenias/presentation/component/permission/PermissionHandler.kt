@@ -23,7 +23,6 @@ fun RequestPermissions(
             onPermissionDenied()
         }
     }
-
     DisposableEffect(Unit) {
         requestPermissionLauncher.launch(
             //TODO ver que esto falla en android 33
@@ -36,7 +35,6 @@ fun RequestPermissions(
     }
 }
 
-
 @Composable
 fun PermissionCameraScreen(navController: NavHostController) {
     val context = LocalContext.current
@@ -45,12 +43,15 @@ fun PermissionCameraScreen(navController: NavHostController) {
             navController.navigate(AppScreen.CameraScreen.route)
         },
         onPermissionDenied = {
-            Toast.makeText(context, context.getString(R.string.permissionCameraText), Toast.LENGTH_SHORT)
+            Toast.makeText(
+                context,
+                context.getString(R.string.permissionCameraText),
+                Toast.LENGTH_SHORT
+            )
                 .show()
         }
     )
 }
-
 
 @Composable
 fun RequestPermissionsGallery(
@@ -76,26 +77,28 @@ fun RequestPermissionsGallery(
                 Manifest.permission.READ_EXTERNAL_STORAGE
             )
         )
-        onDispose {  }
+        onDispose { }
     }
 
     DisposableEffect(Unit) {
-        onDispose {  }
+        onDispose { }
     }
 }
 
 @Composable
-fun PermissionGaleryScreen(navController: NavHostController) {
+fun PermissionGalleryScreen(navController: NavHostController) {
     val context = LocalContext.current
     RequestPermissionsGallery(
         onPermissionGranted = {
             navController.navigate(AppScreen.GalleryScreen.route)
         },
         onPermissionDenied = {
-            Toast.makeText(context, context.getString(R.string.permissionGalleryText), Toast.LENGTH_SHORT)
+            Toast.makeText(
+                context,
+                context.getString(R.string.permissionGalleryText),
+                Toast.LENGTH_SHORT
+            )
                 .show()
         }
     )
 }
-
-

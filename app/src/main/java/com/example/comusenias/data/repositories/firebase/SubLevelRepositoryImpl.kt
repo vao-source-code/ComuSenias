@@ -1,6 +1,6 @@
-package com.example.comusenias.data.repositories
+package com.example.comusenias.data.repositories.firebase
 
-import com.example.comusenias.data.repositories.room.SubLevelDao
+import com.example.comusenias.data.room.dao.SubLevelDao
 import com.example.comusenias.domain.models.room.SubLevelEntity
 import com.example.comusenias.domain.repositories.SubLevelRepository
 import com.example.comusenias.domain.repositories.SubLevels

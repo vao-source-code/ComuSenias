@@ -1,6 +1,8 @@
 package com.example.comusenias.core.di
 
+import android.annotation.SuppressLint
 import com.example.comusenias.data.api.ApiService
+import com.example.comusenias.presentation.ui.theme.TLS
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,58 +19,98 @@ import javax.net.ssl.SSLContext
 import javax.net.ssl.TrustManager
 import javax.net.ssl.X509TrustManager
 
-
 @InstallIn(SingletonComponent::class)
 @Module
 object RetrofitModule {
-
-
+    /**
+     * Proporciona un singleton OkHttpClient que permite el logging de todas las peticiones HTTP y las respuestas y
+     * confía en todos los certificados SSL.
+     *
+     * @return OkHttpClient con logging y confiando en todos los certificados SSL.
+     */
     @Provides
     @Singleton
     fun provideOkHttpClient(): OkHttpClient {
-        val loggingInterceptor = HttpLoggingInterceptor()
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY) // Establece el nivel de logging
+        val loggingInterceptor = getHttpLoggingInterceptor()
+        val trustAllCerts: Array<TrustManager> = getTrustManager()
+        val sslContext: SSLContext = getSSLContext(trustAllCerts)
 
-        val trustAllCerts: Array<TrustManager> = arrayOf<TrustManager>(object : X509TrustManager {
-            override fun checkClientTrusted(
-                chain: Array<out X509Certificate>?,
-                authType: String?
-            ) {
-            }
-
-            override fun checkServerTrusted(
-                chain: Array<out X509Certificate>?,
-                authType: String?
-            ) {
-            }
-
-            override fun getAcceptedIssuers(): Array<X509Certificate> {
-                return arrayOf()
-            }
-        })
-
-        val sslContext: SSLContext = SSLContext.getInstance("TLS")
-        sslContext.init(null, trustAllCerts, SecureRandom())
-
-        return OkHttpClient.Builder()
-            .addInterceptor(loggingInterceptor)
-            .sslSocketFactory(sslContext.socketFactory, trustAllCerts[0] as X509TrustManager)
-            .hostnameVerifier { _, _ -> true }
-            .connectTimeout(60, TimeUnit.SECONDS)
-            .readTimeout(60, TimeUnit.SECONDS)
-            .writeTimeout(60, TimeUnit.SECONDS)
-            .build()
-
-        //Todo Ignore el certificado de confianza usando el metodo sslSocketFactory
+        return getOkHttpClientBuilder(loggingInterceptor, sslContext, trustAllCerts)
     }
+
+    /**
+     * Crea y configura un OkHttpClient que permite el logging de todas las peticiones HTTP y las respuestas y
+     * confía en todos los certificados SSL.
+     *
+     * @param loggingInterceptor Interceptor para registrar todas las peticiones y respuestas HTTP.
+     * @param sslContext Contexto SSL para configurar el socket factory del cliente.
+     * @param trustAllCerts Array de TrustManager para configurar el socket factory del cliente.
+     * @return OkHttpClient configurado con el interceptor de logging y el socket factory del contexto SSL.
+     */
+    private fun getOkHttpClientBuilder(
+        loggingInterceptor: HttpLoggingInterceptor,
+        sslContext: SSLContext,
+        trustAllCerts: Array<TrustManager>
+    ) = OkHttpClient.Builder()
+        .addInterceptor(loggingInterceptor)
+        .sslSocketFactory(sslContext.socketFactory, trustAllCerts[0] as X509TrustManager)
+        .hostnameVerifier { _, _ -> true }
+        .connectTimeout(60, TimeUnit.SECONDS)
+        .readTimeout(60, TimeUnit.SECONDS)
+        .writeTimeout(60, TimeUnit.SECONDS)
+        .build()
+
+    /**
+     * Crea e inicializa un contexto SSL que confía en todos los certificados SSL.
+     *
+     * @param trustAllCerts Un array de TrustManager configurado para confiar en todos los certificados SSL.
+     * @return Un contexto SSL que confía en todos los certificados SSL.
+     */
+    private fun getSSLContext(trustAllCerts: Array<TrustManager>): SSLContext =
+        SSLContext.getInstance(TLS).apply {
+            init(null, trustAllCerts, SecureRandom())
+        }
+
+    /**
+     * Crea y configura un array de TrustManager para confiar en todos los certificados SSL.
+     * Este método es peligroso y sólo debe ser utilizado para propósitos de desarrollo.
+     *
+     * @return Array de TrustManager configurado para confiar en todos los certificados SSL.
+     */
+    private fun getTrustManager(): Array<TrustManager> = arrayOf(@SuppressLint("CustomX509TrustManager")
+    object : X509TrustManager {
+        override fun checkClientTrusted(chain: Array<out X509Certificate>?, authType: String?) =
+            Unit
+
+        override fun checkServerTrusted(chain: Array<out X509Certificate>?, authType: String?) =
+            Unit
+
+        override fun getAcceptedIssuers(): Array<X509Certificate> = arrayOf()
+    })
+
+    /**
+     * Crea y configura un HttpLoggingInterceptor para registrar las solicitudes y respuestas HTTP.
+     *
+     * @return HttpLoggingInterceptor configurado para registrar el cuerpo de las solicitudes y respuestas HTTP.
+     */
+    private fun getHttpLoggingInterceptor(): HttpLoggingInterceptor =
+        HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+
+    /**
+     * Proporciona una instancia de ApiService para realizar llamadas a la API.
+     *
+     * @param okHttpClient OkHttpClient para hacer las peticiones HTTP.
+     * @return ApiService para hacer las llamadas a la API.
+     */
     @Provides
     @Singleton
-    fun provideApiService(okHttpClient: OkHttpClient): ApiService {
-        return Retrofit.Builder()
+    fun provideApiService(okHttpClient: OkHttpClient): ApiService =
+        Retrofit.Builder()
             .baseUrl("http://192.168.0.95:8000")
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()
             .create(ApiService::class.java)
-    }
 }

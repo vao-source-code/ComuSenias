@@ -1,12 +1,13 @@
-package com.example.comusenias.data.repositories
+package com.example.comusenias.data.repositories.firebase
 
 import com.example.comusenias.constants.FirebaseConstants
-import com.example.comusenias.domain.models.Response
+import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.models.game.LevelModel
 import com.example.comusenias.domain.models.game.SubLevelModel
 import com.example.comusenias.domain.repositories.LevelRepository
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.google.firebase.firestore.CollectionReference
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.awaitClose
@@ -51,6 +52,7 @@ class LevelRepositoryImpl @Inject constructor(
         }
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun getLevels(): Flow<Response<List<LevelModel>>> = callbackFlow {
         val snapshotListener = levelRef.addSnapshotListener { snapshot, e ->
             GlobalScope.launch(Dispatchers.IO) {

@@ -27,7 +27,6 @@ fun CongratsPlayScreen(navController: NavHostController, modifier: Modifier) {
 
 @Composable
 fun CongratsPlayView(navController: NavHostController, modifier: Modifier) {
-
     Column(
         modifier = modifier
             .fillMaxSize()

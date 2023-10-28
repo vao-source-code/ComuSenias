@@ -15,7 +15,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class SubLevelRoomViewModel @Inject constructor(
+class SubLevelViewModel @Inject constructor(
     private val subLevelRepository: SubLevelRepository
 ) : ViewModel() {
 

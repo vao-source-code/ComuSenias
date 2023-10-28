@@ -1,7 +1,7 @@
-package com.example.comusenias.data.repositories
+package com.example.comusenias.data.repositories.firebase
 
 import com.example.comusenias.constants.FirebaseConstants
-import com.example.comusenias.domain.models.Response
+import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.models.letter.LetterModel
 import com.example.comusenias.domain.repositories.LetterImageRepository
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING

@@ -1,12 +1,11 @@
 package com.example.comusenias.presentation.screen.gameAction
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
-import com.example.comusenias.domain.models.Response
+import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.models.game.SubLevelModel
 import com.example.comusenias.presentation.component.defaults.app.CircularProgressBar
 import com.example.comusenias.presentation.component.defaults.app.ShowRetrySnackBar
@@ -14,7 +13,6 @@ import com.example.comusenias.presentation.component.gameAction.GameAction
 import com.example.comusenias.presentation.component.gameAction.MatchLetter
 import com.example.comusenias.presentation.component.home.ContentProgressBar
 import com.example.comusenias.presentation.component.home.getLevelViewModel
-import com.example.comusenias.presentation.extensions.validation.getChoicesSelected
 import com.example.comusenias.presentation.extensions.validation.selectedOption
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.CONTINUE
@@ -22,7 +20,6 @@ import com.example.comusenias.presentation.ui.theme.ERROR_RETRY_LEVEL
 import com.example.comusenias.presentation.ui.theme.STEP_TWO
 import com.example.comusenias.presentation.ui.theme.WHAT_LETTER_IS
 import com.example.comusenias.presentation.view_model.LevelViewModel
-
 
 @Composable
 fun ChoseTheLetterPlayScreen(
@@ -92,7 +89,6 @@ private fun ShowScreenChoseTheLetter(
                         )
                 )
                 selectedOption(it.name, getLevelViewModel)
-                Log.d("TAG", "ShowScreenChoseTheLetter: ${getChoicesSelected(getLevelViewModel)}")
             },
         ) {
             MatchLetter(

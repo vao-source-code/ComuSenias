@@ -1,8 +1,8 @@
 package com.example.comusenias.presentation.view_model
 
-import com.example.comusenias.domain.models.Response
+import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.models.users.UserModel
-import com.example.comusenias.domain.use_cases.auth.AuthFactoryUseCases
+import com.example.comusenias.domain.models.auth.AuthFactory
 import com.example.comusenias.domain.use_cases.users.UsersFactoryUseCases
 import com.google.firebase.auth.FirebaseUser
 import io.mockk.MockKAnnotations
@@ -22,7 +22,7 @@ import org.mockito.Mock
 class RegisterViewModelTest {
 
     @Mock
-    private lateinit var authUseCases: AuthFactoryUseCases
+    private lateinit var authUseCases: AuthFactory
 
     @Mock
     private lateinit var usersUseCase: UsersFactoryUseCases

@@ -46,7 +46,7 @@ fun CardGame(
     level: String,
     subLevel: SubLevelModel,
     navController: NavController,
-    status : StatusGame
+    status: StatusGame
 ) {
     Card(
         modifier = Modifier

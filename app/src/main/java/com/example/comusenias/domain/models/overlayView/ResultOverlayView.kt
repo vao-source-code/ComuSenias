@@ -1,4 +1,4 @@
-package com.example.comusenias.domain.models
+package com.example.comusenias.domain.models.overlayView
 
 import com.google.mediapipe.tasks.vision.gesturerecognizer.GestureRecognizerResult
 

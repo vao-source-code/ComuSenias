@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.comusenias.constants.TestTag
 import com.example.comusenias.presentation.component.home.getLevelViewModel
-import com.example.comusenias.presentation.extensions.BorderStyleGames
+import com.example.comusenias.presentation.extensions.borderStyle.BorderStyleGames
 import com.example.comusenias.presentation.screen.gameAction.Sign
 import com.example.comusenias.presentation.ui.theme.IMAGE_SIGN
 import com.example.comusenias.presentation.ui.theme.SIZE1
