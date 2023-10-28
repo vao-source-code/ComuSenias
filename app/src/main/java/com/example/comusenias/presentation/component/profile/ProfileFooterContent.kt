@@ -12,7 +12,7 @@ import com.example.comusenias.presentation.ui.theme.UPDATE_DATA
 import com.example.comusenias.presentation.ui.theme.size20
 
 @Composable
-fun ProfileFooterContent(onClickButton: () -> Unit?) {
+fun ProfileFooterContent(onClickChangeProfile: () -> Unit?) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -23,8 +23,12 @@ fun ProfileFooterContent(onClickButton: () -> Unit?) {
             titleButton = UPDATE_DATA,
             icon = null,
             onClickButton = {
-                onClickButton()
+                onClickChangeProfile()
             }
         )
+
+        ButtonApp(titleButton = UPDATE_DATA,
+            icon = null,
+            onClickButton = {})
     }
 }

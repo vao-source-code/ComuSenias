@@ -41,7 +41,7 @@ fun ProfileScreen(
                     )
                 }
                 ProfileFooterContent(
-                    onClickButton = onClick
+                    onClickChangeProfile = onClick
                 )
             }
         }

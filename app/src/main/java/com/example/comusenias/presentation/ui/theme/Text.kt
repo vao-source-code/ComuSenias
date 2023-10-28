@@ -126,4 +126,7 @@ const val CHANGE_PROFILE_CONFIRM_PASSWORD = "Confirmar Contraseña"
 /*-----------------PROFILE CONTENT -----------------*/
 const val PROFILE_USER = "Nombre del Usuario"
 const val PROFILE_EMAIL = "Correo electrónico"
+const val PROFILE_NAME_SURNAME = "Nombre y Apellido"
+const val PROFILE_BIRTHDATE = "Fecha Nacimiento"
+
 

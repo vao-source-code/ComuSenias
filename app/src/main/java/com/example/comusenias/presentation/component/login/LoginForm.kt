@@ -34,9 +34,6 @@ fun LoginForm(
         viewModel = viewModel
     )
 
-    ResponsePasswordReset(
-        response = viewModel.loginReset,
-    )
 
     Column(
         modifier = Modifier
@@ -59,7 +56,7 @@ fun LoginForm(
             label = PASSWORD,
             errorMsg = viewModel.errorPassword
         )
-        RememberMeAndForgetMyPass(viewModel = viewModel)
+        RememberMeAndForgetMyPass(viewModel = viewModel, navController = navController)
         Spacer(modifier = Modifier.height(size10.dp))
         ButtonApp(
             titleButton = LOGIN,

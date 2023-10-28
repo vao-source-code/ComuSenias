@@ -12,7 +12,9 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.comusenias.constants.TestTag
+import com.example.comusenias.presentation.navigation.AuthScreen
 import com.example.comusenias.presentation.ui.theme.forgotPassword
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
 import com.example.comusenias.presentation.ui.theme.size10
@@ -20,14 +22,14 @@ import com.example.comusenias.presentation.ui.theme.size14
 import com.example.comusenias.presentation.view_model.LoginViewModel
 
 @Composable
-fun RememberMeAndForgetMyPass(viewModel: LoginViewModel) {
+fun RememberMeAndForgetMyPass(viewModel: LoginViewModel, navController: NavHostController) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = size10.dp),
         horizontalArrangement = Arrangement.End
     ) {
-        ForgetMyPass { viewModel.resetPassword() }
+        ForgetMyPass { navController.navigate(AuthScreen.ResetPasswordScreen.route) }
     }
 }
 
