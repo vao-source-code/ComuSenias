@@ -5,13 +5,15 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
-import com.example.comusenias.domain.models.Response
+import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.models.game.SubLevelModel
 import com.example.comusenias.presentation.component.defaults.app.CircularProgressBar
 import com.example.comusenias.presentation.component.defaults.app.ShowRetrySnackBar
 import com.example.comusenias.presentation.component.gameAction.GameAction
 import com.example.comusenias.presentation.component.gameAction.MatchLetter
 import com.example.comusenias.presentation.component.home.ContentProgressBar
+import com.example.comusenias.presentation.component.home.getLevelViewModel
+import com.example.comusenias.presentation.extensions.validation.selectedOption
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.CONTINUE
 import com.example.comusenias.presentation.ui.theme.ERROR_RETRY_LEVEL
@@ -26,10 +28,12 @@ fun ChoseTheLetterPlayScreen(
     subLevel: String,
     levelViewModel: LevelViewModel
 ) {
-    val subLevelViewModel = levelViewModel.getSubLevelById(level, subLevel)
+    getLevelViewModel.levelSelected = level
+    getLevelViewModel.subLevelModel = subLevel
+    val subLevelViewModel = getLevelViewModel.getSubLevelById(level, subLevel)
     val isButtonEnabled = remember { mutableStateOf(false) }
     val onMatchResult: (Boolean) -> Unit = {
-        isButtonEnabled.value = true
+        isButtonEnabled.value = it
     }
 
     when (levelViewModel.levelsResponse) {
@@ -44,7 +48,13 @@ fun ChoseTheLetterPlayScreen(
         }
 
         is Response.Success -> {
-            ShowScreenChoseTheLetter(subLevelViewModel, isButtonEnabled, navController, level, onMatchResult)
+            ShowScreenChoseTheLetter(
+                subLevelViewModel,
+                isButtonEnabled,
+                navController,
+                level,
+                onMatchResult,
+            )
         }
 
         else -> {
@@ -59,7 +69,7 @@ private fun ShowScreenChoseTheLetter(
     isButtonEnabled: MutableState<Boolean>,
     navController: NavHostController,
     level: String,
-    onMatchResult: (Boolean) -> Unit
+    onMatchResult: (Boolean) -> Unit,
 ) {
     subLevel?.let {
         GameAction(
@@ -78,12 +88,13 @@ private fun ShowScreenChoseTheLetter(
                             subLevel.name
                         )
                 )
+                selectedOption(it.name, getLevelViewModel)
             },
         ) {
             MatchLetter(
                 singLetter = it.name,
                 randomLetter = it.randomLetter,
-                responseMatchLetter = onMatchResult
+                onMatchResult = onMatchResult,
             )
         }
     }

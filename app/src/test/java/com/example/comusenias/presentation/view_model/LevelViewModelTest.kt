@@ -1,7 +1,7 @@
 package com.example.comusenias.presentation.view_model
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.comusenias.domain.models.Response
+import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.models.game.LevelModel
 import com.example.comusenias.domain.models.game.SubLevelModel
 import com.example.comusenias.domain.use_cases.level.LevelFactory

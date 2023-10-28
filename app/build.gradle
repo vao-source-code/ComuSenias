@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'com.google.dagger.hilt.android'
     id 'com.google.gms.google-services'
+    id 'de.undercouch.download'
 }
 
 android {
@@ -20,6 +21,10 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true
+        }
+
+        ndk {
+            abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
         }
     }
 
@@ -50,7 +55,29 @@ android {
     testOptions {
         unitTests.returnDefaultValues = true
     }
+
+    tasks.matching { it.name.startsWith("mergeDebugAssets") }.configureEach {
+        dependsOn(":app:downloadAndUnzipFile")
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            // Define extra properties inside the buildTypes block
+            project.ext.ASSET_DIR = projectDir.toString() + '/src/main/assets'
+            project.ext.TEST_ASSETS_DIR = projectDir.toString() + '/src/androidTest/assets'
+        }
+    }
+    lintOptions {
+        checkReleaseBuilds false
+    }
 }
+apply from: 'download_task.gradle'
+// Define extra properties outside the dependencies block
+project.ext.ASSET_DIR = projectDir.toString() + '/src/main/assets'
+project.ext.TEST_ASSETS_DIR = projectDir.toString() + '/src/androidTest/assets'
+
 
 dependencies {
     testImplementation 'junit:junit:'
@@ -122,8 +149,24 @@ dependencies {
     implementation libs.accompanist
     implementation libs.commons
 
-    implementation 'com.google.firebase:firebase-storage:20.0.0'
+    implementation libs.room.runtime
+    kapt libs.room.compiler
+    implementation libs.room.ktx
 
+    implementation 'com.google.firebase:firebase-storage:20.0.0'
+    testImplementation "org.mockito:mockito-inline:3.11.2"
+
+    implementation libs.camerax.core
+    implementation libs.camera.camera2
+    implementation libs.camera.lifecycle
+    implementation libs.camera.view
+    implementation libs.camera.video
+
+    // Mediapipe Library
+    implementation libs.mediapipe.task
+
+    //Datastore
+    implementation libs.datastore.preferences
 }
 kapt {
     correctErrorTypes true

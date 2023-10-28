@@ -1,6 +1,6 @@
 package com.example.comusenias.presentation.view_model
 
-import com.example.comusenias.domain.use_cases.auth.AuthFactoryUseCases
+import com.example.comusenias.domain.models.auth.AuthFactory
 import com.example.comusenias.domain.use_cases.users.UsersFactoryUseCases
 import io.mockk.MockKAnnotations
 import io.mockk.mockk
@@ -13,7 +13,7 @@ import org.mockito.Mock
 class LoginViewModelTest {
 
     @Mock
-    private lateinit var authUseCases: AuthFactoryUseCases
+    private lateinit var authUseCases: AuthFactory
 
     @Mock
     private lateinit var usersUseCase: UsersFactoryUseCases

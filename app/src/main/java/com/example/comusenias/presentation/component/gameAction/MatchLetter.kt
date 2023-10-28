@@ -1,138 +1,125 @@
 package com.example.comusenias.presentation.component.gameAction
 
-import androidx.compose.animation.animateColorAsState
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.comusenias.constants.TestTag
+import com.example.comusenias.presentation.component.home.getLevelViewModel
+import com.example.comusenias.presentation.extensions.borderStyle.BorderStyleGames
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
+import com.example.comusenias.presentation.ui.theme.SIZE1
 import com.example.comusenias.presentation.ui.theme.SIZE12
-import com.example.comusenias.presentation.ui.theme.SIZE2
+import com.example.comusenias.presentation.ui.theme.SIZE120
+import com.example.comusenias.presentation.ui.theme.SIZE150
 import com.example.comusenias.presentation.ui.theme.SIZE50
-import com.example.comusenias.presentation.ui.theme.SIZE73
-import com.example.comusenias.presentation.ui.theme.SIZE84
-import com.example.comusenias.presentation.ui.theme.borderButtonLetter
-import com.example.comusenias.presentation.ui.theme.greenColorApp
-import com.example.comusenias.presentation.ui.theme.SIZE30
-
-enum class StatusSign {
-    NORMAL,
-    CORRECT,
-    ERROR
-}
+import com.example.comusenias.presentation.ui.theme.SIZE15
 
 @Composable
 fun MatchLetter(
     singLetter: String,
     randomLetter: String,
-    responseMatchLetter: (Boolean) -> Unit
+    onMatchResult: (Boolean) -> Unit,
 ) {
-    var isEnable by remember { mutableStateOf(true) }
-    val isEnableButtonLetter = remember { mutableStateOf(isEnable) }
-
     val letters = listOf(singLetter, randomLetter)
-    val randomLetters = letters.shuffled()
+    val randomLetters = remember { letters.shuffled() }
+    val selectedButtonIndex = remember { mutableStateOf(-1) }
 
-    Row(
+    LazyRow(
         modifier = Modifier
-            .padding(top = SIZE30.dp),
-        horizontalArrangement = Arrangement.spacedBy(SIZE30.dp)
+            .fillMaxSize()
+            .padding(SIZE12.dp),
+        horizontalArrangement = Arrangement.Center
     ) {
-        randomLetters.forEach { letter ->
+        itemsIndexed(randomLetters) { index, text ->
             ButtonLetter(
-                letter = letter,
-                letterCompare = singLetter,
-                isEnable = isEnableButtonLetter.value
-            ) {
-                responseMatchLetter(it)
-                isEnableButtonLetter.value = false
+                text = text,
+                index = index,
+                selectedButtonIndex = selectedButtonIndex,
+            )
+            if (index < letters.size - SIZE1) {
+                Spacer(Modifier.width(SIZE15.dp))
             }
         }
     }
+    getSelectedLetter(selectedButtonIndex, letters)
+    onMatchResult(validateButton(selectedButtonIndex))
 }
 
 @Composable
 fun ButtonLetter(
-    letter: String,
-    letterCompare: String,
-    isEnable: Boolean ,
-    matchLetter: (Boolean) -> Unit
+    text: String,
+    index: Int,
+    selectedButtonIndex: MutableState<Int>,
 ) {
-    val statusLetter by remember { mutableStateOf(letter) }
-    var status by remember { mutableStateOf(StatusSign.NORMAL) }
-
-    val borderColor by animateColorAsState(
-        when (status) {
-            StatusSign.NORMAL -> borderButtonLetter
-            StatusSign.CORRECT -> greenColorApp
-            StatusSign.ERROR -> Color.Red
-        }, label = EMPTY_STRING
-    )
-    val backgroundColor by animateColorAsState(
-        when (status) {
-            StatusSign.NORMAL -> Color.White
-            StatusSign.CORRECT -> greenColorApp
-            StatusSign.ERROR -> Color.Red
-        }, label = EMPTY_STRING
-    )
-    val letterColor by animateColorAsState(
-        if (status == StatusSign.NORMAL) Color.Black else Color.White, label = EMPTY_STRING
-    )
-
+    val borderStyleGames = BorderStyleGames(selectedButtonIndex, index)
     Box(
         modifier = Modifier
+            .width(SIZE120.dp)
+            .height(SIZE150.dp)
             .border(
-                width = SIZE2.dp,
-                color = borderColor,
+                width = borderStyleGames.getBorderWidth(),
+                color = borderStyleGames.getBorderColor(),
                 shape = RoundedCornerShape(SIZE12.dp)
             )
-            .background(
-                backgroundColor,
-                shape = RoundedCornerShape(SIZE12.dp)
-            )
-            .width(SIZE84.dp)
-            .height(SIZE73.dp)
             .clickable {
-                if (isEnable) {
-                    status = if (letter.equals(letterCompare, ignoreCase = true)) {
-                        matchLetter(true)
-                        StatusSign.CORRECT
-                    } else {
-                        matchLetter(false)
-                        StatusSign.ERROR
-                    }
-                }
+                selectedButtonIndex.value = index
+                getLevelViewModel.onOptionSelected = text
             }
+            .testTag(TestTag.TAG_MATCH_SIGN + text)
     ) {
         Text(
-            modifier = Modifier.fillMaxWidth(),
-            text = statusLetter.uppercase(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.Center),
+            text = text.uppercase(),
             style = TextStyle(
-                fontSize =  SIZE50.sp,
+                fontSize = SIZE50.sp,
                 fontWeight = FontWeight.SemiBold,
-                color = letterColor,
                 textAlign = TextAlign.Center
             )
         )
     }
 }
+
+/**
+ * Devuelve la letra seleccionada basada en el índice del botón seleccionado.
+ *
+ * @param selectedButtonIndex Índice del botón seleccionado.
+ * @param letters Lista de letras.
+ * @return La letra en el índice seleccionado, o una cadena vacía si no se ha seleccionado ningún botón.
+ */
+@Composable
+fun getSelectedLetter(selectedButtonIndex: MutableState<Int>, letters: List<String>): String =
+    if (selectedButtonIndex.value != -1) letters[selectedButtonIndex.value] else EMPTY_STRING
+
+/**
+ * Valida si se ha seleccionado algún botón.
+ *
+ * @param selectedButtonIndex Índice del botón seleccionado.
+ * @return Verdadero si se ha seleccionado algún botón, falso en caso contrario.
+ */
+fun validateButton(selectedButtonIndex: MutableState<Int>): Boolean =
+    selectedButtonIndex.value != -1

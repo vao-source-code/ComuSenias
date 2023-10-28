@@ -1,6 +1,5 @@
 package com.example.comusenias.presentation.view_model
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -8,12 +7,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.comusenias.domain.library.LibraryPassword
 import com.example.comusenias.domain.library.LibraryString
-import com.example.comusenias.domain.models.Response
+import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.models.users.UserModel
 import com.example.comusenias.domain.models.state.RegisterState
-import com.example.comusenias.domain.use_cases.auth.AuthFactoryUseCases
+import com.example.comusenias.domain.models.auth.AuthFactory
 import com.example.comusenias.domain.use_cases.users.UsersFactoryUseCases
-import com.example.comusenias.presentation.ui.theme.emptyString
+import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.invalidEmail
 import com.example.comusenias.presentation.ui.theme.passwordDoNotMatch
 import com.example.comusenias.presentation.ui.theme.restrictionNameUserAccount
@@ -25,7 +24,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
-    private val authUseCases: AuthFactoryUseCases, private val usersUseCase: UsersFactoryUseCases
+    private val authUseCases: AuthFactory, private val usersUseCase: UsersFactoryUseCases
 ) : ViewModel() {
     var registerResponse by mutableStateOf<Response<FirebaseUser>?>(null)
         private set
@@ -54,38 +53,38 @@ class RegisterViewModel @Inject constructor(
             userName = state.userName, email = state.email, password = state.password
         )
         register(user)
-
     }
 
     private fun enabledRegisterButton() {
-        isRegisterEnabled = isUserNameValid && isEmailValid && isPasswordValid && isConfirmPasswordValid
+        isRegisterEnabled =
+            isUserNameValid && isEmailValid && isPasswordValid && isConfirmPasswordValid
     }
 
     fun validateUserName() {
         val isValid = LibraryString.validUserName(state.userName)
         isUserNameValid = isValid
-        errorUserName = if (isValid) emptyString else restrictionNameUserAccount
+        errorUserName = if (isValid) EMPTY_STRING else restrictionNameUserAccount
         enabledRegisterButton()
     }
 
     fun validateEmail() {
         val isValid = LibraryString.validEmail(state.email)
         isEmailValid = isValid
-        errorEmail = if (isValid) emptyString else invalidEmail
+        errorEmail = if (isValid) EMPTY_STRING else invalidEmail
         enabledRegisterButton()
     }
 
     fun validatePassword() {
         val isValid = LibraryString.validPassword(state.password)
         isPasswordValid = isValid
-        errorPassword = if (isValid) emptyString else restrictionPasswordUserAccount
+        errorPassword = if (isValid) EMPTY_STRING else restrictionPasswordUserAccount
         enabledRegisterButton()
     }
 
     fun validateConfirmPassword() {
         val isValid = state.password == state.confirmPassword
         isConfirmPasswordValid = isValid
-        errorConfirmPassword = if (isValid) emptyString else passwordDoNotMatch
+        errorConfirmPassword = if (isValid) EMPTY_STRING else passwordDoNotMatch
         enabledRegisterButton()
     }
 

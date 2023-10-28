@@ -6,11 +6,10 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.comusenias.domain.library.LibraryString
-import com.example.comusenias.domain.models.Response
+import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.models.state.LoginState
-import com.example.comusenias.domain.use_cases.auth.AuthFactoryUseCases
+import com.example.comusenias.domain.models.auth.AuthFactory
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
-import com.example.comusenias.presentation.ui.theme.emptyString
 import com.example.comusenias.presentation.ui.theme.invalidEmail
 import com.example.comusenias.presentation.ui.theme.invalidPassword
 import com.google.firebase.auth.FirebaseUser
@@ -20,38 +19,38 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(private val authUseCases: AuthFactoryUseCases) :
+class LoginViewModel @Inject constructor(private val authUseCases: AuthFactory) :
     ViewModel() {
 
     var loginResponse by mutableStateOf<Response<FirebaseUser>?>(null)
     var state by mutableStateOf(LoginState())
         private set
-    var isEmailValid: Boolean by mutableStateOf(false)
+    private var isEmailValid: Boolean by mutableStateOf(false)
     var errorEmail: String by mutableStateOf(EMPTY_STRING)
-    var isPasswordValid: Boolean by mutableStateOf(false)
+    private var isPasswordValid: Boolean by mutableStateOf(false)
     var errorPassword: String by mutableStateOf(EMPTY_STRING)
     var isLoginEnabled = false
-    val currentUser = authUseCases.getCurrentUserUseCase()
+    private val currentUser = authUseCases.getCurrentUserUseCase()
 
     init {
         currentUser?.let { loginResponse = Response.Success(it) }
     }
 
-    fun enabledLoginButton() {
+    private fun enabledLoginButton() {
         isLoginEnabled = isEmailValid && isPasswordValid
     }
 
     fun validateEmail() {
         val isValid = LibraryString.validEmail(state.email)
         isEmailValid = isValid
-        errorEmail = if (isValid) emptyString else invalidEmail
+        errorEmail = if (isValid) EMPTY_STRING else invalidEmail
         enabledLoginButton()
     }
 
     fun validatePassword() {
         val isValid = LibraryString.validPassword(state.password)
         isPasswordValid = isValid
-        errorPassword = if (isValid) emptyString else invalidPassword
+        errorPassword = if (isValid) EMPTY_STRING else invalidPassword
         enabledLoginButton()
     }
 

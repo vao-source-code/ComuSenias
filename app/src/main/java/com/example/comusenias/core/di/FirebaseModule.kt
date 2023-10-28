@@ -5,15 +5,15 @@ import com.example.comusenias.constants.FirebaseConstants.LETTERS_COLLECTION
 import com.example.comusenias.constants.FirebaseConstants.LEVEL_COLLECTION
 import com.example.comusenias.constants.FirebaseConstants.SUB_LEVEL_COLLECTION
 import com.example.comusenias.constants.FirebaseConstants.USERS_COLLECTION
-import com.example.comusenias.data.repositories.AuthRepositoryImpl
-import com.example.comusenias.data.repositories.LetterImageRepositoryImpl
-import com.example.comusenias.data.repositories.LevelRepositoryImpl
-import com.example.comusenias.data.repositories.UsersRepositoryImpl
+import com.example.comusenias.data.repositories.firebase.AuthRepositoryImpl
+import com.example.comusenias.data.repositories.firebase.LetterImageRepositoryImpl
+import com.example.comusenias.data.repositories.firebase.LevelRepositoryImpl
+import com.example.comusenias.data.repositories.firebase.UsersRepositoryImpl
 import com.example.comusenias.domain.repositories.AuthRepository
 import com.example.comusenias.domain.repositories.LetterImageRepository
 import com.example.comusenias.domain.repositories.LevelRepository
 import com.example.comusenias.domain.repositories.UsersRepository
-import com.example.comusenias.domain.use_cases.auth.AuthFactoryUseCases
+import com.example.comusenias.domain.models.auth.AuthFactory
 import com.example.comusenias.domain.use_cases.auth.GetCurrentUserUseCase
 import com.example.comusenias.domain.use_cases.auth.LoginUseCase
 import com.example.comusenias.domain.use_cases.auth.LogoutUseCase
@@ -57,7 +57,7 @@ object FirebaseModule {
 
     @Provides
     fun providerAuthUseCases(authRepository: AuthRepository) =
-        AuthFactoryUseCases(
+        AuthFactory(
             getCurrentUserUseCase = GetCurrentUserUseCase(authRepository),
             loginUseCase = LoginUseCase(authRepository),
             logoutUseCase = LogoutUseCase(authRepository),

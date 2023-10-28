@@ -35,7 +35,7 @@ import com.example.comusenias.presentation.ui.theme.SIZE28
 import com.example.comusenias.presentation.ui.theme.SIZE36
 import com.example.comusenias.presentation.ui.theme.SIZE90
 import com.example.comusenias.presentation.ui.theme.blackColorApp
-import com.example.comusenias.presentation.ui.theme.size15
+import com.example.comusenias.presentation.ui.theme.SIZE15
 
 @Composable
 fun CardGame(
@@ -45,7 +45,8 @@ fun CardGame(
     icon: State<Int>,
     level: String,
     subLevel: SubLevelModel,
-    navController: NavController
+    navController: NavController,
+    status: StatusGame
 ) {
     Card(
         modifier = Modifier
@@ -55,9 +56,11 @@ fun CardGame(
     ) {
         Row(
             modifier = Modifier
-                .clickable { navigateToLearSign(navController, level, subLevel) }
+                .clickable(enabled = status != StatusGame.BLOCKED) {
+                    navigateToLearSign(navController, level, subLevel)
+                }
                 .fillMaxSize()
-                .padding(start = size15.dp, end = SIZE27.dp),
+                .padding(start = SIZE15.dp, end = SIZE27.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(SIZE28.dp)
         ) {

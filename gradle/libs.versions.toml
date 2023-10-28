@@ -4,6 +4,7 @@ constraintlayoutCompose = "1.0.1"
 core = "1.10.1"
 activityCompose = "1.7.2"
 composeBom = "2022.10.00"
+datastorePreferences = "1.0.0"
 lottieCompose = "6.1.0"
 mockK = "1.12.0"
 mockito = "4.2.0"
@@ -34,12 +35,16 @@ accompanist = "0.30.0"
 firebaseStorage = "24.7.1"
 commons = "2.8.0"
 kotlinXCoroutinesTest = "1.7.3"
+room = "2.5.0"
+camerax_version = "1.2.1"
+mediaPipe = "0.10.0"
 
 [libraries]
 accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanistPager" }
 accompanist-pager-indicators = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanistPager" }
 constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayoutCompose" }
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "core" }
+datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
 kotlinBom = { module = "org.jetbrains.kotlin:kotlin-bom", version.ref = "kotlinBom" }
 activityCompose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
 composeBom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
@@ -80,8 +85,19 @@ accompanist = { module = "com.google.accompanist:accompanist-permissions", versi
 firebaseStorage = { module = "com.google.firebase:firebase-firestore-ktx", version.ref = "firebaseStorage" }
 commons = { module = "commons-io:commons-io", version.ref = "commons" }
 kotlinXCoroutinesTest = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinXCoroutinesTest" }
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+camerax_core = {module = "androidx.camera:camera-core" , version.ref = "camerax_version" }
+camera-camera2 = {module = "androidx.camera:camera-camera2" , version.ref = "camerax_version" }
+camera-lifecycle = {module = "androidx.camera:camera-lifecycle",version.ref = "camerax_version"}
+camera-video = {module = "androidx.camera:camera-video",version.ref = "camerax_version"}
+camera-view = {module = "androidx.camera:camera-view",version.ref = "camerax_version"}
+camera-mlkit-vision = {module = "androidx.camera:camera-mlkit-vision",version.ref = "camerax_version"}
+camera-extensions = {module = "androidx.camera:camera-extensions",version.ref = "camerax_version"}
 play-services-mlkit-text-recognition-common = { group = "com.google.android.gms", name = "play-services-mlkit-text-recognition-common", version = "19.0.0" }
 ui-text-android = { group = "androidx.compose.ui", name = "ui-text-android", version = "1.5.3" }
+mediapipe-task = { group = "com.google.mediapipe", name = "tasks-vision", version = "0.10.0" }
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "androidApplication" }
