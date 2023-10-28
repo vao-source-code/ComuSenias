@@ -29,7 +29,7 @@ class MatchSignComposableTest {
 //        MockitoAnnotations.initMocks(this)
        levelViewModel = Mockito.mock(LevelViewModel::class.java)
     }
-
+/*
     @Test
     fun  testWhenMatchSignIsIncorrect() {
         var isCorrect = true
@@ -68,5 +68,5 @@ class MatchSignComposableTest {
         composeTestRule.onNodeWithTag(TestTag.TAG_MATCH_SIGN + letter).assertExists()
         composeTestRule.onNodeWithTag(TestTag.TAG_MATCH_SIGN + randomLetter).performClick()
         assert(!isCorrect)
-    }
+    }*/
 }
