@@ -17,7 +17,7 @@ import com.example.comusenias.constants.TestTag
 import com.example.comusenias.presentation.navigation.AuthScreen
 import com.example.comusenias.presentation.ui.theme.forgotPassword
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
-import com.example.comusenias.presentation.ui.theme.size10
+import com.example.comusenias.presentation.ui.theme.SIZE10
 import com.example.comusenias.presentation.ui.theme.size14
 import com.example.comusenias.presentation.view_model.LoginViewModel
 
@@ -26,7 +26,7 @@ fun RememberMeAndForgetMyPass(viewModel: LoginViewModel, navController: NavHostC
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = size10.dp),
+            .padding(horizontal = SIZE10.dp),
         horizontalArrangement = Arrangement.End
     ) {
         ForgetMyPass { navController.navigate(AuthScreen.ResetPasswordScreen.route) }

@@ -11,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -26,7 +25,7 @@ import com.example.comusenias.presentation.ui.theme.EMAIL_TEXT
 import com.example.comusenias.presentation.ui.theme.PASSWORD
 import com.example.comusenias.presentation.ui.theme.REGISTER
 import com.example.comusenias.presentation.ui.theme.SIZE2
-import com.example.comusenias.presentation.ui.theme.size10
+import com.example.comusenias.presentation.ui.theme.SIZE10
 import com.example.comusenias.presentation.view_model.RegisterViewModel
 
 @Composable
@@ -72,7 +71,7 @@ fun RegisterForm(
             currentRoute.value = if (isCheckedValue) specilaistFormScreen else childFormScreen
             viewModel.onSpecialistRoleInput(isCheckedValue)
         }
-        Spacer(modifier = Modifier.height(size10.dp))
+        Spacer(modifier = Modifier.height(SIZE10.dp))
         ButtonApp(
             titleButton = REGISTER,
             onClickButton = {

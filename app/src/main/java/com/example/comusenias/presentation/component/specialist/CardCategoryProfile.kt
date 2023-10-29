@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.sp
 import com.example.comusenias.presentation.ui.theme.CIRCLE_IMAGE
 import com.example.comusenias.presentation.ui.theme.SIZE100
 import com.example.comusenias.presentation.ui.theme.SIZE3
-import com.example.comusenias.presentation.ui.theme.size10
+import com.example.comusenias.presentation.ui.theme.SIZE10
 import com.example.comusenias.presentation.ui.theme.size150
 import com.example.comusenias.presentation.ui.theme.size20
 import com.example.comusenias.presentation.ui.theme.size24
@@ -45,17 +45,17 @@ fun CardHomeSpecialist(image: Int, title: String, subtitle: String, onClickCard:
             }
             .shadow(
                 elevation = SIZE3.dp,
-                shape = RoundedCornerShape(size10.dp),
+                shape = RoundedCornerShape(SIZE10.dp),
                 spotColor = Color(0x33000000),
                 ambientColor = Color(0x33000000)
             )
             .shadow(
                 elevation = SIZE3.dp,
-                shape = RoundedCornerShape(size10.dp),
+                shape = RoundedCornerShape(SIZE10.dp),
                 spotColor = Color(0x21000000),
                 ambientColor = Color(0x21000000)
             )
-            .background(Color.White, shape = RoundedCornerShape(size10.dp))
+            .background(Color.White, shape = RoundedCornerShape(SIZE10.dp))
     ) {
         Row(
             modifier = Modifier

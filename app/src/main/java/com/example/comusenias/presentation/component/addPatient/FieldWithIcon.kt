@@ -11,16 +11,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
-import com.example.comusenias.presentation.ui.theme.ICON
 import com.example.comusenias.presentation.ui.theme.SIZE12
 import com.example.comusenias.presentation.ui.theme.SIZE24
+import com.example.comusenias.presentation.ui.theme.iconApp
 
 @Composable
 fun FieldWithIcon(icon: Painter, text: String) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         Icon(
             painter = icon,
-            contentDescription = ICON,
+            contentDescription = iconApp,
             modifier = Modifier.size(SIZE24.dp)
         )
         Spacer(modifier = Modifier.width(SIZE12.dp))

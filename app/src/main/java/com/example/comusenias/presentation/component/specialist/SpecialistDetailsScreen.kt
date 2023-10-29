@@ -30,16 +30,22 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.comusenias.R
 import com.example.comusenias.presentation.ui.theme.IMAGE_AVATAR
+import com.example.comusenias.presentation.ui.theme.IMAGE_LEFT
+import com.example.comusenias.presentation.ui.theme.IMAGE_RIGHT
 import com.example.comusenias.presentation.ui.theme.LETTERS
 import com.example.comusenias.presentation.ui.theme.NAME_KID
 import com.example.comusenias.presentation.ui.theme.NUMBERS
 import com.example.comusenias.presentation.ui.theme.SIZE140
+import com.example.comusenias.presentation.ui.theme.SIZE3
 import com.example.comusenias.presentation.ui.theme.VOWELS
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
-import com.example.comusenias.presentation.ui.theme.size10
+import com.example.comusenias.presentation.ui.theme.SIZE10
+import com.example.comusenias.presentation.ui.theme.SIZE16
+import com.example.comusenias.presentation.ui.theme.SIZE20
 import com.example.comusenias.presentation.ui.theme.size20
-import com.example.comusenias.presentation.ui.theme.SIZE3
 import com.example.comusenias.presentation.ui.theme.SIZE30
+import com.example.comusenias.presentation.ui.theme.SIZE5
+import com.example.comusenias.presentation.ui.theme.SIZE70
 import com.example.comusenias.presentation.ui.theme.size40
 
 @Composable
@@ -54,7 +60,7 @@ fun SpecialistDetailsScreen(modifier: Modifier, navController: NavHostController
         ) {
             Text(
                 text = NAME_KID,
-                modifier = Modifier.padding(size10.dp),
+                modifier = Modifier.padding(SIZE10.dp),
                 color = Color.White,
                 fontSize = SIZE30.sp
             )
@@ -73,7 +79,7 @@ fun SpecialistDetailsScreen(modifier: Modifier, navController: NavHostController
             }
         }
 
-        Spacer(modifier = Modifier.size(size10.dp))
+        Spacer(modifier = Modifier.size(SIZE10.dp))
         Divider(
             modifier = Modifier
                 .fillMaxWidth()
@@ -81,10 +87,10 @@ fun SpecialistDetailsScreen(modifier: Modifier, navController: NavHostController
             color = Color.Gray
         )
 
-        TextDetails(icono = R.drawable.icon_calendar, text = "6 años")
-        TextDetails(icono = R.drawable.icon_call, text = "1122334545")
-        TextDetails(icono = R.drawable.icon_email, text = "test@gmail.com")
-        TextDetails(icono = R.drawable.icon_map, text = "Ubicacion")
+        textDetails(icon = R.drawable.icon_calendar, text = "6 años")
+        textDetails(icon = R.drawable.icon_call, text = "1122334545")
+        textDetails(icon = R.drawable.icon_email, text = "test@gmail.com")
+        textDetails(icon = R.drawable.icon_map, text = "Ubicacion")
 
         Divider(
             modifier = Modifier
@@ -92,7 +98,7 @@ fun SpecialistDetailsScreen(modifier: Modifier, navController: NavHostController
                 .size(SIZE3.dp),
             color = Color.Gray
         )
-        Spacer(modifier = Modifier.size(size10.dp))
+        Spacer(modifier = Modifier.size(SIZE10.dp))
 
         CardWithTwoImages(
             imageLeft = R.drawable.details,
@@ -115,23 +121,21 @@ fun SpecialistDetailsScreen(modifier: Modifier, navController: NavHostController
 }
 
 @Composable
-fun TextDetails(icono: Int, text: String) {
+fun textDetails(icon: Int, text: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(10.dp)
+            .padding(SIZE10.dp)
     ) {
-        // Icono.
         Icon(
-            painter = painterResource(id = icono),
+            painter = painterResource(id = icon),
             contentDescription = "Icono de inicio"
         )
 
-        // Texto.
         Text(
             text = text,
-            fontSize = 20.sp,
-            modifier = Modifier.padding(start = 10.dp)
+            fontSize = SIZE20.sp,
+            modifier = Modifier.padding(start = SIZE10.dp)
         )
     }
 }
@@ -147,14 +151,14 @@ fun CardWithTwoImages(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(10.dp)
+            .padding(SIZE10.dp)
             .shadow(
                 elevation = SIZE3.dp,
-                shape = RoundedCornerShape(size10.dp),
+                shape = RoundedCornerShape(SIZE10.dp),
                 spotColor = Color(0x21000000),
                 ambientColor = Color(0x21000000)
             )
-            .background(Color.White, RoundedCornerShape(size10.dp)),
+            .background(Color.White, RoundedCornerShape(SIZE10.dp)),
     ) {
         Row(
             modifier = Modifier
@@ -167,23 +171,23 @@ fun CardWithTwoImages(
                 modifier = Modifier
                     .size(70.dp)
                     .padding(5.dp),
-                contentDescription = "image left"
+                contentDescription = IMAGE_LEFT
             )
 
             Text(
                 text = text,
                 modifier = Modifier
-                    .padding(16.dp),
-                fontSize = 20.sp
+                    .padding(SIZE16.dp),
+                fontSize = SIZE10.sp
             )
             Spacer(modifier = Modifier.weight(1f))
 
             Image(
                 painter = painterResource(id = imageRight),
                 modifier = Modifier
-                    .size(70.dp)
-                    .padding(5.dp),
-                contentDescription = "image right"
+                    .size(SIZE70.dp)
+                    .padding(SIZE5.dp),
+                contentDescription = IMAGE_RIGHT
             )
         }
     }

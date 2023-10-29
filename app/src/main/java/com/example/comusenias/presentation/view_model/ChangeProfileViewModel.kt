@@ -11,6 +11,8 @@ import com.example.comusenias.domain.library.ComposeFileProvider
 import com.example.comusenias.domain.library.LibraryString
 import com.example.comusenias.domain.library.ResultingActivityHandler
 import com.example.comusenias.domain.models.Response
+import com.example.comusenias.domain.models.response.Response
+import com.example.comusenias.domain.models.users.UserModel
 import com.example.comusenias.domain.models.state.ChangeProfileState
 import com.example.comusenias.domain.models.users.UserModel
 import com.example.comusenias.domain.use_cases.users.UsersFactoryUseCases

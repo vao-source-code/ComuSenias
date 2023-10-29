@@ -30,7 +30,7 @@ import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.SIZE12
 import com.example.comusenias.presentation.ui.theme.SIZE16
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
-import com.example.comusenias.presentation.ui.theme.size10
+import com.example.comusenias.presentation.ui.theme.SIZE10
 import com.example.comusenias.presentation.ui.theme.size6
 
 @Composable
@@ -80,7 +80,7 @@ fun Indicator(isSelected: Boolean) {
     )
     Box(
         modifier = Modifier
-            .height(size10.dp)
+            .height(SIZE10.dp)
             .width(width.value)
             .clip(CircleShape)
             .background(

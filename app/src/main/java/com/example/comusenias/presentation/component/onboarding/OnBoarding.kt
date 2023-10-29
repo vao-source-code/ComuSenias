@@ -29,7 +29,7 @@ import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.IMAGE
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.size08
-import com.example.comusenias.presentation.ui.theme.size1
+import com.example.comusenias.presentation.ui.theme.SIZE1
 import com.example.comusenias.presentation.ui.theme.size20
 import com.example.comusenias.presentation.ui.theme.size24
 import com.example.comusenias.presentation.ui.theme.size250
@@ -60,9 +60,9 @@ fun OnBoarding(navController: NavController) {
             OnBoardingItem(items[page], page = page)
         }
         BottomSection(size = items.size, index = state.currentPage) {
-            if (state.currentPage + size1 < items.size)
+            if (state.currentPage + SIZE1 < items.size)
                 scope.launch {
-                    state.scrollToPage(state.currentPage + size1)
+                    state.scrollToPage(state.currentPage + SIZE1)
                 } else {
                 navController.popBackStack()
                 bottomBarViewModel.isBottomAppBarVisible.value = true

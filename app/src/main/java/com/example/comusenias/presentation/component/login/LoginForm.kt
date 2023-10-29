@@ -19,7 +19,7 @@ import com.example.comusenias.presentation.ui.theme.EMAIL_TEXT
 import com.example.comusenias.presentation.ui.theme.LOGIN
 import com.example.comusenias.presentation.ui.theme.PASSWORD
 import com.example.comusenias.presentation.ui.theme.SIZE2
-import com.example.comusenias.presentation.ui.theme.size10
+import com.example.comusenias.presentation.ui.theme.SIZE10
 import com.example.comusenias.presentation.view_model.LoginViewModel
 
 @Composable
@@ -28,7 +28,7 @@ fun LoginForm(
     navController: NavHostController
 ) {
     val state = viewModel.state
-    ResponseStatusLogin(
+    ResponseStatus(
         navController = navController,
         response = viewModel.loginResponse,
         viewModel = viewModel
@@ -57,7 +57,7 @@ fun LoginForm(
             errorMsg = viewModel.errorPassword
         )
         RememberMeAndForgetMyPass(viewModel = viewModel, navController = navController)
-        Spacer(modifier = Modifier.height(size10.dp))
+        Spacer(modifier = Modifier.height(SIZE10.dp))
         ButtonApp(
             titleButton = LOGIN,
             enabledButton = viewModel.isLoginEnabled,

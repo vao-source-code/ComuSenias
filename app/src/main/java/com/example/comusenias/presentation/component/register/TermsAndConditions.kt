@@ -23,7 +23,7 @@ import com.example.comusenias.presentation.ui.theme.accept
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.conditions
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
-import com.example.comusenias.presentation.ui.theme.size10
+import com.example.comusenias.presentation.ui.theme.SIZE10
 import com.example.comusenias.presentation.ui.theme.size14
 import com.example.comusenias.presentation.ui.theme.size6
 import com.example.comusenias.presentation.ui.theme.terms
@@ -37,7 +37,7 @@ fun TermsAndConditions(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = size10.dp),
+            .padding(horizontal = SIZE10.dp),
         horizontalArrangement = Arrangement.spacedBy(SIZE3.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
