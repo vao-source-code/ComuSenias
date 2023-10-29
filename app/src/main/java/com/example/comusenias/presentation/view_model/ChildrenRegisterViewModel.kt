@@ -12,7 +12,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.comusenias.constants.PreferencesConstant
 import com.example.comusenias.domain.library.LibraryPassword
 import com.example.comusenias.domain.library.LibraryString
-import com.example.comusenias.domain.models.Response
+import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.models.state.RegisterState
 import com.example.comusenias.domain.models.users.ChildrenModel
 import com.example.comusenias.domain.models.users.UserModel
@@ -26,7 +26,6 @@ import com.example.comusenias.presentation.ui.theme.INVALID_PHONE
 import com.example.comusenias.presentation.ui.theme.RESTRICTION_NAME_USER_ACCOUNT
 import com.example.comusenias.presentation.ui.theme.URL_POLICY_PRIVACY
 import com.example.comusenias.presentation.ui.theme.URL_TERMS_CONDITIONS
-import com.example.comusenias.presentation.ui.theme.emptyString
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -84,7 +83,7 @@ class ChildrenRegisterViewModel @Inject constructor(
     fun validateName() {
         val isValid = LibraryString.validUserName(stateChildren.name)
         isNameValid = isValid
-        errorName = if (isValid) emptyString else RESTRICTION_NAME_USER_ACCOUNT
+        errorName = if (isValid) EMPTY_STRING else RESTRICTION_NAME_USER_ACCOUNT
         enabledRegisterButton()
     }
 
@@ -98,7 +97,7 @@ class ChildrenRegisterViewModel @Inject constructor(
     fun validateDate() {
         val isValid = stateChildren.date.isNotEmpty()
         isDateValid = isValid
-        errorDate = if (isValid) emptyString else INVALID_DATE
+        errorDate = if (isValid) EMPTY_STRING else INVALID_DATE
         enabledRegisterButton()
     }
 

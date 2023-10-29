@@ -1,9 +1,8 @@
-package com.example.comusenias.data.repositories
+package com.example.comusenias.data.repositories.firebase
 
 import android.net.Uri
 import com.example.comusenias.constants.FirebaseConstants.USERS_COLLECTION
 import com.example.comusenias.domain.library.LibraryPassword
-import com.example.comusenias.domain.models.Response
 import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.models.users.UserModel
 import com.example.comusenias.domain.repositories.UsersRepository

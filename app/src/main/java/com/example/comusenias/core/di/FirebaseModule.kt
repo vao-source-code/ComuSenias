@@ -7,12 +7,12 @@ import com.example.comusenias.constants.FirebaseConstants.LEVEL_COLLECTION
 import com.example.comusenias.constants.FirebaseConstants.SPECIALIST_COLLECTION
 import com.example.comusenias.constants.FirebaseConstants.SUB_LEVEL_COLLECTION
 import com.example.comusenias.constants.FirebaseConstants.USERS_COLLECTION
-import com.example.comusenias.data.repositories.AuthRepositoryImpl
 import com.example.comusenias.data.repositories.ChildrenRepositoryImpl
-import com.example.comusenias.data.repositories.LetterImageRepositoryImpl
-import com.example.comusenias.data.repositories.LevelRepositoryImpl
 import com.example.comusenias.data.repositories.SpecialistRepositoryImpl
-import com.example.comusenias.data.repositories.UsersRepositoryImpl
+import com.example.comusenias.data.repositories.firebase.AuthRepositoryImpl
+import com.example.comusenias.data.repositories.firebase.LetterImageRepositoryImpl
+import com.example.comusenias.data.repositories.firebase.LevelRepositoryImpl
+import com.example.comusenias.data.repositories.firebase.UsersRepositoryImpl
 import com.example.comusenias.domain.repositories.AuthRepository
 import com.example.comusenias.domain.repositories.ChildrenRepository
 import com.example.comusenias.domain.repositories.LetterImageRepository

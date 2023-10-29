@@ -34,10 +34,6 @@ object PreferencesModule {
         return RolDataStorageRepositoryImpl(app)
     }
 
-    @Provides
-    fun provideContext(@ApplicationContext app: Context): Context {
-        return app
-    }
 
     @Provides
     fun provideDataRolStorageFactory(repository: RolDataStorageRepository) =

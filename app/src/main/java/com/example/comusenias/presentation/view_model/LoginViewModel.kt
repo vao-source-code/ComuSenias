@@ -7,18 +7,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.comusenias.constants.PreferencesConstant.PREFERENCE_ROL_CURRENT
 import com.example.comusenias.domain.library.LibraryString
-import com.example.comusenias.domain.models.Response
+import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.models.state.LoginState
 import com.example.comusenias.domain.use_cases.auth.AuthFactoryUseCases
 import com.example.comusenias.domain.use_cases.shared_preferences.DataRolStorageFactory
 import com.example.comusenias.domain.use_cases.users.UsersFactoryUseCases
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.INVALID_EMAIL
-import com.example.comusenias.presentation.ui.theme.emptyString
 import com.example.comusenias.presentation.ui.theme.invalidPassword
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -49,7 +49,7 @@ class LoginViewModel @Inject constructor(
         onLogin()
     }
 
-    fun onLogin() = viewModelScope.launch(IO) {
+    fun onLogin() = viewModelScope.launch(Main) {
         currentUser?.let {
             usersUseCase.getUserByIdUseCase(it.uid).collect { user ->
                 dataRolStorageFactory.putRolValue(PREFERENCE_ROL_CURRENT, user.rol)
@@ -57,6 +57,7 @@ class LoginViewModel @Inject constructor(
             }
         }
     }
+
 
     fun rolLogin() = viewModelScope.launch(IO) {
         rol = dataRolStorageFactory.getRolValue(PREFERENCE_ROL_CURRENT) ?: ""
@@ -69,14 +70,14 @@ class LoginViewModel @Inject constructor(
     fun validateEmail() {
         val isValid = LibraryString.validEmail(state.email)
         isEmailValid = isValid
-        errorEmail = if (isValid) emptyString else INVALID_EMAIL
+        errorEmail = if (isValid) EMPTY_STRING else INVALID_EMAIL
         enabledLoginButton()
     }
 
     fun validatePassword() {
         val isValid = LibraryString.validPassword(state.password)
         isPasswordValid = isValid
-        errorPassword = if (isValid) emptyString else invalidPassword
+        errorPassword = if (isValid) EMPTY_STRING else invalidPassword
         enabledLoginButton()
     }
 
@@ -84,7 +85,6 @@ class LoginViewModel @Inject constructor(
         loginResponse = Response.Loading
         val result = authUseCases.loginUseCase(state.email, state.password)
         loginResponse = result
-        rolLogin()
     }
 
     fun resetPassword() = viewModelScope.launch(IO) {
@@ -106,4 +106,19 @@ class LoginViewModel @Inject constructor(
     fun onPasswordInput(password: String) {
         state = state.copy(password = password)
     }
+
+
+    fun putRol(uid: String) = viewModelScope.launch(IO) {
+        usersUseCase.getUserByIdUseCase(uid).collect { user ->
+            dataRolStorageFactory.putRolValue(PREFERENCE_ROL_CURRENT, user.rol)
+            rolLogin()
+        }
+    }
+
+    fun initRol() = viewModelScope.launch(IO) {
+        if (dataRolStorageFactory.getRolValue(PREFERENCE_ROL_CURRENT) == null) {
+            onLogin()
+        }
+    }
+
 }

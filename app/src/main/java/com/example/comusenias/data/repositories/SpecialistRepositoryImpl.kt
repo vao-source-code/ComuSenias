@@ -2,7 +2,7 @@ package com.example.comusenias.data.repositories
 
 import android.net.Uri
 import com.example.comusenias.constants.FirebaseConstants
-import com.example.comusenias.domain.models.Response
+import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.models.users.SpecialistModel
 import com.example.comusenias.domain.repositories.SpecialistRepository
 import com.google.firebase.firestore.CollectionReference

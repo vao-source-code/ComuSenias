@@ -18,8 +18,8 @@ import com.example.comusenias.presentation.component.defaults.app.TextFieldAppPa
 import com.example.comusenias.presentation.ui.theme.EMAIL_TEXT
 import com.example.comusenias.presentation.ui.theme.LOGIN
 import com.example.comusenias.presentation.ui.theme.PASSWORD
-import com.example.comusenias.presentation.ui.theme.SIZE2
 import com.example.comusenias.presentation.ui.theme.SIZE10
+import com.example.comusenias.presentation.ui.theme.SIZE2
 import com.example.comusenias.presentation.view_model.LoginViewModel
 
 @Composable
@@ -28,9 +28,8 @@ fun LoginForm(
     navController: NavHostController
 ) {
     val state = viewModel.state
-    ResponseStatus(
+    ResponseStatusLogin(
         navController = navController,
-        response = viewModel.loginResponse,
         viewModel = viewModel
     )
 

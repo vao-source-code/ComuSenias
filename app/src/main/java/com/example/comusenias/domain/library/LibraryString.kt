@@ -21,7 +21,7 @@ object LibraryString {
     fun validPhone(phone: String) = phone.matches(regexPhone.toRegex())
 
     fun validDateOfBirth(dateOfBirth: String): Boolean {
-        val dateFormat = SimpleDateFormat("dd-MM-yyyy")
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd")
         return try {
             val dateOfBirthAsDate = dateFormat.parse(dateOfBirth)
             val currentDate = Date()
@@ -33,7 +33,7 @@ object LibraryString {
     }
 
     fun validateRegistrationExpirationDate(expirationDate: String): Boolean {
-        val dateFormat = SimpleDateFormat("dd-MM-yyyy")
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd")
         return try {
             val expirationDateAsDate = dateFormat.parse(expirationDate)
             val currentDate = Date()

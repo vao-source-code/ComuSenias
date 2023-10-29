@@ -8,16 +8,16 @@ import androidx.lifecycle.viewModelScope
 import com.example.comusenias.constants.PreferencesConstant.PREFERENCE_USER
 import com.example.comusenias.domain.library.LibraryPassword
 import com.example.comusenias.domain.library.LibraryString
-import com.example.comusenias.domain.models.Response
+import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.models.state.RegisterState
 import com.example.comusenias.domain.models.users.Rol
 import com.example.comusenias.domain.models.users.UserModel
 import com.example.comusenias.domain.use_cases.auth.AuthFactoryUseCases
 import com.example.comusenias.domain.use_cases.shared_preferences.DataUserStorageFactory
 import com.example.comusenias.domain.use_cases.users.UsersFactoryUseCases
+import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.INVALID_EMAIL
 import com.example.comusenias.presentation.ui.theme.RESTRICTION_PASSWORD_USER_ACCOUNT
-import com.example.comusenias.presentation.ui.theme.emptyString
 import com.example.comusenias.presentation.ui.theme.passwordDoNotMatch
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -67,21 +67,21 @@ class RegisterViewModel @Inject constructor(
     fun validateEmail() {
         val isValid = LibraryString.validEmail(state.email)
         isEmailValid = isValid
-        errorEmail = if (isValid) emptyString else INVALID_EMAIL
+        errorEmail = if (isValid) EMPTY_STRING else INVALID_EMAIL
         enabledRegisterButton()
     }
 
     fun validatePassword() {
         val isValid = LibraryString.validPassword(state.password)
         isPasswordValid = isValid
-        errorPassword = if (isValid) emptyString else RESTRICTION_PASSWORD_USER_ACCOUNT
+        errorPassword = if (isValid) EMPTY_STRING else RESTRICTION_PASSWORD_USER_ACCOUNT
         enabledRegisterButton()
     }
 
     fun validateConfirmPassword() {
         val isValid = state.password == state.confirmPassword
         isConfirmPasswordValid = isValid
-        errorConfirmPassword = if (isValid) emptyString else passwordDoNotMatch
+        errorConfirmPassword = if (isValid) EMPTY_STRING else passwordDoNotMatch
         enabledRegisterButton()
     }
 

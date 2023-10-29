@@ -40,9 +40,9 @@ import com.example.comusenias.presentation.ui.theme.PROFILE_BIRTHDATE
 import com.example.comusenias.presentation.ui.theme.PROFILE_EMAIL
 import com.example.comusenias.presentation.ui.theme.PROFILE_NAME_SURNAME
 import com.example.comusenias.presentation.ui.theme.SELECTED_IMAGE
+import com.example.comusenias.presentation.ui.theme.SIZE10
 import com.example.comusenias.presentation.ui.theme.SIZE140
 import com.example.comusenias.presentation.ui.theme.SIZE55
-import com.example.comusenias.presentation.ui.theme.size10
 import com.example.comusenias.presentation.ui.theme.size20
 import com.example.comusenias.presentation.view_model.ChildrenProfileViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -119,7 +119,7 @@ fun ChildrenProfileContent(
                         onClick = { /* Acción al hacer clic en el botón */ },
                         modifier = Modifier
                             .align(Alignment.BottomEnd)
-                            .offset(y = (-size10).dp),
+                            .offset(y = (-SIZE10).dp),
                     ) {
                         Icon(
                             imageVector = Icons.Default.Edit,
