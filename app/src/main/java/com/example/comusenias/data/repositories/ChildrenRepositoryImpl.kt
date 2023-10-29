@@ -64,6 +64,7 @@ class ChildrenRepositoryImpl @Inject constructor(
         return try {
             val fromFile = Uri.fromFile(file)
             val ref = storageChildrenRef.child(file.name)
+            val uploadTask = ref.putFile(fromFile).await()
             val url = ref.downloadUrl.await()
             return Response.Success(url.toString())
         } catch (e: Exception) {

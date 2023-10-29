@@ -3,7 +3,6 @@ package com.example.comusenias.presentation.navigation
 import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -18,22 +17,20 @@ import androidx.navigation.navArgument
 import com.example.comusenias.presentation.activities.MainActivity
 import com.example.comusenias.presentation.component.specialist.SpecialistDetailsScreen
 import com.example.comusenias.presentation.screen.gameAction.ChoseTheLetterPlayScreen
-import com.example.comusenias.presentation.screen.home.HomeScreen
 import com.example.comusenias.presentation.screen.gameAction.ChoseTheSignPlayScreen
 import com.example.comusenias.presentation.screen.gameAction.CongratsPlayScreen
 import com.example.comusenias.presentation.screen.gameAction.InterpretationStatusScreen
 import com.example.comusenias.presentation.screen.gameAction.LearnSignScreen
 import com.example.comusenias.presentation.screen.gameAction.MakeSignPlayScreen
+import com.example.comusenias.presentation.screen.home.HomeScreen
 import com.example.comusenias.presentation.screen.notification.NotificationScreen
 import com.example.comusenias.presentation.screen.premiun.PremiunScreen
-import com.example.comusenias.presentation.screen.profile.ChangeProfileScreen
-import com.example.comusenias.presentation.screen.profile.ProfileScreen
+import com.example.comusenias.presentation.screen.profile.ChildrenProfileScreen
 import com.example.comusenias.presentation.screen.specialist.SpecialistHomeExample
 import com.example.comusenias.presentation.splashScreen.SplashScreen
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.LEVEL
 import com.example.comusenias.presentation.ui.theme.SUB_LEVEL
-import com.example.comusenias.presentation.ui.theme.USER
 import com.example.comusenias.presentation.view_model.LevelViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -63,7 +60,7 @@ private fun GetNavHost(
         authNavGraph(navController = navController, modifier = modifier)
 
         composable(AppScreen.ProfileScreen.route) {
-            ProfileScreen(navController = navController, modifier = modifier)
+            ChildrenProfileScreen(navController = navController, modifier = modifier)
         }
         composable(AppScreen.HomeScreen.route) {
             HomeScreen(
@@ -82,7 +79,6 @@ private fun GetNavHost(
         composable(AppScreen.MainActivity.route) {
             MainActivity()
         }
-        composableChangeProfile(navController)
 
         composable(AppScreen.SpecialistScreen.route) {
             SpecialistHomeExample(navController = navController, modifier = modifier)
@@ -113,22 +109,6 @@ private fun GetNavHost(
     }
 }
 
-fun NavGraphBuilder.composableChangeProfile(navController: NavHostController) {
-    composable(
-        route = AppScreen.ChangeProfileScreen.route,
-        arguments = listOf(navArgument(USER) {
-            type = NavType.StringType
-        })
-    ) { user ->
-        user.arguments?.getString(USER)?.let {
-            ChangeProfileScreen(
-                modifier = Modifier.fillMaxSize(),
-                navController = navController,
-                user = it
-            )
-        }
-    }
-}
 
 private fun NavGraphBuilder.composableLearnSign(
     navController: NavHostController,

@@ -12,7 +12,7 @@ import com.example.comusenias.presentation.ui.theme.UPDATE_DATA
 import com.example.comusenias.presentation.ui.theme.size20
 
 @Composable
-fun ProfileFooterContent(onClickChangeProfile: () -> Unit?) {
+fun ChildrenProfileFooterContent(onClickChangeProfile: () -> Unit?) {
     Row(
         modifier = Modifier
             .fillMaxWidth()

@@ -4,19 +4,17 @@ import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.comusenias.domain.library.ComposeFileProvider
-import com.example.comusenias.domain.library.LibraryString
 import com.example.comusenias.domain.library.ResultingActivityHandler
 import com.example.comusenias.domain.models.Response
 import com.example.comusenias.domain.models.state.ChangeProfileState
-import com.example.comusenias.domain.models.users.UserModel
+import com.example.comusenias.domain.models.users.ChildrenModel
+import com.example.comusenias.domain.use_cases.auth.AuthFactoryUseCases
+import com.example.comusenias.domain.use_cases.children.ChildrenFactory
 import com.example.comusenias.domain.use_cases.users.UsersFactoryUseCases
-import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.PATH_IMAGE
-import com.example.comusenias.presentation.ui.theme.RESTRICTION_NAME_USER_ACCOUNT
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
@@ -24,48 +22,37 @@ import kotlinx.coroutines.launch
 import java.io.File
 import javax.inject.Inject
 
-
 @HiltViewModel
-class ChangeProfileViewModel @Inject constructor(
-    private var savedStateHandle: SavedStateHandle,
-    private val usersUseCase: UsersFactoryUseCases,
+class ChildrenProfileViewModel @Inject constructor(
+    private val authUsesCases: AuthFactoryUseCases, private val useCases: UsersFactoryUseCases,
+    private val childrenUser: ChildrenFactory,
     @ApplicationContext private val context: Context
+
 ) : ViewModel() {
+
+    var userData by mutableStateOf(ChildrenModel())
+        private set
+    val currentUser = authUsesCases.getCurrentUserUseCase()
+
+    val resultingActivityHandler = ResultingActivityHandler()
 
     var state by mutableStateOf(ChangeProfileState())
         private set
-
-    private var isUserNameValid: Boolean by mutableStateOf(false)
-    var errorUserName: String by mutableStateOf("")
-
-    val data = savedStateHandle.get<String>("user")
-    val user = UserModel.fromJson(data!!)
-
+    var file: File? = null
     var updateResponse by mutableStateOf<Response<Boolean>?>(null)
         private set
-
-    val resultingActivityHandler = ResultingActivityHandler()
     var saveImageResponse by mutableStateOf<Response<String>?>(null)
-        private set
-    var file: File? = null
 
     init {
-        state = state.copy(
-            //userName = user.userName, image = user.image
-        )
+        getUserData()
     }
 
-    fun saveImage() = viewModelScope.launch(Dispatchers.IO) {
-        file?.let {
-            saveImageResponse = Response.Loading
-            val result = usersUseCase.saveImageUserUseCase(it)
-            saveImageResponse = result
+    private fun getUserData() = viewModelScope.launch {
+        currentUser?.let {
+            childrenUser.getChildrenById(it.uid).collect { user ->
+                userData = user
+            }
         }
-        update(
-            user = UserModel(
-                // id = user.id, userName = state.userName, image = state.image
-            )
-        )
     }
 
     fun pickImage() = viewModelScope.launch(Dispatchers.IO) {
@@ -84,30 +71,34 @@ class ChangeProfileViewModel @Inject constructor(
         }
     }
 
+    fun saveImage() = viewModelScope.launch(Dispatchers.IO) {
+        file?.let {
+            saveImageResponse = Response.Loading
+            val result = childrenUser.saveImageChildren(it)
+            saveImageResponse = result
+        }
+    }
+
     fun onUpdate(url: String) {
-        val myUser = UserModel(
-            // id = user.id, userName = state.userName, image = url
+        val myUser = ChildrenModel(
+            id = userData.id,
+            name = userData.name,
+            tel = userData.tel,
+            email = userData.email,
+            date = userData.date,
+            image = url,
         )
         update(myUser)
     }
 
-    fun update(user: UserModel) = viewModelScope.launch(Dispatchers.IO) {
+    fun update(user: ChildrenModel) = viewModelScope.launch(Dispatchers.IO) {
         updateResponse = Response.Loading
-        val result = usersUseCase.updateUserUseCase(user)
+        val result = childrenUser.updateChildren(user)
         updateResponse = result
     }
 
-    fun onUsernameInput(username: String) {
-        state = state.copy(name = username)
-    }
 
-    fun validateUserName() {
-        if (LibraryString.validUserName(state.name)) {
-            isUserNameValid = true
-            errorUserName = EMPTY_STRING
-        } else {
-            isUserNameValid = false
-            errorUserName = RESTRICTION_NAME_USER_ACCOUNT
-        }
+    fun logout() {
+        authUsesCases.logoutUseCase()
     }
 }
