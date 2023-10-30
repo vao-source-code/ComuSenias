@@ -13,7 +13,9 @@ import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
@@ -37,8 +39,9 @@ class LoginViewModelTest {
     @Before
     fun setup() {
         MockKAnnotations.init(this)
-        authUseCases = mockk()
-        usersUseCase = mockk()
+        authUseCases = mockk<AuthFactoryUseCases>()
+        usersUseCase = mockk<UsersFactoryUseCases>()
+        Dispatchers.setMain(Dispatchers.Unconfined)
 
         coEvery { authUseCases.getCurrentUserUseCase } returns GetCurrentUserUseCase(userRepository)
         viewModel = LoginViewModel(
@@ -46,9 +49,14 @@ class LoginViewModelTest {
             dataRolStorageFactory = dataRolStorageFactory,
             usersUseCase = usersUseCase
         )
-        Dispatchers.setMain(Dispatchers.Unconfined)
+
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain()
+    }
 
     @Test
     fun testValidEmail() = runBlocking {
