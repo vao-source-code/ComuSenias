@@ -16,7 +16,6 @@ class SpecialistModelTest {
         val childrenInCharge = listOf<ChildrenModel>()
 
         val specialistModel = SpecialistModel(
-                userModel = userModel,
                 date = date,
                 medicalLicense = medicalLicense,
                 medicalLicenseExpiration = medicalLicenseExpiration,
@@ -24,7 +23,6 @@ class SpecialistModelTest {
                 childrenInCharge = childrenInCharge
         )
 
-        assertEquals(userModel, specialistModel.userModel)
         assertEquals(date, specialistModel.date)
         assertEquals(medicalLicense, specialistModel.medicalLicense)
         assertEquals(medicalLicenseExpiration, specialistModel.medicalLicenseExpiration)

@@ -54,23 +54,18 @@ class DataClassUtil {
 
             val userModelSpecialist = UserModel(
                 id = "example_id",
-                userName = "Fabian Zarate",
                 email = "example_email@example.com",
                 password = "example_password",
-                image = "example_image_url",
-                numberPhone = "1234567890"
             )
             val userModelChildren = UserModel(
                 id = "1",
-                userName = "Juan Jose",
                 email = "example_email@example.com",
                 password = "example_password",
-                image = "example_image_url",
-                numberPhone = "1234567890"
             )
 
+
             val childrenModel = ChildrenModel(
-                userModel = userModelChildren,
+                id = "",
                 date = "2023-10-21",
                 specialist = null,
                 levelActual = 1,
@@ -100,7 +95,7 @@ class DataClassUtil {
             )
 
             return  SpecialistModel(
-                userModel = userModelSpecialist,
+                id = "",
                 date = "2023-10-21",
                 medicalLicense = "example_license_number",
                 medicalLicenseExpiration = "2024-10-21",

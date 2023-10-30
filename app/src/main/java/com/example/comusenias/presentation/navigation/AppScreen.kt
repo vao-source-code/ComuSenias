@@ -5,7 +5,7 @@ sealed class AppScreen(val route: String) {
     object LoginScreen : AppScreen("login_screen")
     object RegisterScreen : AppScreen("register_screen")
     object PremiumScreen : AppScreen("premium_screen")
-    object ProfileScreen : AppScreen("profile_screen")
+    object ChildrenProfileScreen : AppScreen("children_profile_screen")
     object SplashScreen : AppScreen("splash_screen")
     object MainActivity : AppScreen("main_screen")
     object ChangeProfileScreen : AppScreen("change_profile_screen/{user}") {
@@ -29,7 +29,10 @@ sealed class AppScreen(val route: String) {
 
     object MakeSignPlayScreen : AppScreen("make_sign_play")
     object CongratsPlayScreen : AppScreen("congrats_play")
-    object InterpretationStatusScreen : AppScreen("Interpretation_status_screen")
+    object InterpretationStatusScreen : AppScreen("Interpretation_status_screen/{path}") {
+        fun createRoute(path: String) = "Interpretation_status_screen/${path}"
+    }
+
     object NotificationScreen : AppScreen("notification_screen")
     object SpecialistScreen : AppScreen("specialist_screen")
     object ProfilePatientScreen : AppScreen("profile_patient_screen")
@@ -39,5 +42,16 @@ sealed class AppScreen(val route: String) {
         fun createRoute(level: String, subLevel: String) =
             "chose_the_letter_play/${level}/${subLevel}"
     }
+    object CameraScreenPermission : AppScreen("camera_screen_permission")
+
+    object CameraScreen : AppScreen("camera_screen")
+
+    object GaleryScreenPermission : AppScreen("galery_screen_permission")
+
+    object GalleryScreen : AppScreen("gallery_screen/{path}") {
+        fun createRoute(path: String) = "gallery_screen/${path}"
+
+    }
 }
+
 

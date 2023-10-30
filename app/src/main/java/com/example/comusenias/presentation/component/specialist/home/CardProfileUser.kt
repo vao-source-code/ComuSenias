@@ -30,18 +30,18 @@ import com.example.comusenias.presentation.ui.theme.SIZE50
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.line_divisor
 import com.example.comusenias.presentation.ui.theme.size1
-import com.example.comusenias.presentation.ui.theme.size10
+import com.example.comusenias.presentation.ui.theme.SIZE10
 
 @Composable
 fun CardProfileUser(user: ChildrenModel, onClickCard: () -> Unit) {
-    val image = user.userModel.image
-    val name = remember { user.userModel.userName }
+    val image = "user.userModel.image"
+    val name = remember { "user.userModel.userName "}
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .clickable { onClickCard() },
-        verticalArrangement = Arrangement.spacedBy(size10.dp)
+        verticalArrangement = Arrangement.spacedBy(SIZE10.dp)
     ) {
         Row(
             modifier = Modifier.fillMaxSize(),

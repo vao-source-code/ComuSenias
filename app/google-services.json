@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "220008974660",
+    "firebase_url": "https://comusenias-default-rtdb.firebaseio.com",
     "project_id": "comusenias",
     "storage_bucket": "comusenias.appspot.com"
   },

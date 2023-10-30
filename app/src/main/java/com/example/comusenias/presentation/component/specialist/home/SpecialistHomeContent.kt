@@ -31,7 +31,7 @@ import com.example.comusenias.presentation.ui.theme.SIZE16
 import com.example.comusenias.presentation.ui.theme.SIZE220
 import com.example.comusenias.presentation.ui.theme.SIZE24
 import com.example.comusenias.presentation.ui.theme.blackColorApp
-import com.example.comusenias.presentation.ui.theme.size15
+import com.example.comusenias.presentation.ui.theme.SIZE15
 import com.example.comusenias.presentation.ui.theme.SIZE3
 
 @Composable
@@ -44,8 +44,8 @@ fun SpecialistHomeContent(
         topBar = {
             Surface(shadowElevation = SIZE3.dp) {
                 TopBarHome(
-                    name = specialist.userModel.userName,
-                    image = specialist.userModel.image
+                    name = "specialist.userModel.userName",
+                    image = "specialist.userModel.image"
                 ) { navController.navigate(AppScreen.NotificationScreen.route) }
             }
         },
@@ -76,7 +76,7 @@ fun PatientContainer(
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(16.dp),
-        verticalArrangement = Arrangement.spacedBy(size15.dp)
+        verticalArrangement = Arrangement.spacedBy(SIZE15.dp)
     ) {
         item {
             Title()

@@ -37,7 +37,6 @@ fun HomeScreen(
                 .padding(paddingValues)
         ) {
             ContentHome(
-                modifier = Modifier.fillMaxSize(),
                 navController = navController,
                 levelViewModel
             )

@@ -42,7 +42,7 @@ import com.example.comusenias.presentation.ui.theme.IMAGE_EDIT_BUTTON
 import com.example.comusenias.presentation.ui.theme.SELECTED_IMAGE
 import com.example.comusenias.presentation.ui.theme.SIZE140
 import com.example.comusenias.presentation.ui.theme.SIZE55
-import com.example.comusenias.presentation.ui.theme.size10
+import com.example.comusenias.presentation.ui.theme.SIZE10
 import com.example.comusenias.presentation.ui.theme.size20
 import com.example.comusenias.presentation.view_model.ChangeProfileViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -121,7 +121,7 @@ fun ChangeProfileContent(
                         onClick = { /* Acción al hacer clic en el botón */ },
                         modifier = Modifier
                             .align(Alignment.BottomEnd)
-                            .offset(y = (-size10).dp),
+                            .offset(y = (-SIZE10).dp),
                     ) {
                         Icon(
                             imageVector = Icons.Default.Edit,
@@ -134,7 +134,7 @@ fun ChangeProfileContent(
             Spacer(modifier = Modifier.height(SIZE55.dp))
 
             TextFieldApp(
-                value = state.userName,
+                value = state.name,
                 onValueChange = { viewModel.onUsernameInput(it) },
                 validateField = { viewModel.validateUserName() },
                 label = CHANGE_PROFILE_USER,
@@ -160,7 +160,7 @@ fun ChangeProfileContent(
                 validateField = {},
 
                 )
-            Spacer(modifier = Modifier.height(size10.dp))
+            Spacer(modifier = Modifier.height(SIZE10.dp))
         }
     }
 }

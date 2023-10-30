@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.comusenias.R
 import com.example.comusenias.presentation.ui.theme.iconApp
-import com.example.comusenias.presentation.ui.theme.size130
+import com.example.comusenias.presentation.ui.theme.SIZE130
 
 @Preview(showBackground = true)
 @Composable
@@ -35,7 +35,7 @@ fun HeaderImage() {
         contentDescription = iconApp,
         contentScale = ContentScale.Fit,
         modifier = Modifier
-            .width(size130.dp)
-            .height(size130.dp)
+            .width(SIZE130.dp)
+            .height(SIZE130.dp)
     )
 }

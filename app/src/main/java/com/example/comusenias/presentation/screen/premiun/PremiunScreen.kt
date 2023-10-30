@@ -12,14 +12,14 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.comusenias.presentation.component.bottomBar.ShowBottomBar
-import com.example.comusenias.presentation.view_model.ProfileViewModel
+import com.example.comusenias.presentation.view_model.ChildrenProfileViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PremiunScreen(
     navController: NavHostController,
     modifier: Modifier,
-    viewModel: ProfileViewModel = hiltViewModel()
+    viewModel: ChildrenProfileViewModel = hiltViewModel()
 ) {
     Scaffold(
         bottomBar = {

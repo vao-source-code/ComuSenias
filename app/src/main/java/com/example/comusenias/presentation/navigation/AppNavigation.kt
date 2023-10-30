@@ -1,9 +1,9 @@
 package com.example.comusenias.presentation.navigation
 
+import PermissionCameraScreen
 import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -16,6 +16,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.comusenias.presentation.activities.MainActivity
+import com.example.comusenias.presentation.screen.camera.CameraScreen
+import com.example.comusenias.presentation.screen.gallery.GalleryScreen
 import com.example.comusenias.presentation.screen.gameAction.ChoseTheLetterPlayScreen
 import com.example.comusenias.presentation.screen.gameAction.ChoseTheSignPlayScreen
 import com.example.comusenias.presentation.screen.gameAction.CongratsPlayScreen
@@ -25,16 +27,14 @@ import com.example.comusenias.presentation.screen.gameAction.MakeSignPlayScreen
 import com.example.comusenias.presentation.screen.home.HomeScreen
 import com.example.comusenias.presentation.screen.notification.NotificationScreen
 import com.example.comusenias.presentation.screen.premiun.PremiunScreen
-import com.example.comusenias.presentation.screen.profile.ChangeProfileScreen
-import com.example.comusenias.presentation.screen.profile.ProfileScreen
 import com.example.comusenias.presentation.screen.specialist.ProfilePatientScreen
 import com.example.comusenias.presentation.screen.specialist.SendObservationScreen
 import com.example.comusenias.presentation.screen.specialist.SpecialistScreen
+import com.example.comusenias.presentation.screen.profile.ChildrenProfileScreen
 import com.example.comusenias.presentation.splashScreen.SplashScreen
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.LEVEL
 import com.example.comusenias.presentation.ui.theme.SUB_LEVEL
-import com.example.comusenias.presentation.ui.theme.USER
 import com.example.comusenias.presentation.view_model.LevelViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -63,8 +63,8 @@ private fun GetNavHost(
 
         authNavGraph(navController = navController, modifier = modifier)
 
-        composable(AppScreen.ProfileScreen.route) {
-            ProfileScreen(navController = navController, modifier = modifier)
+        composable(AppScreen.ChildrenProfileScreen.route) {
+            ChildrenProfileScreen(navController = navController, modifier = modifier)
         }
         composable(AppScreen.HomeScreen.route) {
             HomeScreen(
@@ -83,7 +83,6 @@ private fun GetNavHost(
         composable(AppScreen.MainActivity.route) {
             MainActivity()
         }
-        composableChangeProfile(navController)
 
         composable(AppScreen.SpecialistScreen.route) {
             SpecialistScreen(navController = navController, modifier = modifier)
@@ -102,10 +101,25 @@ private fun GetNavHost(
         composableChoseTheSignPlay(navController, levelViewModel)
 
         composable(AppScreen.MakeSignPlayScreen.route) {
-            MakeSignPlayScreen(navController = navController, modifier = modifier)
+            MakeSignPlayScreen(
+                navController = navController,
+                modifier = modifier,
+                levelViewModel = levelViewModel
+            )
+
         }
-        composable(AppScreen.InterpretationStatusScreen.route) {
-            InterpretationStatusScreen(navController = navController, modifier = modifier)
+        composable(AppScreen.InterpretationStatusScreen.route, arguments = listOf(
+            navArgument("path") {
+                type = NavType.StringType
+            }
+        )
+        ) {
+            val path = it.arguments?.getString("path") ?: EMPTY_STRING
+            InterpretationStatusScreen(
+                navController = navController,
+                modifier = modifier,
+                path = path
+            )
         }
         composable(AppScreen.CongratsPlayScreen.route) {
             CongratsPlayScreen(navController = navController, modifier = modifier)
@@ -115,25 +129,41 @@ private fun GetNavHost(
         composable(AppScreen.NotificationScreen.route) {
             NotificationScreen(navController = navController)
         }
+
+        composable(AppScreen.CameraScreen.route) {
+            CameraScreen(navController = navController, levelViewModel = levelViewModel)
+        }
+
+        //Permission Camera
+        composable(AppScreen.CameraScreenPermission.route) {
+            PermissionCameraScreen(navController = navController)
+        }
+
+
+        //Permission Gallery
+        composable(AppScreen.GaleryScreenPermission.route) {
+            PermissionCameraScreen(navController = navController)
+        }
+
+
+        composable(
+            AppScreen.GalleryScreen.route, arguments = listOf(
+                navArgument("path") {
+                    type = NavType.StringType
+                }
+            )
+        ) {
+            val path = it.arguments?.getString("path") ?: EMPTY_STRING
+            GalleryScreen(
+                navController = navController,
+                path = path,
+                levelViewModel = levelViewModel
+            )
+        }
+
     }
 }
 
-fun NavGraphBuilder.composableChangeProfile(navController: NavHostController) {
-    composable(
-        route = AppScreen.ChangeProfileScreen.route,
-        arguments = listOf(navArgument(USER) {
-            type = NavType.StringType
-        })
-    ) { user ->
-        user.arguments?.getString(USER)?.let {
-            ChangeProfileScreen(
-                modifier = Modifier.fillMaxSize(),
-                navController = navController,
-                user = it
-            )
-        }
-    }
-}
 
 private fun NavGraphBuilder.composableLearnSign(
     navController: NavHostController,
@@ -202,4 +232,5 @@ private fun NavGraphBuilder.composableChoseTheSignPlay(
         val subLevel = it.arguments?.getString(SUB_LEVEL) ?: EMPTY_STRING
         ChoseTheSignPlayScreen(navController = navController, level, subLevel, levelViewModel)
     }
+
 }

@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.example.comusenias.constants.TestTag.Companion.TAG_BUTTON_DEFAULT
 import com.example.comusenias.presentation.component.defaults.app.TextErrorDefault
 import com.example.comusenias.presentation.ui.theme.iconButtonDescription
-import com.example.comusenias.presentation.ui.theme.size10
+import com.example.comusenias.presentation.ui.theme.SIZE10
 
 @Composable
 fun ButtonDefault(
@@ -32,9 +32,9 @@ fun ButtonDefault(
         Button(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(vertical = size10.dp)
+                .padding(vertical = SIZE10.dp)
                 .testTag(TAG_BUTTON_DEFAULT),
-            shape = RoundedCornerShape(size10.dp),
+            shape = RoundedCornerShape(SIZE10.dp),
             enabled = enabled,
             onClick = { onClick() }) {
             Text(text = text)

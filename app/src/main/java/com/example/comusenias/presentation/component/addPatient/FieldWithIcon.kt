@@ -10,10 +10,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
-import com.example.comusenias.presentation.ui.theme.ICON
 import com.example.comusenias.presentation.ui.theme.SIZE12
 import com.example.comusenias.presentation.ui.theme.SIZE24
 import com.example.comusenias.presentation.ui.theme.iconColorProgress
+import com.example.comusenias.presentation.ui.theme.iconApp
 
 @Composable
 fun FieldWithIcon(icon: Painter, text: String) {
@@ -23,9 +23,9 @@ fun FieldWithIcon(icon: Painter, text: String) {
     ) {
         Icon(
             painter = icon,
-            contentDescription = ICON,
             modifier = Modifier.size(SIZE24.dp),
-            tint = iconColorProgress
+            tint = iconColorProgress,
+            contentDescription = iconApp,
         )
         Text(text = text)
     }

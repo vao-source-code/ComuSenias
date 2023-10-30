@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.comusenias.presentation.ui.theme.PROGRESS
 import com.example.comusenias.presentation.ui.theme.blackColorApp
-import com.example.comusenias.presentation.ui.theme.size10
+import com.example.comusenias.presentation.ui.theme.SIZE10
 import com.example.comusenias.presentation.ui.theme.size18
 import com.example.comusenias.presentation.ui.theme.size9
 @Preview(showBackground = true)
@@ -26,7 +26,7 @@ fun ContentProgressBar() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = size10.dp)
+            .padding(top = SIZE10.dp)
             .background(Color.White),
         verticalArrangement = Arrangement.spacedBy(size9.dp, Alignment.CenterVertically),
         horizontalAlignment = Alignment.Start,

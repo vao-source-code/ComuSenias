@@ -2,7 +2,7 @@ package com.example.comusenias.presentation.view_model
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.comusenias.constants.AlphabetConstants
-import com.example.comusenias.domain.models.Response
+import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.models.letter.LetterModel
 import com.example.comusenias.domain.use_cases.letters.LettersFactoryUseCases
 import com.example.comusenias.domain.use_cases.letters.SearchImageLetterUseCase

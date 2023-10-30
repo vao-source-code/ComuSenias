@@ -11,6 +11,7 @@ import com.example.comusenias.constants.TestTag
 import com.example.comusenias.presentation.component.defaults.app.AuthenticationContent
 import com.example.comusenias.presentation.component.defaults.app.AuthenticationFooterContent
 import com.example.comusenias.presentation.component.login.LoginForm
+import com.example.comusenias.presentation.component.login.ResponseStatusLogin
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.DONT_HAVE_ACCOUNT
 import com.example.comusenias.presentation.ui.theme.REGISTER
@@ -43,5 +44,9 @@ fun LoginScreen(
             }
         )
 
+        ResponseStatusLogin(
+            navController = navController,
+            viewModel = viewModel
+        )
     }
 }

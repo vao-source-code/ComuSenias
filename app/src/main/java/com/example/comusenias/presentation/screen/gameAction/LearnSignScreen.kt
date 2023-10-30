@@ -2,11 +2,12 @@ package com.example.comusenias.presentation.screen.gameAction
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
-import com.example.comusenias.domain.models.Response
+import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.presentation.component.defaults.app.CircularProgressBar
 import com.example.comusenias.presentation.component.defaults.app.ShowRetrySnackBar
 import com.example.comusenias.presentation.component.gameAction.ContentLetterType
 import com.example.comusenias.presentation.component.gameAction.GameAction
+import com.example.comusenias.presentation.component.home.getLevelViewModel
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.CONTINUE
 import com.example.comusenias.presentation.ui.theme.ERROR_RETRY_LEVEL
@@ -21,7 +22,9 @@ fun LearnSignScreen(
     subLevel: String,
     levelViewModel: LevelViewModel
 ) {
+
     val subLevelViewModel = levelViewModel.getSubLevelById(level, subLevel)
+    getLevelViewModel.choiceOfOption.clear()
 
     when (levelViewModel.levelsResponse) {
         is Response.Loading -> {
