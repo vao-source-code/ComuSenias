@@ -9,6 +9,7 @@ import androidx.navigation.NavHostController
 import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.presentation.component.defaults.DefaultLoadingProgressIndicator
 import com.example.comusenias.presentation.component.defaults.app.showToast
+import com.example.comusenias.presentation.navigation.AuthScreen
 import com.example.comusenias.presentation.ui.theme.LOGIN_ERROR
 import com.example.comusenias.presentation.ui.theme.RESET_PASSWORD_SUCCESS
 
@@ -28,7 +29,7 @@ fun ResponsePasswordReset(
 
         is Response.Success -> {
             showToast(LocalContext.current, RESET_PASSWORD_SUCCESS, Toast.LENGTH_SHORT)
-            navController.popBackStack()
+            navController.navigate(AuthScreen.LoginScreen.route)
         }
 
         is Response.Error -> {
