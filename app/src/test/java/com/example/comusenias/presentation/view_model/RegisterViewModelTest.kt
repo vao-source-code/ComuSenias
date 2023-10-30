@@ -5,9 +5,9 @@ import com.example.comusenias.domain.models.users.UserModel
 import com.example.comusenias.domain.use_cases.auth.AuthFactoryUseCases
 import com.example.comusenias.domain.use_cases.shared_preferences.DataUserStorageFactory
 import com.example.comusenias.domain.use_cases.users.UsersFactoryUseCases
+import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.INVALID_EMAIL
 import com.example.comusenias.presentation.ui.theme.RESTRICTION_PASSWORD_USER_ACCOUNT
-import com.example.comusenias.presentation.ui.theme.emptyString
 import io.mockk.MockKAnnotations
 import io.mockk.impl.annotations.RelaxedMockK
 import junit.framework.TestCase.assertEquals
@@ -54,7 +54,7 @@ class RegisterViewModelTest {
         viewModel.onEmailInput("email@ejemplo.com")
         viewModel.validateEmail()
         assertTrue(viewModel.isEmailValid)
-        assertEquals(emptyString, viewModel.errorEmail)
+        assertEquals(EMPTY_STRING, viewModel.errorEmail)
 
         // Email inválido
         viewModel.onEmailInput("email_sin_arroba.com")
@@ -71,7 +71,7 @@ class RegisterViewModelTest {
         viewModel.onPasswordInput("Contraseña1234")
         viewModel.validatePassword()
         assertTrue(viewModel.isPasswordValid)
-        assertEquals(emptyString, viewModel.errorPassword)
+        assertEquals(EMPTY_STRING, viewModel.errorPassword)
 
         // Contraseña inválida
         viewModel.onPasswordInput("1234")
@@ -89,7 +89,7 @@ class RegisterViewModelTest {
         viewModel.onConfirmPasswordInput("contraseña1234")
         viewModel.validateConfirmPassword()
         assertTrue(viewModel.isConfirmPasswordValid)
-        assertEquals(emptyString, viewModel.errorConfirmPassword)
+        assertEquals(EMPTY_STRING, viewModel.errorConfirmPassword)
 
         // Cont contraseñas no coincidentes
         viewModel.onConfirmPasswordInput("contraseña_incorrecta")
