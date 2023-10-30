@@ -2,6 +2,7 @@ package com.example.comusenias.data.repositories.firebase
 
 import android.net.Uri
 import com.example.comusenias.constants.FirebaseConstants.USERS_COLLECTION
+import com.example.comusenias.domain.library.LibraryPassword
 import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.models.users.UserModel
 import com.example.comusenias.domain.repositories.UsersRepository
@@ -41,6 +42,7 @@ class UsersRepositoryImpl @Inject constructor(
     override fun getUserById(id: String): Flow<UserModel> = callbackFlow {
         val snapshotListener = usersRef.document(id).addSnapshotListener { snapshot, _ ->
             val user = snapshot?.toObject(UserModel::class.java) ?: UserModel()
+            user.password = LibraryPassword.encodePassword(user.password)
             trySend(user)
         }
         awaitClose {
@@ -51,8 +53,11 @@ class UsersRepositoryImpl @Inject constructor(
     override suspend fun updateUser(user: UserModel): Response<Boolean> {
         return try {
             val mapImage: MutableMap<String, Any> = HashMap()
-            mapImage["userName"] = user.userName
-            mapImage["image"] = user.image?.let { it } ?: ""
+            //aca tiene que ser email y rol
+            mapImage["email"] = user.email
+            mapImage["rol"] = user.rol
+            mapImage["password"] = LibraryPassword.hashPassword(user.password)
+            //mapImage["image"] = user.image?.let { it } ?: ""
             usersRef.document(user.id).update(mapImage).await()
             Response.Success(true)
         } catch (e: Exception) {

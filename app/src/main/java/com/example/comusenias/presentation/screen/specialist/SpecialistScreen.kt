@@ -24,14 +24,14 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.comusenias.R
-import com.example.comusenias.domain.models.users.UserModel
+import com.example.comusenias.domain.models.users.ChildrenModel
 import com.example.comusenias.presentation.component.specialist.CardHomeSpecialist
 import com.example.comusenias.presentation.component.specialist.CardProfileUser
 import com.example.comusenias.presentation.navigation.AppScreen
-import com.example.comusenias.presentation.ui.theme.SIZE26
-import com.example.comusenias.presentation.ui.theme.primaryColorApp
 import com.example.comusenias.presentation.ui.theme.SIZE10
+import com.example.comusenias.presentation.ui.theme.SIZE26
 import com.example.comusenias.presentation.ui.theme.SIZE30
+import com.example.comusenias.presentation.ui.theme.primaryColorApp
 
 @Composable
 fun SpecialistScreen(navController: NavHostController, modifier: Modifier) {
@@ -66,7 +66,7 @@ fun SpecialistHomeExample(navController: NavHostController, modifier: Modifier) 
                     image = R.drawable.diagnostic_category,
                     title = "Juan Perez",
                     subtitle = "Psicologo Infantil",
-                    onClickCard = { navController.navigate(route = AppScreen.ProfileScreen.route) }
+                    onClickCard = { navController.navigate(route = AppScreen.ChildrenProfileScreen.route) }
                 )
             }
             ProfileView(modifier = modifier, navController = navController)
@@ -102,27 +102,27 @@ fun ProfileView(modifier: Modifier, navController: NavHostController) {
 
 @Composable
 fun CardExampleDos(
-    user: UserModel,
+    user: ChildrenModel,
     navController: NavHostController,
-    onItemSelected: (UserModel) -> Unit
+    onItemSelected: (ChildrenModel) -> Unit
 ) {
     CardProfileUser(image = R.drawable.profile_avatar,
-        title = user.userName,
+        title = user.name,
         onClickCard = { navController.navigate(route = AppScreen.SpecialistDetailsScreen.route) })
 
 }
 
-fun getChapterItem(): List<UserModel> {
+fun getChapterItem(): List<ChildrenModel> {
     return listOf(
-        UserModel(id = "1", userName = "Alberto Wirstes", image = ""),
-        UserModel(id = "2", userName = "Sabrina Gomez", image = ""),
-        UserModel(id = "3", userName = "Norma Gonzales", image = ""),
-        UserModel(id = "4", userName = "Nicolas Orue", image = ""),
-        UserModel(id = "5", userName = "Esther Segovia", image = ""),
-        UserModel(id = "6", userName = "Juan Carnizo", image = ""),
-        UserModel(id = "7", userName = "Victor Alvarez", image = ""),
-        UserModel(id = "8", userName = "Karina Gomez", image = ""),
-        UserModel(id = "9", userName = "Daniel Arribas", image = ""),
+        ChildrenModel(id = "1", name = "Alberto Wirstes", image = ""),
+        ChildrenModel(id = "2", name = "Sabrina Gomez", image = ""),
+        ChildrenModel(id = "3", name = "Norma Gonzales", image = ""),
+        ChildrenModel(id = "4", name = "Nicolas Orue", image = ""),
+        ChildrenModel(id = "5", name = "Esther Segovia", image = ""),
+        ChildrenModel(id = "6", name = "Juan Carnizo", image = ""),
+        ChildrenModel(id = "7", name = "Victor Alvarez", image = ""),
+        ChildrenModel(id = "8", name = "Karina Gomez", image = ""),
+        ChildrenModel(id = "9", name = "Daniel Arribas", image = ""),
 
         )
 }

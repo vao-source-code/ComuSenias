@@ -10,27 +10,29 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.comusenias.constants.TestTag
+import com.example.comusenias.presentation.navigation.AuthScreen
 import com.example.comusenias.presentation.ui.theme.forgotPassword
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
 import com.example.comusenias.presentation.ui.theme.SIZE10
 import com.example.comusenias.presentation.ui.theme.size14
+import com.example.comusenias.presentation.view_model.LoginViewModel
 
-@Preview(showBackground = true)
 @Composable
-fun RememberMeAndForgetMyPass() {
+fun RememberMeAndForgetMyPass(viewModel: LoginViewModel, navController: NavHostController) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = SIZE10.dp),
         horizontalArrangement = Arrangement.End
     ) {
-        ForgetMyPass { }
+        ForgetMyPass { navController.navigate(AuthScreen.ResetPasswordScreen.route) }
     }
 }
+
 @Composable
 fun ForgetMyPass(onClickText: () -> Unit = {}) {
     Text(

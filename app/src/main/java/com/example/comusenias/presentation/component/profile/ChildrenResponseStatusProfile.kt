@@ -6,30 +6,27 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.presentation.component.defaults.DefaultLoadingProgressIndicator
-import com.example.comusenias.presentation.ui.theme.ERROR_UNKNOWN
-import com.example.comusenias.presentation.view_model.ChangeProfileViewModel
+import com.example.comusenias.presentation.ui.theme.ERROR_UPDATED_DATA
+import com.example.comusenias.presentation.ui.theme.UPDATED_DATA
+import com.example.comusenias.presentation.view_model.ChildrenProfileViewModel
 
 @Composable
-
-fun SaveImageProfile(viewModel: ChangeProfileViewModel = hiltViewModel()) {
-    when (val response = viewModel.saveImageResponse) {
+fun ChildrenResponseStatusProfile(viewModel: ChildrenProfileViewModel = hiltViewModel()) {
+    when (val updateResponse = viewModel.updateResponse) {
         Response.Loading -> {
             DefaultLoadingProgressIndicator()
         }
 
         is Response.Success -> {
-            viewModel.onUpdate(response.data)
+
+            Toast.makeText(LocalContext.current, UPDATED_DATA, Toast.LENGTH_SHORT).show()
         }
 
         is Response.Error -> {
-            Toast.makeText(
-                LocalContext.current,
-                response.exception?.message ?: ERROR_UNKNOWN,
-                Toast.LENGTH_LONG
-            ).show()
+            Toast.makeText(LocalContext.current, ERROR_UPDATED_DATA, Toast.LENGTH_SHORT)
+                .show()
         }
 
         else -> {}
     }
-
 }

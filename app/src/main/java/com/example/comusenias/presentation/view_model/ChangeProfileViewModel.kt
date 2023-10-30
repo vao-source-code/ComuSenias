@@ -11,18 +11,19 @@ import com.example.comusenias.domain.library.ComposeFileProvider
 import com.example.comusenias.domain.library.LibraryString
 import com.example.comusenias.domain.library.ResultingActivityHandler
 import com.example.comusenias.domain.models.response.Response
-import com.example.comusenias.domain.models.users.UserModel
 import com.example.comusenias.domain.models.state.ChangeProfileState
+import com.example.comusenias.domain.models.users.UserModel
 import com.example.comusenias.domain.use_cases.users.UsersFactoryUseCases
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.PATH_IMAGE
-import com.example.comusenias.presentation.ui.theme.restrictionNameUserAccount
+import com.example.comusenias.presentation.ui.theme.RESTRICTION_NAME_USER_ACCOUNT
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.File
 import javax.inject.Inject
+
 
 @HiltViewModel
 class ChangeProfileViewModel @Inject constructor(
@@ -50,7 +51,7 @@ class ChangeProfileViewModel @Inject constructor(
 
     init {
         state = state.copy(
-            userName = user.userName, image = user.image
+            //userName = user.userName, image = user.image
         )
     }
 
@@ -62,7 +63,7 @@ class ChangeProfileViewModel @Inject constructor(
         }
         update(
             user = UserModel(
-                id = user.id, userName = state.userName, image = state.image
+                // id = user.id, userName = state.userName, image = state.image
             )
         )
     }
@@ -85,7 +86,7 @@ class ChangeProfileViewModel @Inject constructor(
 
     fun onUpdate(url: String) {
         val myUser = UserModel(
-            id = user.id, userName = state.userName, image = url
+            // id = user.id, userName = state.userName, image = url
         )
         update(myUser)
     }
@@ -97,16 +98,16 @@ class ChangeProfileViewModel @Inject constructor(
     }
 
     fun onUsernameInput(username: String) {
-        state = state.copy(userName = username)
+        state = state.copy(name = username)
     }
 
     fun validateUserName() {
-        if (LibraryString.validUserName(state.userName)) {
+        if (LibraryString.validUserName(state.name)) {
             isUserNameValid = true
             errorUserName = EMPTY_STRING
         } else {
             isUserNameValid = false
-            errorUserName = restrictionNameUserAccount
+            errorUserName = RESTRICTION_NAME_USER_ACCOUNT
         }
     }
 }

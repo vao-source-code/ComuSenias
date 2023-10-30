@@ -134,7 +134,7 @@ fun ChangeProfileContent(
             Spacer(modifier = Modifier.height(SIZE55.dp))
 
             TextFieldApp(
-                value = state.userName,
+                value = state.name,
                 onValueChange = { viewModel.onUsernameInput(it) },
                 validateField = { viewModel.validateUserName() },
                 label = CHANGE_PROFILE_USER,

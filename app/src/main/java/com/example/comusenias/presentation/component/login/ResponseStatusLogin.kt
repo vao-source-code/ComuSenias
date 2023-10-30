@@ -7,43 +7,62 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
+import com.example.comusenias.constants.PreferencesConstant
 import com.example.comusenias.domain.models.response.Response
+import com.example.comusenias.domain.models.users.Rol
 import com.example.comusenias.presentation.component.defaults.DefaultLoadingProgressIndicator
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.LOGIN_ERROR
-import com.example.comusenias.presentation.ui.theme.LOGIN_SUCCESS
-import com.google.firebase.auth.FirebaseUser
+import com.example.comusenias.presentation.view_model.LoginViewModel
 
 @Composable
-fun ResponseStatus(
-    navController: NavHostController,
-    response: Response<FirebaseUser>?
+fun ResponseStatusLogin(
+    navController: NavHostController, viewModel: LoginViewModel
 ) {
-    when (response) {
+
+    when (viewModel.loginResponse) {
         Response.Loading -> {
             Box(
                 contentAlignment = Alignment.Center,
             ) {
                 DefaultLoadingProgressIndicator()
+
             }
         }
 
         is Response.Success -> {
             LaunchedEffect(Unit) {
-                navController.navigate(route = AppScreen.HomeScreen.route) {
+
+                val targetRoute = when (viewModel.dataRolStorageFactory.getRolValue(
+                    PreferencesConstant.PREFERENCE_ROL_CURRENT
+                )) {
+                    Rol.CHILDREN.toString() -> {
+                        AppScreen.HomeScreen.route
+                    }
+
+                    Rol.SPECIALIST.toString() -> {
+                        AppScreen.SpecialistScreen.route
+                    }
+
+                    else -> {
+                        viewModel.initRol()
+                        AppScreen.SplashScreen.route
+                    }
+                }
+
+                navController.navigate(route = targetRoute) {
                     popUpTo(AppScreen.LoginScreen.route) {
                         inclusive = true
                     }
                 }
+
             }
-            Toast.makeText(LocalContext.current, LOGIN_SUCCESS, Toast.LENGTH_SHORT)
-                .show()
         }
 
         is Response.Error -> {
             Toast.makeText(
                 LocalContext.current,
-                response.exception?.message + LOGIN_ERROR,
+                (viewModel.loginResponse as Response.Error).exception?.message + LOGIN_ERROR,
                 Toast.LENGTH_SHORT
             ).show()
         }

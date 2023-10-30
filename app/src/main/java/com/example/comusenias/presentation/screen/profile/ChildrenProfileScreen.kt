@@ -10,16 +10,15 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.comusenias.presentation.component.bottomBar.ShowBottomBar
-import com.example.comusenias.presentation.component.profile.ProfileContent
-import com.example.comusenias.presentation.component.profile.ProfileFooterContent
-import com.example.comusenias.presentation.navigation.AppScreen
-import com.example.comusenias.presentation.view_model.ProfileViewModel
+import com.example.comusenias.presentation.component.profile.ChildrenProfileContent
+import com.example.comusenias.presentation.component.profile.ChildrenProfileFooterContent
+import com.example.comusenias.presentation.view_model.ChildrenProfileViewModel
 
 @Composable
-fun ProfileScreen(
+fun ChildrenProfileScreen(
     navController: NavHostController,
     modifier: Modifier,
-    viewModel: ProfileViewModel = hiltViewModel()
+    viewModel: ChildrenProfileViewModel = hiltViewModel()
 ) {
     Scaffold(
         bottomBar = {
@@ -32,16 +31,15 @@ fun ProfileScreen(
                 .padding(paddingValues)
         ) {
             Column(modifier = Modifier.fillMaxSize()) {
-                ProfileContent(
+                ChildrenProfileContent(
                     viewModel = viewModel
                 )
-                val onClick = {
-                    navController.navigate(
-                        route = AppScreen.ChangeProfileScreen.createRoute(viewModel.userData.toJson())
-                    )
-                }
-                ProfileFooterContent(
-                    onClickButton = onClick
+                val onClick: () -> Unit =
+                    {
+                        viewModel.saveImage()
+                    }
+                ChildrenProfileFooterContent(
+                    onClickChangeProfile = onClick
                 )
             }
         }

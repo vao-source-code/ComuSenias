@@ -1,29 +1,43 @@
 package com.example.comusenias.core.di
 
+import com.example.comusenias.constants.FirebaseConstants.CHILDREN_COLLECTION
 import com.example.comusenias.constants.FirebaseConstants.GAME_COLLECTION
 import com.example.comusenias.constants.FirebaseConstants.LETTERS_COLLECTION
 import com.example.comusenias.constants.FirebaseConstants.LEVEL_COLLECTION
+import com.example.comusenias.constants.FirebaseConstants.SPECIALIST_COLLECTION
 import com.example.comusenias.constants.FirebaseConstants.SUB_LEVEL_COLLECTION
 import com.example.comusenias.constants.FirebaseConstants.USERS_COLLECTION
+import com.example.comusenias.data.repositories.ChildrenRepositoryImpl
+import com.example.comusenias.data.repositories.SpecialistRepositoryImpl
 import com.example.comusenias.data.repositories.firebase.AuthRepositoryImpl
 import com.example.comusenias.data.repositories.firebase.LetterImageRepositoryImpl
 import com.example.comusenias.data.repositories.firebase.LevelRepositoryImpl
 import com.example.comusenias.data.repositories.firebase.UsersRepositoryImpl
 import com.example.comusenias.domain.repositories.AuthRepository
+import com.example.comusenias.domain.repositories.ChildrenRepository
 import com.example.comusenias.domain.repositories.LetterImageRepository
 import com.example.comusenias.domain.repositories.LevelRepository
+import com.example.comusenias.domain.repositories.SpecialistRepository
 import com.example.comusenias.domain.repositories.UsersRepository
-import com.example.comusenias.domain.models.auth.AuthFactory
+import com.example.comusenias.domain.use_cases.auth.AuthFactoryUseCases
 import com.example.comusenias.domain.use_cases.auth.GetCurrentUserUseCase
 import com.example.comusenias.domain.use_cases.auth.LoginUseCase
 import com.example.comusenias.domain.use_cases.auth.LogoutUseCase
 import com.example.comusenias.domain.use_cases.auth.RegisterUseCase
+import com.example.comusenias.domain.use_cases.auth.ResetPasswordUseCase
+import com.example.comusenias.domain.use_cases.children.ChildrenFactory
+import com.example.comusenias.domain.use_cases.children.CreateChildren
+import com.example.comusenias.domain.use_cases.children.GetChildrenById
+import com.example.comusenias.domain.use_cases.children.SaveImageChildren
+import com.example.comusenias.domain.use_cases.children.UpdateChildren
 import com.example.comusenias.domain.use_cases.letters.GetImageUseCase
 import com.example.comusenias.domain.use_cases.letters.LettersFactoryUseCases
 import com.example.comusenias.domain.use_cases.letters.SearchImageLetterUseCase
 import com.example.comusenias.domain.use_cases.level.GetLevels
 import com.example.comusenias.domain.use_cases.level.LevelFactory
 import com.example.comusenias.domain.use_cases.level.SearchLevelName
+import com.example.comusenias.domain.use_cases.specialist.CreateSpecialist
+import com.example.comusenias.domain.use_cases.specialist.SpecialistFactory
 import com.example.comusenias.domain.use_cases.users.CreateUserUseCase
 import com.example.comusenias.domain.use_cases.users.GetUserByIdUseCase
 import com.example.comusenias.domain.use_cases.users.SaveImageUserUseCase
@@ -57,11 +71,12 @@ object FirebaseModule {
 
     @Provides
     fun providerAuthUseCases(authRepository: AuthRepository) =
-        AuthFactory(
+        AuthFactoryUseCases(
             getCurrentUserUseCase = GetCurrentUserUseCase(authRepository),
             loginUseCase = LoginUseCase(authRepository),
             logoutUseCase = LogoutUseCase(authRepository),
-            registerUseCase = RegisterUseCase(authRepository)
+            registerUseCase = RegisterUseCase(authRepository),
+            resetPasswordUseCase = ResetPasswordUseCase(authRepository)
         )
 
     /*----------------------------- Firestore --------------------------------------------------- */
@@ -74,6 +89,11 @@ object FirebaseModule {
     @Named(USERS_COLLECTION)
     fun providerUserRef(db: FirebaseFirestore): CollectionReference =
         db.collection(USERS_COLLECTION)
+
+    @Provides
+    @Named(CHILDREN_COLLECTION)
+    fun providerChildrenRef(db: FirebaseFirestore): CollectionReference =
+        db.collection(CHILDREN_COLLECTION)
 
     @Provides
     @Named(LETTERS_COLLECTION)
@@ -94,16 +114,27 @@ object FirebaseModule {
     @Named(GAME_COLLECTION)
     fun providerGameRef(db: FirebaseFirestore): CollectionReference = db.collection(GAME_COLLECTION)
 
+    @Provides
+    @Named(SPECIALIST_COLLECTION)
+    fun providerSpecialistRef(db: FirebaseFirestore): CollectionReference =
+        db.collection(SPECIALIST_COLLECTION)
+
     /*----------------------------- Repositories ------------------------------------------------ */
 
     @Provides
     fun providerUsersRepository(impl: UsersRepositoryImpl): UsersRepository = impl
 
     @Provides
+    fun providerChildrenRepository(impl: ChildrenRepositoryImpl): ChildrenRepository = impl
+
+    @Provides
     fun providerLetterImageRepository(impl: LetterImageRepositoryImpl): LetterImageRepository = impl
 
     @Provides
     fun providerLevelRepository(impl: LevelRepositoryImpl): LevelRepository = impl
+
+    @Provides
+    fun providerSpecialistRepository(impl: SpecialistRepositoryImpl): SpecialistRepository = impl
 
     /*----------------------------- Use Cases --------------------------------------------------- */
     @Provides
@@ -113,6 +144,7 @@ object FirebaseModule {
         updateUserUseCase = UpdateUserUseCase(usersRepository),
         saveImageUserUseCase = SaveImageUserUseCase(usersRepository)
     )
+
     @Provides
     fun providerLettersUseCases(letterImageRepository: LetterImageRepository) =
         LettersFactoryUseCases(
@@ -121,10 +153,26 @@ object FirebaseModule {
         )
 
     @Provides
-    fun providerLevelUseCases(levelRepository: LevelRepository) = LevelFactory(
-        getLevels = GetLevels(levelRepository),
-        searchLevelName = SearchLevelName(levelRepository)
-    )
+    fun providerLevelUseCases(levelRepository: LevelRepository) =
+        LevelFactory(
+            getLevels = GetLevels(levelRepository),
+            searchLevelName = SearchLevelName(levelRepository)
+        )
+
+    @Provides
+    fun providerChildrenUseCases(usersRepository: ChildrenRepository) =
+        ChildrenFactory(
+            createChildren = CreateChildren(usersRepository),
+            getChildrenById = GetChildrenById(usersRepository),
+            saveImageChildren = SaveImageChildren(usersRepository),
+            updateChildren = UpdateChildren(usersRepository)
+        )
+
+    @Provides
+    fun providerSpecialistUseCases(usersRepository: SpecialistRepository) =
+        SpecialistFactory(
+            createSpecialist = CreateSpecialist(usersRepository),
+        )
 
     /*----------------------------- Storage ----------------------------------------------------- */
     @Provides
@@ -134,6 +182,11 @@ object FirebaseModule {
     @Named(USERS_COLLECTION)
     fun providerStorageRefUsers(storage: FirebaseStorage) =
         storage.reference.child(USERS_COLLECTION)
+
+    @Provides
+    @Named(CHILDREN_COLLECTION)
+    fun providerStorageRefChildren(storage: FirebaseStorage) =
+        storage.reference.child(CHILDREN_COLLECTION)
 
     @Provides
     @Named(LETTERS_COLLECTION)
@@ -149,5 +202,10 @@ object FirebaseModule {
     @Named(SUB_LEVEL_COLLECTION)
     fun providerStorageRefSubLevel(storage: FirebaseStorage) =
         storage.reference.child(SUB_LEVEL_COLLECTION)
+
+    @Provides
+    @Named(SPECIALIST_COLLECTION)
+    fun providerStorageRefSpecialist(storage: FirebaseStorage) =
+        storage.reference.child(SPECIALIST_COLLECTION)
 
 }

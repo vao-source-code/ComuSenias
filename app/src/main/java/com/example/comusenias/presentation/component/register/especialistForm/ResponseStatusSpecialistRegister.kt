@@ -1,4 +1,4 @@
-package com.example.comusenias.presentation.component.register
+package com.example.comusenias.presentation.component.register.especialistForm
 
 import android.widget.Toast
 import androidx.compose.runtime.Composable
@@ -8,13 +8,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.presentation.component.defaults.DefaultLoadingProgressIndicator
+import com.example.comusenias.presentation.component.defaults.app.showToast
 import com.example.comusenias.presentation.navigation.AppScreen
-import com.example.comusenias.presentation.view_model.RegisterViewModel
+import com.example.comusenias.presentation.view_model.SpecialistRegisterViewModel
 
 @Composable
-fun ResponseStatusRegister(
+fun ResponseStatusChildrenRegister(
     navController: NavHostController,
-    viewModel: RegisterViewModel = hiltViewModel()
+    viewModel: SpecialistRegisterViewModel = hiltViewModel()
 ) {
     when (val registerResponse = viewModel.registerResponse) {
         is Response.Loading -> {
@@ -24,18 +25,17 @@ fun ResponseStatusRegister(
         is Response.Success -> {
             LaunchedEffect(Unit) {
                 viewModel.createUser()
-                //Elimino asi el total del historial de atras
                 navController.popBackStack(AppScreen.LoginScreen.route, inclusive = true)
-                navController.navigate(route = AppScreen.ProfileScreen.route)
+                navController.navigate(route = AppScreen.SpecialistScreen.route)
             }
         }
 
         is Response.Error -> {
-            Toast.makeText(
+            showToast(
                 LocalContext.current,
-                registerResponse.exception?.message,
+                registerResponse.exception?.message.toString(),
                 Toast.LENGTH_SHORT
-            ).show()
+            )
         }
 
         else -> {}
