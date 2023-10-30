@@ -8,6 +8,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.comusenias.presentation.component.login.ResetPasswordScreen
+import com.example.comusenias.presentation.screen.login.LoadingLoginScreen
 import com.example.comusenias.presentation.screen.login.LoginScreen
 import com.example.comusenias.presentation.screen.onboarding.OnBoardingScreen
 import com.example.comusenias.presentation.screen.register.ChildFormScreen
@@ -23,6 +24,9 @@ fun NavGraphBuilder.authNavGraph(navController: NavHostController, modifier: Mod
 
         composable(route = AuthScreen.LoginScreen.route) {
             LoginScreen(navController = navController, modifier = modifier)
+        }
+        composable(route = AuthScreen.LoadingScreen.route) {
+            LoadingLoginScreen(navController = navController, modifier = modifier)
         }
         composable(route = AuthScreen.RegisterScreen.route) {
             RegisterScreen(navController = navController, modifier = modifier)
@@ -49,4 +53,5 @@ sealed class AuthScreen(val route: String) {
     object LoginScreen : AuthScreen("login_screen")
     object RegisterScreen : AuthScreen("register_screen")
     object ResetPasswordScreen : AuthScreen("reset_password_screen")
+    object LoadingScreen : AuthScreen("loading_screen")
 }
