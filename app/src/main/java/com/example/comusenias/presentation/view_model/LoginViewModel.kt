@@ -41,11 +41,13 @@ class LoginViewModel @Inject constructor(
     var isPasswordValid: Boolean by mutableStateOf(false)
     var errorPassword: String by mutableStateOf(EMPTY_STRING)
     var isLoginEnabled = false
-    val currentUser = authUseCases.getCurrentUserUseCase()
+    var currentUser = authUseCases.getCurrentUserUseCase()
     var rol: String by mutableStateOf(EMPTY_STRING)
 
     init {
-        currentUser?.let { loginResponse = Response.Success(it) }
+        currentUser?.let {
+            loginResponse = Response.Success(it)
+        }
         onLogin()
     }
 
@@ -108,8 +110,11 @@ class LoginViewModel @Inject constructor(
     }
 
     fun initRol() = viewModelScope.launch(IO) {
-        if (dataRolStorageFactory.getRolValue(PREFERENCE_ROL_CURRENT) == null) {
-            onLogin()
+        currentUser = authUseCases.getCurrentUserUseCase()
+        currentUser?.let {
+            usersUseCase.getUserByIdUseCase(it.uid).collect { user ->
+                dataRolStorageFactory.putRolValue(PREFERENCE_ROL_CURRENT, user.rol)
+            }
         }
     }
 
