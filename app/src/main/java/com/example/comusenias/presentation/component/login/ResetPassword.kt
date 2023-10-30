@@ -30,7 +30,6 @@ fun ResetPasswordScreen(
 
     ResponsePasswordReset(
         response = viewModel.loginReset,
-        navController = navController,
     )
 
     Column(
