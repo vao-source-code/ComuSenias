@@ -26,7 +26,7 @@ fun getBottomBarItems(): List<BottomBarItem> {
             selectedIcon = R.drawable.workspace_premium,
             unselectedIcon = R.drawable.workspace_premium,
         ), BottomBarItem(
-            route = AppScreen.ProfileScreen.route,
+            route = AppScreen.ChildrenProfileScreen.route,
             title = PROFILE_TEXT,
             selectedIcon = R.drawable.girl,
             unselectedIcon = R.drawable.children,

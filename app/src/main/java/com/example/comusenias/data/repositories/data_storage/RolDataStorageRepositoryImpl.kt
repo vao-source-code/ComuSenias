@@ -6,15 +6,15 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.example.comusenias.constants.PreferencesConstant
 import com.example.comusenias.domain.repositories.RolDataStorageRepository
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 private val Context.dataStore by preferencesDataStore(name = PreferencesConstant.PREFERENCE_ROL_CURRENT)
 
-
 class RolDataStorageRepositoryImpl @Inject constructor(private val context: Context) :
     RolDataStorageRepository {
-
 
     override suspend fun putRolValue(key: String, value: String) {
         val preferenceKey = stringPreferencesKey(key)
@@ -26,9 +26,10 @@ class RolDataStorageRepositoryImpl @Inject constructor(private val context: Cont
     override suspend fun getRolValue(key: String): String? {
         return try {
             val preferenceKey = stringPreferencesKey(key)
-            val preferences = context.dataStore.data.first()
-            val json = preferences[preferenceKey]
-            json
+            val json = withContext(IO) {
+                context.dataStore.data.first()
+            }
+            json[preferenceKey]
         } catch (e: Exception) {
             e.printStackTrace()
             ""

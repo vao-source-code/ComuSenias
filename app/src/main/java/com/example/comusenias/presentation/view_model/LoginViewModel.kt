@@ -26,7 +26,7 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val authUseCases: AuthFactoryUseCases,
     private val usersUseCase: UsersFactoryUseCases,
-    public val dataRolStorageFactory: DataRolStorageFactory
+    val dataRolStorageFactory: DataRolStorageFactory
 ) :
     ViewModel() {
 
@@ -105,14 +105,6 @@ class LoginViewModel @Inject constructor(
 
     fun onPasswordInput(password: String) {
         state = state.copy(password = password)
-    }
-
-
-    fun putRol(uid: String) = viewModelScope.launch(IO) {
-        usersUseCase.getUserByIdUseCase(uid).collect { user ->
-            dataRolStorageFactory.putRolValue(PREFERENCE_ROL_CURRENT, user.rol)
-            rolLogin()
-        }
     }
 
     fun initRol() = viewModelScope.launch(IO) {

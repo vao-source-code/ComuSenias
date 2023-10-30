@@ -13,7 +13,6 @@ import com.example.comusenias.domain.models.users.Rol
 import com.example.comusenias.presentation.component.defaults.DefaultLoadingProgressIndicator
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.LOGIN_ERROR
-import com.example.comusenias.presentation.ui.theme.LOGIN_SUCCESS
 import com.example.comusenias.presentation.view_model.LoginViewModel
 
 @Composable
@@ -27,13 +26,13 @@ fun ResponseStatusLogin(
                 contentAlignment = Alignment.Center,
             ) {
                 DefaultLoadingProgressIndicator()
+
             }
         }
 
         is Response.Success -> {
-
-
             LaunchedEffect(Unit) {
+
                 val targetRoute = when (viewModel.dataRolStorageFactory.getRolValue(
                     PreferencesConstant.PREFERENCE_ROL_CURRENT
                 )) {
@@ -47,7 +46,7 @@ fun ResponseStatusLogin(
 
                     else -> {
                         viewModel.initRol()
-                        AppScreen.LoginScreen.route
+                        AppScreen.SplashScreen.route
                     }
                 }
 
@@ -58,7 +57,6 @@ fun ResponseStatusLogin(
                 }
 
             }
-            Toast.makeText(LocalContext.current, LOGIN_SUCCESS, Toast.LENGTH_SHORT).show()
         }
 
         is Response.Error -> {

@@ -62,7 +62,7 @@ private fun GetNavHost(
 
         authNavGraph(navController = navController, modifier = modifier)
 
-        composable(AppScreen.ProfileScreen.route) {
+        composable(AppScreen.ChildrenProfileScreen.route) {
             ChildrenProfileScreen(navController = navController, modifier = modifier)
         }
         composable(AppScreen.HomeScreen.route) {

@@ -28,11 +28,10 @@ import com.example.comusenias.domain.models.users.ChildrenModel
 import com.example.comusenias.presentation.component.specialist.CardHomeSpecialist
 import com.example.comusenias.presentation.component.specialist.CardProfileUser
 import com.example.comusenias.presentation.navigation.AppScreen
+import com.example.comusenias.presentation.ui.theme.SIZE10
 import com.example.comusenias.presentation.ui.theme.SIZE26
 import com.example.comusenias.presentation.ui.theme.SIZE30
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
-import com.example.comusenias.presentation.ui.theme.SIZE10
-import com.example.comusenias.presentation.ui.theme.SIZE30
 
 @Composable
 fun SpecialistScreen(navController: NavHostController, modifier: Modifier) {
@@ -67,7 +66,7 @@ fun SpecialistHomeExample(navController: NavHostController, modifier: Modifier) 
                     image = R.drawable.diagnostic_category,
                     title = "Juan Perez",
                     subtitle = "Psicologo Infantil",
-                    onClickCard = { navController.navigate(route = AppScreen.ProfileScreen.route) }
+                    onClickCard = { navController.navigate(route = AppScreen.ChildrenProfileScreen.route) }
                 )
             }
             ProfileView(modifier = modifier, navController = navController)
