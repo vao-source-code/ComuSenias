@@ -31,7 +31,6 @@ class LoginViewModel @Inject constructor(
     ViewModel() {
 
     var loginResponse by mutableStateOf<Response<FirebaseUser>?>(null)
-
     var loginReset by mutableStateOf<Response<Boolean>?>(null)
 
     var state by mutableStateOf(LoginState())
@@ -41,11 +40,13 @@ class LoginViewModel @Inject constructor(
     var isPasswordValid: Boolean by mutableStateOf(false)
     var errorPassword: String by mutableStateOf(EMPTY_STRING)
     var isLoginEnabled = false
-    val currentUser = authUseCases.getCurrentUserUseCase()
+    var currentUser = authUseCases.getCurrentUserUseCase()
     var rol: String by mutableStateOf(EMPTY_STRING)
 
     init {
-        currentUser?.let { loginResponse = Response.Success(it) }
+        currentUser?.let {
+            loginResponse = Response.Success(it)
+        }
         onLogin()
     }
 
@@ -88,15 +89,15 @@ class LoginViewModel @Inject constructor(
     }
 
     fun resetPassword() = viewModelScope.launch(IO) {
-        loginReset = Response.Loading
         if (isEmailValid) {
-            val result = authUseCases.resetPasswordUseCase(state.email)
-            loginReset = result
-        } else {
-            errorEmail = INVALID_EMAIL
+            loginReset = Response.Loading
+            if (isEmailValid) {
+                val result = authUseCases.resetPasswordUseCase(state.email)
+                loginReset = result
+            } else {
+                errorEmail = INVALID_EMAIL
+            }
         }
-
-
     }
 
     fun onEmailInput(email: String) {
@@ -108,8 +109,11 @@ class LoginViewModel @Inject constructor(
     }
 
     fun initRol() = viewModelScope.launch(IO) {
-        if (dataRolStorageFactory.getRolValue(PREFERENCE_ROL_CURRENT) == null) {
-            onLogin()
+        currentUser = authUseCases.getCurrentUserUseCase()
+        currentUser?.let {
+            usersUseCase.getUserByIdUseCase(it.uid).collect { user ->
+                dataRolStorageFactory.putRolValue(PREFERENCE_ROL_CURRENT, user.rol)
+            }
         }
     }
 

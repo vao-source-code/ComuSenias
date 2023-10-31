@@ -25,7 +25,7 @@ import com.example.comusenias.presentation.ui.theme.SIZE16
 import com.example.comusenias.presentation.ui.theme.SIZE36
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.iconColorProgress
-import com.example.comusenias.presentation.ui.theme.size10
+import com.example.comusenias.presentation.ui.theme.SIZE10
 
 @Composable
 fun TopBarHome(
@@ -63,7 +63,7 @@ fun ContentHelloUser(
 ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(
-            size10.dp,
+            SIZE10.dp,
             Alignment.End
         ),
         verticalAlignment = Alignment.CenterVertically,

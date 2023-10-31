@@ -1,9 +1,9 @@
 package com.example.comusenias.presentation.view_model
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.models.game.LevelModel
 import com.example.comusenias.domain.models.game.SubLevelModel
+import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.use_cases.level.LevelFactory
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -26,6 +26,7 @@ class LevelViewModelTest {
 
     @RelaxedMockK
     private lateinit var levelUsesCases: LevelFactory
+
     @get:Rule
     var rule: InstantTaskExecutorRule = InstantTaskExecutorRule()
 

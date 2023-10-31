@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.comusenias.presentation.ui.theme.SIZE16
 import com.example.comusenias.presentation.ui.theme.blackColorApp
-import com.example.comusenias.presentation.ui.theme.size10
+import com.example.comusenias.presentation.ui.theme.SIZE10
 import com.example.comusenias.presentation.ui.theme.size14
 
 @Composable
@@ -67,7 +67,7 @@ fun TiltePage(
     title: String
 ) {
     Text(
-        modifier = Modifier.padding(size10.dp),
+        modifier = Modifier.padding(SIZE10.dp),
         text = title,
         style = TextStyle(
             fontSize = SIZE16.sp,

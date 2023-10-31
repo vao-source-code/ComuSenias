@@ -48,8 +48,8 @@ fun PatientProfileContent(navController: NavController) {
         modifier = Modifier.fillMaxSize()
     ) {
         ContentTopProfile(
-            userImage = patient.userModel.image,
-            name = patient.userModel.userName
+            userImage = "patient.userModel.image",
+            name = "patient.userModel.userName"
         )
         Spacer(modifier = Modifier.height(SIZE36.dp))
         TabsPage(

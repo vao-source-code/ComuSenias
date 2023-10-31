@@ -13,14 +13,14 @@ import com.example.comusenias.domain.models.users.ChildrenModel
 import com.example.comusenias.presentation.component.addPatient.FieldWithIcon
 import com.example.comusenias.presentation.ui.theme.AGE
 import com.example.comusenias.presentation.ui.theme.SIZE12
-import com.example.comusenias.presentation.ui.theme.size10
+import com.example.comusenias.presentation.ui.theme.SIZE10
 
 @Composable
 fun ChildData(patient: ChildrenModel) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = size10.dp),
+            .padding(top = SIZE10.dp),
         verticalArrangement = Arrangement.spacedBy(SIZE12.dp)
     ) {
         FieldWithIcon(
@@ -29,11 +29,11 @@ fun ChildData(patient: ChildrenModel) {
         )
         FieldWithIcon(
             icon = painterResource(R.drawable.phone_icon),
-            text = patient.userModel.numberPhone
+            text = "patient.userModel.numberPhone"
         )
         FieldWithIcon(
             icon = painterResource(R.drawable.mail_icon),
-            text = patient.userModel.email
+            text = "patient.userModel.email"
         )
     }
 }

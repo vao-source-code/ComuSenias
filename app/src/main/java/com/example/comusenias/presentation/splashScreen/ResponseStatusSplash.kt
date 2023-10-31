@@ -1,4 +1,4 @@
-package com.example.comusenias.presentation.component.login
+package com.example.comusenias.presentation.splashScreen
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Box
@@ -12,13 +12,11 @@ import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.models.users.Rol
 import com.example.comusenias.presentation.component.defaults.DefaultLoadingProgressIndicator
 import com.example.comusenias.presentation.navigation.AppScreen
-import com.example.comusenias.presentation.navigation.AuthScreen
 import com.example.comusenias.presentation.ui.theme.LOGIN_ERROR
 import com.example.comusenias.presentation.view_model.LoginViewModel
-import kotlinx.coroutines.delay
 
 @Composable
-fun ResponseStatusLogin(
+fun ResponseStatusSplash(
     navController: NavHostController, viewModel: LoginViewModel
 ) {
 
@@ -34,37 +32,28 @@ fun ResponseStatusLogin(
 
         is Response.Success -> {
             LaunchedEffect(Unit) {
-
-                when (viewModel.dataRolStorageFactory.getRolValue(PreferencesConstant.PREFERENCE_ROL_CURRENT)) {
-                    null -> {
-                        viewModel.initRol()
-                        delay(2000)
-                        navController.navigate(route = AuthScreen.LoadingScreen.route) {
-                            popUpTo(AppScreen.LoginScreen.route) {
-                                inclusive = true
-                            }
-                        }
+                val targetRoute = when (viewModel.dataRolStorageFactory.getRolValue(
+                    PreferencesConstant.PREFERENCE_ROL_CURRENT
+                )) {
+                    Rol.CHILDREN.toString() -> {
+                        AppScreen.HomeScreen.route
                     }
 
                     Rol.SPECIALIST.toString() -> {
-                        navController.navigate(route = AppScreen.SpecialistScreen.route) {
-                            popUpTo(AppScreen.LoginScreen.route) {
-                                inclusive = true
-                            }
-                        }
-                    }
-
-                    Rol.CHILDREN.toString() -> {
-                        navController.navigate(route = AppScreen.HomeScreen.route) {
-                            popUpTo(AppScreen.LoginScreen.route) {
-                                inclusive = true
-                            }
-                        }
+                        AppScreen.SpecialistScreen.route
                     }
 
                     else -> {
+                        AppScreen.LoginScreen.route
                     }
                 }
+
+                navController.navigate(route = targetRoute) {
+                    popUpTo(AppScreen.SplashScreen.route) {
+                        inclusive = true
+                    }
+                }
+
             }
         }
 
@@ -76,6 +65,15 @@ fun ResponseStatusLogin(
             ).show()
         }
 
-        else -> {}
+        else -> {
+
+            navController.navigate(
+                route = AppScreen.LoginScreen.route
+            ) {
+                popUpTo(AppScreen.SplashScreen.route) {
+                    inclusive = true
+                }
+            }
+        }
     }
 }

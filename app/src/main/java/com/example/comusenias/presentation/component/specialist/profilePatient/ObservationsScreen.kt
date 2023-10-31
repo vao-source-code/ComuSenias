@@ -28,7 +28,7 @@ import com.example.comusenias.presentation.ui.theme.SIZE16
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.line_divisor
 import com.example.comusenias.presentation.ui.theme.size1
-import com.example.comusenias.presentation.ui.theme.size10
+import com.example.comusenias.presentation.ui.theme.SIZE10
 import com.example.comusenias.presentation.ui.theme.size14
 import com.example.comusenias.presentation.ui.theme.size6
 
@@ -71,7 +71,7 @@ fun CardObservation(observation: Observation) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = size10.dp),
+            .padding(top = SIZE10.dp),
         verticalArrangement = Arrangement.spacedBy(size6.dp)
     ) {
         Text(

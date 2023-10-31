@@ -42,8 +42,8 @@ fun AddPatientScreen(modifier: Modifier, navHostController: NavHostController) {
             verticalArrangement = Arrangement.Top
         ) {
             UserProfileContent(
-                image = patient.userModel.image,
-                name = patient.userModel.userName
+                image = "patient.userModel.image",
+                name = "patient.userModel.userName"
             )
             Spacer(modifier = Modifier.height(SIZE48.dp))
             ChildData(patient = patient)
