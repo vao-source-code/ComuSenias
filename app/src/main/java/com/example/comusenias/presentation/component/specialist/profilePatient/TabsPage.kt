@@ -27,7 +27,7 @@ import com.example.comusenias.presentation.ui.theme.size14
 fun TabsPage(
     tabContent: List<@Composable () -> Unit>
 ) {
-    val titles = listOf("Perfil", "Progreso", "Observaciones")
+    val titles = listOf("Progreso", "Observaciones")
     var tabIndex by remember { mutableStateOf(0) }
 
     Scaffold(

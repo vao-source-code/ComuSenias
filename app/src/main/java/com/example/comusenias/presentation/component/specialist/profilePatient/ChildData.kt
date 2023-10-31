@@ -19,8 +19,7 @@ import com.example.comusenias.presentation.ui.theme.SIZE10
 fun ChildData(patient: ChildrenModel) {
     Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = SIZE10.dp),
+            .fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(SIZE12.dp)
     ) {
         FieldWithIcon(
