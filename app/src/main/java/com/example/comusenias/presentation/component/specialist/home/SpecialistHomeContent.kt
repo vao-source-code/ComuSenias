@@ -44,8 +44,8 @@ fun SpecialistHomeContent(
         topBar = {
             Surface(shadowElevation = SIZE3.dp) {
                 TopBarHome(
-                    name = "specialist.userModel.userName",
-                    image = "specialist.userModel.image"
+                    name = specialist.name,
+                    image = specialist.image
                 ) { navController.navigate(AppScreen.NotificationScreen.route) }
             }
         },

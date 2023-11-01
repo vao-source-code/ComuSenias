@@ -3,11 +3,13 @@ package com.example.comusenias.presentation.component.home
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -53,13 +55,17 @@ fun ContentHelloUser(
         ),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        AsyncImage(
-            modifier = Modifier.size(SIZE36.dp),
-            model = image ,
-            contentDescription = PROFILE_USER,
-            contentScale = ContentScale.FillBounds,
-            error = painterResource(R.drawable.profile_avatar)
-        )
+        if (image != null) {
+            AsyncImage(
+                modifier = Modifier
+                    .size(SIZE36.dp)
+                    .clip(CircleShape),
+                model = image,
+                contentDescription = PROFILE_USER,
+                contentScale = ContentScale.Crop,
+                error = painterResource(image.toInt())
+            )
+        }
         Text(
             text = name,
             style = TextStyle(

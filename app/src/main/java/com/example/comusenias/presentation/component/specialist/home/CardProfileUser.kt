@@ -8,12 +8,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -34,8 +36,8 @@ import com.example.comusenias.presentation.ui.theme.SIZE10
 
 @Composable
 fun CardProfileUser(user: ChildrenModel, onClickCard: () -> Unit) {
-    val image = "user.userModel.image"
-    val name = remember { "user.userModel.userName "}
+    val image = user.image
+    val name = remember { user.name}
 
     Column(
         modifier = Modifier
@@ -48,14 +50,17 @@ fun CardProfileUser(user: ChildrenModel, onClickCard: () -> Unit) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(SIZE36.dp)
         ) {
-            AsyncImage(
-                model = image,
-                contentDescription = PROFILE_USER,
-                modifier = Modifier
-                    .size(SIZE50.dp),
-                contentScale = ContentScale.Crop,
-                error = painterResource(R.drawable.profile_avatar)
-            )
+            if (image != null) {
+                AsyncImage(
+                    model = image,
+                    contentDescription = PROFILE_USER,
+                    modifier = Modifier
+                        .size(SIZE50.dp)
+                        .clip(CircleShape),
+                    contentScale = ContentScale.Crop,
+                    error = painterResource(image.toInt())
+                )
+            }
             Text(
                 text = name,
                 style = TextStyle(

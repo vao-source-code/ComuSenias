@@ -11,18 +11,19 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.comusenias.presentation.component.defaults.DefaultTopBar
 import com.example.comusenias.presentation.component.specialist.profilePatient.PatientProfileContent
-import com.example.comusenias.presentation.ui.theme.OBSERVATION
 import com.example.comusenias.presentation.ui.theme.SIZE3
 
 @Composable
 fun ProfilePatientScreen(navController: NavHostController, modifier: Modifier) {
+    val patient = DataClassUtil.createSpecialistModelExample().childrenInCharge?.get(0)!!
+    val observations = patient.observation!!
 
     Box(modifier = modifier.fillMaxSize()) {
         Scaffold(
             topBar = {
                 Surface(shadowElevation = SIZE3.dp) {
                     DefaultTopBar(
-                        title = OBSERVATION,
+                        title = patient.name,
                         upAvailable = true,
                         navHostController = navController
                     )
@@ -34,7 +35,11 @@ fun ProfilePatientScreen(navController: NavHostController, modifier: Modifier) {
                     .fillMaxSize()
                     .padding(paddingValues)
             ) {
-                PatientProfileContent(navController = navController)
+                PatientProfileContent(
+                    navController = navController,
+                    patient = patient,
+                    observations = observations
+                )
             }
         }
     }
