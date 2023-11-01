@@ -14,8 +14,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.comusenias.presentation.ui.theme.ARROWBACK
 import com.example.comusenias.presentation.ui.theme.SIZE16
-import com.example.comusenias.presentation.ui.theme.arrowBack
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -45,7 +45,7 @@ fun DefaultTopBar(
                 IconButton(onClick = { navHostController?.popBackStack() }) {
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
-                        contentDescription = arrowBack,
+                        contentDescription = ARROWBACK,
                         tint = blackColorApp
                     )
                 }
