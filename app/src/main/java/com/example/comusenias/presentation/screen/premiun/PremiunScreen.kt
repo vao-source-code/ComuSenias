@@ -12,6 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.comusenias.presentation.component.bottomBar.ShowBottomBar
+import com.example.comusenias.presentation.component.defaults.app.ButtonApp
+import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.view_model.ChildrenProfileViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -34,6 +36,10 @@ fun PremiunScreen(
         ) {
             Column(modifier = Modifier.fillMaxSize()) {
                 Text(text = "PremiunScreen")
+
+                ButtonApp(titleButton = "QRGenerate") {
+                    navController.navigate(AppScreen.GenerateQRScreen.route)
+                }
             }
         }
     }

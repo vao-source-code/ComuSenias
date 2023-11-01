@@ -15,14 +15,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.comusenias.presentation.component.defaults.ButtonDefault
 import com.example.comusenias.presentation.ui.theme.SIZE10
-import com.example.comusenias.presentation.view_model.QRViewModel
+import com.example.comusenias.presentation.view_model.ScanQRViewModel
 
 
 @Composable
 fun LectorQR(
     navController: NavController,
     modifier: Modifier = Modifier,
-    viewModel: QRViewModel = hiltViewModel()
+    viewModel: ScanQRViewModel = hiltViewModel()
 ) {
 
     val state = viewModel.state

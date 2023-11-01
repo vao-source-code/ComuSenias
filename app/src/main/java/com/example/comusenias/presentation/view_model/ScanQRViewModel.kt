@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class QRViewModel @Inject constructor(
+class ScanQRViewModel @Inject constructor(
     private val childrenUseCases: ChildrenFactory,
     private val specialistUseCases: SpecialistFactory,
     private val qrRepository: QRRepository
