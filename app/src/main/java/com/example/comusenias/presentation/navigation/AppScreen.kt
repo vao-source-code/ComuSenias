@@ -50,4 +50,6 @@ sealed class AppScreen(val route: String) {
         fun createRoute(path: String) = "gallery_screen/${path}"
 
     }
+
+    object LectorQRScreen : AppScreen("lector_qr_screen")
 }

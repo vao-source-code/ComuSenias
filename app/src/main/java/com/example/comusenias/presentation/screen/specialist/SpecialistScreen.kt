@@ -38,6 +38,7 @@ fun SpecialistScreen(navController: NavHostController, modifier: Modifier) {
     SpecialistHomeExample(
         navController = navController, modifier = modifier
     )
+
 }
 
 @Composable
@@ -47,6 +48,7 @@ fun SpecialistHomeExample(navController: NavHostController, modifier: Modifier) 
             .fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
+
         Column(
             modifier = Modifier
                 .fillMaxSize(),
@@ -66,7 +68,7 @@ fun SpecialistHomeExample(navController: NavHostController, modifier: Modifier) 
                     image = R.drawable.diagnostic_category,
                     title = "Juan Perez",
                     subtitle = "Psicologo Infantil",
-                    onClickCard = { navController.navigate(route = AppScreen.ChildrenProfileScreen.route) }
+                    onClickCard = { navController.navigate(route = AppScreen.LectorQRScreen.route) }
                 )
             }
             ProfileView(modifier = modifier, navController = navController)

@@ -29,6 +29,7 @@ import com.example.comusenias.presentation.screen.home.HomeScreen
 import com.example.comusenias.presentation.screen.notification.NotificationScreen
 import com.example.comusenias.presentation.screen.premiun.PremiunScreen
 import com.example.comusenias.presentation.screen.profile.ChildrenProfileScreen
+import com.example.comusenias.presentation.screen.qr.LectorQR
 import com.example.comusenias.presentation.screen.specialist.SpecialistHomeExample
 import com.example.comusenias.presentation.splashScreen.SplashScreen
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
@@ -153,6 +154,12 @@ private fun GetNavHost(
                 navController = navController,
                 path = path,
                 levelViewModel = levelViewModel
+            )
+        }
+
+        composable(AppScreen.LectorQRScreen.route) {
+            LectorQR(
+                navController = navController,
             )
         }
 

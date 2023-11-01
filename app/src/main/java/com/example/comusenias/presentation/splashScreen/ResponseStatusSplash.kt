@@ -66,7 +66,6 @@ fun ResponseStatusSplash(
         }
 
         else -> {
-
             navController.navigate(
                 route = AppScreen.LoginScreen.route
             ) {
