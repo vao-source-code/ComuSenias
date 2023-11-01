@@ -63,7 +63,7 @@ fun ContentHelloUser(
                 model = image,
                 contentDescription = PROFILE_USER,
                 contentScale = ContentScale.Crop,
-                error = painterResource(image.toInt())
+                error = painterResource(id = R.drawable.profile_avatar)
             )
         }
         Text(
