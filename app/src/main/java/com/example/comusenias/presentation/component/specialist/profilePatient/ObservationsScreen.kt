@@ -37,7 +37,7 @@ fun ObservationsScreen(
     observations: List<Observation>, navController: NavController
 ) {
     Scaffold(floatingActionButton = {
-        FloatingButtonDefault(icon = R.drawable.send,
+        FloatingButtonDefault(icon = R.drawable.note_add,
             click = { navController.navigate(AppScreen.SendObservationScreen.route) })
     }) { paddingValues ->
         Box(
