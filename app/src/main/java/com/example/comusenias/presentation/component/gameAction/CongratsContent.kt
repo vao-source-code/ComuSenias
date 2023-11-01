@@ -24,9 +24,9 @@ import com.example.comusenias.presentation.extensions.validation.getChoicesSelec
 import com.example.comusenias.presentation.ui.theme.CONGRATS_TEXT
 import com.example.comusenias.presentation.ui.theme.ERROR_CONGRATS_TEXT
 import com.example.comusenias.presentation.ui.theme.SIZE100
+import com.example.comusenias.presentation.ui.theme.SIZE24
 import com.example.comusenias.presentation.ui.theme.SIZE300
 import com.example.comusenias.presentation.ui.theme.blackColorApp
-import com.example.comusenias.presentation.ui.theme.size24
 
 @Composable
 fun CongratsContent() {
@@ -47,7 +47,7 @@ fun CongratsContent() {
             modifier = Modifier.fillMaxWidth(),
             text = showText(),
             style = TextStyle(
-                fontSize = size24.sp,
+                fontSize = SIZE24.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = blackColorApp,
                 textAlign = TextAlign.Center,

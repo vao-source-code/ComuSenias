@@ -14,9 +14,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction.Companion.Done
 import androidx.compose.ui.unit.dp
-import com.example.comusenias.presentation.ui.theme.SIZE08
 import com.example.comusenias.presentation.ui.theme.SIZE160
 import com.example.comusenias.presentation.ui.theme.SIZE2
+import com.example.comusenias.presentation.ui.theme.SIZE8
 import com.example.comusenias.presentation.ui.theme.line_divisor
 import com.example.comusenias.presentation.ui.theme.size08
 
@@ -25,17 +25,19 @@ fun CustomMultilineHintTextField(
     value: String,
     onValueChanged: (String) -> Unit,
     textStyle: TextStyle = MaterialTheme.typography.bodyMedium,
-    maxLines: Int = SIZE08
+    maxLines: Int = SIZE8
 ) {
     OutlinedTextField(
         modifier = Modifier
-            .fillMaxWidth().height(SIZE160.dp) .border(
+            .fillMaxWidth()
+            .height(SIZE160.dp)
+            .border(
                 width = SIZE2.dp,
                 color = line_divisor,
                 shape = RoundedCornerShape(size08.dp)
             )
-            .background(Color.White, RoundedCornerShape(SIZE08.dp)),
-        shape = RoundedCornerShape(SIZE08.dp),
+            .background(Color.White, RoundedCornerShape(SIZE8.dp)),
+        shape = RoundedCornerShape(SIZE8.dp),
         value = value,
         onValueChange = onValueChanged,
         keyboardOptions = KeyboardOptions(imeAction = Done),

@@ -28,12 +28,12 @@ import com.example.comusenias.presentation.component.defaults.app.ButtonApp
 import com.example.comusenias.presentation.component.specialist.observation.CustomMultilineHintTextField
 import com.example.comusenias.presentation.ui.theme.OBSERVATION
 import com.example.comusenias.presentation.ui.theme.SEND
+import com.example.comusenias.presentation.ui.theme.SIZE1
 import com.example.comusenias.presentation.ui.theme.SIZE12
+import com.example.comusenias.presentation.ui.theme.SIZE20
 import com.example.comusenias.presentation.ui.theme.SIZE3
+import com.example.comusenias.presentation.ui.theme.SIZE40
 import com.example.comusenias.presentation.ui.theme.blackColorApp
-import com.example.comusenias.presentation.ui.theme.size1
-import com.example.comusenias.presentation.ui.theme.size20
-import com.example.comusenias.presentation.ui.theme.size40
 
 @Composable
 fun SendObservationScreen(navController: NavHostController, modifier: Modifier) {
@@ -60,7 +60,7 @@ fun SendObservationScreen(navController: NavHostController, modifier: Modifier) 
         bottomBar = {
             Box(
                 modifier = Modifier
-                    .padding(size20.dp)
+                    .padding(SIZE20.dp)
             ) {
                 ButtonApp(
                     titleButton = SEND,
@@ -73,11 +73,11 @@ fun SendObservationScreen(navController: NavHostController, modifier: Modifier) 
                 .fillMaxSize()
                 .padding(paddingValues)
                 .background(Color.White)
-                .padding(top = size40.dp, start = size20.dp, end = size20.dp)
+                .padding(top = SIZE40.dp, start = SIZE20.dp, end = SIZE20.dp)
         ) {
             Column(
                 modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.spacedBy(size1.dp)
+                verticalArrangement = Arrangement.spacedBy(SIZE1.dp)
             ) {
                 CustomMultilineHintTextField(
                     value = text,

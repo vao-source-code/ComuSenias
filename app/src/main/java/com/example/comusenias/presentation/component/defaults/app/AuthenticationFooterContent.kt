@@ -14,10 +14,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.comusenias.constants.TestTag
+import com.example.comusenias.presentation.ui.theme.SIZE14
+import com.example.comusenias.presentation.ui.theme.SIZE5
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
-import com.example.comusenias.presentation.ui.theme.size14
-import com.example.comusenias.presentation.ui.theme.size5
 
 @Composable
 fun AuthenticationFooterContent(
@@ -31,18 +31,18 @@ fun AuthenticationFooterContent(
     ) {
         Text(
             text = textOne,
-            fontSize = size14.sp,
+            fontSize = SIZE14.sp,
             fontWeight = FontWeight.Medium,
             color = blackColorApp
         )
-        Spacer(modifier = Modifier.width(size5.dp))
+        Spacer(modifier = Modifier.width(SIZE5.dp))
         Text(
             modifier = Modifier
                 .testTag(TestTag.TAG_TEXT_CLICK_FOOTER)
                 .clickable { onClickText() },
             text = textTwo,
             color = primaryColorApp,
-            fontSize = size14.sp,
+            fontSize = SIZE14.sp,
             fontWeight = FontWeight.Bold
         )
     }

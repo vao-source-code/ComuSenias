@@ -22,29 +22,24 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.comusenias.R
 import com.example.comusenias.domain.models.observation.Observation
-import com.example.comusenias.presentation.component.specialist.home.MyFloatingButton
+import com.example.comusenias.presentation.component.defaults.FloatingButtonDefault
 import com.example.comusenias.presentation.navigation.AppScreen
+import com.example.comusenias.presentation.ui.theme.SIZE1
+import com.example.comusenias.presentation.ui.theme.SIZE10
+import com.example.comusenias.presentation.ui.theme.SIZE14
 import com.example.comusenias.presentation.ui.theme.SIZE16
+import com.example.comusenias.presentation.ui.theme.SIZE6
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.line_divisor
-import com.example.comusenias.presentation.ui.theme.size1
-import com.example.comusenias.presentation.ui.theme.SIZE10
-import com.example.comusenias.presentation.ui.theme.size14
-import com.example.comusenias.presentation.ui.theme.size6
 
 @Composable
 fun ObservationsScreen(
-    observations: List<Observation>,
-    navController: NavController
+    observations: List<Observation>, navController: NavController
 ) {
-    Scaffold(
-        floatingActionButton = {
-            MyFloatingButton(
-                icon = R.drawable.send,
-                click = { navController.navigate(AppScreen.SendObservationScreen.route) }
-            )
-        }
-    ) { paddingValues ->
+    Scaffold(floatingActionButton = {
+        FloatingButtonDefault(icon = R.drawable.send,
+            click = { navController.navigate(AppScreen.SendObservationScreen.route) })
+    }) { paddingValues ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -72,33 +67,30 @@ fun CardObservation(observation: Observation) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = SIZE10.dp),
-        verticalArrangement = Arrangement.spacedBy(size6.dp)
+        verticalArrangement = Arrangement.spacedBy(SIZE6.dp)
     ) {
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = observation.dateObservation,
             style = TextStyle(
-                fontSize = size14.sp,
+                fontSize = SIZE14.sp,
                 fontWeight = FontWeight.Medium,
                 color = blackColorApp,
                 textAlign = TextAlign.Right
             )
         )
         Text(
-            modifier = Modifier.fillMaxWidth(),
-            text = "Dr. Gutierrez",
-            style = TextStyle(
-                fontSize = size14.sp,
+            modifier = Modifier.fillMaxWidth(), text = "Dr. Gutierrez", style = TextStyle(
+                fontSize = SIZE14.sp,
                 fontWeight = FontWeight.Bold,
                 color = blackColorApp,
                 textAlign = TextAlign.Left
             )
         )
         Text(
-            modifier = Modifier.fillMaxWidth(),
-            text = observation.observation,
-            style = TextStyle(
-                fontSize = size14.sp,
+            modifier = Modifier.fillMaxWidth(), text = observation.observation, style =
+            TextStyle(
+                fontSize = SIZE14.sp,
                 lineHeight = SIZE16.sp,
                 fontWeight = FontWeight.Normal,
                 color = blackColorApp,
@@ -108,8 +100,7 @@ fun CardObservation(observation: Observation) {
         Divider(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(size1.dp),
-            color = line_divisor
+                .height(SIZE1.dp), color = line_divisor
         )
     }
 }

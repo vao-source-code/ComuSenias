@@ -23,16 +23,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.example.comusenias.R
 import com.example.comusenias.domain.models.users.ChildrenModel
 import com.example.comusenias.presentation.ui.theme.PROFILE_USER
+import com.example.comusenias.presentation.ui.theme.SIZE1
+import com.example.comusenias.presentation.ui.theme.SIZE10
 import com.example.comusenias.presentation.ui.theme.SIZE16
 import com.example.comusenias.presentation.ui.theme.SIZE36
 import com.example.comusenias.presentation.ui.theme.SIZE50
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.line_divisor
-import com.example.comusenias.presentation.ui.theme.size1
-import com.example.comusenias.presentation.ui.theme.SIZE10
 
 @Composable
 fun CardProfileUser(user: ChildrenModel, onClickCard: () -> Unit) {
@@ -73,7 +72,7 @@ fun CardProfileUser(user: ChildrenModel, onClickCard: () -> Unit) {
         Divider(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(size1.dp),
+                .height(SIZE1.dp),
             color = line_divisor
         )
     }

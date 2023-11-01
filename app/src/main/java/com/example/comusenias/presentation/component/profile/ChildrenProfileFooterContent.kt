@@ -8,15 +8,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.comusenias.presentation.component.defaults.app.ButtonApp
+import com.example.comusenias.presentation.ui.theme.SIZE20
 import com.example.comusenias.presentation.ui.theme.UPDATE_DATA
-import com.example.comusenias.presentation.ui.theme.size20
 
 @Composable
 fun ChildrenProfileFooterContent(onClickChangeProfile: () -> Unit?) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(size20.dp),
+            .padding(SIZE20.dp),
         horizontalArrangement = Arrangement.Center
     ) {
         ButtonApp(

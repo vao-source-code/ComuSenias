@@ -18,10 +18,10 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.comusenias.presentation.ui.theme.SIZE10
+import com.example.comusenias.presentation.ui.theme.SIZE14
 import com.example.comusenias.presentation.ui.theme.SIZE16
 import com.example.comusenias.presentation.ui.theme.blackColorApp
-import com.example.comusenias.presentation.ui.theme.SIZE10
-import com.example.comusenias.presentation.ui.theme.size14
 
 @Composable
 fun TabsPage(
@@ -53,7 +53,7 @@ fun TabsPage(
                 modifier = Modifier
                     .padding(paddingValues)
                     .fillMaxWidth()
-                    .padding(horizontal = size14.dp),
+                    .padding(horizontal = SIZE14.dp),
             ) {
                 tabContent[tabIndex]()
             }

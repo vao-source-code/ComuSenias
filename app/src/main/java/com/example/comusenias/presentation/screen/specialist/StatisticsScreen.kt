@@ -19,18 +19,19 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.comusenias.presentation.ui.theme.SIZE10
+import com.example.comusenias.presentation.ui.theme.SIZE14
+import com.example.comusenias.presentation.ui.theme.SIZE24
 import com.example.comusenias.presentation.ui.theme.SIZE30
-import com.example.comusenias.presentation.ui.theme.size14
-import com.example.comusenias.presentation.ui.theme.size24
-import com.example.comusenias.presentation.ui.theme.size7
+import com.example.comusenias.presentation.ui.theme.SIZE7
 
 @Composable
 fun StatisticsScreen() {
-    Column(modifier = Modifier
-        .fillMaxWidth()
-        .padding(size24.dp),
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(SIZE24.dp),
         verticalArrangement = Arrangement.spacedBy(SIZE30.dp)
-        ) {
+    ) {
         GamePerformance.statistics.forEach { gamePerformance ->
             Column(
                 verticalArrangement = Arrangement.spacedBy(SIZE10.dp)
@@ -50,12 +51,12 @@ fun StatisticsScreen() {
 fun StatisticsComponent(letterPerformance: List<LetterPerformance>){
 
     Row(
-        horizontalArrangement = Arrangement.spacedBy(size14.dp),
+        horizontalArrangement = Arrangement.spacedBy(SIZE14.dp),
         verticalAlignment = Alignment.Bottom
     ) {
         letterPerformance.forEach { performance ->
             Column(
-                verticalArrangement = Arrangement.spacedBy(size7.dp),
+                verticalArrangement = Arrangement.spacedBy(SIZE7.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Row(

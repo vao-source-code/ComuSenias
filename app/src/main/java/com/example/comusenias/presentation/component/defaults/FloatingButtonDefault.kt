@@ -1,4 +1,4 @@
-package com.example.comusenias.presentation.component.specialist.home
+package com.example.comusenias.presentation.component.defaults
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
@@ -16,23 +16,20 @@ import com.example.comusenias.presentation.ui.theme.SIZE28
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
 
 @Composable
-fun MyFloatingButton(
-    icon: Int = R.drawable.person_add,
-    click: () -> Unit = {}
+fun FloatingButtonDefault(
+    icon: Int = R.drawable.person_add, click: () -> Unit = {}
 ) {
     FloatingActionButton(
         onClick = { click() },
         modifier = Modifier
             .padding(SIZE16.dp)
             .background(
-                color = primaryColorApp,
-                shape = RoundedCornerShape(SIZE28.dp)
+                color = primaryColorApp, shape = RoundedCornerShape(SIZE28.dp)
             ),
         backgroundColor = primaryColorApp,
     ) {
         Icon(
-            painter = painterResource(id = icon),
-            contentDescription = ADD_PATIENT
+            painter = painterResource(id = icon), contentDescription = ADD_PATIENT
         )
     }
 }

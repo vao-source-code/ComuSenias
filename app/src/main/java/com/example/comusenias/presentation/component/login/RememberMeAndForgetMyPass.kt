@@ -15,10 +15,10 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.comusenias.constants.TestTag
 import com.example.comusenias.presentation.navigation.AuthScreen
+import com.example.comusenias.presentation.ui.theme.SIZE10
+import com.example.comusenias.presentation.ui.theme.SIZE14
 import com.example.comusenias.presentation.ui.theme.forgotPassword
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
-import com.example.comusenias.presentation.ui.theme.SIZE10
-import com.example.comusenias.presentation.ui.theme.size14
 import com.example.comusenias.presentation.view_model.LoginViewModel
 
 @Composable
@@ -41,7 +41,7 @@ fun ForgetMyPass(onClickText: () -> Unit = {}) {
             .clickable { onClickText() },
         text = forgotPassword,
         color = primaryColorApp,
-        fontSize = size14.sp,
+        fontSize = SIZE14.sp,
         fontWeight = FontWeight.Bold
     )
 }
