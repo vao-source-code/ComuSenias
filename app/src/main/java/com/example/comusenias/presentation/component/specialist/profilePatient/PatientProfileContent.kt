@@ -17,9 +17,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import com.example.comusenias.R
 import com.example.comusenias.domain.models.observation.Observation
 import com.example.comusenias.domain.models.users.ChildrenModel
+import com.example.comusenias.presentation.screen.specialist.StatisticsScreen
 import com.example.comusenias.presentation.ui.theme.SELECTED_IMAGE
 import com.example.comusenias.presentation.ui.theme.SIZE100
 import com.example.comusenias.presentation.ui.theme.SIZE20
@@ -39,6 +39,7 @@ fun PatientProfileContent(
         TabsPage(
             tabContent = listOf(
                 {
+                StatisticsScreen()
                 },
                 {
                     ObservationsScreen(
