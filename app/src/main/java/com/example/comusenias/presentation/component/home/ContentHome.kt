@@ -13,15 +13,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.models.game.LevelModel
 import com.example.comusenias.domain.models.game.SubLevelModel
+import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.models.room.SubLevelEntity
 import com.example.comusenias.presentation.component.defaults.app.CircularProgressBar
 import com.example.comusenias.presentation.component.defaults.app.ShowRetrySnackBar
 import com.example.comusenias.presentation.ui.theme.ERROR_RETRY_LEVEL
 import com.example.comusenias.presentation.ui.theme.SIZE1
-import com.example.comusenias.presentation.ui.theme.size14
+import com.example.comusenias.presentation.ui.theme.SIZE14
 import com.example.comusenias.presentation.view_model.LevelViewModel
 import com.example.comusenias.presentation.view_model.SubLevelViewModel
 
@@ -75,8 +75,8 @@ private fun ShowLazyColumn(
         modifier = Modifier
             .fillMaxWidth()
             .padding(
-                start = size14.dp,
-                end = size14.dp,
+                start = SIZE14.dp,
+                end = SIZE14.dp,
             )
             .background(Color.White),
         verticalArrangement = Arrangement.spacedBy(SIZE1.dp)

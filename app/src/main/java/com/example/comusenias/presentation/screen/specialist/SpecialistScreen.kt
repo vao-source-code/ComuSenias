@@ -1,134 +1,129 @@
 package com.example.comusenias.presentation.screen.specialist
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.comusenias.R
+import com.example.comusenias.domain.models.game.LevelModel
+import com.example.comusenias.domain.models.observation.Observation
 import com.example.comusenias.domain.models.users.ChildrenModel
-import com.example.comusenias.presentation.component.specialist.CardHomeSpecialist
-import com.example.comusenias.presentation.component.specialist.CardProfileUser
-import com.example.comusenias.presentation.navigation.AppScreen
-import com.example.comusenias.presentation.ui.theme.SIZE10
-import com.example.comusenias.presentation.ui.theme.SIZE26
-import com.example.comusenias.presentation.ui.theme.SIZE30
-import com.example.comusenias.presentation.ui.theme.primaryColorApp
+import com.example.comusenias.domain.models.users.SpecialistModel
+import com.example.comusenias.presentation.component.specialist.home.SpecialistHomeContent
 
 @Composable
 fun SpecialistScreen(navController: NavHostController, modifier: Modifier) {
-    SpecialistHomeExample(
-        navController = navController, modifier = modifier
-    )
-}
 
-@Composable
-fun SpecialistHomeExample(navController: NavHostController, modifier: Modifier) {
     Box(
-        modifier = Modifier
-            .fillMaxSize(),
-        contentAlignment = Alignment.Center
+        modifier = modifier
+            .fillMaxSize()
+            .background(Color.White)
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Box(
-                Modifier
-                    .shadow(
-                        elevation = SIZE10.dp,
-                        shape = RoundedCornerShape(bottomEnd = SIZE30.dp, bottomStart = SIZE30.dp)
-                    )
-                    .background(primaryColorApp)
-            ) {
-
-                CardHomeSpecialist(
-                    image = R.drawable.diagnostic_category,
-                    title = "Juan Perez",
-                    subtitle = "Psicologo Infantil",
-                    onClickCard = { navController.navigate(route = AppScreen.ChildrenProfileScreen.route) }
-                )
-            }
-            ProfileView(modifier = modifier, navController = navController)
-        }
-    }
-}
-
-@Composable
-fun ProfileView(modifier: Modifier, navController: NavHostController) {
-    Text(
-
-        textAlign = TextAlign.Start,
-        text = "Pacientes",
-        style = TextStyle(fontSize = SIZE26.sp, fontWeight = FontWeight.Bold)
-    )
-
-    LazyVerticalGrid(
-        modifier = modifier,
-        columns = GridCells.Fixed(1),
-    ) {
-        items(getChapterItem()) { chapter ->
-            Column(modifier = Modifier.padding(SIZE10.dp)) {
-                CardExampleDos(
-                    user = chapter,
-                    navController = navController,
-                    {}) //TODO deberia ir los datos del paciente en el {}
-            }
-
-        }
-    }
-}
-
-
-@Composable
-fun CardExampleDos(
-    user: ChildrenModel,
-    navController: NavHostController,
-    onItemSelected: (ChildrenModel) -> Unit
-) {
-    CardProfileUser(image = R.drawable.profile_avatar,
-        title = user.name,
-        onClickCard = { navController.navigate(route = AppScreen.SpecialistDetailsScreen.route) })
-
-}
-
-fun getChapterItem(): List<ChildrenModel> {
-    return listOf(
-        ChildrenModel(id = "1", name = "Alberto Wirstes", image = ""),
-        ChildrenModel(id = "2", name = "Sabrina Gomez", image = ""),
-        ChildrenModel(id = "3", name = "Norma Gonzales", image = ""),
-        ChildrenModel(id = "4", name = "Nicolas Orue", image = ""),
-        ChildrenModel(id = "5", name = "Esther Segovia", image = ""),
-        ChildrenModel(id = "6", name = "Juan Carnizo", image = ""),
-        ChildrenModel(id = "7", name = "Victor Alvarez", image = ""),
-        ChildrenModel(id = "8", name = "Karina Gomez", image = ""),
-        ChildrenModel(id = "9", name = "Daniel Arribas", image = ""),
-
+        SpecialistHomeContent(
+            navController = navController,
+            specialist = DataClassUtil.createSpecialistModelExample()
         )
+    }
 }
 
-@Preview
-@Composable
-fun SpecialistHomeExamplePreview() {
-    SpecialistScreen(navController = rememberNavController(), modifier = Modifier)
+class DataClassUtil {
+    companion object {
+        fun createSpecialistModelExample(): SpecialistModel {
+            val observation = Observation(
+                id = "observation_id",
+                dateObservation = "30-10-2023",
+                observation = "Example observation Example observation Example observation Example observationExample observation Example observation Example observation Example observation Example observation Example observation Example observation"
+            )
+
+            val exampleChildren = ChildrenModel(
+                id = "example_id",
+                name = "Federico Gamorra",
+                tel = "1234567890",
+                email = "john.doe@example.com",
+                image = R.drawable.child.toString(),
+                date = "30-10-2023",
+                idSpecialist = "specialist_id",
+                levelActual = 1,
+                subLevelActual = 2,
+                isPremium = true,
+                levels = listOf(
+                    LevelModel(id = "level_id_1", name = "Level 1", subLevelId = listOf("sublevel_id_1", "sublevel_id_2")),
+                    LevelModel(id = "level_id_2", name = "Level 2", subLevelId = listOf("sublevel_id_3", "sublevel_id_4"))
+                ),
+                observation = listOf(
+                    observation,
+                    observation,
+                    observation,
+                    observation,
+                    )
+            )
+
+            val exampleChildren1 = ChildrenModel(
+                id = "example_id",
+                name = "Josefina Bautista",
+                tel = "1234567890",
+                email = "john.doe@example.com",
+                image = R.drawable.child_one.toString(),
+                date = "30-10-2023",
+                idSpecialist = "specialist_id",
+                levelActual = 1,
+                subLevelActual = 2,
+                isPremium = true,
+                levels = listOf(
+                    LevelModel(id = "level_id_1", name = "Level 1", subLevelId = listOf("sublevel_id_1", "sublevel_id_2")),
+                    LevelModel(id = "level_id_2", name = "Level 2", subLevelId = listOf("sublevel_id_3", "sublevel_id_4"))
+                ),
+                observation = listOf(
+                    observation,
+                    observation,
+                    observation,
+                    observation,
+                )
+            )
+
+            val exampleChildren2 = ChildrenModel(
+                id = "example_id",
+                name = "Franco Gutierrez",
+                tel = "1234567890",
+                email = "john.doe@example.com",
+                image = R.drawable.child_two.toString(),
+                date = "30-10-2023",
+                idSpecialist = "specialist_id",
+                levelActual = 1,
+                subLevelActual = 2,
+                isPremium = true,
+                levels = listOf(
+                    LevelModel(id = "level_id_1", name = "Level 1", subLevelId = listOf("sublevel_id_1", "sublevel_id_2")),
+                    LevelModel(id = "level_id_2", name = "Level 2", subLevelId = listOf("sublevel_id_3", "sublevel_id_4"))
+                ),
+                observation = listOf(
+                    observation,
+                    observation,
+                    observation,
+                    observation,
+                )
+            )
+
+            return SpecialistModel(
+                id = "specialist_id",
+                name = "Dr. Smith",
+                tel = "9876543210",
+                email = "dr.smith@example.com",
+                date = "30-10-2023",
+                image = R.drawable.specialist_doctor.toString(),
+                medicalLicense = "license_number",
+                medicalLicenseExpiration = "2024-10-21",
+                speciality = "Pediatrics",
+                titleMedical = "Medical Director",
+                childrenInCharge = listOf(
+                    exampleChildren,
+                    exampleChildren1,
+                    exampleChildren2,
+                )
+            )
+        }
+    }
 }

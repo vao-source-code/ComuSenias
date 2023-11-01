@@ -40,10 +40,10 @@ import com.example.comusenias.presentation.ui.theme.CHANGE_PROFILE_USER
 import com.example.comusenias.presentation.ui.theme.IMAGE_AVATAR
 import com.example.comusenias.presentation.ui.theme.IMAGE_EDIT_BUTTON
 import com.example.comusenias.presentation.ui.theme.SELECTED_IMAGE
-import com.example.comusenias.presentation.ui.theme.SIZE140
-import com.example.comusenias.presentation.ui.theme.SIZE55
 import com.example.comusenias.presentation.ui.theme.SIZE10
-import com.example.comusenias.presentation.ui.theme.size20
+import com.example.comusenias.presentation.ui.theme.SIZE140
+import com.example.comusenias.presentation.ui.theme.SIZE20
+import com.example.comusenias.presentation.ui.theme.SIZE55
 import com.example.comusenias.presentation.view_model.ChangeProfileViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
@@ -77,7 +77,7 @@ fun ChangeProfileContent(
     )
 
     viewModel.resultingActivityHandler.handle()
-    Box(modifier = Modifier.padding(size20.dp)) {
+    Box(modifier = Modifier.padding(SIZE20.dp)) {
 
         Column(
             modifier = Modifier.fillMaxWidth(),
@@ -143,7 +143,7 @@ fun ChangeProfileContent(
                 icon = Icons.Default.Person
             )
 
-            Spacer(modifier = Modifier.height(size20.dp))
+            Spacer(modifier = Modifier.height(SIZE20.dp))
 
             TextFieldAppPassword(
                 label = CHANGE_PROFILE_PASSWORD,
@@ -152,7 +152,7 @@ fun ChangeProfileContent(
                 validateField = {},
             )
 
-            Spacer(modifier = Modifier.height(size20.dp))
+            Spacer(modifier = Modifier.height(SIZE20.dp))
             TextFieldAppPassword(
                 label = CHANGE_PROFILE_CONFIRM_PASSWORD,
                 value = CHANGE_PROFILE_PASSWORD,

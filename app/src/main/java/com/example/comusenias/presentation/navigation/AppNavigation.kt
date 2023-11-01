@@ -16,7 +16,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.comusenias.presentation.activities.MainActivity
-import com.example.comusenias.presentation.component.specialist.SpecialistDetailsScreen
 import com.example.comusenias.presentation.screen.camera.CameraScreen
 import com.example.comusenias.presentation.screen.gallery.GalleryScreen
 import com.example.comusenias.presentation.screen.gameAction.ChoseTheLetterPlayScreen
@@ -28,8 +27,10 @@ import com.example.comusenias.presentation.screen.gameAction.MakeSignPlayScreen
 import com.example.comusenias.presentation.screen.home.HomeScreen
 import com.example.comusenias.presentation.screen.notification.NotificationScreen
 import com.example.comusenias.presentation.screen.premiun.PremiunScreen
+import com.example.comusenias.presentation.screen.specialist.ProfilePatientScreen
+import com.example.comusenias.presentation.screen.specialist.SendObservationScreen
+import com.example.comusenias.presentation.screen.specialist.SpecialistScreen
 import com.example.comusenias.presentation.screen.profile.ChildrenProfileScreen
-import com.example.comusenias.presentation.screen.specialist.SpecialistHomeExample
 import com.example.comusenias.presentation.splashScreen.SplashScreen
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.LEVEL
@@ -84,11 +85,15 @@ private fun GetNavHost(
         }
 
         composable(AppScreen.SpecialistScreen.route) {
-            SpecialistHomeExample(navController = navController, modifier = modifier)
+            SpecialistScreen(navController = navController, modifier = modifier)
         }
 
-        composable(AppScreen.SpecialistDetailsScreen.route) {
-            SpecialistDetailsScreen(navController = navController, modifier = modifier)
+        composable(AppScreen.ProfilePatientScreen.route) {
+            ProfilePatientScreen(navController = navController, modifier = modifier)
+        }
+
+        composable(AppScreen.SendObservationScreen.route) {
+            SendObservationScreen(navController = navController,modifier = modifier)
         }
 
         composableLearnSign(navController, levelViewModel)
