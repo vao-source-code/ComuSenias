@@ -9,13 +9,13 @@ import androidx.lifecycle.viewModelScope
 import com.example.comusenias.constants.PreferencesConstant
 import com.example.comusenias.domain.library.ComposeFileProvider
 import com.example.comusenias.domain.library.ResultingActivityHandler
+import com.example.comusenias.domain.library.SPManager
 import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.models.state.ChangeProfileState
 import com.example.comusenias.domain.models.users.ChildrenModel
 import com.example.comusenias.domain.models.users.UserModel
 import com.example.comusenias.domain.use_cases.auth.AuthFactoryUseCases
 import com.example.comusenias.domain.use_cases.children.ChildrenFactory
-import com.example.comusenias.domain.use_cases.shared_preferences.DataRolStorageFactory
 import com.example.comusenias.domain.use_cases.shared_preferences.DataUserStorageFactory
 import com.example.comusenias.domain.use_cases.users.UsersFactoryUseCases
 import com.example.comusenias.presentation.ui.theme.PATH_IMAGE
@@ -28,11 +28,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ChildrenProfileViewModel @Inject constructor(
-    private val authUsesCases: AuthFactoryUseCases, private val useCases: UsersFactoryUseCases,
+    private val authUsesCases: AuthFactoryUseCases,
+    private val useCases: UsersFactoryUseCases,
     private val childrenUser: ChildrenFactory,
-    private val dataRolStorageFactory: DataRolStorageFactory,
     private val dataUserStorageFactory: DataUserStorageFactory,
-
     @ApplicationContext private val context: Context
 
 ) : ViewModel() {
@@ -107,7 +106,7 @@ class ChildrenProfileViewModel @Inject constructor(
 
     fun logout() = viewModelScope.launch(Dispatchers.IO) {
         authUsesCases.logoutUseCase()
-        dataRolStorageFactory.putRolValue(PreferencesConstant.PREFERENCE_ROL_CURRENT, "")
         dataUserStorageFactory.putUserValue(PreferencesConstant.PREFERENCE_USER, UserModel())
+        SPManager(context).add(SPManager.ROL, "")
     }
 }

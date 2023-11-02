@@ -7,7 +7,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
-import com.example.comusenias.constants.PreferencesConstant
 import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.models.users.Rol
 import com.example.comusenias.presentation.component.defaults.DefaultLoadingProgressIndicator
@@ -32,9 +31,7 @@ fun ResponseStatusSplash(
 
         is Response.Success -> {
             LaunchedEffect(Unit) {
-                val targetRoute = when (viewModel.dataRolStorageFactory.getRolValue(
-                    PreferencesConstant.PREFERENCE_ROL_CURRENT
-                )) {
+                val targetRoute = when (viewModel.getRol()) {
                     Rol.CHILDREN.toString() -> {
                         AppScreen.HomeScreen.route
                     }
