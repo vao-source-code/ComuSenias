@@ -27,13 +27,12 @@ import com.example.comusenias.presentation.screen.gameAction.MakeSignPlayScreen
 import com.example.comusenias.presentation.screen.home.HomeScreen
 import com.example.comusenias.presentation.screen.notification.NotificationScreen
 import com.example.comusenias.presentation.screen.premiun.PremiunScreen
-import com.example.comusenias.presentation.screen.specialist.ProfilePatientScreen
-import com.example.comusenias.presentation.screen.specialist.SendObservationScreen
-import com.example.comusenias.presentation.screen.specialist.SpecialistScreen
 import com.example.comusenias.presentation.screen.profile.ChildrenProfileScreen
 import com.example.comusenias.presentation.screen.qr.GenerateQRScreen
 import com.example.comusenias.presentation.screen.qr.LectorQR
-import com.example.comusenias.presentation.screen.specialist.SpecialistHomeExample
+import com.example.comusenias.presentation.screen.specialist.ProfilePatientScreen
+import com.example.comusenias.presentation.screen.specialist.SendObservationScreen
+import com.example.comusenias.presentation.screen.specialist.SpecialistScreen
 import com.example.comusenias.presentation.splashScreen.SplashScreen
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.LEVEL
