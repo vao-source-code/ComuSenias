@@ -8,23 +8,28 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.comusenias.presentation.component.bottomBar.ShowBottomBar
 import com.example.comusenias.presentation.component.home.ContentHome
 import com.example.comusenias.presentation.component.home.TopBarHome
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.SIZE3
+import com.example.comusenias.presentation.view_model.ChildrenProfileViewModel
 import com.example.comusenias.presentation.view_model.LevelViewModel
 
 @Composable
 fun HomeScreen(
     navController: NavController,
-    levelViewModel: LevelViewModel
+    levelViewModel: LevelViewModel,
+    childrenModel: ChildrenProfileViewModel = hiltViewModel()
 ) {
     Scaffold(
         topBar = {
             Surface(shadowElevation = SIZE3.dp) {
-                TopBarHome(onClick = { navController.navigate(AppScreen.NotificationScreen.route) })
+                TopBarHome(
+                    name = childrenModel.userData.name,
+                    onClick = { navController.navigate(AppScreen.NotificationScreen.route) })
             }
         },
         bottomBar = {

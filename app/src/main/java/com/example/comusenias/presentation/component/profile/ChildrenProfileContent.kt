@@ -42,8 +42,8 @@ import com.example.comusenias.presentation.ui.theme.PROFILE_NAME_SURNAME
 import com.example.comusenias.presentation.ui.theme.SELECTED_IMAGE
 import com.example.comusenias.presentation.ui.theme.SIZE10
 import com.example.comusenias.presentation.ui.theme.SIZE140
+import com.example.comusenias.presentation.ui.theme.SIZE20
 import com.example.comusenias.presentation.ui.theme.SIZE55
-import com.example.comusenias.presentation.ui.theme.size20
 import com.example.comusenias.presentation.view_model.ChildrenProfileViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
@@ -75,7 +75,7 @@ fun ChildrenProfileContent(
     )
     viewModel.resultingActivityHandler.handle()
 
-    Box(modifier = Modifier.padding(size20.dp)) {
+    Box(modifier = Modifier.padding(SIZE20.dp)) {
 
         Column(
             modifier = Modifier.fillMaxWidth(),
@@ -131,7 +131,7 @@ fun ChildrenProfileContent(
 
             Spacer(modifier = Modifier.height(SIZE55.dp))
 
-            Spacer(modifier = Modifier.height(size20.dp))
+            Spacer(modifier = Modifier.height(SIZE20.dp))
             TextFieldApp(
                 icon = Icons.Default.Email,
                 value = viewModel.userData.email,

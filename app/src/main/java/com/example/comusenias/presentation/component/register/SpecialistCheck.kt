@@ -15,10 +15,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.comusenias.presentation.component.defaults.app.CheckBoxApp
 import com.example.comusenias.presentation.ui.theme.ESPECIALIST
-import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.SIZE10
-import com.example.comusenias.presentation.ui.theme.size14
-import com.example.comusenias.presentation.ui.theme.size9
+import com.example.comusenias.presentation.ui.theme.SIZE14
+import com.example.comusenias.presentation.ui.theme.SIZE9
+import com.example.comusenias.presentation.ui.theme.blackColorApp
 
 @Composable
 fun SpecialistCheck(onCheckChange: (Boolean) -> Unit) {
@@ -26,7 +26,7 @@ fun SpecialistCheck(onCheckChange: (Boolean) -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = SIZE10.dp),
-        horizontalArrangement = Arrangement.spacedBy(size9.dp),
+        horizontalArrangement = Arrangement.spacedBy(SIZE9.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         val isChecked = remember { mutableStateOf(false) }
@@ -36,7 +36,7 @@ fun SpecialistCheck(onCheckChange: (Boolean) -> Unit) {
         }
         Text(
             text = ESPECIALIST,
-            fontSize = size14.sp,
+            fontSize = SIZE14.sp,
             fontWeight = FontWeight.Medium,
             color = blackColorApp
         )

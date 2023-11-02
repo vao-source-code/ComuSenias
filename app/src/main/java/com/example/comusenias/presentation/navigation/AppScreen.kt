@@ -13,6 +13,7 @@ sealed class AppScreen(val route: String) {
             return "change_profile_screen/$user"
         }
     }
+
     object HomeScreen : AppScreen("home_screen")
     object OnboardingScreen : AppScreen("onboarding_screen")
     object EspecialistFormScreen : AppScreen("especialist_screen")
@@ -34,7 +35,9 @@ sealed class AppScreen(val route: String) {
 
     object NotificationScreen : AppScreen("notification_screen")
     object SpecialistScreen : AppScreen("specialist_screen")
-    object SpecialistDetailsScreen : AppScreen("specialist_details_screen")
+    object ProfilePatientScreen : AppScreen("profile_patient_screen")
+    object SendObservationScreen : AppScreen("send_observation_screen")
+
     object ChoseTheLetterPlayScreen : AppScreen("chose_the_letter_play/{level}/{subLevel}") {
         fun createRoute(level: String, subLevel: String) =
             "chose_the_letter_play/${level}/${subLevel}"

@@ -21,10 +21,10 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.comusenias.domain.models.bottomNavigation.BottomBarItem
 import com.example.comusenias.domain.models.bottomNavigation.getBottomBarItems
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
-import com.example.comusenias.presentation.ui.theme.primaryColorApp
-import com.example.comusenias.presentation.ui.theme.size24
+import com.example.comusenias.presentation.ui.theme.SIZE24
 import com.example.comusenias.presentation.ui.theme.SIZE30
 import com.example.comusenias.presentation.ui.theme.SIZE50
+import com.example.comusenias.presentation.ui.theme.primaryColorApp
 
 @Composable
 fun ShowBottomBar(navController: NavController) {
@@ -48,9 +48,8 @@ fun ShowBottomBar(navController: NavController) {
                             item = item
                         ),
                         contentDescription = item.route,
-                        modifier = if (currentRoute == item.route) Modifier.size(SIZE30.dp) else Modifier.size(
-                            size24.dp
-                        ),
+                        modifier = if (currentRoute == item.route) Modifier.size(SIZE30.dp)
+                        else Modifier.size(SIZE24.dp),
                         tint = if (currentRoute == item.route) primaryColorApp else Color.Black
                     )
                 },
