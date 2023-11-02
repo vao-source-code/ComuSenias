@@ -46,7 +46,9 @@ fun SpecialistHomeContent(
             ) { navController.navigate(AppScreen.NotificationScreen.route) }
         }
     }, floatingActionButton = {
-        FloatingButtonDefault()
+        FloatingButtonDefault() {
+            navController.navigate(AppScreen.LectorQRScreen.route)
+        }
     }) { paddingValues ->
         Box(
             modifier = Modifier

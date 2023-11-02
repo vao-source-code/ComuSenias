@@ -27,18 +27,17 @@ import com.example.comusenias.presentation.screen.gameAction.MakeSignPlayScreen
 import com.example.comusenias.presentation.screen.home.HomeScreen
 import com.example.comusenias.presentation.screen.notification.NotificationScreen
 import com.example.comusenias.presentation.screen.premiun.PremiunScreen
-import com.example.comusenias.presentation.screen.specialist.ProfilePatientScreen
-import com.example.comusenias.presentation.screen.specialist.SendObservationScreen
-import com.example.comusenias.presentation.screen.specialist.SpecialistScreen
 import com.example.comusenias.presentation.screen.profile.ChildrenProfileScreen
 import com.example.comusenias.presentation.screen.qr.GenerateQRScreen
 import com.example.comusenias.presentation.screen.qr.LectorQR
-import com.example.comusenias.presentation.screen.specialist.SpecialistHomeExample
+import com.example.comusenias.presentation.screen.specialist.ProfilePatientScreen
+import com.example.comusenias.presentation.screen.specialist.SendObservationScreen
+import com.example.comusenias.presentation.screen.specialist.SpecialistScreen
 import com.example.comusenias.presentation.splashScreen.SplashScreen
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
-import com.example.comusenias.presentation.ui.theme.LEVEL
 import com.example.comusenias.presentation.ui.theme.SUB_LEVEL
 import com.example.comusenias.presentation.view_model.LevelViewModel
+import com.google.firebase.analytics.FirebaseAnalytics.Param.LEVEL
 
 @RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
