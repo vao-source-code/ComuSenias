@@ -13,7 +13,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.comusenias.R
-import com.example.comusenias.presentation.ui.theme.iconApp
+import com.example.comusenias.presentation.ui.theme.ICONAPP
 import com.example.comusenias.presentation.ui.theme.SIZE130
 
 @Preview(showBackground = true)
@@ -32,7 +32,7 @@ fun AuthenticationHeaderContent() {
 fun HeaderImage() {
     Image(
         painter = painterResource(id = R.drawable.comu_senias_with_text),
-        contentDescription = iconApp,
+        contentDescription = ICONAPP,
         contentScale = ContentScale.Fit,
         modifier = Modifier
             .width(SIZE130.dp)

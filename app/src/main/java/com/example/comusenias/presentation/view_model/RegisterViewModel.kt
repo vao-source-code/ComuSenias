@@ -17,8 +17,8 @@ import com.example.comusenias.domain.use_cases.shared_preferences.DataUserStorag
 import com.example.comusenias.domain.use_cases.users.UsersFactoryUseCases
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.INVALID_EMAIL
+import com.example.comusenias.presentation.ui.theme.PASSWORD_DO_NOT_MATCH
 import com.example.comusenias.presentation.ui.theme.RESTRICTION_PASSWORD_USER_ACCOUNT
-import com.example.comusenias.presentation.ui.theme.passwordDoNotMatch
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -81,7 +81,7 @@ class RegisterViewModel @Inject constructor(
     fun validateConfirmPassword() {
         val isValid = state.password == state.confirmPassword
         isConfirmPasswordValid = isValid
-        errorConfirmPassword = if (isValid) EMPTY_STRING else passwordDoNotMatch
+        errorConfirmPassword = if (isValid) EMPTY_STRING else PASSWORD_DO_NOT_MATCH
         enabledRegisterButton()
     }
 

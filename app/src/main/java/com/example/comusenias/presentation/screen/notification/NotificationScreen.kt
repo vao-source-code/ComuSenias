@@ -25,15 +25,15 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.comusenias.R
 import com.example.comusenias.domain.models.model.Notification
-import com.example.comusenias.presentation.ui.theme.Aviso
 import com.example.comusenias.presentation.ui.theme.NOMBRE_NOTIFICATION1
 import com.example.comusenias.presentation.ui.theme.NOMBRE_NOTIFICATION2
 import com.example.comusenias.presentation.ui.theme.NOMBRE_NOTIFICATION3
 import com.example.comusenias.presentation.ui.theme.NOMBRE_NOTIFICATION4
 import com.example.comusenias.presentation.ui.theme.SIZE16
 import com.example.comusenias.presentation.ui.theme.SIZE24
-import com.example.comusenias.presentation.ui.theme.Suscribe
-import com.example.comusenias.presentation.ui.theme.Suscribe_Ya
+import com.example.comusenias.presentation.ui.theme.SUBSCRIBE
+import com.example.comusenias.presentation.ui.theme.SUBSCRIBE_NOW
+import com.example.comusenias.presentation.ui.theme.WARNING
 
 @Composable
 fun NotificationScreen(navController: NavHostController) {
@@ -54,7 +54,7 @@ fun NotificationScreen(navController: NavHostController) {
                     modifier = Modifier.size(SIZE24.dp)
                 )
                 Text(
-                    text = Suscribe_Ya,
+                    text = SUBSCRIBE_NOW,
                     style = MaterialTheme.typography.subtitle1,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f)
@@ -62,7 +62,7 @@ fun NotificationScreen(navController: NavHostController) {
                 Button(
                     onClick = { /* Handle button click */ },
                 ) {
-                    Text(Suscribe)
+                    Text(SUBSCRIBE)
                 }
             }
         }
@@ -72,7 +72,7 @@ val notificationList = listOf(
     Notification(
         iconResId = R.drawable.baseline_arrow_back_24,
         time = 1.0,
-        content = Aviso
+        content = WARNING
     ),
     Notification(
         iconResId = R.drawable.onboarding2,
@@ -112,7 +112,9 @@ fun NotificationItem(notification: Notification) {
                     contentDescription = null,
                     modifier = Modifier.size(SIZE16.dp)
                 )
-                Spacer(modifier = Modifier.width(30.dp).height(SIZE16.dp))
+                Spacer(modifier = Modifier
+                    .width(30.dp)
+                    .height(SIZE16.dp))
                 Column {
                     Modifier.width(SIZE16.dp)
                     Text(

@@ -18,6 +18,7 @@ import com.example.comusenias.R
 import com.example.comusenias.constants.TestTag.Companion.TAG_BOX_SPLASH_SCREEN
 import com.example.comusenias.constants.TestTag.Companion.TAG_COLUMN_SPLASH_SCREEN
 import com.example.comusenias.presentation.component.defaults.GetImage
+import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.logoApp
 import com.example.comusenias.presentation.ui.theme.size150
 import com.example.comusenias.presentation.view_model.LoginViewModel
@@ -30,9 +31,17 @@ fun SplashScreen(
 ) {
     LaunchedEffect(key1 = true) {
         delay(2000)
-        navController.popBackStack()
+        val targetRoute =
+            AppScreen.LoginScreen.route
+
+        navController.navigate(route = targetRoute) {
+            popUpTo(AppScreen.SplashScreen.route) {
+                inclusive = true
+            }
+        }
+
     }
-    ResponseStatusSplash(navController = navController, viewModel = loginViewModel)
+
     SplashScreenContent()
 }
 

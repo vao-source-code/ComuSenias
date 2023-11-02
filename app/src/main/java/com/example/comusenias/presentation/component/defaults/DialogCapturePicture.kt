@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.sp
 import com.example.comusenias.presentation.ui.theme.DIALOG_CAPTURE_PICTURE
 import com.example.comusenias.presentation.ui.theme.DIALOG_CAPTURE_TITLE
 import com.example.comusenias.presentation.ui.theme.DIALOG_GALLERY
-import com.example.comusenias.presentation.ui.theme.size20
+import com.example.comusenias.presentation.ui.theme.SIZE20
 
 @Composable
 fun DialogCapturePicture(
@@ -29,14 +29,14 @@ fun DialogCapturePicture(
                 Text(
                     text = DIALOG_CAPTURE_TITLE,
                     color = Color.Black,
-                    fontSize = size20.sp
+                    fontSize = SIZE20.sp
                 )
             },
             confirmButton = {
                 Text(
                     text = DIALOG_CAPTURE_PICTURE,
                     color = Color.Black,
-                    fontSize = size20.sp,
+                    fontSize = SIZE20.sp,
                     modifier = Modifier.clickable {
                         takePhoto()
                         status.value = false
@@ -47,7 +47,7 @@ fun DialogCapturePicture(
                 Text(
                     text = DIALOG_GALLERY,
                     color = Color.Black,
-                    fontSize = size20.sp,
+                    fontSize = SIZE20.sp,
                     modifier = Modifier.clickable {
                         pickPhoto()
                         status.value = false

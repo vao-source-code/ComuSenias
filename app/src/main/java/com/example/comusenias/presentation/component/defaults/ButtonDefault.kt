@@ -16,7 +16,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.example.comusenias.constants.TestTag.Companion.TAG_BUTTON_DEFAULT
 import com.example.comusenias.presentation.component.defaults.app.TextErrorDefault
-import com.example.comusenias.presentation.ui.theme.iconButtonDescription
+import com.example.comusenias.presentation.ui.theme.ICON_BUTTON_DESCRIPTION
 import com.example.comusenias.presentation.ui.theme.SIZE10
 
 @Composable
@@ -40,7 +40,7 @@ fun ButtonDefault(
             Text(text = text)
             Spacer(modifier = Modifier.width(10.dp))
             if (icon != null) {
-                Icon(imageVector = icon, contentDescription = iconButtonDescription)
+                Icon(imageVector = icon, contentDescription = ICON_BUTTON_DESCRIPTION)
             }
         }
         TextErrorDefault(errorMsg = errorMsg)

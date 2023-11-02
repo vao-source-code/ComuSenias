@@ -27,13 +27,13 @@ import com.example.comusenias.constants.TestTag
 import com.example.comusenias.domain.models.onBoarding.OnBoardingItem
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.IMAGE
+import com.example.comusenias.presentation.ui.theme.SIZE1
+import com.example.comusenias.presentation.ui.theme.SIZE20
+import com.example.comusenias.presentation.ui.theme.SIZE24
+import com.example.comusenias.presentation.ui.theme.SIZE250
+import com.example.comusenias.presentation.ui.theme.SIZE95
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.size08
-import com.example.comusenias.presentation.ui.theme.SIZE1
-import com.example.comusenias.presentation.ui.theme.size20
-import com.example.comusenias.presentation.ui.theme.size24
-import com.example.comusenias.presentation.ui.theme.size250
-import com.example.comusenias.presentation.ui.theme.size95
 import com.example.comusenias.presentation.view_model.BottomBarViewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -82,22 +82,22 @@ fun OnBoardingItem(
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = size20.dp)
+            .padding(horizontal = SIZE20.dp)
             .testTag(TestTag.TAG_ONBOARDING_ITEM + page)
     ) {
         Image(
             modifier = Modifier
-                .height(size250.dp)
-                .width(size250.dp),
+                .height(SIZE250.dp)
+                .width(SIZE250.dp),
             painter = painterResource(item.image),
             contentScale = ContentScale.Fit,
             contentDescription = IMAGE
         )
-        Spacer(modifier = Modifier.height(size95.dp))
+        Spacer(modifier = Modifier.height(SIZE95.dp))
         Text(
             text = stringResource(item.text),
             textAlign = TextAlign.Center,
-            fontSize = size24.sp,
+            fontSize = SIZE24.sp,
             color = blackColorApp,
             fontWeight = FontWeight.SemiBold
         )

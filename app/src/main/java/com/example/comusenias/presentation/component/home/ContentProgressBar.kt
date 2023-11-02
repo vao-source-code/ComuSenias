@@ -16,10 +16,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.comusenias.presentation.ui.theme.PROGRESS
-import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.SIZE10
-import com.example.comusenias.presentation.ui.theme.size18
-import com.example.comusenias.presentation.ui.theme.size9
+import com.example.comusenias.presentation.ui.theme.SIZE18
+import com.example.comusenias.presentation.ui.theme.SIZE9
+import com.example.comusenias.presentation.ui.theme.blackColorApp
+
 @Preview(showBackground = true)
 @Composable
 fun ContentProgressBar() {
@@ -28,13 +29,13 @@ fun ContentProgressBar() {
             .fillMaxSize()
             .padding(top = SIZE10.dp)
             .background(Color.White),
-        verticalArrangement = Arrangement.spacedBy(size9.dp, Alignment.CenterVertically),
+        verticalArrangement = Arrangement.spacedBy(SIZE9.dp, Alignment.CenterVertically),
         horizontalAlignment = Alignment.Start,
     ) {
         Text(
             text = PROGRESS,
             style = TextStyle(
-                fontSize = size18.sp,
+                fontSize = SIZE18.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = blackColorApp
             )

@@ -40,7 +40,7 @@ import com.example.comusenias.presentation.ui.theme.ERROR_TAKE_PHOTO
 import com.example.comusenias.presentation.ui.theme.FIELD_IMAGES
 import com.example.comusenias.presentation.ui.theme.GALLERY_SCREEN
 import com.example.comusenias.presentation.ui.theme.KEY_BOOLEAN
-import com.example.comusenias.presentation.ui.theme.LETRA
+import com.example.comusenias.presentation.ui.theme.LETTER
 import com.example.comusenias.presentation.ui.theme.MULTI_PART_FROM_DATA
 import com.example.comusenias.presentation.ui.theme.SIZE16
 import com.example.comusenias.presentation.ui.theme.TAKE_PHOTO
@@ -104,9 +104,9 @@ fun GalleryScreen(
         }
 
         if (vowelsResponse.value?.letra == null) {
-            Text("${LETRA}:")
+            Text("${LETTER}:")
         } else {
-            Text("${LETRA}:${vowelsResponse.value?.letra}")
+            Text("${LETTER}:${vowelsResponse.value?.letra}")
         }
 
         Button(

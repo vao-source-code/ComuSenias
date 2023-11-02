@@ -25,15 +25,15 @@ import com.example.comusenias.presentation.ui.theme.CHECK_POINT
 import com.example.comusenias.presentation.ui.theme.CONSULT_WHIT_ESPECIALIST
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.SIZE12
+import com.example.comusenias.presentation.ui.theme.SIZE15
 import com.example.comusenias.presentation.ui.theme.SIZE16
+import com.example.comusenias.presentation.ui.theme.SIZE18
 import com.example.comusenias.presentation.ui.theme.SIZE28
+import com.example.comusenias.presentation.ui.theme.SIZE7
 import com.example.comusenias.presentation.ui.theme.SIZE90
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.cardColorCheckPoint
 import com.example.comusenias.presentation.ui.theme.cardGray
-import com.example.comusenias.presentation.ui.theme.SIZE15
-import com.example.comusenias.presentation.ui.theme.size18
-import com.example.comusenias.presentation.ui.theme.size7
 
 @Preview(showBackground = true)
 @Composable
@@ -48,7 +48,7 @@ fun CardGameCheckPoint() {
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(start = SIZE15.dp, end = size18.dp),
+                .padding(start = SIZE15.dp, end = SIZE18.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(SIZE28.dp)
         ) {
@@ -61,7 +61,7 @@ fun CardGameCheckPoint() {
             Column(
                 modifier = Modifier
                     .fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(size7.dp)
+                verticalArrangement = Arrangement.spacedBy(SIZE7.dp)
             ) {
                 Text(
                     text = CHECK_POINT,
