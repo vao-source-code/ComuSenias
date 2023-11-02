@@ -33,7 +33,7 @@ fun ButtonApp(
             .fillMaxWidth()
             .padding()
             .height(50.dp)
-            .testTag(TestTag.TAG_BUTTON_APP)
+            .testTag(TestTag.TAG_BUTTON_APP),
     ) {
         Text(
             modifier = Modifier.testTag("titleButton"),

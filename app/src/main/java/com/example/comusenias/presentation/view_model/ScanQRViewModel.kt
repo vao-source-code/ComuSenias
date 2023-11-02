@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.comusenias.domain.models.state.QRState
+import com.example.comusenias.domain.models.users.ChildrenModel
 import com.example.comusenias.domain.repositories.QRRepository
 import com.example.comusenias.domain.use_cases.children.ChildrenFactory
 import com.example.comusenias.domain.use_cases.specialist.SpecialistFactory
@@ -22,11 +23,18 @@ class ScanQRViewModel @Inject constructor(
 ) : ViewModel() {
 
     var state by mutableStateOf(QRState())
-
+    var stateChildren by mutableStateOf(ChildrenModel())
     fun startScanning() = viewModelScope.launch(IO) {
         qrRepository.startScanning().collect { data ->
             if (!data.isNullOrBlank()) {
                 state = state.copy(details = data)
+
+                try {
+                    val children = ChildrenModel.fromJson(state.details)
+                    stateChildren = children
+                } catch (e: Exception) {
+
+                }
             }
         }
     }
