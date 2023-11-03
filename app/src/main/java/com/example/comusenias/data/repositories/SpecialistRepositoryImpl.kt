@@ -71,14 +71,17 @@ class SpecialistRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getChildrenForSpecialistById(id: String): Flow<List<ChildrenModel>> =
+    override suspend fun getChildrenForSpecialistById(id: String): Flow<Response<List<ChildrenModel>>> =
         callbackFlow {
             val snapshotListener = childrenRef.whereEqualTo("idSpecialist", id)
-                .addSnapshotListener { snapshot, _ ->
-                    val childrenModelList = snapshot?.toObjects(ChildrenModel::class.java)
-                        ?: ArrayList<ChildrenModel>()
-                    trySend(childrenModelList)
+                .addSnapshotListener { snapshot, e ->
+                    snapshot.let {
+                        val childrenModelList = snapshot?.toObjects(ChildrenModel::class.java)
+                            ?: ArrayList<ChildrenModel>()
+                        trySend(Response.Success(childrenModelList))
+                    } ?: Response.Error(e)
                 }
+
             awaitClose {
                 snapshotListener.remove()
             }

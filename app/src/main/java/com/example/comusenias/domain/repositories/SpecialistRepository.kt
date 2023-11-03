@@ -11,5 +11,5 @@ interface SpecialistRepository {
     fun getUserSpecialistById(id: String): Flow<SpecialistModel>
     suspend fun updateUserSpecialist(user: SpecialistModel): Response<Boolean>
     suspend fun saveImageUserSpecialist(file: File): Response<String>
-    suspend fun getChildrenForSpecialistById(id: String): Flow<List<ChildrenModel>>
+    suspend fun getChildrenForSpecialistById(id: String): Flow<Response<List<ChildrenModel>>>
 }
