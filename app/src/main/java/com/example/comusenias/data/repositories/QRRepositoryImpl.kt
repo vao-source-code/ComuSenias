@@ -1,8 +1,11 @@
 package com.example.comusenias.data.repositories
 
 import android.graphics.Bitmap
+import android.util.Log
 import com.example.comusenias.domain.models.users.ChildrenModel
 import com.example.comusenias.domain.repositories.QRRepository
+import com.google.android.gms.common.moduleinstall.ModuleInstallClient
+import com.google.android.gms.common.moduleinstall.ModuleInstallRequest
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.codescanner.GmsBarcodeScanner
 import com.google.zxing.BarcodeFormat
@@ -16,20 +19,24 @@ import javax.inject.Inject
 class QRRepositoryImpl @Inject constructor(
     private val scanner: GmsBarcodeScanner,
     private val barcode: BarcodeEncoder,
+    private val playModule: ModuleInstallClient,
 ) : QRRepository {
+
+    init {
+        installModule()
+    }
+
     override fun startScanning(): Flow<String?> = callbackFlow {
+        installModule()
         scanner.startScan()
             .addOnSuccessListener { barcode ->
                 launch {
-                    barcode.rawValue
-                    send(getDetalis(barcode))
+                    send(getDetails(barcode))
                 }
             }
             .addOnFailureListener {
                 it.printStackTrace()
             }
-
-
         awaitClose {}
 
     }
@@ -43,9 +50,13 @@ class QRRepositoryImpl @Inject constructor(
     }
 
 
-    private fun getDetalis(barcode: Barcode): String {
+    private fun getDetails(barcode: Barcode): String {
         return when (barcode.valueType) {
             Barcode.TYPE_TEXT -> {
+                barcode.displayValue.toString()
+            }
+
+            Barcode.FORMAT_QR_CODE -> {
                 barcode.displayValue.toString()
             }
 
@@ -53,7 +64,21 @@ class QRRepositoryImpl @Inject constructor(
                 barcode.rawValue ?: "Error al querer leer el codigo QR"
             }
         }
+    }
 
-
+    /** Checking does ScannerModule is installed on the device otherwise,
+    install using ModuleClientAPI, for more visit
+    https://developers.google.com/android/guides/module-install-apis **/
+    private fun installModule() {
+        playModule
+            .areModulesAvailable(scanner)
+            .addOnSuccessListener {
+                if (!it.areModulesAvailable()) {
+                    val newRequest = ModuleInstallRequest.newBuilder().addApi(scanner).build()
+                    playModule.installModules(newRequest)
+                }
+            }.addOnFailureListener {
+                Log.d("QRRepository", "Failed to install QRCodeScanner Module")
+            }
     }
 }

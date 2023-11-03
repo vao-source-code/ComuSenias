@@ -37,7 +37,11 @@ import com.example.comusenias.domain.use_cases.level.GetLevels
 import com.example.comusenias.domain.use_cases.level.LevelFactory
 import com.example.comusenias.domain.use_cases.level.SearchLevelName
 import com.example.comusenias.domain.use_cases.specialist.CreateSpecialist
+import com.example.comusenias.domain.use_cases.specialist.GetChildrenForSpecialistById
+import com.example.comusenias.domain.use_cases.specialist.GetSpecialistById
+import com.example.comusenias.domain.use_cases.specialist.SaveImageSpecialist
 import com.example.comusenias.domain.use_cases.specialist.SpecialistFactory
+import com.example.comusenias.domain.use_cases.specialist.UpdateSpecialist
 import com.example.comusenias.domain.use_cases.users.CreateUserUseCase
 import com.example.comusenias.domain.use_cases.users.GetUserByIdUseCase
 import com.example.comusenias.domain.use_cases.users.SaveImageUserUseCase
@@ -172,6 +176,11 @@ object FirebaseModule {
     fun providerSpecialistUseCases(usersRepository: SpecialistRepository) =
         SpecialistFactory(
             createSpecialist = CreateSpecialist(usersRepository),
+            getSpecialistById = GetSpecialistById(usersRepository),
+            saveImageSpecialist = SaveImageSpecialist(usersRepository),
+            updateSpecialist = UpdateSpecialist(usersRepository),
+            getChildrenForSpecialistById = GetChildrenForSpecialistById(usersRepository)
+
         )
 
     /*----------------------------- Storage ----------------------------------------------------- */

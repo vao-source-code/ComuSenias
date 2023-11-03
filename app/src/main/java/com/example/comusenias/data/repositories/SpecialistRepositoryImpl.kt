@@ -3,6 +3,7 @@ package com.example.comusenias.data.repositories
 import android.net.Uri
 import com.example.comusenias.constants.FirebaseConstants
 import com.example.comusenias.domain.models.response.Response
+import com.example.comusenias.domain.models.users.ChildrenModel
 import com.example.comusenias.domain.models.users.SpecialistModel
 import com.example.comusenias.domain.repositories.SpecialistRepository
 import com.google.firebase.firestore.CollectionReference
@@ -17,14 +18,16 @@ import javax.inject.Named
 
 class SpecialistRepositoryImpl @Inject constructor(
     @Named(FirebaseConstants.SPECIALIST_COLLECTION) private val specialistRef: CollectionReference,
-    @Named(FirebaseConstants.SPECIALIST_COLLECTION) private val storageSpecialistRef: StorageReference
+    @Named(FirebaseConstants.SPECIALIST_COLLECTION) private val storageSpecialistRef: StorageReference,
+    @Named(FirebaseConstants.CHILDREN_COLLECTION) private val childrenRef: CollectionReference
 ) : SpecialistRepository {
 
 
-    override suspend fun saveImageUserChildren(file: File): Response<String> {
+    override suspend fun saveImageUserSpecialist(file: File): Response<String> {
         return try {
             val fromFile = Uri.fromFile(file)
             val ref = storageSpecialistRef.child(file.name)
+            val uploadTask = ref.putFile(fromFile).await()
             val url = ref.downloadUrl.await()
             return Response.Success(url.toString())
         } catch (e: Exception) {
@@ -67,5 +70,18 @@ class SpecialistRepositoryImpl @Inject constructor(
             Response.Error(e)
         }
     }
+
+    override suspend fun getChildrenForSpecialistById(id: String): Flow<List<ChildrenModel>> =
+        callbackFlow {
+            val snapshotListener = childrenRef.whereEqualTo("idSpecialist", id)
+                .addSnapshotListener { snapshot, _ ->
+                    val childrenModelList = snapshot?.toObjects(ChildrenModel::class.java)
+                        ?: ArrayList<ChildrenModel>()
+                    trySend(childrenModelList)
+                }
+            awaitClose {
+                snapshotListener.remove()
+            }
+        }
 
 }

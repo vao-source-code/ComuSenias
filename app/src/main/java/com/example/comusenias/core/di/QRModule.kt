@@ -3,6 +3,8 @@ package com.example.comusenias.core.di
 import android.content.Context
 import com.example.comusenias.data.repositories.QRRepositoryImpl
 import com.example.comusenias.domain.repositories.QRRepository
+import com.google.android.gms.common.moduleinstall.ModuleInstall
+import com.google.android.gms.common.moduleinstall.ModuleInstallClient
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.codescanner.GmsBarcodeScanner
 import com.google.mlkit.vision.codescanner.GmsBarcodeScannerOptions
@@ -24,7 +26,7 @@ object QRModule {
     fun provideOptions(): GmsBarcodeScannerOptions {
         return GmsBarcodeScannerOptions.Builder()
             .setBarcodeFormats(
-                Barcode.FORMAT_ALL_FORMATS
+                Barcode.FORMAT_QR_CODE
             )
             .build()
     }
@@ -46,5 +48,10 @@ object QRModule {
     @Provides
     fun bindQRRepository(repository: QRRepositoryImpl): QRRepository {
         return repository
+    }
+
+    @Provides
+    fun provideGooglePlayModule(context: Context): ModuleInstallClient {
+        return ModuleInstall.getClient(context)
     }
 }

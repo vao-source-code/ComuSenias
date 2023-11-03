@@ -46,6 +46,7 @@ fun LectorQR(
 
     val state = viewModel.state
 
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -61,7 +62,7 @@ fun LectorQR(
             ButtonApp(
                 titleButton = "Agregar",
                 onClickButton = {
-                    // viewModel.addPatient()
+                    viewModel.updateChildrenbySpecialist()
                 }
             )
         } else {
