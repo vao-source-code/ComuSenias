@@ -12,12 +12,14 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object QRModule {
 
 
+    @Singleton
     @Provides
     fun provideOptions(): GmsBarcodeScannerOptions {
         return GmsBarcodeScannerOptions.Builder()
@@ -33,12 +35,14 @@ object QRModule {
     }
 
 
+    @Singleton
     @Provides
     fun provideScanner(context: Context, options: GmsBarcodeScannerOptions): GmsBarcodeScanner {
         return GmsBarcodeScanning.getClient(context, options)
     }
 
 
+    @Singleton
     @Provides
     fun bindQRRepository(repository: QRRepositoryImpl): QRRepository {
         return repository

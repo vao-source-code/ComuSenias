@@ -22,17 +22,17 @@ data class ChildrenModel(
 ) {
     fun toJson(): String = Gson().toJson(
         ChildrenModel(
-            id,
-            email,
-            tel,
-            name,
-            image,
-            date,
-            idSpecialist,
-            specialist,
-            levelActual,
-            subLevelActual,
-            isPremium,
+            id = id,
+            email = email,
+            tel = tel,
+            name = name,
+            image = image,
+            date = date,
+            idSpecialist = idSpecialist,
+            specialist = specialist,
+            levelActual = levelActual,
+            subLevelActual = subLevelActual,
+            isPremium = isPremium,
         )
     )
 
