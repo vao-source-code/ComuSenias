@@ -21,7 +21,7 @@ import com.example.comusenias.domain.models.users.SpecialistModel
 import com.example.comusenias.presentation.component.defaults.DefaultLoadingProgressIndicator
 import com.example.comusenias.presentation.component.specialist.home.SpecialistHomeContent
 import com.example.comusenias.presentation.ui.theme.LOGIN_ERROR
-import com.example.comusenias.presentation.view_model.SpecialistViewModel
+import com.example.comusenias.presentation.view_model.specialist.SpecialistViewModel
 
 @Composable
 fun SpecialistScreen(
@@ -49,7 +49,7 @@ fun SpecialistScreen(
             ) {
                 SpecialistHomeContent(
                     navController = navController,
-                    specialist = DataClassUtil.createSpecialistModelExample()
+                    specialist = viewModel.stateSpecialist,
                 )
             }
 

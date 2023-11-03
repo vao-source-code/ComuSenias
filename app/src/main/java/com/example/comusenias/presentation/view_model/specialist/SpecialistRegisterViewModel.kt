@@ -1,4 +1,4 @@
-package com.example.comusenias.presentation.view_model
+package com.example.comusenias.presentation.view_model.specialist
 
 import android.content.Intent
 import android.net.Uri

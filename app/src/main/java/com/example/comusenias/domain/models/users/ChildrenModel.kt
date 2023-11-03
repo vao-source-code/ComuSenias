@@ -4,6 +4,8 @@ import com.example.comusenias.domain.models.game.LevelModel
 import com.example.comusenias.domain.models.observation.Observation
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.google.gson.Gson
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
 data class ChildrenModel(
     var id: String = EMPTY_STRING,
@@ -26,7 +28,10 @@ data class ChildrenModel(
             email = email,
             tel = tel,
             name = name,
-            image = image,
+            image = if (image != "") URLEncoder.encode(
+                image,
+                StandardCharsets.UTF_8.toString()
+            ) else "",
             date = date,
             idSpecialist = idSpecialist,
             specialist = specialist,

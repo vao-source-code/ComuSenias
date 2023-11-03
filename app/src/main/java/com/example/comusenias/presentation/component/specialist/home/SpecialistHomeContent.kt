@@ -81,7 +81,9 @@ fun PatientContainer(
                     items(it) { patient ->
                         CardProfileUser(user = patient,
                             onClickCard = {
-                                navController.navigate(AppScreen.ProfilePatientScreen.route)
+                                navController.navigate(
+                                    route = AppScreen.ProfilePatientScreen.passPacient(patient.toJson())
+                                )
                             })
                     }
                 }

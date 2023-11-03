@@ -1,4 +1,4 @@
-package com.example.comusenias.presentation.view_model
+package com.example.comusenias.presentation.view_model.specialist
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

@@ -34,7 +34,7 @@ import com.example.comusenias.presentation.ui.theme.SIZE100
 import com.example.comusenias.presentation.ui.theme.SIZE12
 import com.example.comusenias.presentation.ui.theme.SIZE20
 import com.example.comusenias.presentation.ui.theme.SIZE36
-import com.example.comusenias.presentation.view_model.ScanQRViewModel
+import com.example.comusenias.presentation.view_model.specialist.ScanQRViewModel
 
 
 @Composable

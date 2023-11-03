@@ -1,4 +1,4 @@
-package com.example.comusenias.presentation.view_model
+package com.example.comusenias.presentation.view_model.specialist
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,6 +30,7 @@ class SpecialistViewModel @Inject constructor(
     var state by mutableStateOf(QRState())
     var stateSpecialist by mutableStateOf(SpecialistModel())
     val currentUser = authUsesCases.getCurrentUserUseCase()
+    var childrens by mutableStateOf(listOf<ChildrenModel>())
 
     init {
         getUserData()
@@ -49,6 +50,10 @@ class SpecialistViewModel @Inject constructor(
         currentUser?.let {
             specialistUseCases.getChildrenForSpecialistById(it.uid).collect { children ->
                 childrenResponse = children
+                if (children is Response.Success) {
+                    childrens = children.data
+                    stateSpecialist.childrenInCharge = childrens
+                }
             }
         }
     }

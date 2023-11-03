@@ -13,7 +13,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
@@ -78,7 +77,6 @@ fun ImageProfile(userImage: String?) {
             model = userImage,
             contentScale = ContentScale.Crop,
             contentDescription = SELECTED_IMAGE,
-            error = painterResource(id = userImage.toInt())
         )
     }
 }

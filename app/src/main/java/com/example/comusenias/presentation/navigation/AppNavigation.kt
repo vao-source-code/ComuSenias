@@ -90,12 +90,9 @@ private fun GetNavHost(
             SpecialistScreen(navController = navController, modifier = modifier)
         }
 
-        composable(AppScreen.ProfilePatientScreen.route) {
-            ProfilePatientScreen(navController = navController, modifier = modifier)
-        }
 
         composable(AppScreen.SendObservationScreen.route) {
-            SendObservationScreen(navController = navController,modifier = modifier)
+            SendObservationScreen(navController = navController, modifier = modifier)
         }
 
         composableLearnSign(navController, levelViewModel)
@@ -173,6 +170,21 @@ private fun GetNavHost(
             GenerateQRScreen(
                 navController = navController,
             )
+        }
+
+        composable(
+            route = AppScreen.ProfilePatientScreen.route,
+            arguments = listOf(navArgument("pacient") {
+                type = NavType.StringType
+            })
+        ) { pacient ->
+            pacient.arguments?.getString("pacient")?.let {
+                ProfilePatientScreen(
+                    navController = navController,
+                    modifier = modifier,
+                    pacient = it
+                )
+            }
         }
 
     }
