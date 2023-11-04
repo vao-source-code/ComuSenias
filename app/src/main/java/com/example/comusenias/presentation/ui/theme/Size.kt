@@ -6,6 +6,7 @@ const val FLOAT01: Float = 1f
 const val SIZE1: Int = 1
 const val SIZE2: Int = 2
 const val SIZE3: Int = 3
+const val SIZE4: Int = 4
 const val SIZE5: Int = 5
 const val SIZE6: Int = 6
 const val SIZE7: Int = 7

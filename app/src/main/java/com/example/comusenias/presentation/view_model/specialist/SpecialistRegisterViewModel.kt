@@ -43,35 +43,46 @@ class SpecialistRegisterViewModel @Inject constructor(
     private val dataUserStorageFactoryUseCases: DataUserStorageFactory,
 ) : ViewModel() {
 
+    /*---------------------------------public variable ---------------------------------*/
     var registerResponse by mutableStateOf<Response<FirebaseUser>?>(null)
         private set
     var stateSpecialist by mutableStateOf(SpecialistModel())
         private set
     var state by mutableStateOf(RegisterState())
         private set
-    var isCheckedTermsPolicy: Boolean by mutableStateOf(false)
-    var isNameValid: Boolean by mutableStateOf(false)
     var errorName: String by mutableStateOf("")
-    var isMedicalLicenseValid: Boolean by mutableStateOf(false)
     var errorMedicalLicense: String by mutableStateOf("")
-    var isMedicalLicenseExpirationValid: Boolean by mutableStateOf(false)
-    var errormedicalLicenseExpiration: String by mutableStateOf("")
-    var isSpecialityValid: Boolean by mutableStateOf(false)
     var errorSpeciality: String by mutableStateOf("")
-    var isTitleMedical: Boolean by mutableStateOf(false)
     var errorTitleMedical: String by mutableStateOf("")
-    var isDate: Boolean by mutableStateOf(false)
-    var errorDate: String by mutableStateOf("")
-    var isTelValid: Boolean by mutableStateOf(false)
     var errorTelephone: String by mutableStateOf("")
     var isRegisterEnabled: Boolean by mutableStateOf(false)
-    var specialistModel = SpecialistModel()
     var user = UserModel()
+
+    /*---------------------------------private variable ---------------------------------*/
+    private var isCheckedTermsPolicy: Boolean by mutableStateOf(false)
+    private var isNameValid: Boolean by mutableStateOf(false)
+    private var isMedicalLicenseValid: Boolean by mutableStateOf(false)
+    private var isMedicalLicenseExpirationValid: Boolean by mutableStateOf(false)
+    private var errorMedicalLicenseExpiration: String by mutableStateOf("")
+    private var isSpecialityValid: Boolean by mutableStateOf(false)
+    private var isTitleMedical: Boolean by mutableStateOf(false)
+    private var isDate: Boolean by mutableStateOf(false)
+    private var errorDate: String by mutableStateOf("")
+    private var isTelValid: Boolean by mutableStateOf(false)
+    private var specialistModel = SpecialistModel()
 
     init {
         init()
     }
 
+    /*---------------------------------private function ---------------------------------*/
+    private fun enabledRegisterButton() {
+        isRegisterEnabled =
+            isNameValid && isSpecialityValid && isMedicalLicenseExpirationValid &&
+                    isMedicalLicenseValid && isTitleMedical && isDate && isTelValid && isCheckedTermsPolicy
+    }
+
+    /*---------------------------------public function ---------------------------------*/
     fun init() = viewModelScope.launch(IO) {
         user = dataUserStorageFactoryUseCases.getUserValue(PREFERENCE_USER)!!
     }
@@ -87,11 +98,24 @@ class SpecialistRegisterViewModel @Inject constructor(
         register(user)
     }
 
-    fun enabledRegisterButton() {
-        isRegisterEnabled =
-            isNameValid && isSpecialityValid && isMedicalLicenseExpirationValid &&
-                    isMedicalLicenseValid && isTitleMedical && isDate && isTelValid && isCheckedTermsPolicy
+    fun createUser() = viewModelScope.launch {
+        user.id = authUseCases.getCurrentUserUseCase()?.uid!!
+        user.password = LibraryPassword.hashPassword(user.password)
+        usersUseCase.createUserUseCase(user)
+        specialistModel = SpecialistModel(
+            id = authUseCases.getCurrentUserUseCase()?.uid!!,
+            name = stateSpecialist.name,
+            tel = stateSpecialist.tel,
+            medicalLicense = stateSpecialist.medicalLicense,
+            medicalLicenseExpiration = stateSpecialist.medicalLicenseExpiration,
+            speciality = stateSpecialist.speciality,
+            titleMedical = stateSpecialist.titleMedical,
+        )
+        specialistUseCases.createSpecialist(specialistModel)
     }
+
+
+    /*---------------------------------validation ---------------------------------*/
 
     fun validateName() {
         val isValid = LibraryString.validUserName(stateSpecialist.name)
@@ -110,7 +134,7 @@ class SpecialistRegisterViewModel @Inject constructor(
     fun validateMedicalLicense() {
         val isValid = stateSpecialist.medicalLicense.isNotEmpty()
         isMedicalLicenseValid = isValid
-        errormedicalLicenseExpiration = if (isValid) EMPTY_STRING else RESTRICTION_NAME_USER_ACCOUNT
+        errorMedicalLicenseExpiration = if (isValid) EMPTY_STRING else RESTRICTION_NAME_USER_ACCOUNT
         enabledRegisterButton()
     }
 
@@ -132,7 +156,7 @@ class SpecialistRegisterViewModel @Inject constructor(
         val isValid =
             LibraryString.validateRegistrationExpirationDate(stateSpecialist.medicalLicenseExpiration)
         isMedicalLicenseExpirationValid = isValid
-        errormedicalLicenseExpiration = if (isValid) EMPTY_STRING else INVALID_DATE
+        errorMedicalLicenseExpiration = if (isValid) EMPTY_STRING else INVALID_DATE
         enabledRegisterButton()
     }
 
@@ -143,22 +167,7 @@ class SpecialistRegisterViewModel @Inject constructor(
         enabledRegisterButton()
     }
 
-    fun createUser() = viewModelScope.launch {
-        user.id = authUseCases.getCurrentUserUseCase()?.uid!!
-        user.password = LibraryPassword.hashPassword(user.password)
-        usersUseCase.createUserUseCase(user)
-        specialistModel = SpecialistModel(
-            id = authUseCases.getCurrentUserUseCase()?.uid!!,
-            name = stateSpecialist.name,
-            tel = stateSpecialist.tel,
-            medicalLicense = stateSpecialist.medicalLicense,
-            medicalLicenseExpiration = stateSpecialist.medicalLicenseExpiration,
-            speciality = stateSpecialist.speciality,
-            titleMedical = stateSpecialist.titleMedical,
-        )
-        specialistUseCases.createSpecialist(specialistModel)
-    }
-
+    /*---------------------------------on change ---------------------------------*/
 
     fun onNameInputChanged(name: String) {
         stateSpecialist = stateSpecialist.copy(name = name)

@@ -22,18 +22,22 @@ class ScanQRViewModel @Inject constructor(
     private val childrenUseCases: ChildrenFactory,
     private val specialistUseCases: SpecialistFactory,
     private val qrRepository: QRRepository,
-    private val authUsesCases: AuthFactoryUseCases
+    authUsesCases: AuthFactoryUseCases
 ) : ViewModel() {
 
+    /*---------------------------------public variable ---------------------------------*/
     var state by mutableStateOf(QRState())
     var stateChildren by mutableStateOf(ChildrenModel())
-    var stateSpecialist by mutableStateOf(SpecialistModel())
-    val currentUser = authUsesCases.getCurrentUserUseCase()
+
+    /*---------------------------------private variable ---------------------------------*/
+    private var stateSpecialist by mutableStateOf(SpecialistModel())
+    private val currentUser = authUsesCases.getCurrentUserUseCase()
 
     init {
         getUserData()
     }
 
+    /*---------------------------------private function ---------------------------------*/
     private fun getUserData() = viewModelScope.launch {
         currentUser?.let {
             specialistUseCases.getSpecialistById(it.uid).collect { user ->
@@ -41,7 +45,6 @@ class ScanQRViewModel @Inject constructor(
             }
         }
     }
-
 
     fun startScanning() = viewModelScope.launch(IO) {
         qrRepository.startScanning().collect { data ->
@@ -57,10 +60,10 @@ class ScanQRViewModel @Inject constructor(
         }
     }
 
-    fun updateChildrenbySpecialist() = viewModelScope.launch(IO) {
+    /*---------------------------------public function ---------------------------------*/
+    fun updateChildrenBySpecialist() = viewModelScope.launch(IO) {
         stateChildren.idSpecialist = stateSpecialist.id
         childrenUseCases.updateChildren(stateChildren)
     }
-
 
 }

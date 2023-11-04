@@ -154,3 +154,9 @@ const val PROFILE_USER = "Nombre del Usuario"
 const val PROFILE_EMAIL = "Correo electrónico"
 const val PROFILE_NAME_SURNAME = "Nombre y Apellido"
 const val PROFILE_BIRTHDATE = "Fecha Nacimiento"
+
+/*-----------------QR -----------------*/
+const val QR_SCAN = "Escanear QR"
+const val QR_SCAN_TEXT_CHILDREN = "Escanea el QR del niño para agregarlo a tu lista de pacientes"
+const val PRESS_THE_QR_BUTTON = "Aprieta el botón QR"
+const val QR_ADD = "Agregar"

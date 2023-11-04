@@ -4,10 +4,12 @@ import com.example.comusenias.constants.FirebaseConstants.CHILDREN_COLLECTION
 import com.example.comusenias.constants.FirebaseConstants.GAME_COLLECTION
 import com.example.comusenias.constants.FirebaseConstants.LETTERS_COLLECTION
 import com.example.comusenias.constants.FirebaseConstants.LEVEL_COLLECTION
+import com.example.comusenias.constants.FirebaseConstants.OBSERVATION_COLLECTION
 import com.example.comusenias.constants.FirebaseConstants.SPECIALIST_COLLECTION
 import com.example.comusenias.constants.FirebaseConstants.SUB_LEVEL_COLLECTION
 import com.example.comusenias.constants.FirebaseConstants.USERS_COLLECTION
 import com.example.comusenias.data.repositories.ChildrenRepositoryImpl
+import com.example.comusenias.data.repositories.ObservationRepositoryImpl
 import com.example.comusenias.data.repositories.SpecialistRepositoryImpl
 import com.example.comusenias.data.repositories.firebase.AuthRepositoryImpl
 import com.example.comusenias.data.repositories.firebase.LetterImageRepositoryImpl
@@ -17,6 +19,7 @@ import com.example.comusenias.domain.repositories.AuthRepository
 import com.example.comusenias.domain.repositories.ChildrenRepository
 import com.example.comusenias.domain.repositories.LetterImageRepository
 import com.example.comusenias.domain.repositories.LevelRepository
+import com.example.comusenias.domain.repositories.ObservationRepository
 import com.example.comusenias.domain.repositories.SpecialistRepository
 import com.example.comusenias.domain.repositories.UsersRepository
 import com.example.comusenias.domain.use_cases.auth.AuthFactoryUseCases
@@ -123,6 +126,11 @@ object FirebaseModule {
     fun providerSpecialistRef(db: FirebaseFirestore): CollectionReference =
         db.collection(SPECIALIST_COLLECTION)
 
+    @Provides
+    @Named(OBSERVATION_COLLECTION)
+    fun providerObservationRef(db: FirebaseFirestore): CollectionReference =
+        db.collection(OBSERVATION_COLLECTION)
+
     /*----------------------------- Repositories ------------------------------------------------ */
 
     @Provides
@@ -139,6 +147,9 @@ object FirebaseModule {
 
     @Provides
     fun providerSpecialistRepository(impl: SpecialistRepositoryImpl): SpecialistRepository = impl
+
+    @Provides
+    fun providerObservationRepository(impl: ObservationRepositoryImpl): ObservationRepository = impl
 
     /*----------------------------- Use Cases --------------------------------------------------- */
     @Provides

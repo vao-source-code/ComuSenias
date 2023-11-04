@@ -1,6 +1,5 @@
 package com.example.comusenias.presentation.screen.specialist
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -29,19 +28,15 @@ fun SpecialistScreen(
     modifier: Modifier,
     viewModel: SpecialistViewModel = hiltViewModel()
 ) {
-
     when (viewModel.childrenResponse) {
         Response.Loading -> {
             Box(
                 contentAlignment = Alignment.Center,
             ) {
                 DefaultLoadingProgressIndicator()
-
             }
         }
-
         is Response.Success -> {
-            Log.d("SpecialistScreen", "SpecialistScreen: ${viewModel.childrenResponse}")
             Box(
                 modifier = modifier
                     .fillMaxSize()
@@ -54,7 +49,6 @@ fun SpecialistScreen(
             }
 
         }
-
         is Response.Error -> {
             Toast.makeText(
                 LocalContext.current,
@@ -62,7 +56,6 @@ fun SpecialistScreen(
                 Toast.LENGTH_SHORT
             ).show()
         }
-
         else -> {}
     }
 

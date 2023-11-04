@@ -1,6 +1,5 @@
 package com.example.comusenias.presentation.screen.qr
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,8 +27,6 @@ fun GenerateQRScreen(
 
     val state = viewModel.state
 
-
-
     if (viewModel.state.bitmap != null) {
         Image(
             modifier = Modifier
@@ -52,7 +49,4 @@ fun GenerateQRScreen(
 
         )
     }
-
-
-    Log.d("GenerateQRScreen", "GenerateQRScreen: ${state.bitmap.toString()}")
 }
