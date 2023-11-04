@@ -11,7 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.comusenias.domain.models.observation.Observation
+import com.example.comusenias.domain.models.observation.ObservationModel
 import com.example.comusenias.domain.models.users.ChildrenModel
 import com.example.comusenias.presentation.screen.specialist.StatisticsScreen
 import com.example.comusenias.presentation.ui.theme.SIZE20
@@ -21,7 +21,7 @@ import com.example.comusenias.presentation.ui.theme.SIZE36
 fun PatientProfileContent(
     navController: NavController,
     patient: ChildrenModel,
-    observations: List<Observation>
+    observations: List<ObservationModel>
 ) {
 
     Column(

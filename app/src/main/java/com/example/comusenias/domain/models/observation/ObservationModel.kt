@@ -3,7 +3,7 @@ package com.example.comusenias.domain.models.observation
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.google.gson.Gson
 
-data class Observation(
+data class ObservationModel(
     var id: String = EMPTY_STRING,
     var dateObservation: String = EMPTY_STRING,
     var observation: String = EMPTY_STRING,
@@ -13,7 +13,7 @@ data class Observation(
 ) {
 
     fun toJson(): String = Gson().toJson(
-        Observation(
+        ObservationModel(
             id = id,
             dateObservation = dateObservation,
             observation = observation,
@@ -24,6 +24,7 @@ data class Observation(
     )
 
     companion object {
-        fun fromJson(data: String): Observation = Gson().fromJson(data, Observation::class.java)
+        fun fromJson(data: String): ObservationModel =
+            Gson().fromJson(data, ObservationModel::class.java)
     }
 }

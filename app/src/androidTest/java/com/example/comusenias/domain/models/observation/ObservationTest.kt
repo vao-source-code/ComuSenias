@@ -10,10 +10,10 @@ class ObservationTest {
         val dateObservation = "2023-10-08"
         val observation = "This is an observation."
 
-        val observationModel = Observation(
-                id = id,
-                dateObservation = dateObservation,
-                observation = observation
+        val observationModel = ObservationModel(
+            id = id,
+            dateObservation = dateObservation,
+            observation = observation
         )
 
         assertEquals(id, observationModel.id)

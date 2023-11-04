@@ -1,7 +1,7 @@
 package com.example.comusenias.domain.models.users
 
 import com.example.comusenias.domain.models.game.LevelModel
-import com.example.comusenias.domain.models.observation.Observation
+import com.example.comusenias.domain.models.observation.ObservationModel
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.google.gson.Gson
 import java.net.URLEncoder
@@ -20,7 +20,7 @@ data class ChildrenModel(
     var subLevelActual: Int = 0,
     var isPremium: Boolean = false,
     var levels: List<LevelModel> = listOf(),
-    var observation: List<Observation>? = listOf()
+    var observation: List<ObservationModel>? = listOf()
 ) {
     fun toJson(): String = Gson().toJson(
         ChildrenModel(

@@ -13,7 +13,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.comusenias.R
 import com.example.comusenias.domain.models.game.LevelModel
-import com.example.comusenias.domain.models.observation.Observation
+import com.example.comusenias.domain.models.observation.ObservationModel
 import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.models.users.ChildrenModel
 import com.example.comusenias.domain.models.users.SpecialistModel
@@ -65,7 +65,7 @@ fun SpecialistScreen(
 class DataClassUtil {
     companion object {
         fun createSpecialistModelExample(): SpecialistModel {
-            val observation = Observation(
+            val observation = ObservationModel(
                 id = "observation_id",
                 dateObservation = "30-10-2023",
                 observation = "Example observation Example observation Example observation Example observationExample observation Example observation Example observation Example observation Example observation Example observation Example observation"

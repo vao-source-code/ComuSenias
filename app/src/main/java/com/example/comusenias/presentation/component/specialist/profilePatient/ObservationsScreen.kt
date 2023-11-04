@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.comusenias.R
-import com.example.comusenias.domain.models.observation.Observation
+import com.example.comusenias.domain.models.observation.ObservationModel
 import com.example.comusenias.presentation.component.defaults.FloatingButtonDefault
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.SIZE1
@@ -34,7 +34,7 @@ import com.example.comusenias.presentation.ui.theme.line_divisor
 
 @Composable
 fun ObservationsScreen(
-    observations: List<Observation>, navController: NavController
+    observations: List<ObservationModel>, navController: NavController
 ) {
     Scaffold(floatingActionButton = {
         FloatingButtonDefault(icon = R.drawable.note_add,
@@ -51,7 +51,7 @@ fun ObservationsScreen(
 }
 
 @Composable
-fun ListObservations(observations: List<Observation>) {
+fun ListObservations(observations: List<ObservationModel>) {
     LazyColumn(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -62,7 +62,7 @@ fun ListObservations(observations: List<Observation>) {
 }
 
 @Composable
-fun CardObservation(observation: Observation) {
+fun CardObservation(observation: ObservationModel) {
     Column(
         modifier = Modifier
             .fillMaxWidth()

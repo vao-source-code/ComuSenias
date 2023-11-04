@@ -39,6 +39,11 @@ import com.example.comusenias.domain.use_cases.letters.SearchImageLetterUseCase
 import com.example.comusenias.domain.use_cases.level.GetLevels
 import com.example.comusenias.domain.use_cases.level.LevelFactory
 import com.example.comusenias.domain.use_cases.level.SearchLevelName
+import com.example.comusenias.domain.use_cases.observation.CreateObservation
+import com.example.comusenias.domain.use_cases.observation.GetObservation
+import com.example.comusenias.domain.use_cases.observation.GetObservationById
+import com.example.comusenias.domain.use_cases.observation.ObservationFactory
+import com.example.comusenias.domain.use_cases.observation.UpdateObservation
 import com.example.comusenias.domain.use_cases.specialist.CreateSpecialist
 import com.example.comusenias.domain.use_cases.specialist.GetChildrenForSpecialistById
 import com.example.comusenias.domain.use_cases.specialist.GetSpecialistById
@@ -192,6 +197,15 @@ object FirebaseModule {
             updateSpecialist = UpdateSpecialist(usersRepository),
             getChildrenForSpecialistById = GetChildrenForSpecialistById(usersRepository)
 
+        )
+
+    @Provides
+    fun providerObservationUseCases(observationRepository: ObservationRepository) =
+        ObservationFactory(
+            createObservation = CreateObservation(observationRepository),
+            getObservationById = GetObservationById(observationRepository),
+            updateObservation = UpdateObservation(observationRepository),
+            getObservation = GetObservation(observationRepository)
         )
 
     /*----------------------------- Storage ----------------------------------------------------- */

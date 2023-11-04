@@ -1,7 +1,7 @@
 package com.example.comusenias.data.repositories
 
 import com.example.comusenias.constants.FirebaseConstants.OBSERVATION_COLLECTION
-import com.example.comusenias.domain.models.observation.Observation
+import com.example.comusenias.domain.models.observation.ObservationModel
 import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.repositories.ObservationRepository
 import com.google.firebase.firestore.CollectionReference
@@ -16,7 +16,7 @@ class ObservationRepositoryImpl @Inject constructor(
     @Named(OBSERVATION_COLLECTION) private val observationRef: CollectionReference,
 ) : ObservationRepository {
 
-    override suspend fun createObservation(observation: Observation): Response<Boolean> {
+    override suspend fun createObservation(observation: ObservationModel): Response<Boolean> {
         return try {
             observationRef.document(observation.id).set(observation).await()
             Response.Success(true)
@@ -26,9 +26,9 @@ class ObservationRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getObservationById(id: String): Flow<Observation> = callbackFlow {
+    override fun getObservationById(id: String): Flow<ObservationModel> = callbackFlow {
         val snapshotListener = observationRef.document(id).addSnapshotListener { snapshot, _ ->
-            val user = snapshot?.toObject(Observation::class.java) ?: Observation()
+            val user = snapshot?.toObject(ObservationModel::class.java) ?: ObservationModel()
             trySend(user)
         }
         awaitClose {
@@ -36,7 +36,7 @@ class ObservationRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun updateObservation(observation: Observation): Response<Boolean> {
+    override suspend fun updateObservation(observation: ObservationModel): Response<Boolean> {
         return try {
             val mapImage: MutableMap<String, Any> = HashMap()
             mapImage["id"] = observation.id
@@ -52,15 +52,24 @@ class ObservationRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getObservation(idChildren: String): Flow<List<Observation>> = callbackFlow {
-        val snapshotListener = observationRef.whereEqualTo("idChildren", idChildren)
-            .addSnapshotListener { snapshot, _ ->
-                val subLevelModel = snapshot?.toObjects(Observation::class.java)
-                    ?: ArrayList<Observation>()
-                trySend(subLevelModel)
+    override fun getObservation(idChildren: String): Flow<Response<List<ObservationModel>>> =
+        callbackFlow {
+            val snapshotListener = observationRef.whereEqualTo("idChildren", idChildren)
+                .addSnapshotListener { snapshot, e ->
+                    if (e != null) {
+                        trySend(Response.Error(e))
+                    }
+                    snapshot.let {
+                        val modelList = snapshot?.toObjects(ObservationModel::class.java)
+                            ?: ArrayList<ObservationModel>()
+                        trySend(Response.Success(modelList))
+                    }
+                }
+
+            awaitClose {
+                snapshotListener.remove()
             }
-        awaitClose {
-            snapshotListener.remove()
         }
-    }
+
+
 }
