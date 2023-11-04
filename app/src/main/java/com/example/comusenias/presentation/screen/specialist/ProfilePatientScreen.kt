@@ -24,8 +24,6 @@ fun ProfilePatientScreen(
 ) {
 
     val patient = viewModel.user
-    //TODO traer las observaciones aparte
-    val observations = patient.observation!!
 
     Box(modifier = modifier.fillMaxSize()) {
         Scaffold(
@@ -47,7 +45,7 @@ fun ProfilePatientScreen(
                 PatientProfileContent(
                     navController = navController,
                     patient = patient,
-                    observations = observations
+                    viewModel = viewModel
                 )
             }
         }

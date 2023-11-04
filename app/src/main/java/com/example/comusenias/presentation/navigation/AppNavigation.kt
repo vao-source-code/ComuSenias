@@ -91,9 +91,6 @@ private fun GetNavHost(
         }
 
 
-        composable(AppScreen.SendObservationScreen.route) {
-            SendObservationScreen(navController = navController, modifier = modifier)
-        }
 
         composableLearnSign(navController, levelViewModel)
 
@@ -186,6 +183,22 @@ private fun GetNavHost(
                 )
             }
         }
+
+        composable(
+            route = AppScreen.SendObservationScreen.route,
+            arguments = listOf(navArgument("observation") {
+                type = NavType.StringType
+            })
+        ) { observation ->
+            observation.arguments?.getString("observation")?.let {
+                SendObservationScreen(
+                    navController = navController,
+                    modifier = modifier,
+                    observation = it
+                )
+            }
+        }
+
 
     }
 }

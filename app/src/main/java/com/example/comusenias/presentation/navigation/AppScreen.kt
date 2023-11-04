@@ -39,7 +39,11 @@ sealed class AppScreen(val route: String) {
         fun passPacient(user: String) = "profile_patient_screen/$user"
     }
 
-    object SendObservationScreen : AppScreen("send_observation_screen")
+    object SendObservationScreen : AppScreen("send_observation_screen/{observation}") {
+        fun createRoute(observation: String): String {
+            return "send_observation_screen/$observation"
+        }
+    }
 
     object ChoseTheLetterPlayScreen : AppScreen("chose_the_letter_play/{level}/{subLevel}") {
         fun createRoute(level: String, subLevel: String) =

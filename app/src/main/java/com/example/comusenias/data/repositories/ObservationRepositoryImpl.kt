@@ -18,7 +18,7 @@ class ObservationRepositoryImpl @Inject constructor(
 
     override suspend fun createObservation(observation: ObservationModel): Response<Boolean> {
         return try {
-            observationRef.document(observation.id).set(observation).await()
+            observationRef.document().set(observation).await()
             Response.Success(true)
         } catch (e: Exception) {
             e.printStackTrace()
