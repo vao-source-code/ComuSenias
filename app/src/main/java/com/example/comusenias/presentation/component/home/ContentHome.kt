@@ -2,7 +2,9 @@ package com.example.comusenias.presentation.component.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -22,6 +24,7 @@ import com.example.comusenias.presentation.component.defaults.app.ShowRetrySnack
 import com.example.comusenias.presentation.ui.theme.ERROR_RETRY_LEVEL
 import com.example.comusenias.presentation.ui.theme.SIZE1
 import com.example.comusenias.presentation.ui.theme.SIZE14
+import com.example.comusenias.presentation.ui.theme.SIZE5
 import com.example.comusenias.presentation.view_model.LevelViewModel
 import com.example.comusenias.presentation.view_model.SubLevelViewModel
 
@@ -51,14 +54,14 @@ fun ContentHome(
         }
 
         else -> {
-            ContentProgressBar()
+            ContentProgressBar(null)
         }
     }
 }
 
 @Composable
 private fun ShowLazyColumn(
-    level: List<LevelModel>,
+    levels: List<LevelModel>,
     navController: NavController,
     levelViewModel: LevelViewModel
 ) {
@@ -69,7 +72,7 @@ private fun ShowLazyColumn(
         initial = emptyList()
     )
 
-    getSubLevelViewModel.insertSubLevel(createSubLevelEntity(getSubLevel(level)))
+    getSubLevelViewModel.insertSubLevel(createSubLevelEntity(getSubLevel(levels)))
 
     LazyColumn(
         modifier = Modifier
@@ -81,23 +84,28 @@ private fun ShowLazyColumn(
             .background(Color.White),
         verticalArrangement = Arrangement.spacedBy(SIZE1.dp)
     ) {
+
         item {
-            ContentProgressBar()
+            Spacer(modifier = Modifier.height(SIZE5.dp))
+            ContentProgressBar(levels = levels)
         }
-        item {
-            ContentLevel(level[0].name)
-        }
+
         items(
-            items = getSubLevel(level),
-        ) { subLevel ->
-            ContentCardGame(
-                status = getStatusSubLevel(subLevelsEntity.value, subLevel),
-                level = level[0].id,
-                subLevel = subLevel,
-                navController = navController
-            )
-        }
-        item {
+            items = levels,
+        ) { level ->
+            ContentLevel(level)
+
+            level.subLevel.forEach { subLevel ->
+                ContentCardGame(
+                    status = getStatusSubLevel(subLevelsEntity.value, subLevel),
+                    level = level.id,
+                    subLevel = subLevel,
+                    navController = navController
+                )
+            }
+
+            Spacer(modifier = Modifier.height(SIZE5.dp))
+
             CardGameCheckPoint()
         }
     }

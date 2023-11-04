@@ -52,7 +52,7 @@ fun ChoseTheSignPlayScreen(
         }
 
         else -> {
-            ContentProgressBar()
+            ContentProgressBar(null)
         }
     }
 }

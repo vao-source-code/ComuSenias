@@ -58,7 +58,7 @@ fun ChoseTheLetterPlayScreen(
         }
 
         else -> {
-            ContentProgressBar()
+            ContentProgressBar(null)
         }
     }
 }

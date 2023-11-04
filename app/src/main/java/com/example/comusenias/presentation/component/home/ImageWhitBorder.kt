@@ -11,8 +11,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.example.comusenias.R
 import com.example.comusenias.presentation.ui.theme.AVATAR
 import com.example.comusenias.presentation.ui.theme.SIZE5
 import com.example.comusenias.presentation.ui.theme.SIZE64
@@ -40,7 +42,8 @@ fun ImageWhitBorder(
                 .clip(shape = RoundedCornerShape(SIZE8.dp)),
             model = image,
             contentScale = ContentScale.Crop,
-            contentDescription = AVATAR
+            contentDescription = AVATAR,
+            error = painterResource(id = R.drawable.diagnostic_category)
         )
     }
 }
