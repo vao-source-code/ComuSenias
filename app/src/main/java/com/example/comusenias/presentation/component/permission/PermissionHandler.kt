@@ -4,34 +4,33 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import com.example.comusenias.R
 import com.example.comusenias.presentation.navigation.AppScreen
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.rememberMultiplePermissionsState
 
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun RequestPermissions(
     onPermissionGranted: () -> Unit,
     onPermissionDenied: () -> Unit
 ) {
-    val requestPermissionLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestMultiplePermissions()
-    ) { permissions ->
+    val multilpePermissionState = rememberMultiplePermissionsState(
+        listOf(
+            Manifest.permission.CAMERA,
+        )
+    ){ permissions ->
         if (permissions.all { it.value }) {
             onPermissionGranted()
         } else {
             onPermissionDenied()
         }
     }
-    DisposableEffect(Unit) {
-        requestPermissionLauncher.launch(
-            //TODO ver que esto falla en android 33
-            arrayOf(
-                Manifest.permission.CAMERA,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            )
-        )
-        onDispose { }
+    LaunchedEffect(true) {
+        multilpePermissionState.launchMultiplePermissionRequest()
     }
 }
 
