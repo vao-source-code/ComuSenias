@@ -21,6 +21,7 @@ import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.models.room.SubLevelEntity
 import com.example.comusenias.presentation.component.defaults.app.CircularProgressBar
 import com.example.comusenias.presentation.component.defaults.app.ShowRetrySnackBar
+import com.example.comusenias.presentation.component.home.GameUtils.Companion.getStatusSubLevel
 import com.example.comusenias.presentation.ui.theme.ERROR_RETRY_LEVEL
 import com.example.comusenias.presentation.ui.theme.SIZE1
 import com.example.comusenias.presentation.ui.theme.SIZE14
@@ -54,7 +55,7 @@ fun ContentHome(
         }
 
         else -> {
-            ContentProgressBar(null)
+//            ContentProgressBar(null,)
         }
     }
 }
@@ -87,13 +88,13 @@ private fun ShowLazyColumn(
 
         item {
             Spacer(modifier = Modifier.height(SIZE5.dp))
-            ContentProgressBar(levels = levels)
+            ContentProgressBar(levels = levels,subLevelsEntity.value)
         }
 
         items(
             items = levels,
         ) { level ->
-            ContentLevel(level)
+            ContentLevel(level,subLevelsEntity.value)
 
             level.subLevel.forEach { subLevel ->
                 ContentCardGame(
@@ -123,21 +124,27 @@ private fun ShowLazyColumn(
  * - El estado actual del subnivel: Si el subnivel no está después del último subnivel completado.
  * - StatusGame.BLOCKED: Si el subnivel no se encuentra en la lista de subniveles.
  */
-fun getStatusSubLevel(sublevelsEntity: List<SubLevelEntity>, sublevel: SubLevelModel): StatusGame {
-    val statusList = sublevelsEntity.map { it.status }
-    val lastCompletedIndex = statusList.indexOfLast { it == StatusGame.COMPLETED }
-    val currentIndex = sublevelsEntity.indexOfFirst { it.idSubLevel == sublevel.name }
+class GameUtils {
+    companion object {
+        @JvmStatic
+        fun getStatusSubLevel(sublevelsEntity: List<SubLevelEntity>, sublevel: SubLevelModel): StatusGame {
+            val statusList = sublevelsEntity.map { it.status }
+            val lastCompletedIndex = statusList.indexOfLast { it == StatusGame.COMPLETED }
+            val currentIndex = sublevelsEntity.indexOfFirst { it.idSubLevel == sublevel.name }
 
-    if (statusList.all { it == StatusGame.BLOCKED }) {
-        sublevelsEntity.getOrNull(0)?.status = StatusGame.IN_PROGRESS
-    }
+            if (statusList.all { it == StatusGame.BLOCKED }) {
+                sublevelsEntity.getOrNull(0)?.status = StatusGame.IN_PROGRESS
+            }
 
-    return when {
-        lastCompletedIndex != -1 && currentIndex == lastCompletedIndex + 1 -> StatusGame.IN_PROGRESS
-        lastCompletedIndex != -1 && currentIndex > lastCompletedIndex + 1 -> StatusGame.BLOCKED
-        else -> sublevelsEntity.getOrNull(currentIndex)?.status ?: StatusGame.BLOCKED
+            return when {
+                lastCompletedIndex != -1 && currentIndex == lastCompletedIndex + 1 -> StatusGame.IN_PROGRESS
+                lastCompletedIndex != -1 && currentIndex > lastCompletedIndex + 1 -> StatusGame.BLOCKED
+                else -> sublevelsEntity.getOrNull(currentIndex)?.status ?: StatusGame.BLOCKED
+            }
+        }
     }
 }
+
 
 /**
  * Crea entidades de subnivel a partir de una lista de modelos de subnivel.

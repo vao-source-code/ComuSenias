@@ -12,7 +12,6 @@ import com.example.comusenias.domain.models.game.SubLevelModel
 import com.example.comusenias.presentation.component.defaults.app.CircularProgressBar
 import com.example.comusenias.presentation.component.gameAction.GameAction
 import com.example.comusenias.presentation.component.gameAction.MatchSign
-import com.example.comusenias.presentation.component.home.ContentProgressBar
 import com.example.comusenias.presentation.component.home.getLevelViewModel
 import com.example.comusenias.presentation.extensions.validation.selectedOption
 import com.example.comusenias.presentation.navigation.AppScreen
@@ -52,7 +51,7 @@ fun ChoseTheSignPlayScreen(
         }
 
         else -> {
-            ContentProgressBar(null)
+//            ContentProgressBar(null)
         }
     }
 }

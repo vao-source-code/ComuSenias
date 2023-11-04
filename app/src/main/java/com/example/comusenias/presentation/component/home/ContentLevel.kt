@@ -16,7 +16,10 @@ import androidx.compose.ui.text.font.FontWeight.Companion.SemiBold
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.comusenias.domain.models.game.LevelModel
+import com.example.comusenias.domain.models.room.SubLevelEntity
+import com.example.comusenias.presentation.component.home.GameUtils.Companion.getStatusSubLevel
 import com.example.comusenias.presentation.component.home.StatusGame.COMPLETED
+import com.example.comusenias.presentation.ui.theme.COMPLETED_LESSONS
 import com.example.comusenias.presentation.ui.theme.SIZE12
 import com.example.comusenias.presentation.ui.theme.SIZE13
 import com.example.comusenias.presentation.ui.theme.SIZE2
@@ -25,9 +28,7 @@ import com.example.comusenias.presentation.ui.theme.SIZE24
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 
 @Composable
-fun ContentLevel(level: LevelModel) {
-    val subLevelCompleted = level.subLevel.count { it.isCompleted.name == COMPLETED.name }
-    val totalSubLevels = level.subLevel.count()
+fun ContentLevel(level: LevelModel, sublevelsEntity: List<SubLevelEntity>) {
 
     Column(
         modifier = Modifier
@@ -46,7 +47,12 @@ fun ContentLevel(level: LevelModel) {
             )
         )
         Text(
-            text = "${subLevelCompleted}/${totalSubLevels} lecciones completadas",
+            text = "${
+                countCompletedSubLevels(
+                    level,
+                    sublevelsEntity
+                )
+            }/${totalSublevels(level)} $COMPLETED_LESSONS",
             style = TextStyle(
                 fontSize = SIZE13.sp,
                 fontWeight = SemiBold,
@@ -54,4 +60,18 @@ fun ContentLevel(level: LevelModel) {
             )
         )
     }
+}
+
+fun countCompletedSubLevels(level: LevelModel, sublevelsEntity: List<SubLevelEntity>): Int {
+    var subLevelCompleted = 0
+    level.subLevel.forEach { subLevel ->
+        if (getStatusSubLevel(sublevelsEntity, subLevel) == COMPLETED) {
+            subLevelCompleted += 1
+        }
+    }
+    return subLevelCompleted
+}
+
+fun totalSublevels(level: LevelModel): Int {
+    return level.subLevel.count()
 }
