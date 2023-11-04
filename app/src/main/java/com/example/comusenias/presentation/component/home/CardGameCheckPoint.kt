@@ -2,7 +2,7 @@ package com.example.comusenias.presentation.component.home
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,10 +13,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.FontWeight.Companion.Normal
+import androidx.compose.ui.text.font.FontWeight.Companion.SemiBold
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -48,8 +49,8 @@ fun CardGameCheckPoint() {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(start = SIZE15.dp, end = SIZE18.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(SIZE28.dp)
+            verticalAlignment = CenterVertically,
+            horizontalArrangement = spacedBy(SIZE28.dp)
         ) {
             ImageWhitBorder(
                 image = "",
@@ -60,13 +61,13 @@ fun CardGameCheckPoint() {
             Column(
                 modifier = Modifier
                     .fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(SIZE7.dp)
+                verticalArrangement = spacedBy(SIZE7.dp)
             ) {
                 Text(
                     text = CHECK_POINT,
                     style = TextStyle(
                         fontSize = SIZE16.sp,
-                        fontWeight = FontWeight.SemiBold,
+                        fontWeight = SemiBold,
                         color = blackColorApp
                     )
                 )
@@ -74,7 +75,7 @@ fun CardGameCheckPoint() {
                     text = CONSULT_WHIT_ESPECIALIST,
                     style = TextStyle(
                         fontSize = SIZE12.sp,
-                        fontWeight = FontWeight.Normal,
+                        fontWeight = Normal,
                         color = blackColorApp
                     )
                 )
