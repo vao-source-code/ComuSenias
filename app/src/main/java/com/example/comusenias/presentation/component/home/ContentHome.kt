@@ -66,6 +66,7 @@ private fun ShowLazyColumn(
     navController: NavController,
     levelViewModel: LevelViewModel
 ) {
+
     val subLevelViewModel: SubLevelViewModel = hiltViewModel()
     getSubLevelViewModel = subLevelViewModel
 
