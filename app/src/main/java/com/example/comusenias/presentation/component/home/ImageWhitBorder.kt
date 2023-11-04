@@ -10,22 +10,21 @@ import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.ContentScale.Companion.Crop
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.example.comusenias.R
+import com.example.comusenias.R.drawable.diagnostic_category
 import com.example.comusenias.presentation.ui.theme.AVATAR
-import com.example.comusenias.presentation.ui.theme.SIZE5
+import com.example.comusenias.presentation.ui.theme.SIZE3
 import com.example.comusenias.presentation.ui.theme.SIZE64
 import com.example.comusenias.presentation.ui.theme.SIZE8
-import com.example.comusenias.presentation.ui.theme.size08
 
 @Composable
 fun ImageWhitBorder(
     image: String,
     borderColor: State<Color>,
-    border: Int = SIZE5,
+    border: Int = SIZE3,
 ) {
     Box(
         modifier = Modifier
@@ -33,7 +32,7 @@ fun ImageWhitBorder(
             .border(
                 width = border.dp,
                 color = borderColor.value,
-                shape = RoundedCornerShape(size08.dp)
+                shape = RoundedCornerShape(SIZE8.dp)
             )
     ) {
         AsyncImage(
@@ -41,9 +40,9 @@ fun ImageWhitBorder(
                 .fillMaxSize()
                 .clip(shape = RoundedCornerShape(SIZE8.dp)),
             model = image,
-            contentScale = ContentScale.Crop,
+            contentScale = Crop,
             contentDescription = AVATAR,
-            error = painterResource(id = R.drawable.diagnostic_category)
+            error = painterResource(id = diagnostic_category)
         )
     }
 }
