@@ -53,7 +53,6 @@ class KidsMock {
         subLevelActual = 1,
         isPremium = false,
         levels = levelList,
-        observation = null,
         id = "1",
         name = "Pablo Carballo",
         tel = "123456789",
