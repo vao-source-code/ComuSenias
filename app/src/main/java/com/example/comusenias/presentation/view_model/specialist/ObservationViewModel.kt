@@ -1,6 +1,5 @@
 package com.example.comusenias.presentation.view_model.specialist
 
-import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -14,9 +13,8 @@ import com.example.comusenias.domain.models.users.ChildrenModel
 import com.example.comusenias.domain.models.users.SpecialistModel
 import com.example.comusenias.domain.use_cases.children.ChildrenFactory
 import com.example.comusenias.domain.use_cases.observation.ObservationFactory
-import com.example.comusenias.domain.use_cases.specialist.SpecialistFactory
+import com.example.comusenias.presentation.ui.theme.CHILDREN_OBSERVATION
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,12 +22,9 @@ import javax.inject.Inject
 @HiltViewModel
 class ObservationViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    @ApplicationContext private val context: Context,
     private val observationUsesCase: ObservationFactory,
-    private val specialistUsesCase: SpecialistFactory,
     private val childrenUsesCase: ChildrenFactory
 ) : ViewModel() {
-
 
     var stateChildren by mutableStateOf(ChildrenModel())
         private set
@@ -46,7 +41,7 @@ class ObservationViewModel @Inject constructor(
     var specialist by mutableStateOf(SpecialistModel())
         private set
 
-    val data = savedStateHandle.get<String>("observation")
+    val data = savedStateHandle.get<String>(CHILDREN_OBSERVATION)
     val observation = ObservationModel.fromJson(data!!)
 
     init {
@@ -54,25 +49,21 @@ class ObservationViewModel @Inject constructor(
     }
 
     fun getChildren() = viewModelScope.launch(IO) {
-        childrenUsesCase.getChildrenById(observation.idChildren).collect() {
+        childrenUsesCase.getChildrenById(observation.idChildren).collect {
             stateChildren = it
         }
     }
 
-    fun updateObservation() = viewModelScope.launch {
-        observationUsesCase.updateObservation(stateObservation)
-    }
 
     fun createObservation() = viewModelScope.launch {
         sendObservationResponse = Response.Loading
         onDateObservation(LibraryDate.getCurrentDateTimeAsString())
+        onDateTimeObservation(LibraryDate.getCurrentDateTimeAsLong())
         onIdSpecialist(observation.idSpecialist)
         onNameSpecialist(observation.nameSpecialist)
         onIdChildren(observation.idChildren)
-
         sendObservationResponse = observationUsesCase.createObservation(stateObservation)
     }
-
 
     private fun onNameSpecialist(nameSpecialist: String) {
         stateObservation = stateObservation.copy(nameSpecialist = nameSpecialist)
@@ -94,5 +85,8 @@ class ObservationViewModel @Inject constructor(
         stateObservation = stateObservation.copy(idSpecialist = idSpecialist)
     }
 
+    fun onDateTimeObservation(currentDateTimeAsLong: Long) {
+        stateObservation = stateObservation.copy(timeDate = currentDateTimeAsLong)
+    }
 
 }

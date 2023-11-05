@@ -10,6 +10,7 @@ data class ObservationModel(
     var idChildren: String = EMPTY_STRING,
     var idSpecialist: String = EMPTY_STRING,
     var nameSpecialist: String = EMPTY_STRING,
+    var timeDate: Long = 0
 ) {
 
     fun toJson(): String = Gson().toJson(
@@ -19,7 +20,8 @@ data class ObservationModel(
             observation = observation,
             idChildren = idChildren,
             idSpecialist = idSpecialist,
-            nameSpecialist = nameSpecialist
+            nameSpecialist = nameSpecialist,
+            timeDate = timeDate
         )
     )
 

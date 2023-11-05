@@ -60,9 +60,11 @@ class ObservationRepositoryImpl @Inject constructor(
                         trySend(Response.Error(e))
                     }
                     snapshot.let {
-                        val modelList = snapshot?.toObjects(ObservationModel::class.java)
-                            ?: ArrayList<ObservationModel>()
-                        trySend(Response.Success(modelList))
+                        val sortedModelList = snapshot?.toObjects(ObservationModel::class.java)
+                            ?.mapNotNull { it as? ObservationModel }
+                            ?.sortedByDescending { it.timeDate }
+                            ?: emptyList()
+                        trySend(Response.Success(sortedModelList))
                     }
                 }
 

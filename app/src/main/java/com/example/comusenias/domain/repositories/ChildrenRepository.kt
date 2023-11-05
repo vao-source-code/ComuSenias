@@ -10,4 +10,5 @@ interface ChildrenRepository {
     fun getUserChildrenById(id: String): Flow<ChildrenModel>
     suspend fun updateUserChildren(user: ChildrenModel): Response<Boolean>
     suspend fun saveImageUserChildren(file: File): Response<String>
+    suspend fun integrateChildrenWithSpecialist(user: ChildrenModel): Response<Boolean>
 }

@@ -50,4 +50,17 @@ object LibraryDate {
         val currentDate = Date()
         return dateFormat.format(currentDate)
     }
+
+    fun getCurrentDateTimeAsLong(): Long {
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm")
+        val date = Date()
+        val formattedDate = sdf.format(date)
+        return try {
+            val parsedDate = sdf.parse(formattedDate)
+            parsedDate.time
+        } catch (e: Exception) {
+            e.printStackTrace()
+            -1L // En caso de error, se puede devolver un valor predeterminado o manejar el error de otra manera
+        }
+    }
 }

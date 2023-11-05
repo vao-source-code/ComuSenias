@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.models.state.QRState
 import com.example.comusenias.domain.models.users.ChildrenModel
 import com.example.comusenias.domain.models.users.SpecialistModel
@@ -28,6 +29,9 @@ class ScanQRViewModel @Inject constructor(
     /*---------------------------------public variable ---------------------------------*/
     var state by mutableStateOf(QRState())
     var stateChildren by mutableStateOf(ChildrenModel())
+    var addChildrenResponse by mutableStateOf<Response<Boolean>?>(null)
+        private set
+
 
     /*---------------------------------private variable ---------------------------------*/
     private var stateSpecialist by mutableStateOf(SpecialistModel())
@@ -62,8 +66,9 @@ class ScanQRViewModel @Inject constructor(
 
     /*---------------------------------public function ---------------------------------*/
     fun updateChildrenBySpecialist() = viewModelScope.launch(IO) {
+        addChildrenResponse = Response.Loading
         stateChildren.idSpecialist = stateSpecialist.id
-        childrenUseCases.updateChildren(stateChildren)
+        addChildrenResponse = childrenUseCases.integrateChildrenWithSpecialist(stateChildren)
     }
 
 }

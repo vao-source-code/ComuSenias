@@ -31,6 +31,7 @@ import com.example.comusenias.domain.use_cases.auth.ResetPasswordUseCase
 import com.example.comusenias.domain.use_cases.children.ChildrenFactory
 import com.example.comusenias.domain.use_cases.children.CreateChildren
 import com.example.comusenias.domain.use_cases.children.GetChildrenById
+import com.example.comusenias.domain.use_cases.children.IntegrateChildrenWithSpecialist
 import com.example.comusenias.domain.use_cases.children.SaveImageChildren
 import com.example.comusenias.domain.use_cases.children.UpdateChildren
 import com.example.comusenias.domain.use_cases.letters.GetImageUseCase
@@ -185,7 +186,8 @@ object FirebaseModule {
             createChildren = CreateChildren(usersRepository),
             getChildrenById = GetChildrenById(usersRepository),
             saveImageChildren = SaveImageChildren(usersRepository),
-            updateChildren = UpdateChildren(usersRepository)
+            updateChildren = UpdateChildren(usersRepository),
+            integrateChildrenWithSpecialist = IntegrateChildrenWithSpecialist(usersRepository)
         )
 
     @Provides

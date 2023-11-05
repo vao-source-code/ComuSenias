@@ -15,6 +15,7 @@ import com.example.comusenias.domain.models.users.ChildrenModel
 import com.example.comusenias.domain.models.users.SpecialistModel
 import com.example.comusenias.domain.use_cases.observation.ObservationFactory
 import com.example.comusenias.domain.use_cases.specialist.SpecialistFactory
+import com.example.comusenias.presentation.ui.theme.PACIENT
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
@@ -42,7 +43,7 @@ class ProfilePatientViewModel @Inject constructor(
     var specialist by mutableStateOf(SpecialistModel())
         private set
 
-    val data = savedStateHandle.get<String>("pacient")
+    val data = savedStateHandle.get<String>(PACIENT)
     val user = ChildrenModel.fromJson(data!!)
 
     init {

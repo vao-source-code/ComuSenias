@@ -28,17 +28,14 @@ class QRRepositoryImpl @Inject constructor(
 
     override fun startScanning(): Flow<String?> = callbackFlow {
         installModule()
-        scanner.startScan()
-            .addOnSuccessListener { barcode ->
-                launch {
-                    send(getDetails(barcode))
-                }
+        scanner.startScan().addOnSuccessListener { barcode ->
+            launch {
+                send(getDetails(barcode))
             }
-            .addOnFailureListener {
-                it.printStackTrace()
-            }
+        }.addOnFailureListener {
+            it.printStackTrace()
+        }
         awaitClose {}
-
     }
 
     override fun starGenerate(children: ChildrenModel): Flow<Bitmap> = callbackFlow {
@@ -70,15 +67,13 @@ class QRRepositoryImpl @Inject constructor(
     install using ModuleClientAPI, for more visit
     https://developers.google.com/android/guides/module-install-apis **/
     private fun installModule() {
-        playModule
-            .areModulesAvailable(scanner)
-            .addOnSuccessListener {
-                if (!it.areModulesAvailable()) {
-                    val newRequest = ModuleInstallRequest.newBuilder().addApi(scanner).build()
-                    playModule.installModules(newRequest)
-                }
-            }.addOnFailureListener {
-                Log.d("QRRepository", "Failed to install QRCodeScanner Module")
+        playModule.areModulesAvailable(scanner).addOnSuccessListener {
+            if (!it.areModulesAvailable()) {
+                val newRequest = ModuleInstallRequest.newBuilder().addApi(scanner).build()
+                playModule.installModules(newRequest)
             }
+        }.addOnFailureListener {
+            Log.d("QRRepository", "Failed to install QRCodeScanner Module")
+        }
     }
 }
