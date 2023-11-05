@@ -137,7 +137,10 @@ const val CHILD_FILE = "image.jpg"
 const val ERROR_TAKE_PHOTO = "Error al cargar la imagen desde URI:"
 const val COMPLETED_LESSONS = "lecciones completadas"
 const val INFO_TEXT_OPEN_CAMERA = "La cámara se abrirá para detectar tu lengua de señas.Tendrás 5 segundos para realizar el gesto.¡Prepárate!"
-
+const val TITLE_DIALOG_PERMISSION = "Se requiere acceso a la cámara para continuar"
+const val DESCRIPTION_DIALOG_PERMISSION = "Esta funcionalidad nos permite ofrecerte una experiencia más interactiva y enriquecedora."
+const val CONFIG_PERMISSION = "Configurar permisos"
+const val PACKAGE = "package"
 /*-----------------BUTTONS AND ICONS-----------------*/
 const val CLOSE : String = "Salir de la pantalla"
 
