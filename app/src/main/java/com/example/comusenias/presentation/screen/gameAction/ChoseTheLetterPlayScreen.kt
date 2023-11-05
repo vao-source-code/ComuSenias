@@ -11,7 +11,6 @@ import com.example.comusenias.presentation.component.defaults.app.CircularProgre
 import com.example.comusenias.presentation.component.defaults.app.ShowRetrySnackBar
 import com.example.comusenias.presentation.component.gameAction.GameAction
 import com.example.comusenias.presentation.component.gameAction.MatchLetter
-import com.example.comusenias.presentation.component.home.ContentProgressBar
 import com.example.comusenias.presentation.component.home.getLevelViewModel
 import com.example.comusenias.presentation.extensions.validation.selectedOption
 import com.example.comusenias.presentation.navigation.AppScreen
@@ -58,7 +57,7 @@ fun ChoseTheLetterPlayScreen(
         }
 
         else -> {
-            ContentProgressBar()
+//            ContentProgressBar(null)
         }
     }
 }

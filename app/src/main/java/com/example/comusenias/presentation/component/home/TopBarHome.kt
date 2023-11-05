@@ -1,24 +1,25 @@
 package com.example.comusenias.presentation.component.home
 
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterVertically
+import androidx.compose.ui.Alignment.Companion.End
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.layout.ContentScale.Companion.Crop
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.FontWeight.Companion.SemiBold
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.example.comusenias.R
+import com.example.comusenias.R.drawable.profile_avatar
 import com.example.comusenias.presentation.ui.theme.PROFILE_USER
 import com.example.comusenias.presentation.ui.theme.SIZE10
 import com.example.comusenias.presentation.ui.theme.SIZE16
@@ -38,8 +39,8 @@ fun TopBarHome(
                 image = image
             )
         },
-        backgroundColor = Color.White,
-        contentColor = Color.White
+        backgroundColor = White,
+        contentColor = White
     )
 }
 
@@ -49,11 +50,11 @@ fun ContentHelloUser(
     image: String?
 ) {
     Row(
-        horizontalArrangement = Arrangement.spacedBy(
+        horizontalArrangement = spacedBy(
             SIZE10.dp,
-            Alignment.End
+            End
         ),
-        verticalAlignment = Alignment.CenterVertically,
+        verticalAlignment = CenterVertically,
     ) {
         if (image != null) {
             AsyncImage(
@@ -62,15 +63,15 @@ fun ContentHelloUser(
                     .clip(CircleShape),
                 model = image,
                 contentDescription = PROFILE_USER,
-                contentScale = ContentScale.Crop,
-                error = painterResource(id = R.drawable.profile_avatar)
+                contentScale = Crop,
+                error = painterResource(id = profile_avatar)
             )
         }
         Text(
             text = name,
             style = TextStyle(
                 fontSize = SIZE16.sp,
-                fontWeight = FontWeight.SemiBold,
+                fontWeight = SemiBold,
                 color = blackColorApp
             )
         )
