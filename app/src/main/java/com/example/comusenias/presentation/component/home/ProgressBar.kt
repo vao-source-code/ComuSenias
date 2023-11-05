@@ -14,7 +14,8 @@ import com.example.comusenias.presentation.ui.theme.greenColorApp
 import com.example.comusenias.presentation.ui.theme.SIZE15
 
 @Composable
-fun ProgressBar(progress: Float = 0.7f ) {
+fun ProgressBar(progress: Float ) {
+
     LinearProgressIndicator(
         modifier = Modifier
             .fillMaxWidth()

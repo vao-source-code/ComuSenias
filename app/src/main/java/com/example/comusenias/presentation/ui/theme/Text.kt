@@ -135,6 +135,8 @@ const val TAKE_PHOTO = "Sacar foto"
 const val GALLERY_SCREEN = "GalleryScreen"
 const val CHILD_FILE = "image.jpg"
 const val ERROR_TAKE_PHOTO = "Error al cargar la imagen desde URI:"
+const val COMPLETED_LESSONS = "lecciones completadas"
+
 
 /*-----------------BUTTONS AND ICONS-----------------*/
 const val CLOSE : String = "Salir de la pantalla"
