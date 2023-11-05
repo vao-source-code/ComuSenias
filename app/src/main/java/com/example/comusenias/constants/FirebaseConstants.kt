@@ -8,4 +8,5 @@ object FirebaseConstants {
     const val LEVEL_COLLECTION = "level"
     const val SUB_LEVEL_COLLECTION = "sublevel"
     const val GAME_COLLECTION = "game"
+    const val OBSERVATION_COLLECTION = "observation"
 }

@@ -17,7 +17,7 @@ class SplashScreenKtTest {
     val composeTestRule = createComposeRule()
 
     @Mock
-    val navController: NavController = Mockito.mock(NavController::class.java)
+    val navController: NavHostController = Mockito.mock(NavHostController::class.java)
 
     @Before
     fun setUp() {

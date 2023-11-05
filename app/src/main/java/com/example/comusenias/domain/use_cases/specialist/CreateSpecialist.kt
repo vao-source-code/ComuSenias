@@ -8,5 +8,4 @@ import javax.inject.Inject
 class CreateSpecialist @Inject constructor(private val repository: SpecialistRepository) {
     suspend operator fun
             invoke(user: SpecialistModel) = repository.createUserSpecialist(user)
-
 }

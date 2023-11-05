@@ -40,9 +40,6 @@ fun ResponseStatusLogin(
                         viewModel.initRol()
                         delay(2000)
                         navController.navigate(route = AuthScreen.LoadingScreen.route) {
-                            popUpTo(AppScreen.LoginScreen.route) {
-                                inclusive = true
-                            }
                         }
                     }
 

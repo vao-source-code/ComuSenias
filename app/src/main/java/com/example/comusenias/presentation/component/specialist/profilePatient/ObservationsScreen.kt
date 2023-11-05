@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.comusenias.R
-import com.example.comusenias.domain.models.observation.Observation
+import com.example.comusenias.domain.models.observation.ObservationModel
 import com.example.comusenias.presentation.component.defaults.FloatingButtonDefault
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.SIZE1
@@ -31,27 +31,42 @@ import com.example.comusenias.presentation.ui.theme.SIZE16
 import com.example.comusenias.presentation.ui.theme.SIZE6
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.line_divisor
+import com.example.comusenias.presentation.view_model.specialist.ProfilePatientViewModel
 
 @Composable
 fun ObservationsScreen(
-    observations: List<Observation>, navController: NavController
+    observations: List<ObservationModel>,
+    navController: NavController,
+    viewModel: ProfilePatientViewModel
 ) {
     Scaffold(floatingActionButton = {
         FloatingButtonDefault(icon = R.drawable.note_add,
-            click = { navController.navigate(AppScreen.SendObservationScreen.route) })
+            click = {
+                //Mandar el id del paciente, el id de specialist , el name de especialist
+                val newObservation = ObservationModel(
+                    idSpecialist = viewModel.specialist.id,
+                    idChildren = viewModel.user.id,
+                    nameSpecialist = viewModel.specialist.name,
+                )
+                navController.navigate(
+                    route = AppScreen.SendObservationScreen
+                        .createRoute(observation = newObservation.toJson())
+                ) {}
+            })
     }) { paddingValues ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
+
             ListObservations(observations = observations)
         }
     }
 }
 
 @Composable
-fun ListObservations(observations: List<Observation>) {
+fun ListObservations(observations: List<ObservationModel>) {
     LazyColumn(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -62,7 +77,7 @@ fun ListObservations(observations: List<Observation>) {
 }
 
 @Composable
-fun CardObservation(observation: Observation) {
+fun CardObservation(observation: ObservationModel) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -80,7 +95,9 @@ fun CardObservation(observation: Observation) {
             )
         )
         Text(
-            modifier = Modifier.fillMaxWidth(), text = "Dr. Gutierrez", style = TextStyle(
+            modifier = Modifier.fillMaxWidth(),
+            text = observation.nameSpecialist,
+            style = TextStyle(
                 fontSize = SIZE14.sp,
                 fontWeight = FontWeight.Bold,
                 color = blackColorApp,
