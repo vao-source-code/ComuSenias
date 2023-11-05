@@ -73,4 +73,16 @@ class ChildrenRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun integrateChildrenWithSpecialist(user: ChildrenModel): Response<Boolean> {
+        return try {
+            val mapImage: MutableMap<String, Any> = HashMap()
+            mapImage["idSpecialist"] = user.idSpecialist
+            childrenRef.document(user.id).update(mapImage).await()
+            Response.Success(true)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Response.Error(e)
+        }
+    }
+
 }

@@ -8,15 +8,22 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.comusenias.presentation.component.defaults.DefaultTopBar
 import com.example.comusenias.presentation.component.specialist.profilePatient.PatientProfileContent
 import com.example.comusenias.presentation.ui.theme.SIZE3
+import com.example.comusenias.presentation.view_model.specialist.ProfilePatientViewModel
 
 @Composable
-fun ProfilePatientScreen(navController: NavHostController, modifier: Modifier) {
-    val patient = DataClassUtil.createSpecialistModelExample().childrenInCharge?.get(0)!!
-    val observations = patient.observation!!
+fun ProfilePatientScreen(
+    navController: NavHostController,
+    modifier: Modifier,
+    pacient: String,
+    viewModel: ProfilePatientViewModel = hiltViewModel()
+) {
+
+    val patient = viewModel.user
 
     Box(modifier = modifier.fillMaxSize()) {
         Scaffold(
@@ -38,7 +45,7 @@ fun ProfilePatientScreen(navController: NavHostController, modifier: Modifier) {
                 PatientProfileContent(
                     navController = navController,
                     patient = patient,
-                    observations = observations
+                    viewModel = viewModel
                 )
             }
         }

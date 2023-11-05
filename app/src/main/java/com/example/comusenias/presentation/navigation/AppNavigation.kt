@@ -28,15 +28,19 @@ import com.example.comusenias.presentation.screen.gameAction.MakeSignPlayScreen
 import com.example.comusenias.presentation.screen.home.HomeScreen
 import com.example.comusenias.presentation.screen.notification.NotificationScreen
 import com.example.comusenias.presentation.screen.premiun.PremiunScreen
+import com.example.comusenias.presentation.screen.profile.ChildrenProfileScreen
+import com.example.comusenias.presentation.screen.qr.GenerateQRScreen
+import com.example.comusenias.presentation.screen.qr.LectorQRScreen
 import com.example.comusenias.presentation.screen.specialist.ProfilePatientScreen
 import com.example.comusenias.presentation.screen.specialist.SendObservationScreen
 import com.example.comusenias.presentation.screen.specialist.SpecialistScreen
-import com.example.comusenias.presentation.screen.profile.ChildrenProfileScreen
 import com.example.comusenias.presentation.splashScreen.SplashScreen
+import com.example.comusenias.presentation.ui.theme.CHILDREN_OBSERVATION
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
-import com.example.comusenias.presentation.ui.theme.LEVEL
+import com.example.comusenias.presentation.ui.theme.PACIENT
 import com.example.comusenias.presentation.ui.theme.SUB_LEVEL
 import com.example.comusenias.presentation.view_model.LevelViewModel
+import com.google.firebase.analytics.FirebaseAnalytics.Param.LEVEL
 
 @RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -64,6 +68,12 @@ private fun GetNavHost(
 
         authNavGraph(navController = navController, modifier = modifier)
 
+        composable(AppScreen.SplashScreen.route) {
+            SplashScreen(navController)
+        }
+
+        /*------------Children-----------------------*/
+
         composable(AppScreen.ChildrenProfileScreen.route) {
             ChildrenProfileScreen(navController = navController, modifier = modifier)
         }
@@ -74,10 +84,6 @@ private fun GetNavHost(
             )
         }
 
-        composable(AppScreen.SplashScreen.route) {
-            SplashScreen(navController)
-        }
-
         composable(AppScreen.InfoMakeSignScreen.route) {
             InfoMakeSignScreen(navController)
         }
@@ -85,20 +91,9 @@ private fun GetNavHost(
         composable(AppScreen.PremiumScreen.route) {
             PremiunScreen(navController = navController, modifier = modifier)
         }
+
         composable(AppScreen.MainActivity.route) {
             MainActivity()
-        }
-
-        composable(AppScreen.SpecialistScreen.route) {
-            SpecialistScreen(navController = navController, modifier = modifier)
-        }
-
-        composable(AppScreen.ProfilePatientScreen.route) {
-            ProfilePatientScreen(navController = navController, modifier = modifier)
-        }
-
-        composable(AppScreen.SendObservationScreen.route) {
-            SendObservationScreen(navController = navController,modifier = modifier)
         }
 
         composableLearnSign(navController, levelViewModel)
@@ -166,7 +161,62 @@ private fun GetNavHost(
             )
         }
 
+        /*------------Specialist-----------------------*/
+        composableSpecialist(navController, modifier)
+
     }
+}
+
+private fun NavGraphBuilder.composableSpecialist(
+    navController: NavHostController,
+    modifier: Modifier
+) {
+    composable(AppScreen.SpecialistScreen.route) {
+        SpecialistScreen(navController = navController, modifier = modifier)
+    }
+
+    composable(AppScreen.GenerateQRScreen.route) {
+        GenerateQRScreen(
+            navController = navController,
+        )
+    }
+
+    composable(AppScreen.LectorQRScreen.route) {
+        LectorQRScreen(
+            navController = navController, modifier = modifier
+        )
+    }
+
+    composable(
+        route = AppScreen.ProfilePatientScreen.route,
+        arguments = listOf(navArgument(PACIENT) {
+            type = NavType.StringType
+        })
+    ) { pacient ->
+        pacient.arguments?.getString(PACIENT)?.let {
+            ProfilePatientScreen(
+                navController = navController,
+                modifier = modifier,
+                pacient = it
+            )
+        }
+    }
+
+    composable(
+        route = AppScreen.SendObservationScreen.route,
+        arguments = listOf(navArgument(CHILDREN_OBSERVATION) {
+            type = NavType.StringType
+        })
+    ) { observation ->
+        observation.arguments?.getString(CHILDREN_OBSERVATION)?.let {
+            SendObservationScreen(
+                navController = navController,
+                modifier = modifier,
+                observation = it
+            )
+        }
+    }
+
 }
 
 

@@ -9,9 +9,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.example.comusenias.R
 import com.example.comusenias.presentation.component.bottomBar.ShowBottomBar
+import com.example.comusenias.presentation.component.defaults.FloatingButtonDefault
 import com.example.comusenias.presentation.component.profile.ChildrenProfileContent
 import com.example.comusenias.presentation.component.profile.ChildrenProfileFooterContent
+import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.view_model.ChildrenProfileViewModel
 
 @Composable
@@ -23,6 +26,10 @@ fun ChildrenProfileScreen(
     Scaffold(
         bottomBar = {
             ShowBottomBar(navController = navController)
+        }, floatingActionButton = {
+            FloatingButtonDefault(icon = R.drawable.qr_code_scanner) {
+                navController.navigate(AppScreen.GenerateQRScreen.route)
+            }
         }
     ) { paddingValues ->
         Box(

@@ -37,7 +37,7 @@ import com.example.comusenias.presentation.ui.theme.SIZE2
 import com.example.comusenias.presentation.ui.theme.SIZE20
 import com.example.comusenias.presentation.ui.theme.SIZE64
 import com.example.comusenias.presentation.ui.theme.SPECIALTY
-import com.example.comusenias.presentation.view_model.SpecialistRegisterViewModel
+import com.example.comusenias.presentation.view_model.specialist.SpecialistRegisterViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable

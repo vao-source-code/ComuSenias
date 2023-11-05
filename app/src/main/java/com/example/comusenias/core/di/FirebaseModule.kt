@@ -4,10 +4,12 @@ import com.example.comusenias.constants.FirebaseConstants.CHILDREN_COLLECTION
 import com.example.comusenias.constants.FirebaseConstants.GAME_COLLECTION
 import com.example.comusenias.constants.FirebaseConstants.LETTERS_COLLECTION
 import com.example.comusenias.constants.FirebaseConstants.LEVEL_COLLECTION
+import com.example.comusenias.constants.FirebaseConstants.OBSERVATION_COLLECTION
 import com.example.comusenias.constants.FirebaseConstants.SPECIALIST_COLLECTION
 import com.example.comusenias.constants.FirebaseConstants.SUB_LEVEL_COLLECTION
 import com.example.comusenias.constants.FirebaseConstants.USERS_COLLECTION
 import com.example.comusenias.data.repositories.ChildrenRepositoryImpl
+import com.example.comusenias.data.repositories.ObservationRepositoryImpl
 import com.example.comusenias.data.repositories.SpecialistRepositoryImpl
 import com.example.comusenias.data.repositories.firebase.AuthRepositoryImpl
 import com.example.comusenias.data.repositories.firebase.LetterImageRepositoryImpl
@@ -17,6 +19,7 @@ import com.example.comusenias.domain.repositories.AuthRepository
 import com.example.comusenias.domain.repositories.ChildrenRepository
 import com.example.comusenias.domain.repositories.LetterImageRepository
 import com.example.comusenias.domain.repositories.LevelRepository
+import com.example.comusenias.domain.repositories.ObservationRepository
 import com.example.comusenias.domain.repositories.SpecialistRepository
 import com.example.comusenias.domain.repositories.UsersRepository
 import com.example.comusenias.domain.use_cases.auth.AuthFactoryUseCases
@@ -28,6 +31,7 @@ import com.example.comusenias.domain.use_cases.auth.ResetPasswordUseCase
 import com.example.comusenias.domain.use_cases.children.ChildrenFactory
 import com.example.comusenias.domain.use_cases.children.CreateChildren
 import com.example.comusenias.domain.use_cases.children.GetChildrenById
+import com.example.comusenias.domain.use_cases.children.IntegrateChildrenWithSpecialist
 import com.example.comusenias.domain.use_cases.children.SaveImageChildren
 import com.example.comusenias.domain.use_cases.children.UpdateChildren
 import com.example.comusenias.domain.use_cases.letters.GetImageUseCase
@@ -36,8 +40,17 @@ import com.example.comusenias.domain.use_cases.letters.SearchImageLetterUseCase
 import com.example.comusenias.domain.use_cases.level.GetLevels
 import com.example.comusenias.domain.use_cases.level.LevelFactory
 import com.example.comusenias.domain.use_cases.level.SearchLevelName
+import com.example.comusenias.domain.use_cases.observation.CreateObservation
+import com.example.comusenias.domain.use_cases.observation.GetObservation
+import com.example.comusenias.domain.use_cases.observation.GetObservationById
+import com.example.comusenias.domain.use_cases.observation.ObservationFactory
+import com.example.comusenias.domain.use_cases.observation.UpdateObservation
 import com.example.comusenias.domain.use_cases.specialist.CreateSpecialist
+import com.example.comusenias.domain.use_cases.specialist.GetChildrenForSpecialistById
+import com.example.comusenias.domain.use_cases.specialist.GetSpecialistById
+import com.example.comusenias.domain.use_cases.specialist.SaveImageSpecialist
 import com.example.comusenias.domain.use_cases.specialist.SpecialistFactory
+import com.example.comusenias.domain.use_cases.specialist.UpdateSpecialist
 import com.example.comusenias.domain.use_cases.users.CreateUserUseCase
 import com.example.comusenias.domain.use_cases.users.GetUserByIdUseCase
 import com.example.comusenias.domain.use_cases.users.SaveImageUserUseCase
@@ -119,6 +132,11 @@ object FirebaseModule {
     fun providerSpecialistRef(db: FirebaseFirestore): CollectionReference =
         db.collection(SPECIALIST_COLLECTION)
 
+    @Provides
+    @Named(OBSERVATION_COLLECTION)
+    fun providerObservationRef(db: FirebaseFirestore): CollectionReference =
+        db.collection(OBSERVATION_COLLECTION)
+
     /*----------------------------- Repositories ------------------------------------------------ */
 
     @Provides
@@ -135,6 +153,9 @@ object FirebaseModule {
 
     @Provides
     fun providerSpecialistRepository(impl: SpecialistRepositoryImpl): SpecialistRepository = impl
+
+    @Provides
+    fun providerObservationRepository(impl: ObservationRepositoryImpl): ObservationRepository = impl
 
     /*----------------------------- Use Cases --------------------------------------------------- */
     @Provides
@@ -165,13 +186,28 @@ object FirebaseModule {
             createChildren = CreateChildren(usersRepository),
             getChildrenById = GetChildrenById(usersRepository),
             saveImageChildren = SaveImageChildren(usersRepository),
-            updateChildren = UpdateChildren(usersRepository)
+            updateChildren = UpdateChildren(usersRepository),
+            integrateChildrenWithSpecialist = IntegrateChildrenWithSpecialist(usersRepository)
         )
 
     @Provides
     fun providerSpecialistUseCases(usersRepository: SpecialistRepository) =
         SpecialistFactory(
             createSpecialist = CreateSpecialist(usersRepository),
+            getSpecialistById = GetSpecialistById(usersRepository),
+            saveImageSpecialist = SaveImageSpecialist(usersRepository),
+            updateSpecialist = UpdateSpecialist(usersRepository),
+            getChildrenForSpecialistById = GetChildrenForSpecialistById(usersRepository)
+
+        )
+
+    @Provides
+    fun providerObservationUseCases(observationRepository: ObservationRepository) =
+        ObservationFactory(
+            createObservation = CreateObservation(observationRepository),
+            getObservationById = GetObservationById(observationRepository),
+            updateObservation = UpdateObservation(observationRepository),
+            getObservation = GetObservation(observationRepository)
         )
 
     /*----------------------------- Storage ----------------------------------------------------- */

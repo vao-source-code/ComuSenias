@@ -1,36 +1,34 @@
 package com.example.comusenias.presentation.component.specialist.profilePatient
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import coil.compose.AsyncImage
-import com.example.comusenias.domain.models.observation.Observation
+import androidx.navigation.NavHostController
+import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.models.users.ChildrenModel
+import com.example.comusenias.presentation.component.defaults.DefaultLoadingProgressIndicator
+import com.example.comusenias.presentation.component.defaults.app.showToast
 import com.example.comusenias.presentation.screen.specialist.StatisticsScreen
-import com.example.comusenias.presentation.ui.theme.SELECTED_IMAGE
-import com.example.comusenias.presentation.ui.theme.SIZE100
 import com.example.comusenias.presentation.ui.theme.SIZE20
 import com.example.comusenias.presentation.ui.theme.SIZE36
+import com.example.comusenias.presentation.view_model.specialist.ProfilePatientViewModel
 
 @Composable
 fun PatientProfileContent(
-    navController: NavController,
+    navController: NavHostController,
     patient: ChildrenModel,
-    observations: List<Observation>
-    ) {
+    viewModel: ProfilePatientViewModel
+) {
 
     Column(
         modifier = Modifier.fillMaxSize()
@@ -39,12 +37,12 @@ fun PatientProfileContent(
         TabsPage(
             tabContent = listOf(
                 {
-                StatisticsScreen()
+                    StatisticsScreen()
                 },
                 {
-                    ObservationsScreen(
-                        observations = observations,
-                        navController = navController
+                    ResponseStatusObservationScreen(
+                        navController = navController,
+                        viewModel = viewModel
                     )
                 }
             )
@@ -69,16 +67,34 @@ fun ContentTopProfile(
 }
 
 @Composable
-fun ImageProfile(userImage: String?) {
-    if (userImage != null) {
-        AsyncImage(
-            modifier = Modifier
-                .size(SIZE100.dp)
-                .clip(CircleShape),
-            model = userImage,
-            contentScale = ContentScale.Crop,
-            contentDescription = SELECTED_IMAGE,
-            error = painterResource(id = userImage.toInt())
-        )
+fun ResponseStatusObservationScreen(
+    navController: NavHostController,
+    viewModel: ProfilePatientViewModel
+) {
+    when (val observationResponse = viewModel.observationResponse) {
+        is Response.Loading -> {
+            DefaultLoadingProgressIndicator()
+        }
+
+        is Response.Success -> {
+            Log.i("Observation", observationResponse.data.toString())
+            ObservationsScreen(
+                observations = observationResponse.data,
+                navController = navController,
+                viewModel = viewModel
+            )
+        }
+
+        is Response.Error -> {
+            showToast(
+                LocalContext.current,
+                observationResponse.exception?.message.toString(),
+                Toast.LENGTH_SHORT
+            )
+        }
+
+        else -> {}
     }
 }
+
+

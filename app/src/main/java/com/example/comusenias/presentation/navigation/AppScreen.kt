@@ -31,13 +31,21 @@ sealed class AppScreen(val route: String) {
 
     object NotificationScreen : AppScreen("notification_screen")
     object SpecialistScreen : AppScreen("specialist_screen")
-    object ProfilePatientScreen : AppScreen("profile_patient_screen")
-    object SendObservationScreen : AppScreen("send_observation_screen")
+    object ProfilePatientScreen : AppScreen("profile_patient_screen/{pacient}") {
+        fun passPacient(user: String) = "profile_patient_screen/$user"
+    }
+
+    object SendObservationScreen : AppScreen("send_observation_screen/{observation}") {
+        fun createRoute(observation: String): String {
+            return "send_observation_screen/$observation"
+        }
+    }
 
     object ChoseTheLetterPlayScreen : AppScreen("chose_the_letter_play/{level}/{subLevel}") {
         fun createRoute(level: String, subLevel: String) =
             "chose_the_letter_play/${level}/${subLevel}"
     }
+
     object CameraScreenPermission : AppScreen("camera_screen_permission")
 
     object CameraScreen : AppScreen("camera_screen")
@@ -48,6 +56,8 @@ sealed class AppScreen(val route: String) {
         fun createRoute(path: String) = "gallery_screen/${path}"
 
     }
+
+    object LectorQRScreen : AppScreen("lector_qr_screen")
+
+    object GenerateQRScreen : AppScreen("generate_qr_screen")
 }
-
-
