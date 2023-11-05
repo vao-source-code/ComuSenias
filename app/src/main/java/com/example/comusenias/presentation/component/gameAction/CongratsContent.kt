@@ -36,7 +36,7 @@ fun CongratsContent() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = SIZE100.dp),
+            .padding(top = SIZE100.dp)
     ) {
         LottieAnimation(
             modifier = Modifier.height(SIZE300.dp),

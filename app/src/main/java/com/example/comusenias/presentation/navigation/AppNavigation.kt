@@ -21,6 +21,7 @@ import com.example.comusenias.presentation.screen.gallery.GalleryScreen
 import com.example.comusenias.presentation.screen.gameAction.ChoseTheLetterPlayScreen
 import com.example.comusenias.presentation.screen.gameAction.ChoseTheSignPlayScreen
 import com.example.comusenias.presentation.screen.gameAction.CongratsPlayScreen
+import com.example.comusenias.presentation.screen.gameAction.InfoMakeSignScreen
 import com.example.comusenias.presentation.screen.gameAction.InterpretationStatusScreen
 import com.example.comusenias.presentation.screen.gameAction.LearnSignScreen
 import com.example.comusenias.presentation.screen.gameAction.MakeSignPlayScreen
@@ -75,6 +76,10 @@ private fun GetNavHost(
 
         composable(AppScreen.SplashScreen.route) {
             SplashScreen(navController)
+        }
+
+        composable(AppScreen.InfoMakeSignScreen.route) {
+            InfoMakeSignScreen(navController)
         }
 
         composable(AppScreen.PremiumScreen.route) {

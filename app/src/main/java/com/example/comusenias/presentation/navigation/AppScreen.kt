@@ -8,12 +8,6 @@ sealed class AppScreen(val route: String) {
     object ChildrenProfileScreen : AppScreen("children_profile_screen")
     object SplashScreen : AppScreen("splash_screen")
     object MainActivity : AppScreen("main_screen")
-    object ChangeProfileScreen : AppScreen("change_profile_screen/{user}") {
-        fun createRoute(user: String): String {
-            return "change_profile_screen/$user"
-        }
-    }
-
     object HomeScreen : AppScreen("home_screen")
     object OnboardingScreen : AppScreen("onboarding_screen")
     object EspecialistFormScreen : AppScreen("especialist_screen")
@@ -28,6 +22,8 @@ sealed class AppScreen(val route: String) {
     }
 
     object MakeSignPlayScreen : AppScreen("make_sign_play")
+    object InfoMakeSignScreen : AppScreen("info_make_sign_screen")
+
     object CongratsPlayScreen : AppScreen("congrats_play")
     object InterpretationStatusScreen : AppScreen("Interpretation_status_screen/{path}") {
         fun createRoute(path: String) = "Interpretation_status_screen/${path}"

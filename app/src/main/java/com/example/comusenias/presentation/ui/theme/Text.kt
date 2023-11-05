@@ -136,7 +136,7 @@ const val GALLERY_SCREEN = "GalleryScreen"
 const val CHILD_FILE = "image.jpg"
 const val ERROR_TAKE_PHOTO = "Error al cargar la imagen desde URI:"
 const val COMPLETED_LESSONS = "lecciones completadas"
-
+const val INFO_TEXT_OPEN_CAMERA = "La cámara se abrirá para detectar tu lengua de señas.Tendrás 5 segundos para realizar el gesto.¡Prepárate!"
 
 /*-----------------BUTTONS AND ICONS-----------------*/
 const val CLOSE : String = "Salir de la pantalla"

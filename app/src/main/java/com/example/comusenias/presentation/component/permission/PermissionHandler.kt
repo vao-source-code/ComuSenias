@@ -44,11 +44,13 @@ fun RequestPermissions(
 }
 
 @Composable
-fun PermissionCameraScreen(navController: NavHostController) {
+fun PermissionCameraScreen(
+    navController: NavHostController
+) {
     val context = LocalContext.current
     RequestPermissions(
         onPermissionGranted = {
-            navController.navigate(AppScreen.CameraScreen.route)
+            navController.navigate(AppScreen.InfoMakeSignScreen.route)
         },
         onPermissionDenied = {
             Toast.makeText(
