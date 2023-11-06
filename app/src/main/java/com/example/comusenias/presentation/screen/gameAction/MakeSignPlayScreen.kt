@@ -1,6 +1,8 @@
 package com.example.comusenias.presentation.screen.gameAction
 
 import PermissionCameraScreen
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -12,5 +14,7 @@ fun MakeSignPlayScreen(
     modifier: Modifier,
     levelViewModel: LevelViewModel
 ) {
-    PermissionCameraScreen(navController = navController)
+    Box(modifier = modifier.fillMaxSize()) {
+        PermissionCameraScreen(navController = navController)
+    }
 }

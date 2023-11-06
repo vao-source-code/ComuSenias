@@ -39,7 +39,6 @@ class ChildrenModelTest {
             id = "1",
             isPremium = false,
             levels = levels,
-            observation = observations
         )
     }
 
@@ -50,17 +49,14 @@ class ChildrenModelTest {
         assertEquals(specialist, childrenModel.specialist)
         assertEquals(false, childrenModel.isPremium)
         assertEquals(levels, childrenModel.levels)
-        assertEquals(observations, childrenModel.observation)
     }
 
     @Test
     fun changeParametersChildrenReturnChanges() {
         childrenModel.specialist = null
         childrenModel.isPremium = true
-        childrenModel.observation = null
 
         assertEquals(null, childrenModel.specialist)
         assertEquals(true, childrenModel.isPremium)
-        assertEquals(null, childrenModel.observation)
     }
 }
