@@ -104,6 +104,8 @@ class SpecialistRegisterViewModel @Inject constructor(
         usersUseCase.createUserUseCase(user)
         specialistModel = SpecialistModel(
             id = authUseCases.getCurrentUserUseCase()?.uid!!,
+            email = user.email,
+            date = stateSpecialist.date,
             name = stateSpecialist.name,
             tel = stateSpecialist.tel,
             medicalLicense = stateSpecialist.medicalLicense,

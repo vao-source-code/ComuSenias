@@ -13,6 +13,7 @@ import com.example.comusenias.domain.repositories.QRRepository
 import com.example.comusenias.domain.use_cases.auth.AuthFactoryUseCases
 import com.example.comusenias.domain.use_cases.children.ChildrenFactory
 import com.example.comusenias.domain.use_cases.specialist.SpecialistFactory
+import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
@@ -32,6 +33,8 @@ class ScanQRViewModel @Inject constructor(
     var addChildrenResponse by mutableStateOf<Response<Boolean>?>(null)
         private set
 
+    var scanningChildrenResponse by mutableStateOf<Response<Boolean>?>(null)
+        private set
 
     /*---------------------------------private variable ---------------------------------*/
     private var stateSpecialist by mutableStateOf(SpecialistModel())
@@ -52,13 +55,16 @@ class ScanQRViewModel @Inject constructor(
 
     fun startScanning() = viewModelScope.launch(IO) {
         qrRepository.startScanning().collect { data ->
+            scanningChildrenResponse = Response.Loading
             if (!data.isNullOrBlank()) {
                 try {
                     state = state.copy(details = data)
                     val children = ChildrenModel.fromJson(state.details)
                     stateChildren = children
+                    scanningChildrenResponse = Response.Success(true)
                 } catch (e: Exception) {
-                    e.printStackTrace()
+                    state = state.copy(details = EMPTY_STRING)
+                    scanningChildrenResponse = Response.Error(e)
                 }
             }
         }

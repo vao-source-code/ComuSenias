@@ -169,3 +169,4 @@ const val QR_ADD = "Agregar"
 /*-----------------Pasaje datos -----------------*/
 const val PACIENT = "pacient"
 const val CHILDREN_OBSERVATION = "observation"
+const val SPECIALIST_PROFILE = "specialist_profile"

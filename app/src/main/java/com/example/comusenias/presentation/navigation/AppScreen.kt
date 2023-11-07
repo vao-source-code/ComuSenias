@@ -10,8 +10,6 @@ sealed class AppScreen(val route: String) {
     object MainActivity : AppScreen("main_screen")
     object HomeScreen : AppScreen("home_screen")
     object OnboardingScreen : AppScreen("onboarding_screen")
-    object EspecialistFormScreen : AppScreen("especialist_screen")
-    object ChildFormScreen : AppScreen("child_form_screen")
     object LearnSignScreen : AppScreen("learn_sign/{level}/{subLevel}") {
         fun createRoute(level: String, subLevel: String) = "learn_sign/${level}/${subLevel}"
     }
@@ -30,16 +28,6 @@ sealed class AppScreen(val route: String) {
     }
 
     object NotificationScreen : AppScreen("notification_screen")
-    object SpecialistScreen : AppScreen("specialist_screen")
-    object ProfilePatientScreen : AppScreen("profile_patient_screen/{pacient}") {
-        fun passPacient(user: String) = "profile_patient_screen/$user"
-    }
-
-    object SendObservationScreen : AppScreen("send_observation_screen/{observation}") {
-        fun createRoute(observation: String): String {
-            return "send_observation_screen/$observation"
-        }
-    }
 
     object ChoseTheLetterPlayScreen : AppScreen("chose_the_letter_play/{level}/{subLevel}") {
         fun createRoute(level: String, subLevel: String) =
@@ -54,10 +42,30 @@ sealed class AppScreen(val route: String) {
 
     object GalleryScreen : AppScreen("gallery_screen/{path}") {
         fun createRoute(path: String) = "gallery_screen/${path}"
+    }
 
+    object GenerateQRScreen : AppScreen("generate_qr_screen")
+
+    /*-----------------------Specialist Screen -----------------------------------------------*/
+
+    object ProfilePatientScreen : AppScreen("profile_patient_screen/{pacient}") {
+        fun passPacient(user: String) = "profile_patient_screen/$user"
     }
 
     object LectorQRScreen : AppScreen("lector_qr_screen")
 
-    object GenerateQRScreen : AppScreen("generate_qr_screen")
+    object SendObservationScreen : AppScreen("send_observation_screen/{observation}") {
+        fun createRoute(observation: String): String {
+            return "send_observation_screen/$observation"
+        }
+    }
+
+    object SpecialistProfileScreen : AppScreen("specialist_profile_screen")
+
+    object ChangeSpecialistProfileScreen : AppScreen("change_profile_patient_screen/{user}") {
+        fun passProfile(user: String) = "change_profile_patient_screen/$user"
+    }
+
+    object SpecialistScreen : AppScreen("specialist_screen")
+
 }

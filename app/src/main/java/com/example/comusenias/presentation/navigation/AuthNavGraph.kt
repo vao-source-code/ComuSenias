@@ -40,10 +40,10 @@ fun NavGraphBuilder.authNavGraph(navController: NavHostController, modifier: Mod
         composable(AppScreen.RegisterScreen.route) {
             RegisterScreen(navController = navController, modifier = modifier)
         }
-        composable(AppScreen.EspecialistFormScreen.route) {
+        composable(AuthScreen.SpecialistFormScreen.route) {
             SpecialistFormScreen(navController = navController, modifier = modifier)
         }
-        composable(AppScreen.ChildFormScreen.route) {
+        composable(AuthScreen.ChildFormScreen.route) {
             ChildFormScreen(navController = navController, modifier = modifier)
         }
     }
@@ -54,4 +54,7 @@ sealed class AuthScreen(val route: String) {
     object RegisterScreen : AuthScreen("register_screen")
     object ResetPasswordScreen : AuthScreen("reset_password_screen")
     object LoadingScreen : AuthScreen("loading_screen")
+    object SpecialistFormScreen : AppScreen("specialist_form_screen")
+    object ChildFormScreen : AppScreen("child_form_screen")
+
 }
