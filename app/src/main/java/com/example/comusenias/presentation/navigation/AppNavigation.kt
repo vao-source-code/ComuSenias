@@ -39,8 +39,12 @@ import com.example.comusenias.presentation.ui.theme.CHILDREN_OBSERVATION
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.PACIENT
 import com.example.comusenias.presentation.ui.theme.SUB_LEVEL
+import com.example.comusenias.presentation.view_model.ChildrenProfileViewModel
 import com.example.comusenias.presentation.view_model.LevelViewModel
 import com.google.firebase.analytics.FirebaseAnalytics.Param.LEVEL
+
+lateinit var getLevelViewModel: LevelViewModel
+lateinit var getChildrenProfileViewModel: ChildrenProfileViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -60,6 +64,9 @@ private fun GetNavHost(
     modifier: Modifier,
 ) {
     val levelViewModel: LevelViewModel = hiltViewModel()
+    val childrenProfileViewModel: ChildrenProfileViewModel = hiltViewModel()
+    getLevelViewModel = levelViewModel
+    getChildrenProfileViewModel = childrenProfileViewModel
 
     NavHost(
         navController = navController,

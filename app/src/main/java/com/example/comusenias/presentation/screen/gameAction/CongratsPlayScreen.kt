@@ -13,10 +13,10 @@ import androidx.navigation.NavHostController
 import com.example.comusenias.presentation.component.defaults.app.ButtonApp
 import com.example.comusenias.presentation.component.gameAction.CongratsContent
 import com.example.comusenias.presentation.component.home.StatusGame
-import com.example.comusenias.presentation.component.home.getLevelViewModel
-import com.example.comusenias.presentation.component.home.getSubLevelViewModel
+import com.example.comusenias.presentation.component.home.getAllSubLevels
 import com.example.comusenias.presentation.extensions.validation.getChoicesSelected
 import com.example.comusenias.presentation.navigation.AppScreen
+import com.example.comusenias.presentation.navigation.getLevelViewModel
 import com.example.comusenias.presentation.ui.theme.CONTINUE
 import com.example.comusenias.presentation.ui.theme.SIZE30
 
@@ -44,7 +44,7 @@ fun CongratsPlayView(navController: NavHostController, modifier: Modifier) {
         )
     }
     DisposableEffect(Unit) {
-        getSubLevelViewModel.fetchSubLevel(getLevelViewModel.subLevelModel)
+        //getSubLevelViewModel.fetchSubLevel(getLevelViewModel.subLevelSelected)
         onDispose { }
     }
 }
@@ -55,9 +55,8 @@ fun CongratsPlayView(navController: NavHostController, modifier: Modifier) {
  * En caso contrario, el estado se establece en IN_PROGRESS.
  */
 fun setStatusBySubLevel() {
-    val subLevel = getSubLevelViewModel.subLevel
-    val status =
-        if (getChoicesSelected(getLevelViewModel)) StatusGame.COMPLETED else StatusGame.IN_PROGRESS
-    subLevel.status = status
-    getSubLevelViewModel.updateSubLevel(subLevel)
+    getAllSubLevels().find { it.name == getLevelViewModel.subLevelSelected }?.let { subLevel ->
+        subLevel.isCompleted =
+            if (getChoicesSelected(getLevelViewModel)) StatusGame.COMPLETED else StatusGame.COMPLETED
+    }
 }

@@ -34,7 +34,6 @@ class ChildrenModelTest {
 
         childrenModel = ChildrenModel(
             date = "12.12.2021",
-            specialist = specialist,
             idSpecialist = "1",
             id = "1",
             isPremium = false,
@@ -46,17 +45,14 @@ class ChildrenModelTest {
     fun whenCreateChildrenReturnEqualsDates() {
         val date = "12.12.2021"
         assertEquals(date, childrenModel.date)
-        assertEquals(specialist, childrenModel.specialist)
         assertEquals(false, childrenModel.isPremium)
         assertEquals(levels, childrenModel.levels)
     }
 
     @Test
     fun changeParametersChildrenReturnChanges() {
-        childrenModel.specialist = null
         childrenModel.isPremium = true
 
-        assertEquals(null, childrenModel.specialist)
         assertEquals(true, childrenModel.isPremium)
     }
 }

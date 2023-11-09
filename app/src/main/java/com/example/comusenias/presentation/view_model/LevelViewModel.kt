@@ -28,7 +28,7 @@ class LevelViewModel @Inject constructor(
     var choiceOfOption by mutableStateOf<MutableList<Boolean>>(mutableListOf())
     var onOptionSelected by mutableStateOf(EMPTY_STRING)
     var levelSelected by mutableStateOf(EMPTY_STRING)
-    var subLevelModel by mutableStateOf(EMPTY_STRING)
+    var subLevelSelected by mutableStateOf(EMPTY_STRING)
 
     init {
         getLevels()
@@ -88,6 +88,6 @@ class LevelViewModel @Inject constructor(
     }
 
     fun validateLetterCamera(): Boolean {
-        return onOptionSelected.equals(subLevelModel, ignoreCase = true)
+        return onOptionSelected.equals(subLevelSelected, ignoreCase = true)
     }
 }

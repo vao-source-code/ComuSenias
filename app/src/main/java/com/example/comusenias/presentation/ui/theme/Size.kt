@@ -3,6 +3,7 @@ package com.example.comusenias.presentation.ui.theme
 const val size08: Float = 0.8f
 const val FLOAT01: Float = 1f
 
+const val SIZE0: Int = 0
 const val SIZE1: Int = 1
 const val SIZE2: Int = 2
 const val SIZE3: Int = 3

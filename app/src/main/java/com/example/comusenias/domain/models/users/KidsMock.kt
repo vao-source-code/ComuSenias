@@ -48,14 +48,11 @@ class KidsMock {
     val kidMock = ChildrenModel(
         //userModel = userModel,
         date = "12/12/2021",
-        specialist = null,
-        levelActual = 1,
-        subLevelActual = 1,
         isPremium = false,
         levels = levelList,
         id = "1",
         name = "Pablo Carballo",
-        tel = "123456789",
+        phone = "123456789",
         idSpecialist = "1"
     )
 

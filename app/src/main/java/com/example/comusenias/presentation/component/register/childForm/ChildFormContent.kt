@@ -64,7 +64,7 @@ fun ChildFormContent(
                 onValueChange = { birthday -> viewModel.onDateInputChanged(birthday) }
             )
             TextFieldApp(
-                value = state.tel,
+                value = state.phone,
                 onValueChange = { viewModel.onTelInputChanged(it) },
                 validateField = { viewModel.validateTel() },
                 label = NUMBER_PHONE,

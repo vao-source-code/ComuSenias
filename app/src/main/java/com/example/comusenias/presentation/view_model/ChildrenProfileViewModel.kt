@@ -83,7 +83,7 @@ class ChildrenProfileViewModel @Inject constructor(
         val myUser = ChildrenModel(
             id = userData.id,
             name = userData.name,
-            tel = userData.tel,
+            phone = userData.phone,
             email = userData.email,
             date = userData.date,
             image = url,
@@ -96,7 +96,6 @@ class ChildrenProfileViewModel @Inject constructor(
         val result = childrenUser.updateChildren(user)
         updateResponse = result
     }
-
 
     fun logout() {
         authUsesCases.logoutUseCase()

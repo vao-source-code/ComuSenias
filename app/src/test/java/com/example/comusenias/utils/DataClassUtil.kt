@@ -17,13 +17,11 @@ class DataClassUtil {
             val exampleChildren = ChildrenModel(
                 id = "example_id",
                 name = "Federico Gamorra",
-                tel = "1234567890",
+                phone = "1234567890",
                 email = "john.doe@example.com",
                 image = "",
                 date = "30-10-2023",
                 idSpecialist = "specialist_id",
-                levelActual = 1,
-                subLevelActual = 2,
                 isPremium = true,
                 levels = listOf(
                     LevelModel(
@@ -42,13 +40,11 @@ class DataClassUtil {
             val exampleChildren1 = ChildrenModel(
                 id = "example_id",
                 name = "Josefina Bautista",
-                tel = "1234567890",
+                phone = "1234567890",
                 email = "john.doe@example.com",
                 image = "",
                 date = "30-10-2023",
                 idSpecialist = "specialist_id",
-                levelActual = 1,
-                subLevelActual = 2,
                 isPremium = true,
                 levels = listOf(
                     LevelModel(
@@ -67,13 +63,11 @@ class DataClassUtil {
             val exampleChildren2 = ChildrenModel(
                 id = "example_id",
                 name = "Franco Gutierrez",
-                tel = "1234567890",
+                phone = "1234567890",
                 email = "john.doe@example.com",
                 image = "",
                 date = "30-10-2023",
                 idSpecialist = "specialist_id",
-                levelActual = 1,
-                subLevelActual = 2,
                 isPremium = true,
                 levels = listOf(
                     LevelModel(

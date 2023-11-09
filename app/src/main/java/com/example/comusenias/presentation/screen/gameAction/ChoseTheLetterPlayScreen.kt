@@ -11,9 +11,9 @@ import com.example.comusenias.presentation.component.defaults.app.CircularProgre
 import com.example.comusenias.presentation.component.defaults.app.ShowRetrySnackBar
 import com.example.comusenias.presentation.component.gameAction.GameAction
 import com.example.comusenias.presentation.component.gameAction.MatchLetter
-import com.example.comusenias.presentation.component.home.getLevelViewModel
 import com.example.comusenias.presentation.extensions.validation.selectedOption
 import com.example.comusenias.presentation.navigation.AppScreen
+import com.example.comusenias.presentation.navigation.getLevelViewModel
 import com.example.comusenias.presentation.ui.theme.CONTINUE
 import com.example.comusenias.presentation.ui.theme.ERROR_RETRY_LEVEL
 import com.example.comusenias.presentation.ui.theme.STEP_TWO
@@ -28,7 +28,7 @@ fun ChoseTheLetterPlayScreen(
     levelViewModel: LevelViewModel
 ) {
     getLevelViewModel.levelSelected = level
-    getLevelViewModel.subLevelModel = subLevel
+    getLevelViewModel.subLevelSelected = subLevel
     val subLevelViewModel = getLevelViewModel.getSubLevelById(level, subLevel)
     val isButtonEnabled = remember { mutableStateOf(false) }
     val onMatchResult: (Boolean) -> Unit = {

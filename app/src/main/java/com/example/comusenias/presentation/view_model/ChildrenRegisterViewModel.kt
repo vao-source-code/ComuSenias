@@ -20,6 +20,7 @@ import com.example.comusenias.domain.use_cases.auth.AuthFactoryUseCases
 import com.example.comusenias.domain.use_cases.children.ChildrenFactory
 import com.example.comusenias.domain.use_cases.shared_preferences.DataUserStorageFactory
 import com.example.comusenias.domain.use_cases.users.UsersFactoryUseCases
+import com.example.comusenias.presentation.navigation.getLevelViewModel
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.INVALID_DATE
 import com.example.comusenias.presentation.ui.theme.INVALID_PHONE
@@ -88,7 +89,7 @@ class ChildrenRegisterViewModel @Inject constructor(
     }
 
     fun validateTel() {
-        val isValid = LibraryString.validPhone(stateChildren.tel)
+        val isValid = LibraryString.validPhone(stateChildren.phone)
         isTelValid = isValid
         errorTel = if (isValid) EMPTY_STRING else INVALID_PHONE
         enabledRegisterButton()
@@ -106,11 +107,12 @@ class ChildrenRegisterViewModel @Inject constructor(
         user.password = LibraryPassword.hashPassword(user.password)
         usersUseCase.createUserUseCase(user)
         childrenModel = ChildrenModel(
-            email = user.email,
+            id = authUseCases.getCurrentUserUseCase()?.uid!!,
             name = stateChildren.name,
-            tel = stateChildren.tel,
+            phone = stateChildren.phone,
+            email = user.email,
             date = stateChildren.date,
-            id = authUseCases.getCurrentUserUseCase()?.uid!!
+            levels = getLevelViewModel.levels,
         )
         childrenFactoryUsesCases.createChildren(childrenModel)
     }
@@ -120,7 +122,7 @@ class ChildrenRegisterViewModel @Inject constructor(
     }
 
     fun onTelInputChanged(tel: String) {
-        stateChildren = stateChildren.copy(tel = tel)
+        stateChildren = stateChildren.copy(phone = tel)
     }
 
     fun onDateInputChanged(date: String) {
