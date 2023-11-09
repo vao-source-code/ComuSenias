@@ -9,7 +9,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight.Companion.SemiBold
 import androidx.compose.ui.text.style.TextAlign.Companion.Center
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.comusenias.presentation.ui.theme.PRICE_SUSCRIBER
@@ -18,7 +17,6 @@ import com.example.comusenias.presentation.ui.theme.SIZE20
 import com.example.comusenias.presentation.ui.theme.SUSCRIBER
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 
-@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun HeaderPremium() {
     Column(

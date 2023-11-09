@@ -1,10 +1,12 @@
 package com.example.comusenias.presentation.component.premium
 
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,7 +22,6 @@ import com.example.comusenias.presentation.ui.theme.EXPERIENCE_COMPLETED
 import com.example.comusenias.presentation.ui.theme.SIZE1
 import com.example.comusenias.presentation.ui.theme.SIZE12
 import com.example.comusenias.presentation.ui.theme.SIZE20
-import com.example.comusenias.presentation.ui.theme.SIZE24
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 
 @Composable
@@ -32,11 +33,12 @@ fun ContentBenefitsPremium() {
                 width = SIZE1.dp,
                 color = Color(0x4D000000),
                 shape = RoundedCornerShape(size = SIZE12.dp)
-            ),
-        verticalArrangement = spacedBy(SIZE24.dp)
+            )
     ) {
+        Spacer(modifier = Modifier.height(SIZE20.dp))
         Text(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth(),
             text = EXPERIENCE_COMPLETED,
             style = TextStyle(
                 fontSize = SIZE20.sp,
@@ -46,7 +48,9 @@ fun ContentBenefitsPremium() {
             )
         )
         Column(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(SIZE20.dp),
             verticalArrangement = spacedBy(SIZE20.dp)
         ) {
             PremiumBenefits.get().forEach {

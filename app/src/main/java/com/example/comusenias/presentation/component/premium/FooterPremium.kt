@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale.Companion.Crop
 import androidx.compose.ui.res.painterResource
@@ -67,7 +68,8 @@ fun FooterPremium() {
             ) {
                 Image(
                     modifier = Modifier
-                        .fillMaxSize(),
+                        .fillMaxSize()
+                        .clip(RoundedCornerShape(size = SIZE12.dp)),
                     painter = painterResource(id = mercada_pago),
                     contentDescription = IMAGE_JPEG,
                     contentScale = Crop

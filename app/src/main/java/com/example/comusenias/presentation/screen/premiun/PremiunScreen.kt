@@ -31,5 +31,4 @@ fun PremiunScreen(
             ContentPremium(navController = navController)
         }
     }
-
 }
