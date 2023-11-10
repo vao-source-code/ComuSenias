@@ -149,6 +149,21 @@ const val TITLE_DIALOG_PERMISSION = "Se requiere acceso a la cámara para contin
 const val DESCRIPTION_DIALOG_PERMISSION = "Esta funcionalidad nos permite ofrecerte una experiencia más interactiva y enriquecedora."
 const val CONFIG_PERMISSION = "Configurar permisos"
 const val PACKAGE = "package"
+const val PAYMENT_METHODS = "Medios de pago"
+const val I_WANT_TO_SUSCRIBE = "Quiero suscribirme"
+const val SUSCRIBER = "¡Suscribíte al nivel premium por un precio único!"
+const val PRICE_SUSCRIBER = "$ 1.500 / mes"
+const val EXPERIENCE_COMPLETED = "Accede a la experiencia completa"
+const val PREMIUM_ONE_TITLE = "Acceso a todas las lecciones"
+const val PREMIUM_ONE_DESCRIPTION = "Elige tus lecciones para un aprendizaje personalizado."
+const val PREMIUM_TWO_TITLE = "Seguimiento personalizado"
+const val PREMIUM_TWO_DESCRIPTION = "Conta con el seguimiento de un profesional para maximizar tu aprendizaje."
+const val PREMIUM_THREE_TITLE = "Sin anuncios"
+const val PREMIUM_THREE_DESCRIPTION = "Evita las interrupciones."
+const val PREMIUM_FOUR_TITLE = "Contenidos Premium exclusivos"
+const val PREMIUM_FOUR_DESCRIPTION = "Amplía tu vocabulario con lecciones y cursos especializados."
+
+
 /*-----------------BUTTONS AND ICONS-----------------*/
 const val CLOSE : String = "Salir de la pantalla"
 
