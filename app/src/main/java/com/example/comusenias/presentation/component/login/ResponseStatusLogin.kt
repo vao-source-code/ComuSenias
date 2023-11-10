@@ -1,6 +1,6 @@
 package com.example.comusenias.presentation.component.login
 
-import android.widget.Toast
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -9,6 +9,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.presentation.component.defaults.DefaultLoadingProgressIndicator
+import com.example.comusenias.presentation.component.defaults.ToastMake
 import com.example.comusenias.presentation.ui.theme.LOGIN_ERROR
 import com.example.comusenias.presentation.view_model.LoginViewModel
 import kotlinx.coroutines.delay
@@ -36,12 +37,14 @@ fun ResponseStatusLogin(
         }
 
         is Response.Error -> {
-
-            Toast.makeText(
+            Log.e(
+                "Error",
+                (viewModel.loginResponse as Response.Error).exception?.message.toString()
+            )
+            ToastMake.showError(
                 LocalContext.current,
-                (viewModel.loginResponse as Response.Error).exception?.message + LOGIN_ERROR,
-                Toast.LENGTH_SHORT
-            ).show()
+                LOGIN_ERROR
+            )
         }
 
         else -> {}

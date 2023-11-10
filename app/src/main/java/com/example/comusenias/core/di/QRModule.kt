@@ -24,11 +24,9 @@ object QRModule {
     @Singleton
     @Provides
     fun provideOptions(): GmsBarcodeScannerOptions {
-        return GmsBarcodeScannerOptions.Builder()
-            .setBarcodeFormats(
-                Barcode.FORMAT_QR_CODE
-            )
-            .build()
+        return GmsBarcodeScannerOptions.Builder().setBarcodeFormats(
+            Barcode.FORMAT_QR_CODE
+        ).build()
     }
 
     @Provides

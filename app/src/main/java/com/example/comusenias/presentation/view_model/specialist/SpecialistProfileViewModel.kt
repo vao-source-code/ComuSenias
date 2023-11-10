@@ -19,7 +19,7 @@ import com.example.comusenias.presentation.ui.theme.PATH_IMAGE
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import id.zelory.compressor.Compressor
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import java.io.File
 import javax.inject.Inject
@@ -36,7 +36,6 @@ class SpecialistProfileViewModel @Inject constructor(
     var stateSpecialist by mutableStateOf(SpecialistModel())
     val resultingActivityHandler = ResultingActivityHandler()
     var file: File? = null
-
     var saveImageResponse by mutableStateOf<Response<String>?>(null)
 
     /*---------------------------------private variable ---------------------------------*/
@@ -55,7 +54,7 @@ class SpecialistProfileViewModel @Inject constructor(
     }
 
 
-    fun pickImage() = viewModelScope.launch(Dispatchers.IO) {
+    fun pickImage() = viewModelScope.launch(IO) {
         val result = resultingActivityHandler.getContent(PATH_IMAGE)
         result?.let {
             file = ComposeFileProvider.createFileFromUri(context, it)
@@ -63,7 +62,7 @@ class SpecialistProfileViewModel @Inject constructor(
         }
     }
 
-    fun takePhoto() = viewModelScope.launch(Dispatchers.IO) {
+    fun takePhoto() = viewModelScope.launch(IO) {
         val result = resultingActivityHandler.takePicturePreview()
         result?.let {
             stateSpecialist =
@@ -72,7 +71,7 @@ class SpecialistProfileViewModel @Inject constructor(
         }
     }
 
-    fun saveImage() = viewModelScope.launch(Dispatchers.IO) {
+    fun saveImage() = viewModelScope.launch(IO) {
         file?.let {
             saveImageResponse = Response.Loading
             val compressedImageFile = Compressor.compress(context = context, it)
@@ -81,7 +80,7 @@ class SpecialistProfileViewModel @Inject constructor(
         }
     }
 
-    fun logout() = viewModelScope.launch(Dispatchers.IO) {
+    fun logout() = viewModelScope.launch(IO) {
         authUsesCases.logoutUseCase()
         dataRolStorageFactory.putRolValue(PREFERENCE_ROL_CURRENT, EMPTY_STRING)
     }

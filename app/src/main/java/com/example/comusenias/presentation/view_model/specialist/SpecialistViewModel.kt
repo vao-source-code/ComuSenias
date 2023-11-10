@@ -48,7 +48,7 @@ class SpecialistViewModel @Inject constructor(
         getChildrenBySpecialist()
     }
 
-    private fun getUserData() = viewModelScope.launch {
+    fun getUserData() = viewModelScope.launch {
         currentUser?.let {
             specialistUseCases.getSpecialistById(it.uid).collect { user ->
                 stateSpecialist = user
@@ -56,7 +56,7 @@ class SpecialistViewModel @Inject constructor(
         }
     }
 
-    private fun getChildrenBySpecialist() = viewModelScope.launch(IO) {
+    fun getChildrenBySpecialist() = viewModelScope.launch(IO) {
         currentUser?.let {
             specialistUseCases.getChildrenForSpecialistById(it.uid).collect { children ->
                 childrenResponse = children

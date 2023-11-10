@@ -49,7 +49,7 @@ fun ChildrenProfileScreen(
                     onClickChangeProfile = onClick
                 ) {
                     viewModel.logout()
-                    navController.navigate(com.example.comusenias.presentation.navigation.AppScreen.LoginScreen.route)
+                    navController.navigate(AppScreen.LoginScreen.route)
                 }
             }
         }

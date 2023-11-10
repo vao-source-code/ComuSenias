@@ -28,7 +28,7 @@ class SpecialistRepositoryImpl @Inject constructor(
         return try {
             val fromFile = Uri.fromFile(file)
             val ref = storageSpecialistRef.child(file.name)
-            val uploadTask = ref.putFile(fromFile).await()
+            ref.putFile(fromFile).await()
             val url = ref.downloadUrl.await()
             return Response.Success(url.toString())
         } catch (e: Exception) {

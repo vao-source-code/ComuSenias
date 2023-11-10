@@ -16,9 +16,12 @@ import androidx.navigation.NavHostController
 import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.presentation.component.defaults.DefaultLoadingProgressIndicator
 import com.example.comusenias.presentation.component.defaults.DefaultTopBar
+import com.example.comusenias.presentation.component.defaults.ToastMake
 import com.example.comusenias.presentation.component.defaults.app.ButtonApp
 import com.example.comusenias.presentation.component.profile.SpecialistChangeProfileContent
+import com.example.comusenias.presentation.ui.theme.ERROR_UPDATED_DATA
 import com.example.comusenias.presentation.ui.theme.SIZE20
+import com.example.comusenias.presentation.ui.theme.UPDATED_DATA
 import com.example.comusenias.presentation.view_model.specialist.ChangeSpecialistProfileViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -71,6 +74,8 @@ fun SaveImage(viewModel: ChangeSpecialistProfileViewModel = hiltViewModel()) {
         }
 
         is Response.Error -> {
+            Log.e("Error", (response as Response.Error).exception?.message.toString())
+
             Toast.makeText(
                 LocalContext.current,
                 response.exception?.message ?: "Error desconcido",
@@ -92,19 +97,17 @@ fun ProfileUpdate(viewModel: ChangeSpecialistProfileViewModel = hiltViewModel())
         }
 
         is Response.Success -> {
-            Toast.makeText(
+            ToastMake.showSuccess(
                 LocalContext.current,
-                "Datos actualizados correctamente",
-                Toast.LENGTH_LONG
-            ).show()
+                UPDATED_DATA,
+            )
         }
 
         is Response.Error -> {
-            Toast.makeText(
+            ToastMake.showError(
                 LocalContext.current,
-                updateResponse.exception?.message ?: "Error desconocido",
-                Toast.LENGTH_LONG
-            ).show()
+                ERROR_UPDATED_DATA,
+            )
         }
 
         else -> {}
