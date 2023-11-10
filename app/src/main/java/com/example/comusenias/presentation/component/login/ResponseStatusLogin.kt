@@ -12,7 +12,6 @@ import com.example.comusenias.presentation.component.defaults.DefaultLoadingProg
 import com.example.comusenias.presentation.component.defaults.ToastMake
 import com.example.comusenias.presentation.ui.theme.LOGIN_ERROR
 import com.example.comusenias.presentation.view_model.LoginViewModel
-import kotlinx.coroutines.delay
 
 @Composable
 fun ResponseStatusLogin(
@@ -32,7 +31,6 @@ fun ResponseStatusLogin(
         is Response.Success -> {
             LaunchedEffect(Unit) {
                 viewModel.initRol()
-                delay(2000)
             }
         }
 

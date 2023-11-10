@@ -51,7 +51,7 @@ fun ChangeSpecialistProfileScreen(
         bottomBar = {
             Box(Modifier.padding(SIZE20.dp)) {
                 ButtonApp(titleButton = "Actualizar Datos", onClickButton = {
-                    viewModel.saveImage()
+                    viewModel.save()
                 })
 
             }

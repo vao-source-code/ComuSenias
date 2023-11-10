@@ -69,11 +69,13 @@ class ChangeSpecialistProfileViewModel @Inject constructor(
         )
     }
 
-    fun saveImage() = viewModelScope.launch(IO) {
+    fun save() = viewModelScope.launch(IO) {
         file?.let {
             saveImageResponse = Response.Loading
             val result = specialistUsesCase.saveImageSpecialist(it)
             saveImageResponse = result
+        } ?: kotlin.run {
+            onUpdate(state.image!!)
         }
     }
 
