@@ -2,6 +2,7 @@ package com.example.comusenias.presentation.view_model.specialist
 
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.runtime.getValue
@@ -30,7 +31,7 @@ import com.example.comusenias.presentation.ui.theme.URL_POLICY_PRIVACY
 import com.example.comusenias.presentation.ui.theme.URL_TERMS_CONDITIONS
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -83,8 +84,9 @@ class SpecialistRegisterViewModel @Inject constructor(
     }
 
     /*---------------------------------public function ---------------------------------*/
-    fun init() = viewModelScope.launch(IO) {
+    fun init() = viewModelScope.launch(Main) {
         user = dataUserStorageFactoryUseCases.getUserValue(PREFERENCE_USER)!!
+        Log.d("SpecialistRegisterViewModel", "Usuario: ${user.toString()}")
     }
 
     fun register(user: UserModel) = viewModelScope.launch {

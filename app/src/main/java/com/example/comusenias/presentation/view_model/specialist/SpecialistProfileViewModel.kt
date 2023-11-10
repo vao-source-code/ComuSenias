@@ -6,15 +6,19 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.comusenias.constants.PreferencesConstant.PREFERENCE_ROL_CURRENT
 import com.example.comusenias.domain.library.ComposeFileProvider
 import com.example.comusenias.domain.library.ResultingActivityHandler
 import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.models.users.SpecialistModel
 import com.example.comusenias.domain.use_cases.auth.AuthFactoryUseCases
+import com.example.comusenias.domain.use_cases.shared_preferences.DataRolStorageFactory
 import com.example.comusenias.domain.use_cases.specialist.SpecialistFactory
+import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.PATH_IMAGE
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import id.zelory.compressor.Compressor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.File
@@ -23,17 +27,16 @@ import javax.inject.Inject
 @HiltViewModel
 class SpecialistProfileViewModel @Inject constructor(
     private val specialistUseCases: SpecialistFactory,
-    authUsesCases: AuthFactoryUseCases,
+    private val authUsesCases: AuthFactoryUseCases,
+    private val dataRolStorageFactory: DataRolStorageFactory,
     @ApplicationContext private val context: Context
 ) : ViewModel() {
 
     /*---------------------------------public variable ---------------------------------*/
-    var specialistResponse by mutableStateOf<Response<List<SpecialistModel>>?>(Response.Loading)
     var stateSpecialist by mutableStateOf(SpecialistModel())
     val resultingActivityHandler = ResultingActivityHandler()
     var file: File? = null
-    var updateResponse by mutableStateOf<Response<Boolean>?>(null)
-        private set
+
     var saveImageResponse by mutableStateOf<Response<String>?>(null)
 
     /*---------------------------------private variable ---------------------------------*/
@@ -72,9 +75,14 @@ class SpecialistProfileViewModel @Inject constructor(
     fun saveImage() = viewModelScope.launch(Dispatchers.IO) {
         file?.let {
             saveImageResponse = Response.Loading
-            val result = specialistUseCases.saveImageSpecialist(it)
+            val compressedImageFile = Compressor.compress(context = context, it)
+            val result = specialistUseCases.saveImageSpecialist(compressedImageFile)
             saveImageResponse = result
         }
     }
 
+    fun logout() = viewModelScope.launch(Dispatchers.IO) {
+        authUsesCases.logoutUseCase()
+        dataRolStorageFactory.putRolValue(PREFERENCE_ROL_CURRENT, EMPTY_STRING)
+    }
 }

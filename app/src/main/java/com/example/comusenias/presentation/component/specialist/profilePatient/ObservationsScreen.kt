@@ -51,7 +51,7 @@ fun ObservationsScreen(
                 navController.navigate(
                     route = AppScreen.SendObservationScreen
                         .createRoute(observation = newObservation.toJson())
-                ) {}
+                )
             })
     }) { paddingValues ->
         Box(

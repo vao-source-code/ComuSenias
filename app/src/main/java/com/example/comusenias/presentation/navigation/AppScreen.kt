@@ -62,8 +62,10 @@ sealed class AppScreen(val route: String) {
 
     object SpecialistProfileScreen : AppScreen("specialist_profile_screen")
 
-    object ChangeSpecialistProfileScreen : AppScreen("change_profile_patient_screen/{user}") {
-        fun passProfile(user: String) = "change_profile_patient_screen/$user"
+    object ChangeSpecialistProfileScreen :
+        AppScreen("change_profile_patient_screen/{specialist_profile}") {
+        fun passProfile(specialistProfile: String): String =
+            "change_profile_patient_screen/$specialistProfile"
     }
 
     object SpecialistScreen : AppScreen("specialist_screen")

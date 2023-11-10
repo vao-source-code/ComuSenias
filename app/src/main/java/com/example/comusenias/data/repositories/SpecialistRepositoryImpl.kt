@@ -1,7 +1,8 @@
 package com.example.comusenias.data.repositories
 
 import android.net.Uri
-import com.example.comusenias.constants.FirebaseConstants
+import com.example.comusenias.constants.FirebaseConstants.CHILDREN_COLLECTION
+import com.example.comusenias.constants.FirebaseConstants.SPECIALIST_COLLECTION
 import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.models.users.ChildrenModel
 import com.example.comusenias.domain.models.users.SpecialistModel
@@ -17,9 +18,9 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class SpecialistRepositoryImpl @Inject constructor(
-    @Named(FirebaseConstants.SPECIALIST_COLLECTION) private val specialistRef: CollectionReference,
-    @Named(FirebaseConstants.SPECIALIST_COLLECTION) private val storageSpecialistRef: StorageReference,
-    @Named(FirebaseConstants.CHILDREN_COLLECTION) private val childrenRef: CollectionReference
+    @Named(SPECIALIST_COLLECTION) private val specialistRef: CollectionReference,
+    @Named(SPECIALIST_COLLECTION) private val storageSpecialistRef: StorageReference,
+    @Named(CHILDREN_COLLECTION) private val childrenRef: CollectionReference
 ) : SpecialistRepository {
 
 
@@ -63,6 +64,10 @@ class SpecialistRepositoryImpl @Inject constructor(
             mapImage["image"] = user.image?.let { it } ?: ""
             mapImage["date"] = user.date
             mapImage["tel"] = user.tel
+            mapImage["medicalLicense"] = user.medicalLicense
+            mapImage["speciality"] = user.speciality
+            mapImage["titleMedical"] = user.titleMedical
+            mapImage["medicalLicenseExpiration"] = user.medicalLicenseExpiration
             specialistRef.document(user.id).update(mapImage).await()
             Response.Success(true)
         } catch (e: Exception) {
@@ -75,11 +80,14 @@ class SpecialistRepositoryImpl @Inject constructor(
         callbackFlow {
             val snapshotListener = childrenRef.whereEqualTo("idSpecialist", id)
                 .addSnapshotListener { snapshot, e ->
+                    if (e != null) {
+                        trySend(Response.Error(e))
+                    }
                     snapshot.let {
                         val childrenModelList = snapshot?.toObjects(ChildrenModel::class.java)
                             ?: ArrayList<ChildrenModel>()
                         trySend(Response.Success(childrenModelList))
-                    } ?: Response.Error(e)
+                    }
                 }
 
             awaitClose {

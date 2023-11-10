@@ -70,6 +70,7 @@ const val PATH_IMAGE: String = "image/*"
 const val AVATAR: String = "Avatar"
 const val SELECTED_IMAGE: String = "Selected Image"
 const val UPDATE_DATA: String = "Actualizar Datos"
+const val LOGOUT: String = "Desloguearse"
 const val UPDATED_DATA: String = "Datos Actualizados"
 const val ERROR_UPDATED_DATA: String = "Error al actualizar datos"
 const val ERROR_UNKNOWN: String = "Error desconcido"
@@ -153,12 +154,18 @@ const val DIALOG_CAPTURE_TITLE: String = "Selecciona una opción"
 const val CHANGE_PROFILE_USER = "Nuevo Usuario"
 const val CHANGE_PROFILE_PASSWORD = "Nueva Contraseña"
 const val CHANGE_PROFILE_CONFIRM_PASSWORD = "Confirmar Contraseña"
+const val CHANGE_PROFILE_LICENCE_MEDICE = "Matricula"
+const val CHANGE_LICENCE_EXPIRATION = "Fecha de expiración"
+const val CHANGE_TITLE_MEDICY = "Titulo Medico"
+const val CHANGE_SPECIALIST_MEDICY = "Especialidad"
 
 /*-----------------PROFILE CONTENT -----------------*/
 const val PROFILE_USER = "Nombre del Usuario"
 const val PROFILE_EMAIL = "Correo electrónico"
 const val PROFILE_NAME_SURNAME = "Nombre y Apellido"
 const val PROFILE_BIRTHDATE = "Fecha Nacimiento"
+const val PROFILE_SPECIALIST = "Especialidad Medíca"
+
 
 /*-----------------QR -----------------*/
 const val QR_SCAN = "Escanear QR"

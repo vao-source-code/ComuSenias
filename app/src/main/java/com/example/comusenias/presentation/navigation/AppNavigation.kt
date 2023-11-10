@@ -236,7 +236,7 @@ private fun NavGraphBuilder.composableSpecialist(
             ChangeSpecialistProfileScreen(
                 navController = navController,
                 modifier = modifier,
-                user = it
+                specialistProfile = it
             )
         }
     }

@@ -1,5 +1,7 @@
 package com.example.comusenias.domain.library
 
+import java.io.UnsupportedEncodingException
+import java.net.URLDecoder
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 import java.text.SimpleDateFormat
@@ -17,6 +19,16 @@ object LibraryString {
     fun validUserName(userName: String) = userName.length >= 3
     fun encodeURL(image: String): String =
         URLEncoder.encode(image, StandardCharsets.UTF_8.toString())
+
+    fun decodeURL(encodedUrl: String): String {
+        return try {
+            URLDecoder.decode(encodedUrl, StandardCharsets.UTF_8.toString())
+        } catch (e: UnsupportedEncodingException) {
+            // Manejar la excepción según tus necesidades
+            e.printStackTrace()
+            ""
+        }
+    }
 
     fun validPhone(phone: String) = phone.matches(regexPhone.toRegex())
 

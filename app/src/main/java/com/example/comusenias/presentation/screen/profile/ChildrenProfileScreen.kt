@@ -13,7 +13,7 @@ import com.example.comusenias.R
 import com.example.comusenias.presentation.component.bottomBar.ShowBottomBar
 import com.example.comusenias.presentation.component.defaults.FloatingButtonDefault
 import com.example.comusenias.presentation.component.profile.ChildrenProfileContent
-import com.example.comusenias.presentation.component.profile.ChildrenProfileFooterContent
+import com.example.comusenias.presentation.component.profile.ProfileFooterContent
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.view_model.ChildrenProfileViewModel
 
@@ -45,9 +45,12 @@ fun ChildrenProfileScreen(
                     {
                         viewModel.saveImage()
                     }
-                ChildrenProfileFooterContent(
+                ProfileFooterContent(
                     onClickChangeProfile = onClick
-                )
+                ) {
+                    viewModel.logout()
+                    navController.navigate(com.example.comusenias.presentation.navigation.AppScreen.LoginScreen.route)
+                }
             }
         }
     }

@@ -9,9 +9,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.comusenias.presentation.component.bottomBar.ShowBottomBar
-import com.example.comusenias.presentation.component.profile.ChildrenProfileFooterContent
+import com.example.comusenias.domain.library.LibraryString
+import com.example.comusenias.presentation.component.profile.ProfileFooterContent
 import com.example.comusenias.presentation.component.profile.SpecialistProfileContent
+import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.view_model.specialist.SpecialistProfileViewModel
 
 @Composable
@@ -21,10 +22,6 @@ fun SpecialistProfileScreen(
     viewModel: SpecialistProfileViewModel = hiltViewModel()
 ) {
     Scaffold(
-        bottomBar = {
-            ShowBottomBar(navController = navController)
-        }
-
     ) { paddingValues ->
         Box(
             modifier = modifier
@@ -37,10 +34,33 @@ fun SpecialistProfileScreen(
                 )
                 val onClick: () -> Unit =
                     {
-                        viewModel.saveImage()
+                        viewModel.stateSpecialist.image =
+                            viewModel.stateSpecialist.image?.let { image ->
+                                LibraryString.encodeURL(
+                                    image
+                                )
+                            }
+                        navController.navigate(
+                            route = AppScreen.ChangeSpecialistProfileScreen
+                                .passProfile(specialistProfile = viewModel.stateSpecialist.toJson())
+                        )
+                        viewModel.stateSpecialist.image =
+                            viewModel.stateSpecialist.image?.let { image ->
+                                LibraryString.decodeURL(
+                                    image
+                                )
+                            }
                     }
-                ChildrenProfileFooterContent(
-                    onClickChangeProfile = onClick
+                ProfileFooterContent(
+                    onClickChangeProfile = onClick,
+                    onclickLogout = {
+                        viewModel.logout()
+                        navController.navigate(AppScreen.LoginScreen.route) {
+                            popUpTo(AppScreen.SpecialistProfileScreen.route) {
+                                inclusive = true
+                            }
+                        }
+                    }
                 )
             }
         }

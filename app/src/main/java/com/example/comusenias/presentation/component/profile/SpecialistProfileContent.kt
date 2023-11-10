@@ -14,9 +14,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.MedicalServices
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -35,9 +35,10 @@ import coil.compose.AsyncImage
 import com.example.comusenias.R
 import com.example.comusenias.presentation.component.defaults.DialogCapturePicture
 import com.example.comusenias.presentation.component.defaults.app.TextFieldApp
+import com.example.comusenias.presentation.ui.theme.CHANGE_SPECIALIST_MEDICY
+import com.example.comusenias.presentation.ui.theme.CHANGE_TITLE_MEDICY
 import com.example.comusenias.presentation.ui.theme.IMAGE_AVATAR
 import com.example.comusenias.presentation.ui.theme.IMAGE_EDIT_BUTTON
-import com.example.comusenias.presentation.ui.theme.PROFILE_BIRTHDATE
 import com.example.comusenias.presentation.ui.theme.PROFILE_EMAIL
 import com.example.comusenias.presentation.ui.theme.PROFILE_NAME_SURNAME
 import com.example.comusenias.presentation.ui.theme.SELECTED_IMAGE
@@ -159,11 +160,22 @@ fun SpecialistProfileContent(
             )
             Spacer(modifier = Modifier.height(10.dp))
             TextFieldApp(
-                icon = Icons.Default.DateRange,
-                value = viewModel.stateSpecialist.date,
+                icon = Icons.Default.MedicalServices,
+                value = viewModel.stateSpecialist.speciality,
                 onValueChange = {},
                 validateField = {},
-                label = PROFILE_BIRTHDATE,
+                label = CHANGE_TITLE_MEDICY,
+                keyboardType = KeyboardType.Text,
+                hideText = false,
+                readOnly = true
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            TextFieldApp(
+                icon = Icons.Default.MedicalServices,
+                value = viewModel.stateSpecialist.titleMedical,
+                onValueChange = {},
+                validateField = {},
+                label = CHANGE_SPECIALIST_MEDICY,
                 keyboardType = KeyboardType.Text,
                 hideText = false,
                 readOnly = true
