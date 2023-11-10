@@ -74,11 +74,13 @@ class ChildrenProfileViewModel @Inject constructor(
         }
     }
 
-    fun saveImage() = viewModelScope.launch(IO) {
+    fun save() = viewModelScope.launch(IO) {
         file?.let {
             saveImageResponse = Response.Loading
             val result = childrenUser.saveImageChildren(it)
             saveImageResponse = result
+        } ?: kotlin.run {
+            onUpdate(state.image!!)
         }
     }
 

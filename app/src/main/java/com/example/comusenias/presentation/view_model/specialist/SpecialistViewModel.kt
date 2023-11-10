@@ -85,12 +85,4 @@ class SpecialistViewModel @Inject constructor(
         }
     }
 
-    fun saveImage() = viewModelScope.launch(IO) {
-        file?.let {
-            saveImageResponse = Response.Loading
-            val result = specialistUseCases.saveImageSpecialist(it)
-            saveImageResponse = result
-        }
-    }
-
 }

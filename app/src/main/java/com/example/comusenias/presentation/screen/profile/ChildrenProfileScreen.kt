@@ -43,7 +43,7 @@ fun ChildrenProfileScreen(
                 )
                 val onClick: () -> Unit =
                     {
-                        viewModel.saveImage()
+                        viewModel.save()
                     }
                 ProfileFooterContent(
                     onClickChangeProfile = onClick
