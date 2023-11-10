@@ -23,15 +23,18 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
@@ -50,6 +53,7 @@ import com.example.comusenias.presentation.ui.theme.SIZE140
 import com.example.comusenias.presentation.ui.theme.SIZE160
 import com.example.comusenias.presentation.ui.theme.SIZE20
 import com.example.comusenias.presentation.ui.theme.SIZE40
+import com.example.comusenias.presentation.ui.theme.SIZE5
 import com.example.comusenias.presentation.ui.theme.SIZE55
 import com.example.comusenias.presentation.ui.theme.SIZE64
 import com.example.comusenias.presentation.ui.theme.SPECIALTY
@@ -148,7 +152,8 @@ fun SpecialistChangeProfileContent(
                 }
 
                 Spacer(modifier = Modifier.height(SIZE55.dp))
-
+                Text(text = "Datos de la matrícula", fontSize = SIZE20.sp, color = Color.Black)
+                Spacer(modifier = Modifier.height(SIZE10.dp))
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -156,6 +161,7 @@ fun SpecialistChangeProfileContent(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
+
                     TextFieldApp(
                         modifier = Modifier.width(SIZE160.dp),
                         value = state.medicalLicense,
@@ -175,7 +181,8 @@ fun SpecialistChangeProfileContent(
                         validateField = { viewModel.validateMedicalLicenseExpirationValid() }
                     )
                 }
-                Spacer(modifier = Modifier.height(SIZE20.dp))
+                Spacer(modifier = Modifier.height(SIZE10.dp))
+
 
                 TextFieldApp(
                     value = state.titleMedical,
@@ -185,6 +192,8 @@ fun SpecialistChangeProfileContent(
                     icon = null,
                     errorMsg = viewModel.errorTitleMedical
                 )
+                Spacer(modifier = Modifier.height(SIZE5.dp))
+
                 TextFieldApp(
                     value = state.speciality,
                     onValueChange = { viewModel.onSpecialityInputChanged(it) },
