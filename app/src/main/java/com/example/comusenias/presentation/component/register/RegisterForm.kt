@@ -20,7 +20,7 @@ import androidx.navigation.NavHostController
 import com.example.comusenias.presentation.component.defaults.app.ButtonApp
 import com.example.comusenias.presentation.component.defaults.app.TextFieldApp
 import com.example.comusenias.presentation.component.defaults.app.TextFieldAppPassword
-import com.example.comusenias.presentation.navigation.AppScreen
+import com.example.comusenias.presentation.navigation.AuthScreen
 import com.example.comusenias.presentation.ui.theme.CONFIRM_PASS
 import com.example.comusenias.presentation.ui.theme.EMAIL_TEXT
 import com.example.comusenias.presentation.ui.theme.PASSWORD
@@ -35,8 +35,8 @@ fun RegisterForm(
     viewModel: RegisterViewModel = hiltViewModel()
 ) {
     val state = viewModel.state
-    val childFormScreen = AppScreen.ChildFormScreen.route
-    val specilaistFormScreen = AppScreen.EspecialistFormScreen.route
+    val childFormScreen = AuthScreen.ChildFormScreen.route
+    val specilaistFormScreen = AuthScreen.SpecialistFormScreen.route
     var route by remember { mutableStateOf(childFormScreen) }
     val currentRoute = remember { mutableStateOf(route) }
 

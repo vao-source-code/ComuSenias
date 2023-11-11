@@ -1,7 +1,6 @@
 package com.example.comusenias.presentation.component.specialist.profilePatient
 
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,8 +16,9 @@ import androidx.navigation.NavHostController
 import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.models.users.ChildrenModel
 import com.example.comusenias.presentation.component.defaults.DefaultLoadingProgressIndicator
-import com.example.comusenias.presentation.component.defaults.app.showToast
+import com.example.comusenias.presentation.component.defaults.ToastMake
 import com.example.comusenias.presentation.screen.specialist.StatisticsScreen
+import com.example.comusenias.presentation.ui.theme.OBSERVATIONS_ERROR
 import com.example.comusenias.presentation.ui.theme.SIZE20
 import com.example.comusenias.presentation.ui.theme.SIZE36
 import com.example.comusenias.presentation.view_model.specialist.ProfilePatientViewModel
@@ -86,10 +86,10 @@ fun ResponseStatusObservationScreen(
         }
 
         is Response.Error -> {
-            showToast(
+            Log.e("Error", (observationResponse as Response.Error).exception?.message.toString())
+            ToastMake.showError(
                 LocalContext.current,
-                observationResponse.exception?.message.toString(),
-                Toast.LENGTH_SHORT
+                OBSERVATIONS_ERROR
             )
         }
 

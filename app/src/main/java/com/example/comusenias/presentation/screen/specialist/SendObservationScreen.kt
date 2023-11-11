@@ -1,7 +1,6 @@
 package com.example.comusenias.presentation.screen.specialist
 
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -32,16 +31,18 @@ import androidx.navigation.NavHostController
 import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.presentation.component.defaults.DefaultLoadingProgressIndicator
 import com.example.comusenias.presentation.component.defaults.DefaultTopBar
+import com.example.comusenias.presentation.component.defaults.ToastMake
 import com.example.comusenias.presentation.component.defaults.app.ButtonApp
-import com.example.comusenias.presentation.component.defaults.app.showToast
 import com.example.comusenias.presentation.component.specialist.observation.CustomMultilineHintTextField
 import com.example.comusenias.presentation.ui.theme.OBSERVATION
+import com.example.comusenias.presentation.ui.theme.OBSERVATION_ERROR
 import com.example.comusenias.presentation.ui.theme.SEND
 import com.example.comusenias.presentation.ui.theme.SIZE1
 import com.example.comusenias.presentation.ui.theme.SIZE12
 import com.example.comusenias.presentation.ui.theme.SIZE20
 import com.example.comusenias.presentation.ui.theme.SIZE3
 import com.example.comusenias.presentation.ui.theme.SIZE40
+import com.example.comusenias.presentation.ui.theme.SUCCESS
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.view_model.specialist.ObservationViewModel
 
@@ -135,16 +136,20 @@ fun ResponseStatusSendObservationScreen(
         }
 
         is Response.Success -> {
+            ToastMake.showSuccess(
+                LocalContext.current,
+                SUCCESS
+            )
             LaunchedEffect(Unit) {
                 navController.popBackStack()
             }
         }
 
         is Response.Error -> {
-            showToast(
+            Log.e("Error", (observationResponse as Response.Error).exception?.message.toString())
+            ToastMake.showError(
                 LocalContext.current,
-                observationResponse.exception?.message.toString(),
-                Toast.LENGTH_SHORT
+                OBSERVATION_ERROR
             )
         }
 

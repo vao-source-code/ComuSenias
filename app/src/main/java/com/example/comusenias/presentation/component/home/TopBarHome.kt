@@ -1,5 +1,6 @@
 package com.example.comusenias.presentation.component.home
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
@@ -30,13 +31,16 @@ import com.example.comusenias.presentation.ui.theme.blackColorApp
 fun TopBarHome(
     name: String = "",
     image: String? = "",
-    onClick: () -> Unit = {}
+    onClickNotification: () -> Unit = {},
+    onclickProfile: () -> Unit = {}
 ) {
     TopAppBar(
+        //modifier = Modifier.clickable { onclickProfile()  },
         title = {
             ContentHelloUser(
                 name = name,
-                image = image
+                image = image,
+                onclickProfile = { onclickProfile() }
             )
         },
         backgroundColor = White,
@@ -47,7 +51,8 @@ fun TopBarHome(
 @Composable
 fun ContentHelloUser(
     name: String,
-    image: String?
+    image: String?,
+    onclickProfile: () -> Unit
 ) {
     Row(
         horizontalArrangement = spacedBy(
@@ -60,7 +65,8 @@ fun ContentHelloUser(
             AsyncImage(
                 modifier = Modifier
                     .size(SIZE36.dp)
-                    .clip(CircleShape),
+                    .clip(CircleShape)
+                    .clickable { onclickProfile() },
                 model = image,
                 contentDescription = PROFILE_USER,
                 contentScale = Crop,

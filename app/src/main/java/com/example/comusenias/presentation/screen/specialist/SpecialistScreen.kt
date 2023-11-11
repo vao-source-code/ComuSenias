@@ -1,6 +1,5 @@
 package com.example.comusenias.presentation.screen.specialist
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,7 +12,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.presentation.component.defaults.DefaultLoadingProgressIndicator
+import com.example.comusenias.presentation.component.defaults.ToastMake
+import com.example.comusenias.presentation.component.defaults.app.ShowRetrySnackBar
 import com.example.comusenias.presentation.component.specialist.home.SpecialistHomeContent
+import com.example.comusenias.presentation.ui.theme.LOADING_ERROR
 import com.example.comusenias.presentation.ui.theme.LOGIN_ERROR
 import com.example.comusenias.presentation.view_model.specialist.SpecialistViewModel
 
@@ -45,14 +47,16 @@ fun SpecialistScreen(
 
         }
         is Response.Error -> {
-            Toast.makeText(
+            ToastMake.showError(
                 LocalContext.current,
-                (viewModel.childrenResponse as Response.Error).exception?.message + LOGIN_ERROR,
-                Toast.LENGTH_SHORT
-            ).show()
+                LOGIN_ERROR
+            )
+            ShowRetrySnackBar(text = LOADING_ERROR, true, onActionClick = {
+                viewModel.getUserData()
+                viewModel.getChildrenBySpecialist()
+            })
         }
         else -> {}
     }
-
 
 }
