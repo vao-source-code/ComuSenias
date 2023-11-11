@@ -12,6 +12,7 @@ import com.example.comusenias.presentation.component.defaults.app.Authentication
 import com.example.comusenias.presentation.component.defaults.app.AuthenticationFooterContent
 import com.example.comusenias.presentation.component.login.LoginForm
 import com.example.comusenias.presentation.component.login.ResponseStatusLogin
+import com.example.comusenias.presentation.component.login.ResponseStatusRol
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.DONT_HAVE_ACCOUNT
 import com.example.comusenias.presentation.ui.theme.REGISTER
@@ -48,5 +49,11 @@ fun LoginScreen(
             navController = navController,
             viewModel = viewModel
         )
+
+        ResponseStatusRol(
+            navController = navController,
+            viewModel = viewModel
+        )
+
     }
 }

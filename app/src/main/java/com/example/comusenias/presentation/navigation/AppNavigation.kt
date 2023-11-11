@@ -28,7 +28,9 @@ import com.example.comusenias.presentation.screen.gameAction.MakeSignPlayScreen
 import com.example.comusenias.presentation.screen.home.HomeScreen
 import com.example.comusenias.presentation.screen.notification.NotificationScreen
 import com.example.comusenias.presentation.screen.premiun.PremiunScreen
+import com.example.comusenias.presentation.screen.profile.ChangeSpecialistProfileScreen
 import com.example.comusenias.presentation.screen.profile.ChildrenProfileScreen
+import com.example.comusenias.presentation.screen.profile.SpecialistProfileScreen
 import com.example.comusenias.presentation.screen.qr.GenerateQRScreen
 import com.example.comusenias.presentation.screen.qr.LectorQRScreen
 import com.example.comusenias.presentation.screen.specialist.ProfilePatientScreen
@@ -38,6 +40,7 @@ import com.example.comusenias.presentation.splashScreen.SplashScreen
 import com.example.comusenias.presentation.ui.theme.CHILDREN_OBSERVATION
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.PACIENT
+import com.example.comusenias.presentation.ui.theme.SPECIALIST_PROFILE
 import com.example.comusenias.presentation.ui.theme.SUB_LEVEL
 import com.example.comusenias.presentation.view_model.ChildrenProfileViewModel
 import com.example.comusenias.presentation.view_model.LevelViewModel
@@ -220,6 +223,27 @@ private fun NavGraphBuilder.composableSpecialist(
                 navController = navController,
                 modifier = modifier,
                 observation = it
+            )
+        }
+    }
+
+    composable(AppScreen.SpecialistProfileScreen.route) {
+        SpecialistProfileScreen(
+            navController = navController, modifier = modifier
+        )
+    }
+
+    composable(
+        route = AppScreen.ChangeSpecialistProfileScreen.route,
+        arguments = listOf(navArgument(SPECIALIST_PROFILE) {
+            type = NavType.StringType
+        })
+    ) { profile ->
+        profile.arguments?.getString(SPECIALIST_PROFILE)?.let {
+            ChangeSpecialistProfileScreen(
+                navController = navController,
+                modifier = modifier,
+                specialistProfile = it
             )
         }
     }

@@ -1,14 +1,14 @@
 package com.example.comusenias.presentation.component.login
 
-import android.widget.Toast
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
 import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.presentation.component.defaults.DefaultLoadingProgressIndicator
-import com.example.comusenias.presentation.component.defaults.app.showToast
-import com.example.comusenias.presentation.ui.theme.LOGIN_ERROR
+import com.example.comusenias.presentation.component.defaults.ToastMake
+import com.example.comusenias.presentation.ui.theme.RESET_PASSWORD_ERROR
 import com.example.comusenias.presentation.ui.theme.RESET_PASSWORD_SUCCESS
 
 @Composable
@@ -25,14 +25,15 @@ fun ResponsePasswordReset(
         }
 
         is Response.Success -> {
-            showToast(LocalContext.current, RESET_PASSWORD_SUCCESS, Toast.LENGTH_SHORT)
+            Log.d("Success", (response as Response.Success).data.toString())
+            ToastMake.showSuccess(LocalContext.current, RESET_PASSWORD_SUCCESS)
         }
 
         is Response.Error -> {
-            showToast(
+            Log.e("Error", (response as Response.Error).exception?.message.toString())
+            ToastMake.showError(
                 LocalContext.current,
-                response.exception?.message + LOGIN_ERROR,
-                Toast.LENGTH_SHORT
+                RESET_PASSWORD_ERROR
             )
         }
 

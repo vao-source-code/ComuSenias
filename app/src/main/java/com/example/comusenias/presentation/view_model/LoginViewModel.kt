@@ -9,6 +9,7 @@ import com.example.comusenias.constants.PreferencesConstant.PREFERENCE_ROL_CURRE
 import com.example.comusenias.domain.library.LibraryString
 import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.models.state.LoginState
+import com.example.comusenias.domain.models.users.UserModel
 import com.example.comusenias.domain.use_cases.auth.AuthFactoryUseCases
 import com.example.comusenias.domain.use_cases.shared_preferences.DataRolStorageFactory
 import com.example.comusenias.domain.use_cases.users.UsersFactoryUseCases
@@ -31,6 +32,8 @@ class LoginViewModel @Inject constructor(
     ViewModel() {
 
     var loginResponse by mutableStateOf<Response<FirebaseUser>?>(null)
+    var userResponse by mutableStateOf<Response<UserModel>?>(null)
+
     var loginReset by mutableStateOf<Response<Boolean>?>(null)
 
     var state by mutableStateOf(LoginState())
@@ -109,10 +112,12 @@ class LoginViewModel @Inject constructor(
     }
 
     fun initRol() = viewModelScope.launch(IO) {
+        userResponse = Response.Loading
         currentUser = authUseCases.getCurrentUserUseCase()
         currentUser?.let {
             usersUseCase.getUserByIdUseCase(it.uid).collect { user ->
                 dataRolStorageFactory.putRolValue(PREFERENCE_ROL_CURRENT, user.rol)
+                userResponse = Response.Success(user)
             }
         }
     }

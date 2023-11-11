@@ -1,6 +1,5 @@
 package com.example.comusenias.presentation.screen.qr
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,11 +17,12 @@ import androidx.navigation.NavHostController
 import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.presentation.component.defaults.CardInfoDefault
 import com.example.comusenias.presentation.component.defaults.DefaultLoadingProgressIndicator
+import com.example.comusenias.presentation.component.defaults.ToastMake
 import com.example.comusenias.presentation.component.defaults.app.ButtonApp
-import com.example.comusenias.presentation.component.defaults.app.showToast
 import com.example.comusenias.presentation.component.specialist.profilePatient.ChildData
 import com.example.comusenias.presentation.component.specialist.profilePatient.ImageProfile
 import com.example.comusenias.presentation.navigation.AppScreen
+import com.example.comusenias.presentation.ui.theme.ERROR_LECTOR_QR
 import com.example.comusenias.presentation.ui.theme.PRESS_THE_QR_BUTTON
 import com.example.comusenias.presentation.ui.theme.QR_ADD
 import com.example.comusenias.presentation.ui.theme.QR_SCAN
@@ -82,10 +82,9 @@ fun ResponseStatusLectorScreen(
         }
 
         is Response.Error -> {
-            showToast(
+            ToastMake.showError(
                 LocalContext.current,
-                observationResponse.exception?.message.toString(),
-                Toast.LENGTH_SHORT
+                ERROR_LECTOR_QR
             )
         }
 

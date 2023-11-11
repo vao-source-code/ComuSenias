@@ -1,5 +1,6 @@
 package com.example.comusenias.presentation.component.specialist.home
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -27,11 +28,14 @@ import com.example.comusenias.presentation.ui.theme.SIZE3
 fun SpecialistHomeContent(
     navController: NavHostController, specialist: SpecialistModel
 ) {
+    Log.d("SpecialistHomeContent", "Usuario: $specialist")
     Scaffold(topBar = {
         Surface(shadowElevation = SIZE3.dp) {
             TopBarHome(
-                name = specialist.name, image = specialist.image
-            ) { navController.navigate(AppScreen.NotificationScreen.route) }
+                name = specialist.name, image = specialist.image,
+                onClickNotification = { navController.navigate(AppScreen.NotificationScreen.route) },
+                onclickProfile = { navController.navigate(AppScreen.SpecialistProfileScreen.route) }
+            )
         }
     }, floatingActionButton = {
         FloatingButtonDefault {
