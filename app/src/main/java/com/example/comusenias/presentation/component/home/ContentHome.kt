@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.unit.dp
@@ -26,19 +25,23 @@ import com.example.comusenias.presentation.ui.theme.ERROR_RETRY_LEVEL
 import com.example.comusenias.presentation.ui.theme.SIZE1
 import com.example.comusenias.presentation.ui.theme.SIZE14
 import com.example.comusenias.presentation.ui.theme.SIZE5
+import com.example.comusenias.presentation.view_model.ChildrenProfileViewModel
 import com.example.comusenias.presentation.view_model.LevelViewModel
 import com.example.comusenias.presentation.view_model.SubLevelViewModel
 
 lateinit var getLevelViewModel: LevelViewModel
 lateinit var getSubLevelViewModel: SubLevelViewModel
+lateinit var getChildrenProfileViewModel: ChildrenProfileViewModel
 
 @Composable
 fun ContentHome(
     navController: NavController,
-    levelViewModel: LevelViewModel
+    levelViewModel: LevelViewModel,
+    childrenModel: ChildrenProfileViewModel
 ) {
     val level = levelViewModel.levels
     getLevelViewModel = levelViewModel
+    getChildrenProfileViewModel = childrenModel
     when (levelViewModel.levelsResponse) {
         is Response.Loading -> {
             CircularProgressBar()

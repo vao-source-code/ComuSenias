@@ -34,6 +34,7 @@ import com.example.comusenias.domain.use_cases.children.GetChildrenById
 import com.example.comusenias.domain.use_cases.children.IntegrateChildrenWithSpecialist
 import com.example.comusenias.domain.use_cases.children.SaveImageChildren
 import com.example.comusenias.domain.use_cases.children.UpdateChildren
+import com.example.comusenias.domain.use_cases.children.UpdateLevelChildren
 import com.example.comusenias.domain.use_cases.letters.GetImageUseCase
 import com.example.comusenias.domain.use_cases.letters.LettersFactoryUseCases
 import com.example.comusenias.domain.use_cases.letters.SearchImageLetterUseCase
@@ -187,7 +188,8 @@ object FirebaseModule {
             getChildrenById = GetChildrenById(usersRepository),
             saveImageChildren = SaveImageChildren(usersRepository),
             updateChildren = UpdateChildren(usersRepository),
-            integrateChildrenWithSpecialist = IntegrateChildrenWithSpecialist(usersRepository)
+            integrateChildrenWithSpecialist = IntegrateChildrenWithSpecialist(usersRepository),
+            updateLevelChildren = UpdateLevelChildren(usersRepository)
         )
 
     @Provides

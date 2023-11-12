@@ -85,4 +85,16 @@ class ChildrenRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun updateLevelChildren(user: ChildrenModel): Response<Boolean> {
+        return try {
+            val mapImage: MutableMap<String, Any> = HashMap()
+            mapImage["levels"] = user.levels
+            childrenRef.document(user.id).update(mapImage).await()
+            Response.Success(true)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Response.Error(e)
+        }
+    }
+
 }

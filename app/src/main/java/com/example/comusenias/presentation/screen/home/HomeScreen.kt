@@ -43,7 +43,8 @@ fun HomeScreen(
         ) {
             ContentHome(
                 navController = navController,
-                levelViewModel
+                levelViewModel = levelViewModel,
+                childrenModel = childrenModel
             )
         }
     }

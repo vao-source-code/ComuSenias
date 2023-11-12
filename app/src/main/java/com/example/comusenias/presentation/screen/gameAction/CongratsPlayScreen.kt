@@ -16,6 +16,7 @@ import com.example.comusenias.presentation.component.home.StatusGame
 import com.example.comusenias.presentation.component.home.getAllSubLevels
 import com.example.comusenias.presentation.extensions.validation.getChoicesSelected
 import com.example.comusenias.presentation.navigation.AppScreen
+import com.example.comusenias.presentation.navigation.getChildrenProfileViewModel
 import com.example.comusenias.presentation.navigation.getLevelViewModel
 import com.example.comusenias.presentation.ui.theme.CONTINUE
 import com.example.comusenias.presentation.ui.theme.SIZE30
@@ -40,6 +41,7 @@ fun CongratsPlayView(navController: NavHostController, modifier: Modifier) {
             onClickButton = {
                 navController.navigate(AppScreen.HomeScreen.route)
                 setStatusBySubLevel()
+                getChildrenProfileViewModel.updateLevel()
             }
         )
     }
@@ -57,6 +59,14 @@ fun CongratsPlayView(navController: NavHostController, modifier: Modifier) {
 fun setStatusBySubLevel() {
     getAllSubLevels().find { it.name == getLevelViewModel.subLevelSelected }?.let { subLevel ->
         subLevel.isCompleted =
-            if (getChoicesSelected(getLevelViewModel)) StatusGame.COMPLETED else StatusGame.COMPLETED
+            if (getChoicesSelected(getLevelViewModel)) StatusGame.COMPLETED else StatusGame.IN_PROGRESS
+    }
+    getChildrenProfileViewModel.userData.levels.forEach {
+        it.subLevel.forEach { subLevel ->
+            if (subLevel.name == getLevelViewModel.subLevelSelected) {
+                subLevel.isCompleted =
+                    if (getChoicesSelected(getLevelViewModel)) StatusGame.COMPLETED else StatusGame.IN_PROGRESS
+            }
+        }
     }
 }

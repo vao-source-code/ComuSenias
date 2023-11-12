@@ -28,6 +28,11 @@ import com.example.comusenias.presentation.ui.theme.NUMBER_PHONE
 import com.example.comusenias.presentation.ui.theme.SIZE100
 import com.example.comusenias.presentation.ui.theme.SIZE2
 import com.example.comusenias.presentation.view_model.ChildrenRegisterViewModel
+import com.example.comusenias.presentation.view_model.LevelViewModel
+import com.example.comusenias.presentation.view_model.SubLevelViewModel
+
+lateinit var getLevelViewModel: LevelViewModel
+lateinit var getSubLevelViewModel: SubLevelViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
