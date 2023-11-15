@@ -50,7 +50,7 @@ class ChildrenRepositoryImpl @Inject constructor(
             mapImage["name"] = user.name
             mapImage["date"] = user.date
             mapImage["idSpecialist"] = user.idSpecialist
-            mapImage["tel"] = user.phone
+            mapImage["phone"] = user.phone
             mapImage["image"] = user.image?.let { it } ?: ""
             childrenRef.document(user.id).update(mapImage).await()
             Response.Success(true)
