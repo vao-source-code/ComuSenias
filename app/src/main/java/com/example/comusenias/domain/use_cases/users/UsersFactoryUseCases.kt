@@ -4,5 +4,5 @@ data class UsersFactoryUseCases(
     val createUserUseCase: CreateUserUseCase,
     val getUserByIdUseCase: GetUserByIdUseCase,
     val updateUserUseCase: UpdateUserUseCase,
-    val saveImageUserUseCase: SaveImageUserUseCase
+    val saveImageUserUseCase: SaveImageUserUseCase,
 )

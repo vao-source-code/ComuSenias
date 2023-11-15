@@ -50,7 +50,7 @@ class ChildrenRepositoryImpl @Inject constructor(
             mapImage["name"] = user.name
             mapImage["date"] = user.date
             mapImage["idSpecialist"] = user.idSpecialist
-            mapImage["tel"] = user.tel
+            mapImage["phone"] = user.phone
             mapImage["image"] = user.image?.let { it } ?: ""
             childrenRef.document(user.id).update(mapImage).await()
             Response.Success(true)
@@ -85,4 +85,15 @@ class ChildrenRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun updateLevelChildren(user: ChildrenModel): Response<Boolean> {
+        return try {
+            val mapImage: MutableMap<String, Any> = HashMap()
+            mapImage["levels"] = user.levels
+            childrenRef.document(user.id).update(mapImage).await()
+            Response.Success(true)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Response.Error(e)
+        }
+    }
 }

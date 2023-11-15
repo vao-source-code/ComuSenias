@@ -5,5 +5,6 @@ data class ChildrenFactory(
     val getChildrenById: GetChildrenById,
     val saveImageChildren: SaveImageChildren,
     val updateChildren: UpdateChildren,
-    val integrateChildrenWithSpecialist: IntegrateChildrenWithSpecialist
+    val integrateChildrenWithSpecialist: IntegrateChildrenWithSpecialist,
+    val updateLevelChildren: UpdateLevelChildren,
 )

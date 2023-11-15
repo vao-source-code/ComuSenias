@@ -19,10 +19,10 @@ import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.presentation.component.defaults.app.CircularProgressBar
 import com.example.comusenias.presentation.component.gameAction.GameAction
 import com.example.comusenias.presentation.component.gameAction.MatchSign
-import com.example.comusenias.presentation.component.home.getLevelViewModel
 import com.example.comusenias.presentation.component.permission.AlertDialogPermission
 import com.example.comusenias.presentation.extensions.validation.selectedOption
 import com.example.comusenias.presentation.navigation.AppScreen
+import com.example.comusenias.presentation.navigation.getLevelViewModel
 import com.example.comusenias.presentation.ui.theme.CONTINUE
 import com.example.comusenias.presentation.ui.theme.ERROR_RETRY_SUB_LEVEL
 import com.example.comusenias.presentation.ui.theme.STEP_TREE

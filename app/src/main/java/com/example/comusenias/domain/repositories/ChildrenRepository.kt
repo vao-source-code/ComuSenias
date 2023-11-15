@@ -11,4 +11,5 @@ interface ChildrenRepository {
     suspend fun updateUserChildren(user: ChildrenModel): Response<Boolean>
     suspend fun saveImageUserChildren(file: File): Response<String>
     suspend fun integrateChildrenWithSpecialist(user: ChildrenModel): Response<Boolean>
+    suspend fun updateLevelChildren(user: ChildrenModel): Response<Boolean>
 }

@@ -107,7 +107,7 @@ private fun verifyOptionSelected(
     levelViewModel: LevelViewModel
 ): Boolean {
     return category.isNotEmpty() && category != NONE && category.equals(
-        levelViewModel.subLevelModel,
+        levelViewModel.subLevelSelected,
         ignoreCase = true
     )
 }

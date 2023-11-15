@@ -33,6 +33,7 @@ class ChildrenProfileViewModel @Inject constructor(
 
 ) : ViewModel() {
 
+    /*---------------------------------Public Variables---------------------------------*/
     var userData by mutableStateOf(ChildrenModel())
         private set
     val currentUser = authUsesCases.getCurrentUserUseCase()
@@ -46,9 +47,12 @@ class ChildrenProfileViewModel @Inject constructor(
         private set
     var saveImageResponse by mutableStateOf<Response<String>?>(null)
 
+    /*--------------------------------- init ---------------------------------*/
     init {
         getUserData()
     }
+
+    /*--------------------------------- Private Methods ---------------------------------*/
 
     private fun getUserData() = viewModelScope.launch {
         currentUser?.let {
@@ -57,6 +61,14 @@ class ChildrenProfileViewModel @Inject constructor(
             }
         }
     }
+
+    private fun update(user: ChildrenModel) = viewModelScope.launch(IO) {
+        updateResponse = Response.Loading
+        val result = childrenUser.updateChildren(user)
+        updateResponse = result
+    }
+
+    /*--------------------------------- Public Methods ---------------------------------*/
 
     fun pickImage() = viewModelScope.launch(IO) {
         val result = resultingActivityHandler.getContent(PATH_IMAGE)
@@ -88,7 +100,7 @@ class ChildrenProfileViewModel @Inject constructor(
         val myUser = ChildrenModel(
             id = userData.id,
             name = userData.name,
-            tel = userData.tel,
+            phone = userData.phone,
             email = userData.email,
             date = userData.date,
             image = url,
@@ -96,15 +108,17 @@ class ChildrenProfileViewModel @Inject constructor(
         update(myUser)
     }
 
-    fun update(user: ChildrenModel) = viewModelScope.launch(IO) {
-        updateResponse = Response.Loading
-        val result = childrenUser.updateChildren(user)
-        updateResponse = result
-    }
-
 
     fun logout() = viewModelScope.launch(IO) {
         authUsesCases.logoutUseCase()
         dataRolStorageFactory.putRolValue(PreferencesConstant.PREFERENCE_ROL_CURRENT, EMPTY_STRING)
+    }
+
+    fun updateLevel() = viewModelScope.launch(IO) {
+        val myUser = ChildrenModel(
+            id = userData.id,
+            levels = userData.levels,
+        )
+        childrenUser.updateLevelChildren(myUser)
     }
 }

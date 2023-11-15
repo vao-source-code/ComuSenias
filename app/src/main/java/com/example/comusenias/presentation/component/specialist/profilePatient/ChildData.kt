@@ -25,7 +25,7 @@ fun ChildData(patient: ChildrenModel) {
         )
         FieldWithIcon(
             icon = painterResource(R.drawable.phone_icon),
-            text = patient.tel
+            text = patient.phone
         )
         FieldWithIcon(
             icon = painterResource(R.drawable.mail_icon),

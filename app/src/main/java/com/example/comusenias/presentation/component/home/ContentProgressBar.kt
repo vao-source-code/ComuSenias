@@ -16,16 +16,17 @@ import androidx.compose.ui.text.font.FontWeight.Companion.SemiBold
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.comusenias.domain.models.game.LevelModel
-import com.example.comusenias.domain.models.room.SubLevelEntity
+import com.example.comusenias.domain.models.game.SubLevelModel
 import com.example.comusenias.presentation.component.home.StatusGame.COMPLETED
 import com.example.comusenias.presentation.ui.theme.PROGRESS
+import com.example.comusenias.presentation.ui.theme.SIZE0
 import com.example.comusenias.presentation.ui.theme.SIZE10
 import com.example.comusenias.presentation.ui.theme.SIZE18
 import com.example.comusenias.presentation.ui.theme.SIZE9
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 
 @Composable
-fun ContentProgressBar(levels: List<LevelModel>?,sublevelsEntity: List<SubLevelEntity>) {
+fun ContentProgressBar(levels: List<LevelModel>?, sublevelsEntity: List<SubLevelModel>) {
 
     Column(
         modifier = Modifier
@@ -43,44 +44,18 @@ fun ContentProgressBar(levels: List<LevelModel>?,sublevelsEntity: List<SubLevelE
                 color = blackColorApp
             )
         )
-        levels.let {
-            ProgressBar(progress = calculateProgress(levels,sublevelsEntity))
+        levels?.let {
+            ProgressBar(progress = calculateProgress(levels))
         }
-
     }
 }
 
-//private fun calculateProgress(levels: List<LevelModel>?,sublevelsEntity: List<SubLevelEntity>): Float {
-//    var progressBar = 0.0f
-//
-//    levels.let {
-//        var totalSubLevels = 0
-//        var subLevelscompleted = 0
-//
-//        levels?.forEach { level ->
-//            totalSubLevels += level.subLevel.count()
-//        }
-//
-//        levels?.forEach { level ->
-//             level.subLevel.forEach { subLevel ->
-//                 if (GameUtils.getStatusSubLevel(sublevelsEntity,subLevel) == StatusGame.COMPLETED) {
-//                     subLevelscompleted += 1
-//                 }
-//            }
-//        }
-//        progressBar = subLevelscompleted / totalSubLevels.toFloat()
-//    }
-//
-//    return progressBar
-//}
-
-private fun calculateProgress(levels: List<LevelModel>?, sublevelsEntity: List<SubLevelEntity>): Float {
-    val totalSubLevels = levels?.sumOf { it.subLevel.size } ?: 0
+private fun calculateProgress(levels: List<LevelModel>?): Float {
+    val totalSubLevels = levels?.sumOf { it.subLevel.size } ?: SIZE0
     val subLevelsCompleted = levels?.sumOf { level ->
         level.subLevel.count { subLevel ->
-            GameUtils.getStatusSubLevel(sublevelsEntity, subLevel) == COMPLETED
+            getStatusSubLevel(subLevel) == COMPLETED
         }
-    } ?: 0
-
+    } ?: SIZE0
     return if (totalSubLevels != 0) subLevelsCompleted.toFloat() / totalSubLevels else 0.0f
 }

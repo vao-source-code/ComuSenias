@@ -27,8 +27,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.comusenias.constants.TestTag
-import com.example.comusenias.presentation.component.home.getLevelViewModel
 import com.example.comusenias.presentation.extensions.borderStyle.BorderStyleGames
+import com.example.comusenias.presentation.navigation.getLevelViewModel
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.SIZE1
 import com.example.comusenias.presentation.ui.theme.SIZE12
