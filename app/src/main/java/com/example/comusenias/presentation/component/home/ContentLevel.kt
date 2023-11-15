@@ -16,7 +16,6 @@ import androidx.compose.ui.text.font.FontWeight.Companion.SemiBold
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.comusenias.domain.models.game.LevelModel
-import com.example.comusenias.presentation.component.home.GameUtils.Companion.getStatusSubLevel
 import com.example.comusenias.presentation.component.home.StatusGame.COMPLETED
 import com.example.comusenias.presentation.ui.theme.COMPLETED_LESSONS
 import com.example.comusenias.presentation.ui.theme.SIZE12

@@ -18,7 +18,6 @@ import com.example.comusenias.domain.models.game.SubLevelModel
 import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.presentation.component.defaults.app.CircularProgressBar
 import com.example.comusenias.presentation.component.defaults.app.ShowRetrySnackBar
-import com.example.comusenias.presentation.component.home.GameUtils.Companion.getStatusSubLevel
 import com.example.comusenias.presentation.navigation.getChildrenProfileViewModel
 import com.example.comusenias.presentation.navigation.getLevelViewModel
 import com.example.comusenias.presentation.ui.theme.ERROR_RETRY_LEVEL
@@ -113,26 +112,22 @@ private fun ShowLazyColumn(
  * - El estado actual del subnivel: Si el subnivel no está después del último subnivel completado.
  * - StatusGame.BLOCKED: Si el subnivel no se encuentra en la lista de subniveles.
  */
-class GameUtils {
-    companion object {
-        @JvmStatic
-        fun getStatusSubLevel(
-            subLevel: SubLevelModel
-        ): StatusGame {
-            val statusList = getAllSubLevels().map { it.isCompleted }
-            val lastCompletedIndex = statusList.indexOfLast { it == StatusGame.COMPLETED }
-            val currentIndex = getAllSubLevels().indexOfFirst { it.name == subLevel.name }
 
-            if (statusList.all { it == StatusGame.BLOCKED }) {
-                getAllSubLevels().getOrNull(0)?.isCompleted = StatusGame.IN_PROGRESS
-            }
+fun getStatusSubLevel(
+    subLevel: SubLevelModel
+): StatusGame {
+    val statusList = getAllSubLevels().map { it.isCompleted }
+    val lastCompletedIndex = statusList.indexOfLast { it == StatusGame.COMPLETED }
+    val currentIndex = getAllSubLevels().indexOfFirst { it.name == subLevel.name }
 
-            return when {
-                lastCompletedIndex != -1 && currentIndex == lastCompletedIndex + 1 -> StatusGame.IN_PROGRESS
-                lastCompletedIndex != -1 && currentIndex > lastCompletedIndex + 1 -> StatusGame.BLOCKED
-                else -> getAllSubLevels().getOrNull(currentIndex)?.isCompleted ?: StatusGame.BLOCKED
-            }
-        }
+    if (statusList.all { it == StatusGame.BLOCKED }) {
+        getAllSubLevels().getOrNull(0)?.isCompleted = StatusGame.IN_PROGRESS
+    }
+
+    return when {
+        lastCompletedIndex != -1 && currentIndex == lastCompletedIndex + 1 -> StatusGame.IN_PROGRESS
+        lastCompletedIndex != -1 && currentIndex > lastCompletedIndex + 1 -> StatusGame.BLOCKED
+        else -> getAllSubLevels().getOrNull(currentIndex)?.isCompleted ?: StatusGame.BLOCKED
     }
 }
 

@@ -54,7 +54,7 @@ private fun calculateProgress(levels: List<LevelModel>?): Float {
     val totalSubLevels = levels?.sumOf { it.subLevel.size } ?: SIZE0
     val subLevelsCompleted = levels?.sumOf { level ->
         level.subLevel.count { subLevel ->
-            GameUtils.getStatusSubLevel(subLevel) == COMPLETED
+            getStatusSubLevel(subLevel) == COMPLETED
         }
     } ?: SIZE0
     return if (totalSubLevels != 0) subLevelsCompleted.toFloat() / totalSubLevels else 0.0f
