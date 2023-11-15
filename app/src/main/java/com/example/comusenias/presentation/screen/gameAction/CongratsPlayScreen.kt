@@ -46,7 +46,6 @@ fun CongratsPlayView(navController: NavHostController, modifier: Modifier) {
         )
     }
     DisposableEffect(Unit) {
-        //getSubLevelViewModel.fetchSubLevel(getLevelViewModel.subLevelSelected)
         onDispose { }
     }
 }
