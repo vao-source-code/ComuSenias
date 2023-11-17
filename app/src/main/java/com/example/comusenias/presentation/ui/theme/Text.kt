@@ -107,12 +107,10 @@ const val THE_SIGN_IS: String = "La seña es..."
 const val FINISH: String = "Finalizar"
 const val WHAT_SIGN_IS: String = "¿Que seña es la letra?"
 const val WHAT_LETTER_IS : String = "¿Que letra es la seña?"
-const val CONFIRM : String = "Confirmar"
 const val ICON: String = "Icon"
 const val PATIENTS: String = "Pacientes"
 const val ERROR_RETRY_LEVEL  : String = "Error al cargar el nivel"
 const val ERROR_RETRY_SUB_LEVEL  : String = "Error al cargar el sub nivel"
-const val LEVEL  : String = "level"
 const val SUB_LEVEL  : String = "subLevel"
 const val DONT_YOU_HAVE_PATIENTS  : String = "Aun no tenes pacientes."
 const val SUB_LEVEL_TABLE: String = "subLevel_table"
@@ -161,6 +159,7 @@ const val PREMIUM_TWO_DESCRIPTION = "Conta con el seguimiento de un profesional 
 const val PREMIUM_THREE_TITLE = "Sin anuncios"
 const val PREMIUM_THREE_DESCRIPTION = "Evita las interrupciones."
 const val PREMIUM_FOUR_TITLE = "Contenidos Premium exclusivos"
+const val SHOW_LAZY_COLUMN_TAG = "ShowLazyColumnTag"
 const val PREMIUM_FOUR_DESCRIPTION = "Amplía tu vocabulario con lecciones y cursos especializados."
 
 
@@ -176,8 +175,6 @@ const val DIALOG_CAPTURE_TITLE: String = "Selecciona una opción"
 const val CHANGE_PROFILE_USER = "Nuevo Usuario"
 const val CHANGE_PROFILE_PASSWORD = "Nueva Contraseña"
 const val CHANGE_PROFILE_CONFIRM_PASSWORD = "Confirmar Contraseña"
-const val CHANGE_PROFILE_LICENCE_MEDICE = "Matricula"
-const val CHANGE_LICENCE_EXPIRATION = "Fecha de expiración"
 const val CHANGE_TITLE_MEDICY = "Titulo Medico"
 const val CHANGE_SPECIALIST_MEDICY = "Especialidad"
 
@@ -186,8 +183,6 @@ const val PROFILE_USER = "Nombre del Usuario"
 const val PROFILE_EMAIL = "Correo electrónico"
 const val PROFILE_NAME_SURNAME = "Nombre y Apellido"
 const val PROFILE_BIRTHDATE = "Fecha Nacimiento"
-const val PROFILE_SPECIALIST = "Especialidad Medíca"
-
 
 /*-----------------QR -----------------*/
 const val QR_SCAN = "Escanear QR"

@@ -110,6 +110,7 @@ ui-text-android = { group = "androidx.compose.ui", name = "ui-text-android", ver
 mediapipe-task = { group = "com.google.mediapipe", name = "tasks-vision", version = "0.10.0" }
 zxing-android-embedded = { module = "com.journeyapps:zxing-android-embedded", version.ref = "zxingAndroidEmbedded" }
 zxing-core = { module = "com.google.zxing:core", version.ref = "google-core" }
+navigation-testing = { group = "androidx.navigation", name = "navigation-testing", version = "2.7.5" }
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "androidApplication" }

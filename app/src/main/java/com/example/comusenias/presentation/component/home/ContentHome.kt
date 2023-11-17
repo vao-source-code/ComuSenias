@@ -11,26 +11,23 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.comusenias.domain.models.game.LevelModel
 import com.example.comusenias.domain.models.game.SubLevelModel
 import com.example.comusenias.domain.models.response.Response
+import com.example.comusenias.presentation.activities.MainActivity.Companion.getChildrenProfileViewModel
 import com.example.comusenias.presentation.component.defaults.app.CircularProgressBar
 import com.example.comusenias.presentation.component.defaults.app.ShowRetrySnackBar
-import com.example.comusenias.presentation.navigation.getChildrenProfileViewModel
-import com.example.comusenias.presentation.navigation.getLevelViewModel
 import com.example.comusenias.presentation.ui.theme.ERROR_RETRY_LEVEL
+import com.example.comusenias.presentation.ui.theme.SHOW_LAZY_COLUMN_TAG
 import com.example.comusenias.presentation.ui.theme.SIZE1
 import com.example.comusenias.presentation.ui.theme.SIZE14
 import com.example.comusenias.presentation.ui.theme.SIZE5
 import com.example.comusenias.presentation.view_model.ChildrenProfileViewModel
 import com.example.comusenias.presentation.view_model.LevelViewModel
-import com.example.comusenias.presentation.view_model.SubLevelViewModel
 
-lateinit var getLevelViewModel: LevelViewModel
-lateinit var getSubLevelViewModel: SubLevelViewModel
-lateinit var getChildrenProfileViewModel: ChildrenProfileViewModel
 
 @Composable
 fun ContentHome(
@@ -38,9 +35,6 @@ fun ContentHome(
     levelViewModel: LevelViewModel,
     childrenModel: ChildrenProfileViewModel
 ) {
-    val level = levelViewModel.levels
-    getLevelViewModel = levelViewModel
-    getChildrenProfileViewModel = childrenModel
     when (levelViewModel.levelsResponse) {
         is Response.Loading -> {
             CircularProgressBar()
@@ -74,7 +68,8 @@ private fun ShowLazyColumn(
                 start = SIZE14.dp,
                 end = SIZE14.dp,
             )
-            .background(White),
+            .background(White)
+            .testTag(SHOW_LAZY_COLUMN_TAG),
         verticalArrangement = spacedBy(SIZE1.dp)
     ) {
         item {
@@ -103,8 +98,7 @@ private fun ShowLazyColumn(
 /**
  * Ddetermina el estado de juego para un subnivel específico.
  *
- * @param sublevelsEntity La lista de todos los subniveles disponibles en el juego. Cada subnivel es una entidad que contiene su id y estado actual.
- * @param sublevel El subnivel para el que se debe determinar el estado de juego.
+ * @param subLevel La lista de todos los subniveles disponibles en el juego. Cada subnivel es una entidad que contiene su id y estado actual.
  *
  * @return El estado de juego para el subnivel especificado. Puede ser uno de los siguientes:
  * - StatusGame.IN_PROGRESS: Si el subnivel es el próximo subnivel después del último subnivel completado.

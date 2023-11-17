@@ -35,7 +35,6 @@ class ChildrenProfileViewModel @Inject constructor(
 
     /*---------------------------------Public Variables---------------------------------*/
     var userData by mutableStateOf(ChildrenModel())
-        private set
     val currentUser = authUsesCases.getCurrentUserUseCase()
 
     val resultingActivityHandler = ResultingActivityHandler()
@@ -52,9 +51,7 @@ class ChildrenProfileViewModel @Inject constructor(
         getUserData()
     }
 
-    /*--------------------------------- Private Methods ---------------------------------*/
-
-    private fun getUserData() = viewModelScope.launch {
+    fun getUserData() = viewModelScope.launch {
         currentUser?.let {
             childrenUser.getChildrenById(it.uid).collect { user ->
                 userData = user
@@ -62,7 +59,7 @@ class ChildrenProfileViewModel @Inject constructor(
         }
     }
 
-    private fun update(user: ChildrenModel) = viewModelScope.launch(IO) {
+     fun update(user: ChildrenModel) = viewModelScope.launch(IO) {
         updateResponse = Response.Loading
         val result = childrenUser.updateChildren(user)
         updateResponse = result
@@ -82,7 +79,7 @@ class ChildrenProfileViewModel @Inject constructor(
         val result = resultingActivityHandler.takePicturePreview()
         result?.let {
             state = state.copy(image = ComposeFileProvider.getPathFromBitmap(context, it))
-            file = File(state.image)
+            file = state.image?.let { it1 -> File(it1) }
         }
     }
 
