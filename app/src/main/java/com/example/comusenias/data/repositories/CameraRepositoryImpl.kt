@@ -14,6 +14,9 @@ import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.camera.video.FileOutputOptions
+import androidx.camera.video.Recording
+import androidx.camera.video.VideoRecordEvent
 import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
@@ -166,8 +169,11 @@ class CameraRepositoryImpl @Inject constructor(
         }
     }
 
+    private var recording: Recording? = null
+
     override suspend fun recordVideo(navController: NavController) {
-        TODO("Not yet implemented")
+
+
     }
 
 

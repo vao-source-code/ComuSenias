@@ -42,13 +42,9 @@ fun CameraScreen(
     val lifecycleOwner = LocalLifecycleOwner.current
 
 
-
-
     val preferenceManager = remember { PreferenceManager(context) }
 
     val isChecked by remember { mutableStateOf(preferenceManager.getBoolean("key_boolean", false)) }
-
-
 
     // Recolecta los resultados de reconocimiento del ViewModel
     val recognitionResultsState = viewModel.recognitionResults.collectAsState()
@@ -70,7 +66,7 @@ fun CameraScreen(
 
         if(!isChecked){
             OverlayView(resultOverlayView = recognitionResults)
-           /* Button(
+           Button(
                 onClick = {
                     viewModel.recordVideo(navController!!)
                 },
@@ -86,7 +82,7 @@ fun CameraScreen(
                     tint = Color.White
                 )
 
-            }*/
+            }
         }
         else {
             preferenceManager.removeKey("key_boolean")

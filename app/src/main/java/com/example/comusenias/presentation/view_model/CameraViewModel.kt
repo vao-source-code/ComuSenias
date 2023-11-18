@@ -2,6 +2,7 @@ package com.example.comusenias.presentation.view_model
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Bitmap
 import android.net.Uri
 import androidx.camera.view.PreviewView
 import androidx.lifecycle.LifecycleOwner
@@ -15,6 +16,7 @@ import com.example.comusenias.domain.use_cases.camera.CameraUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,13 +26,16 @@ import javax.inject.Inject
 class CameraViewModel @Inject constructor(private val useCases: CameraUseCases):ViewModel() {
 
     private val _recognitionResults = MutableStateFlow<ResultOverlayView?>(null)
-    val recognitionResults: StateFlow<ResultOverlayView?> = _recognitionResults
+    var recognitionResults: StateFlow<ResultOverlayView?> = _recognitionResults
+    private val _bitmaps = MutableStateFlow<List<Bitmap>>(emptyList())
+    val bitmaps = _bitmaps.asStateFlow()
 
     fun showCameraPreview(preview: PreviewView, lifecycleOwner: LifecycleOwner){
         viewModelScope.launch {
             useCases.showCameraPreview(preview, lifecycleOwner)
         }
     }
+
 
     //Este codigo funciona
     // depues implementamos en jetpack compose en otra parte que es solamente usa la funcionalidad de sacar fotos

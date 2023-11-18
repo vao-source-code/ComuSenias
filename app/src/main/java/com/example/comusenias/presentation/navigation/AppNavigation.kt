@@ -19,6 +19,7 @@ import com.example.comusenias.presentation.component.specialist.SpecialistDetail
 import com.example.comusenias.presentation.screen.gallery.GalleryScreen
 import com.example.comusenias.presentation.screen.camera.CameraScreen
 import com.example.comusenias.presentation.screen.camera.TestCamera
+import com.example.comusenias.presentation.screen.camera.VideoScreen
 import com.example.comusenias.presentation.screen.gameAction.ChoseTheLetterPlayScreen
 import com.example.comusenias.presentation.screen.home.HomeScreen
 import com.example.comusenias.presentation.screen.gameAction.ChoseTheSignPlayScreen
@@ -77,7 +78,10 @@ private fun GetNavHost(
             PermissionCameraScreen(navController = navController)
         }
         composable(AppScreen.CameraScreen.route) {
-            CameraScreen(navController = navController)
+            if(true){
+                VideoScreen(navController = navController)
+            }
+            //CameraScreen(navController = navController)
         }
 
 
