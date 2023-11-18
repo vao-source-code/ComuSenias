@@ -40,8 +40,10 @@ fun RequestPermissions(
     DisposableEffect(Unit) {
         requestPermissionLauncher.launch(
             arrayOf(
-                android.Manifest.permission.CAMERA,
-                android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+                Manifest.permission.CAMERA,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.RECORD_AUDIO,
+                Manifest.permission.READ_EXTERNAL_STORAGE
             )
         )
         onDispose { /* Hacer algo cuando se desecha el efecto */ }

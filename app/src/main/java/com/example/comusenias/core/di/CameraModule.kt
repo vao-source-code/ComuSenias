@@ -1,6 +1,7 @@
 package com.example.comusenias.core.di
 
 import CameraRepositoryImpl
+import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.view.Surface
@@ -8,6 +9,7 @@ import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.camera.video.VideoCapture
 import com.example.comusenias.data.api.ApiService
 import com.example.comusenias.domain.repositories.CameraRepository
 import dagger.Module

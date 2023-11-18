@@ -55,7 +55,11 @@ class CameraViewModel @Inject constructor(private val useCases: CameraUseCases):
         }
     }
 
-
+    fun recordVideo(navController: NavController){
+        viewModelScope.launch {
+            useCases.recordVideo(navController)
+        }
+    }
 
 
 }

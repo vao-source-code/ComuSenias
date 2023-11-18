@@ -166,7 +166,9 @@ class CameraRepositoryImpl @Inject constructor(
         }
     }
 
-
+    override suspend fun recordVideo(navController: NavController) {
+        TODO("Not yet implemented")
+    }
 
 
     private fun setupImageAnalysis() {

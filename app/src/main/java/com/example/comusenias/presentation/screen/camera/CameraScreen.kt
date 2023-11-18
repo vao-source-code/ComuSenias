@@ -70,6 +70,23 @@ fun CameraScreen(
 
         if(!isChecked){
             OverlayView(resultOverlayView = recognitionResults)
+           /* Button(
+                onClick = {
+                    viewModel.recordVideo(navController!!)
+                },
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(16.dp)
+                    .size(56.dp)
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.baseline_camera_24),
+                    contentDescription = "Capture",
+                    modifier = Modifier.size(15.dp),
+                    tint = Color.White
+                )
+
+            }*/
         }
         else {
             preferenceManager.removeKey("key_boolean")
@@ -106,4 +123,6 @@ fun CameraScreen(
         onDispose { }
     }
 }
+
+
 
