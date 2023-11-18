@@ -61,6 +61,16 @@ private fun ShowLazyColumn(
     levels: List<LevelModel>,
     navController: NavController
 ) {
+
+    val subLevelViewModel: SubLevelViewModel = hiltViewModel()
+    getSubLevelViewModel = subLevelViewModel
+
+    val subLevelsEntity = getSubLevelViewModel.subLevels.collectAsState(
+        initial = emptyList()
+    )
+
+    getSubLevelViewModel.insertSubLevel(createSubLevelEntity(getSubLevel(levels)))
+
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
