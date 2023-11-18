@@ -20,8 +20,6 @@ import com.example.comusenias.presentation.component.home.StatusGame
 import com.example.comusenias.presentation.component.home.getAllSubLevels
 import com.example.comusenias.presentation.extensions.validation.getChoicesSelected
 import com.example.comusenias.presentation.navigation.AppScreen
-import com.example.comusenias.presentation.navigation.getChildrenProfileViewModel
-import com.example.comusenias.presentation.navigation.getLevelViewModel
 import com.example.comusenias.presentation.ui.theme.CONTINUE
 import com.example.comusenias.presentation.ui.theme.SIZE30
 
