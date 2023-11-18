@@ -16,6 +16,8 @@ import androidx.navigation.NavController
 import com.example.comusenias.domain.models.game.LevelModel
 import com.example.comusenias.domain.models.game.SubLevelModel
 import com.example.comusenias.domain.models.response.Response
+import com.example.comusenias.presentation.activities.MainActivity.Companion.getChildrenProfileViewModel
+import com.example.comusenias.presentation.activities.MainActivity.Companion.getLevelViewModel
 import com.example.comusenias.presentation.component.defaults.app.CircularProgressBar
 import com.example.comusenias.presentation.component.defaults.app.ShowRetrySnackBar
 import com.example.comusenias.presentation.ui.theme.ERROR_RETRY_LEVEL
@@ -25,8 +27,7 @@ import com.example.comusenias.presentation.ui.theme.SIZE5
 import com.example.comusenias.presentation.view_model.ChildrenProfileViewModel
 import com.example.comusenias.presentation.view_model.LevelViewModel
 
-lateinit var getLevelViewModel: LevelViewModel
-lateinit var getChildrenProfileViewModel: ChildrenProfileViewModel
+
 
 @Composable
 fun ContentHome(
@@ -37,7 +38,7 @@ fun ContentHome(
     getLevelViewModel = levelViewModel
     getChildrenProfileViewModel = childrenModel
 
-    when (levelViewModel.levelsResponse) {
+    when (getLevelViewModel.levelsResponse) {
         is Response.Loading -> {
             CircularProgressBar()
         }
