@@ -11,26 +11,22 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.White
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.comusenias.domain.models.game.LevelModel
 import com.example.comusenias.domain.models.game.SubLevelModel
 import com.example.comusenias.domain.models.response.Response
-import com.example.comusenias.presentation.activities.MainActivity.Companion.getChildrenProfileViewModel
 import com.example.comusenias.presentation.component.defaults.app.CircularProgressBar
 import com.example.comusenias.presentation.component.defaults.app.ShowRetrySnackBar
-import com.example.comusenias.presentation.component.register.childForm.getSubLevelViewModel
 import com.example.comusenias.presentation.ui.theme.ERROR_RETRY_LEVEL
-import com.example.comusenias.presentation.ui.theme.SHOW_LAZY_COLUMN_TAG
 import com.example.comusenias.presentation.ui.theme.SIZE1
 import com.example.comusenias.presentation.ui.theme.SIZE14
 import com.example.comusenias.presentation.ui.theme.SIZE5
 import com.example.comusenias.presentation.view_model.ChildrenProfileViewModel
 import com.example.comusenias.presentation.view_model.LevelViewModel
-import com.example.comusenias.presentation.view_model.SubLevelViewModel
 
+lateinit var getLevelViewModel: LevelViewModel
+lateinit var getChildrenProfileViewModel: ChildrenProfileViewModel
 
 @Composable
 fun ContentHome(
@@ -38,6 +34,9 @@ fun ContentHome(
     levelViewModel: LevelViewModel,
     childrenModel: ChildrenProfileViewModel
 ) {
+    getLevelViewModel = levelViewModel
+    getChildrenProfileViewModel = childrenModel
+
     when (levelViewModel.levelsResponse) {
         is Response.Loading -> {
             CircularProgressBar()
@@ -64,10 +63,6 @@ private fun ShowLazyColumn(
     levels: List<LevelModel>,
     navController: NavController
 ) {
-
-    val subLevelViewModel: SubLevelViewModel = hiltViewModel()
-    getSubLevelViewModel = subLevelViewModel
-
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
@@ -75,8 +70,7 @@ private fun ShowLazyColumn(
                 start = SIZE14.dp,
                 end = SIZE14.dp,
             )
-            .background(White)
-            .testTag(SHOW_LAZY_COLUMN_TAG),
+            .background(White),
         verticalArrangement = spacedBy(SIZE1.dp)
     ) {
         item {
