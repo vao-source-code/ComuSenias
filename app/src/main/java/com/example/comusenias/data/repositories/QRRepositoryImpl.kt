@@ -4,6 +4,8 @@ import android.graphics.Bitmap
 import android.util.Log
 import com.example.comusenias.domain.models.users.ChildrenModel
 import com.example.comusenias.domain.repositories.QRRepository
+import com.example.comusenias.presentation.ui.theme.ERROR_SCAN_QR
+import com.example.comusenias.presentation.ui.theme.SIZE400
 import com.google.android.gms.common.moduleinstall.ModuleInstallClient
 import com.google.android.gms.common.moduleinstall.ModuleInstallRequest
 import com.google.mlkit.vision.barcode.common.Barcode
@@ -40,12 +42,11 @@ class QRRepositoryImpl @Inject constructor(
 
     override fun starGenerate(children: ChildrenModel): Flow<Bitmap> = callbackFlow {
         launch {
-            val bitmap = barcode.encodeBitmap(children.toJson(), BarcodeFormat.QR_CODE, 400, 400)
+            val bitmap = barcode.encodeBitmap(children.toJson(), BarcodeFormat.QR_CODE, SIZE400, SIZE400)
             send(bitmap)
         }
         awaitClose {}
     }
-
 
     private fun getDetails(barcode: Barcode): String {
         return when (barcode.valueType) {
@@ -58,7 +59,7 @@ class QRRepositoryImpl @Inject constructor(
             }
 
             else -> {
-                barcode.rawValue ?: "Error al querer leer el codigo QR"
+                barcode.rawValue ?: ERROR_SCAN_QR
             }
         }
     }
