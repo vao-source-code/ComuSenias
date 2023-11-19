@@ -21,43 +21,29 @@ class ContentCardGameTest {
 
     @Test
     fun testContentCardGameCompleted() {
-        composeTestRule.setContent {
-            ContentCardGame(
-                StatusGame.COMPLETED,
-                "",
-                subLevel,
-                mockNavController
-            )
-        }
-        composeTestRule.onNodeWithTag(TestTag.TAG_CONTENT_CARD_GAME + StatusGame.COMPLETED.name)
-            .assertExists()
+        testContentCardGameWithStatus(StatusGame.COMPLETED)
     }
 
     @Test
     fun testContentCardGameProgress() {
-        composeTestRule.setContent {
-            ContentCardGame(
-                StatusGame.IN_PROGRESS,
-                "",
-                subLevel,
-                mockNavController
-            )
-        }
-        composeTestRule.onNodeWithTag(TestTag.TAG_CONTENT_CARD_GAME + StatusGame.IN_PROGRESS.name)
-            .assertExists()
+        testContentCardGameWithStatus(StatusGame.IN_PROGRESS)
     }
 
     @Test
     fun testContentCardGameBlocked() {
+        testContentCardGameWithStatus(StatusGame.BLOCKED)
+    }
+
+    private fun testContentCardGameWithStatus(status: StatusGame) {
         composeTestRule.setContent {
             ContentCardGame(
-                StatusGame.BLOCKED,
+                status,
                 "",
                 subLevel,
                 mockNavController
             )
         }
-        composeTestRule.onNodeWithTag(TestTag.TAG_CONTENT_CARD_GAME + StatusGame.BLOCKED.name)
+        composeTestRule.onNodeWithTag(TestTag.TAG_CONTENT_CARD_GAME + status.name)
             .assertExists()
     }
 }

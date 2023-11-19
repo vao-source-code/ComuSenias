@@ -95,26 +95,36 @@ class CameraRepositoryImpl @Inject constructor(
             outputOptions,
             ContextCompat.getMainExecutor(context),
             object : ImageCapture.OnImageSavedCallback {
-
                 override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                    val savedUri = outputFileResults.savedUri ?: Uri.EMPTY
-                    val encodedUrl = URLEncoder.encode(savedUri.toString(), UTF_8)
-                    val route = AppScreen.InterpretationStatusScreen.createRoute(encodedUrl)
-
-                    navController.navigate(route)
+                    onImageSaved(outputFileResults, navController)
                 }
 
                 override fun onError(exception: ImageCaptureException) {
-                    context.let {
-                        Toast.makeText(
-                            it,
-                            ERROR_TAKE_PICTURE,
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
+                    onError()
                 }
             }
         )
+    }
+
+    private fun onError() {
+        context.let {
+            Toast.makeText(
+                it,
+                ERROR_TAKE_PICTURE,
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
+    private fun onImageSaved(
+        outputFileResults: ImageCapture.OutputFileResults,
+        navController: NavController
+    ) {
+        val savedUri = outputFileResults.savedUri ?: Uri.EMPTY
+        val encodedUrl = URLEncoder.encode(savedUri.toString(), UTF_8)
+        val route = AppScreen.InterpretationStatusScreen.createRoute(encodedUrl)
+
+        navController.navigate(route)
     }
 
     /**
@@ -170,20 +180,22 @@ class CameraRepositoryImpl @Inject constructor(
     ) {
         withContext(Dispatchers.Main) {
             preview.setSurfaceProvider(previewView.surfaceProvider)
-            try {
-                cameraProvider.unbindAll()
-                cameraProvider.bindToLifecycle(
-                    lifecycleOwner,
-                    cameraSelector,
-                    preview,
-                    imageAnalysis,
-                    imageCapture
-                )
-            } catch (e: Exception) {
-                Log.e(SHOW_CAMERA_PREVIEW, ERROR_BINDING_CAMERA, e)
-                Response.Error(e)
-            }
+            bindCameraToLifecycle(lifecycleOwner)
         }
+    }
+
+    private fun bindCameraToLifecycle(lifecycleOwner: LifecycleOwner) = try {
+        cameraProvider.unbindAll()
+        cameraProvider.bindToLifecycle(
+            lifecycleOwner,
+            cameraSelector,
+            preview,
+            imageAnalysis,
+            imageCapture
+        )
+    } catch (e: Exception) {
+        Log.e(SHOW_CAMERA_PREVIEW, ERROR_BINDING_CAMERA, e)
+        Response.Error(e)
     }
 
     /**

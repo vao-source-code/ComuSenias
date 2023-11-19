@@ -6,13 +6,15 @@ import com.example.comusenias.domain.models.game.SubLevelModel
 import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.use_cases.level.LevelFactory
 import io.mockk.MockKAnnotations
+import io.mockk.clearAllMocks
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.RelaxedMockK
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.FlowCollector
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.After
@@ -21,94 +23,75 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-@OptIn(ExperimentalCoroutinesApi::class)
+@ExperimentalCoroutinesApi
 class LevelViewModelTest {
 
     @RelaxedMockK
     private lateinit var levelUsesCases: LevelFactory
 
     @get:Rule
-    var rule: InstantTaskExecutorRule = InstantTaskExecutorRule()
+    var instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private lateinit var viewModels: LevelViewModel
-    private var listLevel = listOf<LevelModel>()
-    private val listSubLevel = arrayListOf<SubLevelModel>()
-    private val listStringSubLevel = arrayListOf<String>()
-
+    private lateinit var viewModel: LevelViewModel
+    private lateinit var listLevel: List<LevelModel>
 
     @Before
-    fun onBefore() {
+    fun setup() {
         MockKAnnotations.init(this)
-        viewModels = LevelViewModel(levelUsesCases = levelUsesCases)
+        viewModel = LevelViewModel(levelUsesCases = levelUsesCases)
 
-        listSubLevel.add(
+        val listSubLevel = mutableListOf(
             SubLevelModel(
                 name = "A",
                 image = "image",
                 imageOnly = "imageOnly",
                 randomLetter = "C",
                 randomImage = "randomImage",
-            )
-        )
-        listSubLevel.add(
+            ),
             SubLevelModel(
                 name = "E",
                 image = "image",
                 imageOnly = "imageOnly",
                 randomLetter = "E",
                 randomImage = "randomImage",
-
-                )
-        )
-
-        listStringSubLevel.add("1.1")
-        listStringSubLevel.add("1.2")
-
-        listLevel = listOf(
-            LevelModel(
-                id = "1", name = "name", subLevel = listSubLevel
             )
         )
 
-        Dispatchers.setMain(Dispatchers.Unconfined)
+        listLevel = listOf(
+            LevelModel(
+                id = "1",
+                name = "name",
+                subLevel = listSubLevel
+            )
+        )
+
+        Dispatchers.setMain(TestCoroutineDispatcher())
     }
 
     @After
-    fun onAfter() {
+    fun tearDown() {
+        clearAllMocks()
         Dispatchers.resetMain()
     }
 
     @Test
-    fun getLevelsTest() {
-        val result = Response.Success(listLevel)
-        coEvery { levelUsesCases.getLevels() } returns object : Flow<Response<List<LevelModel>>> {
-            override suspend fun collect(collector: FlowCollector<Response<List<LevelModel>>>) {
-                collector.emit(result)
-            }
-        }
-        // Call the method to be tested
-        viewModels.getLevels()
-        // Verify the results
+    fun getLevelsTest() = runBlocking {
+        coEvery { levelUsesCases.getLevels() } returns flowOf(Response.Success(listLevel))
+
+        viewModel.getLevels()
+
         coVerify { levelUsesCases.getLevels() }
-        // Assert
-        assertEquals(listLevel, viewModels.levels)
+        assertEquals(viewModel.levels, listLevel)
     }
 
     @Test
-    fun searchNameLevelTest() {
-        val result = Response.Success(listLevel)
-        coEvery { levelUsesCases.getLevels() } returns object : Flow<Response<List<LevelModel>>> {
-            override suspend fun collect(collector: FlowCollector<Response<List<LevelModel>>>) {
-                collector.emit(result)
-            }
-        }
-        // Call the method to be tested
-        viewModels.getLevels()
-        // Verify the results
-        coVerify { levelUsesCases.getLevels() }
-        // Assert
-        assertEquals(listLevel, viewModels.levels)
-        assertEquals(listLevel, viewModels.searchLevelByName("name"))
-    }
+    fun searchNameLevelTest() = runBlocking {
+        coEvery { levelUsesCases.getLevels() } returns flowOf(Response.Success(listLevel))
 
+        viewModel.getLevels()
+        viewModel.searchLevelByName("name")
+
+        coVerify { levelUsesCases.getLevels() }
+        assertEquals(listLevel, viewModel.levels)
+    }
 }

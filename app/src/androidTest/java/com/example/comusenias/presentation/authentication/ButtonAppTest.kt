@@ -10,6 +10,7 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.unit.dp
 import com.example.comusenias.constants.TestTag
 import com.example.comusenias.presentation.component.defaults.app.ButtonApp
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
@@ -17,52 +18,35 @@ class ButtonAppTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    @Test
-    fun testButtonApp(){
+    @Before
+    fun setUp() {
         composeTestRule.setContent {
             ButtonApp(titleButton = "Iniciar sesión")
         }
+    }
+
+    @Test
+    fun testButtonApp() {
         composeTestRule.onNodeWithTag(TestTag.TAG_BUTTON_APP).assertIsDisplayed()
     }
 
     @Test
-    fun testButtonAppHasClickAction(){
-        composeTestRule.setContent {
-            ButtonApp(
-                titleButton = "Iniciar sesión",
-            )
-        }
+    fun testButtonAppHasClickAction() {
         composeTestRule.onNodeWithTag(TestTag.TAG_BUTTON_APP).assertHasClickAction()
     }
+
     @Test
-    fun testButtonAppPerfomClick(){
-        composeTestRule.setContent {
-            ButtonApp(
-                titleButton = "Iniciar sesión"
-            )
-        }
+    fun testButtonAppPerfomClick() {
         composeTestRule.onNodeWithTag(TestTag.TAG_BUTTON_APP).performClick()
     }
 
     @Test
-    fun testButtonAppHeigth(){
-        composeTestRule.setContent {
-            ButtonApp(
-                titleButton = "Iniciar sesión"
-            )
-        }
+    fun testButtonAppHeigth() {
         composeTestRule.onNodeWithTag(TestTag.TAG_BUTTON_APP).assertHeightIsEqualTo(50.dp)
     }
 
     @Test
-    fun testButtonAppTitle(){
-        composeTestRule.setContent {
-            ButtonApp(
-                titleButton = "Iniciar sesión"
-            )
-        }
+    fun testButtonAppTitle() {
         composeTestRule.onNodeWithText("Iniciar sesión").assertIsDisplayed()
     }
-
-
 }

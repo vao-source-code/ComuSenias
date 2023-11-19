@@ -9,65 +9,53 @@ import org.junit.Rule
 import org.junit.Test
 
 class SignInterpretationStatusTest {
+
     @get:Rule
     val composeTestRule = createComposeRule()
 
     @Test
     fun testWhenSignInterpretationStatusReturnTrue() {
-        var response = false
-
-        composeTestRule.setContent {
-            SignInterpretationStatus(status = Status.CORRECT) {
-                response = it
-            }
-        }
-
-        composeTestRule.waitForIdle()
-        composeTestRule.onNodeWithTag(Status.CORRECT.name).assertExists()
+        val response = testSignInterpretationStatus(Status.CORRECT)
         assert(response)
     }
 
     @Test
     fun testWhenSignInterpretationStatusReturnFalse() {
-        var response = true
+        val response = testSignInterpretationStatus(Status.INCORRECT)
+        assert(!response)
+    }
+
+    private fun testSignInterpretationStatus(status: Status) : Boolean {
+        var response = false
 
         composeTestRule.setContent {
-            SignInterpretationStatus(status = Status.INCORRECT) {
+            SignInterpretationStatus(status = status) {
                 response = it
             }
         }
 
         composeTestRule.waitForIdle()
-        composeTestRule.onNodeWithTag(Status.INCORRECT.name).assertExists()
-        assert(!response)
+        composeTestRule.onNodeWithTag(status.name).assertExists()
+
+        return response
     }
 
     @Test
     fun testWhenCrossfadeIconIsCorrect() {
-        val status = Status.CORRECT
-
-        composeTestRule.setContent {
-            CrossfadeIcon(status) { }
-        }
-
-        composeTestRule.onNodeWithTag(status.name).assertExists()
+        testCrossfadeIcon(Status.CORRECT)
     }
 
     @Test
     fun testWhenCrossfadeIconIsInCorrect() {
-        val status = Status.INCORRECT
-
-        composeTestRule.setContent {
-            CrossfadeIcon(status) { }
-        }
-
-        composeTestRule.onNodeWithTag(status.name).assertExists()
+        testCrossfadeIcon(Status.INCORRECT)
     }
 
     @Test
     fun testWhenCrossfadeIconIsInLoading() {
-        val status = Status.LOADING
+        testCrossfadeIcon(Status.LOADING)
+    }
 
+    private fun testCrossfadeIcon(status: Status) {
         composeTestRule.setContent {
             CrossfadeIcon(status) { }
         }

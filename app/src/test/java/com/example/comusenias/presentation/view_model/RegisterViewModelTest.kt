@@ -101,15 +101,12 @@ class RegisterViewModelTest {
     // Test para habilitar el botón de registro
     @Test
     fun enabledRegisterButton() {
-
-        // Botón deshabilitado
         viewModel.isEmailValid = false
         viewModel.isPasswordValid = false
         viewModel.isConfirmPasswordValid = false
         viewModel.enabledRegisterButton()
         assertFalse(viewModel.isRegisterEnabled)
 
-        // Botón habilitado
         viewModel.isEmailValid = true
         viewModel.isPasswordValid = true
         viewModel.isConfirmPasswordValid = true
