@@ -1,126 +1,111 @@
 package com.example.comusenias.presentation.screen.specialist
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.material.Text
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.graphics.Color.Companion.Red
+import androidx.compose.ui.text.style.TextAlign.Companion.Center
 import androidx.compose.ui.unit.dp
-import com.example.comusenias.presentation.ui.theme.SIZE10
-import com.example.comusenias.presentation.ui.theme.SIZE14
-import com.example.comusenias.presentation.ui.theme.SIZE24
-import com.example.comusenias.presentation.ui.theme.SIZE30
-import com.example.comusenias.presentation.ui.theme.SIZE7
+import com.example.comusenias.presentation.component.home.StatusGame
+import com.example.comusenias.presentation.component.specialist.home.Title
+import com.example.comusenias.presentation.component.statitics.ContentBarChart
+import com.example.comusenias.presentation.extensions.statitics.StatisticsCalculator.AttemptType.FAILURE
+import com.example.comusenias.presentation.extensions.statitics.StatisticsCalculator.AttemptType.SUCCESS
+import com.example.comusenias.presentation.extensions.statitics.StatisticsCalculator.createBarList
+import com.example.comusenias.presentation.ui.theme.CORRECT
+import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
+import com.example.comusenias.presentation.ui.theme.INCORRECT
+import com.example.comusenias.presentation.ui.theme.SIZE20
+import com.example.comusenias.presentation.ui.theme.SIZE36
+import com.example.comusenias.presentation.ui.theme.greenColorApp
 
 @Composable
 fun StatisticsScreen() {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(SIZE24.dp),
-        verticalArrangement = Arrangement.spacedBy(SIZE30.dp)
-    ) {
-        GamePerformance.statistics.forEach { gamePerformance ->
-            Column(
-                verticalArrangement = Arrangement.spacedBy(SIZE10.dp)
-            ) {
-                Text(
-                    text = gamePerformance.title,
-                    fontWeight = FontWeight.Bold
-                    )
-                StatisticsComponent(letterPerformance = gamePerformance.letterPerformance)
-            }
-        }
-    }
-
+    StatisticsComponent(levelModel = LevelModelMock.getMockLevels()[1])
 }
 
 @Composable
-fun StatisticsComponent(letterPerformance: List<LetterPerformance>){
+fun StatisticsComponent(levelModel: LevelModelMock) {
+    val statistics = listOf(
+        createBarList(
+            levelModel.subLevel,
+            greenColorApp,
+            CORRECT,
+            SUCCESS
+        ),
+        createBarList(
+            levelModel.subLevel,
+            Red,
+            INCORRECT,
+            FAILURE
+        ),
+    )
 
-    Row(
-        horizontalArrangement = Arrangement.spacedBy(SIZE14.dp),
-        verticalAlignment = Alignment.Bottom
+    LazyColumn(
+        modifier = Modifier.fillMaxSize()
     ) {
-        letterPerformance.forEach { performance ->
-            Column(
-                verticalArrangement = Arrangement.spacedBy(SIZE7.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Row(
-                    verticalAlignment = Alignment.Bottom
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .width(SIZE30.dp)
-                            .height((performance.successCount * 16).dp)
-                            .background(Color.Green)
-                    )
-                    Box(
-                        modifier = Modifier
-                            .width(SIZE30.dp)
-                            .height((performance.failureCount * 16).dp)
-                            .background(Color.Red)
-                    )
-                }
-                Text(
-                    text = performance.letter,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center
+        item {
+            Spacer(modifier = Modifier.height(SIZE20.dp))
+            Title(
+                "Nivel: ${ levelModel.name}",
+                Center
                 )
-            }
+        }
+        item {
+            ContentBarChart(statistics = statistics)
+        }
+        item {
+            Spacer(modifier = Modifier.height(SIZE36.dp))
         }
     }
 }
 
-data class LetterPerformance(
-    val letter: String,
-    val successCount: Int,
-    val failureCount: Int
+data class SubLevelModelMock(
+    var name: String = EMPTY_STRING,
+    var failures: Int = 0,
+    var successes: Int = 0
 )
 
-data class GamePerformance(
-    val title: String,
-    val letterPerformance: List<LetterPerformance>,
+data class LevelModelMock(
+    var name: String = EMPTY_STRING,
+    var subLevel: MutableList<SubLevelModelMock> = mutableListOf(),
+    var isCompleted: StatusGame = StatusGame.IN_PROGRESS
 ) {
     companion object {
-        private val lettersResults = listOf(
-            LetterPerformance("B", 10, 5),
-            LetterPerformance("C", 8, 2),
-            LetterPerformance("F", 7, 3),
-            LetterPerformance("J", 6, 4),
-            LetterPerformance("T", 9, 1)
-        )
+        fun getMockLevels(): List<LevelModelMock> {
+            val levels = mutableListOf<LevelModelMock>()
 
-        private val vowelResults = listOf(
-            LetterPerformance("A", 10, 5),
-            LetterPerformance("E", 8, 2),
-            LetterPerformance("I", 7, 3),
-            LetterPerformance("O", 6, 4),
-            LetterPerformance("U", 9, 1)
-        )
+            val level1 = LevelModelMock(
+                name = "Vocales",
+                subLevel = mutableListOf(
+                    SubLevelModelMock(name = "A", failures = 2, successes = 5),
+                    SubLevelModelMock(name = "E", failures = 1, successes = 8),
+                    SubLevelModelMock(name = "I", failures = 4, successes = 10),
+                    SubLevelModelMock(name = "O", failures = 2, successes = 10),
+                    SubLevelModelMock(name = "U", failures = 5, successes = 7),
+                ),
+                isCompleted = StatusGame.IN_PROGRESS
+            )
 
-        val statistics = listOf(
-            GamePerformance("Vocales", vowelResults),
-            GamePerformance("Abecedario", lettersResults)
-        )
+            val level2 = LevelModelMock(
+                name = "Palabras",
+                subLevel = mutableListOf(
+                    SubLevelModelMock(name = "Hola", failures = 2, successes = 5),
+                    SubLevelModelMock(name = "Chau", failures = 1, successes = 8),
+                    SubLevelModelMock(name = "Permiso", failures = 4, successes = 10),
+                    SubLevelModelMock(name = "Por Favor", failures = 2, successes = 10),
+                    SubLevelModelMock(name = "Buen dia", failures = 5, successes = 7),
+                ),
+                isCompleted = StatusGame.BLOCKED
+            )
+
+            levels.add(level1)
+            levels.add(level2)
+
+            return levels
+        }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    StatisticsScreen()
 }
