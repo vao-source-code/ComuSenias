@@ -81,7 +81,7 @@ class SpecialistViewModel @Inject constructor(
         result?.let {
             stateSpecialist =
                 stateSpecialist.copy(image = ComposeFileProvider.getPathFromBitmap(context, it))
-            file = File(stateSpecialist.image)
+            file = stateSpecialist.image?.let { it1 -> File(it1) }
         }
     }
 

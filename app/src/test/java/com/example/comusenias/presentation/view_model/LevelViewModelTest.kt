@@ -75,7 +75,7 @@ class LevelViewModelTest {
     }
 
     @Test
-    fun `get levels test`() = runBlocking {
+    fun getLevelsTest() = runBlocking {
         coEvery { levelUsesCases.getLevels() } returns flowOf(Response.Success(listLevel))
 
         viewModel.getLevels()
@@ -85,7 +85,7 @@ class LevelViewModelTest {
     }
 
     @Test
-    fun `search name level test`() = runBlocking {
+    fun searchNameLevelTest() = runBlocking {
         coEvery { levelUsesCases.getLevels() } returns flowOf(Response.Success(listLevel))
 
         viewModel.getLevels()

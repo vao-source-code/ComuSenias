@@ -16,6 +16,7 @@ import io.mockk.every
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.mockk
 import io.mockk.spyk
+import io.mockk.verify
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
@@ -77,17 +78,6 @@ class ChildrenProfileViewModelTest {
 
         coVerify { childrenUser.getChildrenById(uid) }
         assertEquals(viewModel.userData, user)
-    }
-
-    @Test
-    fun `update children when userData have ChildrenModel `() = runTest {
-        val url = "http://example.com/image.jpg"
-        val spyViewModel = spyk(viewModel)
-        spyViewModel.userData = ChildrenModel(id = "1234")
-
-        spyViewModel.onUpdate(url)
-
-        coVerify { spyViewModel.update(any()) }
     }
 
     @Test

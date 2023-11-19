@@ -21,6 +21,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 import javax.inject.Inject
 
@@ -93,16 +94,17 @@ class ChildrenProfileViewModel @Inject constructor(
         }
     }
 
-    fun onUpdate(url: String) {
-        val myUser = ChildrenModel(
-            id = userData.id,
-            name = userData.name,
-            phone = userData.phone,
-            email = userData.email,
-            date = userData.date,
+    fun onUpdate(url: String) = viewModelScope.launch {
+        val myUser = withContext(IO) { userData }
+        val updatedUser = ChildrenModel(
+            id = myUser.id,
+            name = myUser.name,
+            phone = myUser.phone,
+            email = myUser.email,
+            date = myUser.date,
             image = url,
         )
-        update(myUser)
+        update(updatedUser)
     }
 
 
