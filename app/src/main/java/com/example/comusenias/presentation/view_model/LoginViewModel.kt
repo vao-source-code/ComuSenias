@@ -104,11 +104,11 @@ class LoginViewModel @Inject constructor(
     }
 
     fun onEmailInput(email: String) {
-        state = state.copy(email = email)
+        state = state.copy(email = email.trim())
     }
 
     fun onPasswordInput(password: String) {
-        state = state.copy(password = password)
+        state = state.copy(password = password.trim())
     }
 
     fun initRol() = viewModelScope.launch(IO) {
