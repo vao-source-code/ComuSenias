@@ -1,6 +1,7 @@
 package com.example.comusenias.presentation.navigation
 
 import PermissionCameraScreen
+import PermissionRecordCameraScreen
 import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -17,6 +18,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.comusenias.presentation.activities.MainActivity
 import com.example.comusenias.presentation.screen.camera.CameraScreen
+import com.example.comusenias.presentation.screen.camera.RecordCameraScreen
+import com.example.comusenias.presentation.screen.camera.TestCamera
 import com.example.comusenias.presentation.screen.gallery.GalleryScreen
 import com.example.comusenias.presentation.screen.gameAction.ChoseTheLetterPlayScreen
 import com.example.comusenias.presentation.screen.gameAction.ChoseTheSignPlayScreen
@@ -79,8 +82,11 @@ private fun GetNavHost(
         authNavGraph(navController = navController, modifier = modifier)
 
         composable(AppScreen.SplashScreen.route) {
-            SplashScreen(navController)
+            //SplashScreen(navController)
+           TestCamera(navController = navController)
         }
+
+
 
         /*------------Children-----------------------*/
 
@@ -144,9 +150,18 @@ private fun GetNavHost(
             CameraScreen(navController = navController, levelViewModel = levelViewModel)
         }
 
+        composable(AppScreen.RecordCameraScreen.route){
+            RecordCameraScreen(levelViewModel = levelViewModel)
+        }
+
         //Permission Camera
         composable(AppScreen.CameraScreenPermission.route) {
             PermissionCameraScreen(navController = navController)
+        }
+
+        //Permission Record Camera
+        composable(AppScreen.PermissioRecordCameraScreen.route) {
+            PermissionRecordCameraScreen(navController = navController)
         }
 
 

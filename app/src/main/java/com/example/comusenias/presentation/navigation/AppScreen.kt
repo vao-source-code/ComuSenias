@@ -36,6 +36,9 @@ sealed class AppScreen(val route: String) {
 
     object CameraScreenPermission : AppScreen("camera_screen_permission")
 
+    object PermissioRecordCameraScreen :AppScreen("record_camera_screen_permission")
+
+
     object CameraScreen : AppScreen("camera_screen")
 
     object GaleryScreenPermission : AppScreen("galery_screen_permission")
@@ -69,5 +72,8 @@ sealed class AppScreen(val route: String) {
     }
 
     object SpecialistScreen : AppScreen("specialist_screen")
+
+    object RecordCameraScreen : AppScreen("record_camera_screen")
+
 
 }

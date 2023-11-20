@@ -1,5 +1,6 @@
 package com.example.comusenias.domain.use_cases.camera
 
+import androidx.camera.view.LifecycleCameraController
 import androidx.camera.view.PreviewView
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavController
@@ -41,4 +42,8 @@ class CameraUseCases @Inject constructor(private val customCameraRepository: Cam
      * Detiene la vista previa de la cámara.
      */
     suspend fun stopCameraPreview() = customCameraRepository.stopCameraPreview()
+
+
+    suspend fun recordVideo(controller: LifecycleCameraController) = customCameraRepository.recordVideo(controller)
+
 }
