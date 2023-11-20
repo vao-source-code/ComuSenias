@@ -89,6 +89,7 @@ class LevelViewModelTest {
         coEvery { levelUsesCases.getLevels() } returns flowOf(Response.Success(listLevel))
 
         viewModel.getLevels()
+
         viewModel.searchLevelByName("name")
         coVerify { levelUsesCases.getLevels() }
         assertEquals(listLevel, viewModel.levels)
