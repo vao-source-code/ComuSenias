@@ -49,7 +49,11 @@ fun ChildrenProfileScreen(
                     onClickChangeProfile = onClick
                 ) {
                     viewModel.logout()
-                    navController.navigate(AppScreen.LoginScreen.route)
+                    navController.navigate(AppScreen.LoginScreen.route) {
+                        popUpTo(AppScreen.HomeScreen.route) {
+                            inclusive = true
+                        }
+                    }
                 }
             }
         }
