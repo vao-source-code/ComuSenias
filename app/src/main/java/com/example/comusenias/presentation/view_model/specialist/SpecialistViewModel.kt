@@ -45,13 +45,13 @@ class SpecialistViewModel @Inject constructor(
 
     init {
         getUserData()
-        getChildrenBySpecialist()
     }
 
     fun getUserData() = viewModelScope.launch {
         currentUser?.let {
             specialistUseCases.getSpecialistById(it.uid).collect { user ->
                 stateSpecialist = user
+                getChildrenBySpecialist()
             }
         }
     }

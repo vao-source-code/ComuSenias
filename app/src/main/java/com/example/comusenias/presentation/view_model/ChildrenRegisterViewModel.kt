@@ -122,7 +122,7 @@ class ChildrenRegisterViewModel @Inject constructor(
     }
 
     fun onTelInputChanged(tel: String) {
-        stateChildren = stateChildren.copy(phone = tel)
+        stateChildren = stateChildren.copy(phone = tel.trim())
     }
 
     fun onDateInputChanged(date: String) {

@@ -54,7 +54,7 @@ fun ContentHome(
         }
 
         else -> {
-//            ContentProgressBar(null,)
+            CircularProgressBar()
         }
     }
 }

@@ -49,7 +49,6 @@ class ChildrenRepositoryImpl @Inject constructor(
             val mapImage: MutableMap<String, Any> = HashMap()
             mapImage["name"] = user.name
             mapImage["date"] = user.date
-            mapImage["idSpecialist"] = user.idSpecialist
             mapImage["phone"] = user.phone
             mapImage["image"] = user.image?.let { it } ?: ""
             childrenRef.document(user.id).update(mapImage).await()
