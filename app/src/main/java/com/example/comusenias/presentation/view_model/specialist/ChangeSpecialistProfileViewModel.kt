@@ -74,8 +74,6 @@ class ChangeSpecialistProfileViewModel @Inject constructor(
             saveImageResponse = Response.Loading
             val result = specialistUsesCase.saveImageSpecialist(it)
             saveImageResponse = result
-        } ?: kotlin.run {
-            onUpdate(state.image!!)
         }
     }
 

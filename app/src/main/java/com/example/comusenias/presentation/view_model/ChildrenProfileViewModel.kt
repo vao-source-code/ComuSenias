@@ -31,7 +31,6 @@ class ChildrenProfileViewModel @Inject constructor(
     private val dataRolStorageFactory: DataRolStorageFactory,
     private val childrenUser: ChildrenFactory,
     @ApplicationContext private val context: Context
-
 ) : ViewModel() {
 
     /*---------------------------------Public Variables---------------------------------*/
@@ -80,7 +79,7 @@ class ChildrenProfileViewModel @Inject constructor(
         val result = resultingActivityHandler.takePicturePreview()
         result?.let {
             state = state.copy(image = ComposeFileProvider.getPathFromBitmap(context, it))
-            file = state.image?.let { it1 -> File(it1) }
+            file = File(state.image)
         }
     }
 
@@ -89,8 +88,6 @@ class ChildrenProfileViewModel @Inject constructor(
             saveImageResponse = Response.Loading
             val result = childrenUser.saveImageChildren(it)
             saveImageResponse = result
-        } ?: kotlin.run {
-            onUpdate(state.image!!)
         }
     }
 

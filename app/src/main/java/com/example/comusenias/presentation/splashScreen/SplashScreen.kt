@@ -39,14 +39,14 @@ fun SplashScreen(
     navController: NavHostController,
     viewModel: LoginViewModel = hiltViewModel()
 ) {
+    SplashScreenContent()
+
     LaunchedEffect(key1 = true) {
         delay(2000)
     }
 
-    SplashScreenContent()
 
     LaunchedEffect(Unit) {
-
         when (viewModel.dataRolStorageFactory.getRolValue(PreferencesConstant.PREFERENCE_ROL_CURRENT)) {
             Rol.SPECIALIST.toString() -> {
                 navController.navigate(route = AppScreen.SpecialistScreen.route) {
