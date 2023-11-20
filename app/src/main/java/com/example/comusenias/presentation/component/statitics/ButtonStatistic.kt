@@ -13,7 +13,7 @@ import androidx.compose.ui.text.font.FontWeight.Companion.SemiBold
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.comusenias.presentation.ui.theme.SIZE10
-import com.example.comusenias.presentation.ui.theme.SIZE16
+import com.example.comusenias.presentation.ui.theme.SIZE14
 import com.example.comusenias.presentation.ui.theme.SIZE50
 
 @Composable
@@ -32,7 +32,7 @@ fun ButtonStatistic(
         Text(
             color = White,
             text = titleButton,
-            fontSize = SIZE16.sp,
+            fontSize = SIZE14.sp,
             fontWeight = SemiBold
         )
     }

@@ -20,7 +20,6 @@ import com.example.comusenias.presentation.component.defaults.ToastMake
 import com.example.comusenias.presentation.screen.specialist.StatisticsScreen
 import com.example.comusenias.presentation.ui.theme.OBSERVATIONS_ERROR
 import com.example.comusenias.presentation.ui.theme.SIZE20
-import com.example.comusenias.presentation.ui.theme.SIZE36
 import com.example.comusenias.presentation.view_model.specialist.ProfilePatientViewModel
 
 @Composable
@@ -30,7 +29,8 @@ fun PatientProfileContent(
     viewModel: ProfilePatientViewModel
 ) {
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
     ) {
         ContentTopProfile(patient = patient)
         TabsPage(
@@ -56,7 +56,7 @@ fun ContentTopProfile(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = SIZE36.dp, start = SIZE20.dp, end = SIZE20.dp, bottom = SIZE20.dp),
+            .padding(top = SIZE20.dp, start = SIZE20.dp, end = SIZE20.dp, bottom = SIZE20.dp),
         horizontalArrangement = spacedBy(SIZE20.dp),
         verticalAlignment = CenterVertically
     ) {

@@ -95,8 +95,9 @@ const val DETAILS_GRAPH: String = "details_graph"
 const val SUBSCRIBE: String = "Suscribirse"
 const val SUBSCRIBE_NOW: String = "Suscribete ahora y desbloque beneficios exclusivos"
 const val WARNING: String = "AVISO"
-const val CORRECT: String = "Correctas"
-const val INCORRECT: String = "Incorrectas"
+const val CORRECT: String = "CORRECTAS"
+const val INCORRECT: String = "INCORRECTAS"
+const val CHOICES: String =  "INTENTOS"
 
 /*-------------------NOTIFICATION-------------------*/
 const val NOMBRE_NOTIFICATION1: String = "Marcela te ha pedido que corrijas su ejercicio"

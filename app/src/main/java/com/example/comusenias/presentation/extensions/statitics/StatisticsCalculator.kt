@@ -1,8 +1,12 @@
 package com.example.comusenias.presentation.extensions.statitics
 
 import androidx.compose.ui.graphics.Color
-import com.example.comusenias.domain.models.statistics.StatisticsModel
+import androidx.compose.ui.graphics.Color.Companion.Red
+import com.example.comusenias.presentation.extensions.statitics.StatisticsCalculator.AttemptType.FAILURE
+import com.example.comusenias.presentation.extensions.statitics.StatisticsCalculator.AttemptType.SUCCESS
+import com.example.comusenias.presentation.extensions.statitics.StatisticsCalculator.AttemptType.TOTAL
 import com.example.comusenias.presentation.screen.specialist.SubLevelModelMock
+import com.example.comusenias.presentation.ui.theme.greenColorApp
 import com.github.tehras.charts.bar.BarChartData.Bar
 import com.github.tehras.charts.line.LineChartData.Point
 
@@ -10,40 +14,47 @@ object StatisticsCalculator {
 
     enum class AttemptType {
         SUCCESS,
-        FAILURE
+        FAILURE,
+        TOTAL,
+    }
+
+    fun sumStatistics(
+        subLevel: List<SubLevelModelMock>,
+        attemptType: AttemptType
+    ): Int {
+        val value = when (attemptType) {
+            SUCCESS -> subLevel.sumOf { it.successes }
+            FAILURE -> subLevel.sumOf { it.failures }
+            TOTAL -> subLevel.sumOf { it.successes } + subLevel.sumOf { it.failures }
+        }
+        return value
     }
 
     fun createBarList(
         subLevels: List<SubLevelModelMock>,
-        color: Color,
-        description: String,
         attemptType: AttemptType
-    ): StatisticsModel {
+    ): List<Bar> {
         val bars = subLevels.map { subLevel ->
             val value = when (attemptType) {
-                AttemptType.SUCCESS -> subLevel.successes.toFloat()
-                AttemptType.FAILURE -> subLevel.failures.toFloat()
+                SUCCESS -> subLevel.successes.toFloat()
+                FAILURE -> subLevel.failures.toFloat()
+                else -> {
+                    0f
+                }
+            }
+            val color = when (attemptType) {
+                SUCCESS -> greenColorApp
+                FAILURE -> Red
+                else -> {
+                    Color.Black
+                }
             }
             Bar(value = value, color = color, label = subLevel.name)
         }
-        return StatisticsModel(description = description, barChartData = bars)
+        return bars
     }
 
-//    fun calculateDifference(vowelResultsCompleted: StatisticsModel, vowelResultsFail: StatisticsModel): List<Point> {
-//        val result = mutableListOf<Point>()
-//
-//        for (i in vowelResultsCompleted.indices) {
-//            val completedValue = vowelResultsCompleted[i].value
-//            val failValue = vowelResultsFail[i].value
-//            val difference = completedValue - failValue
-//
-//            result.add(Point(difference, vowelResultsCompleted[i].label))
-//        }
-//
-//        return result
-//    }
-//
-//    fun getValuesPointList(barList: StatisticsModel): List<Point> {
-//        return barList.map { Point(it.value, it.label) }
-//    }
+    fun getValuesPointList(barList: List<Bar>): List<Point> {
+        return barList.map { Point(it.value, it.label) }
+    }
 }

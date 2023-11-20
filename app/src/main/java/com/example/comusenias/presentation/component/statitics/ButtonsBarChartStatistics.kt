@@ -1,6 +1,6 @@
 package com.example.comusenias.presentation.component.statitics
 
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Arrangement.Center
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,7 +25,7 @@ fun ButtonsStatistics(
         modifier = Modifier
             .fillMaxWidth()
             .padding(SIZE16.dp),
-        horizontalArrangement = Arrangement.Center
+        horizontalArrangement = Center
     ) {
         ButtonStatistic(
             titleButton = CORRECT,
