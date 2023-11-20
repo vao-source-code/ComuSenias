@@ -34,7 +34,6 @@ class LoginViewModelTest {
     private lateinit var dataRolStorageFactory: DataRolStorageFactory
 
     private lateinit var viewModel: LoginViewModel
-
     @OptIn(ExperimentalCoroutinesApi::class)
     @Before
     fun setup() {
