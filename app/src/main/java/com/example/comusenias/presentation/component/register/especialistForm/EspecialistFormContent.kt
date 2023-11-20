@@ -29,7 +29,7 @@ import com.example.comusenias.presentation.ui.theme.BIRTHDAY
 import com.example.comusenias.presentation.ui.theme.CONTINUE
 import com.example.comusenias.presentation.ui.theme.EXPIRY_OF_PROFESSIONAL_REGISTRATION
 import com.example.comusenias.presentation.ui.theme.MEDICAL_TITLE
-import com.example.comusenias.presentation.ui.theme.NAME
+import com.example.comusenias.presentation.ui.theme.COMPLETE_NAME
 import com.example.comusenias.presentation.ui.theme.NUMBER_PHONE
 import com.example.comusenias.presentation.ui.theme.PROFESSIONAL_REGISTRATION
 import com.example.comusenias.presentation.ui.theme.SIZE160
@@ -65,7 +65,7 @@ fun EspecialistFormContent(
                 value = state.name,
                 onValueChange = { viewModel.onNameInputChanged(it) },
                 validateField = { viewModel.validateName() },
-                label = NAME,
+                label = COMPLETE_NAME,
                 icon = Icons.Default.Person,
                 errorMsg = viewModel.errorName
 

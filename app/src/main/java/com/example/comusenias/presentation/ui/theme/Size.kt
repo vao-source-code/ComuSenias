@@ -45,6 +45,7 @@ const val SIZE220: Int = 220
 const val SIZE250: Int = 250
 const val SIZE300: Int = 300
 const val SIZE350: Int = 350
+const val SIZE400: Int = 400
 
 const val STEP_ONE: Int = 1
 const val STEP_TWO: Int = 2
