@@ -23,7 +23,7 @@ import com.example.comusenias.presentation.component.defaults.app.TextFieldDate
 import com.example.comusenias.presentation.component.register.TermsAndConditions
 import com.example.comusenias.presentation.ui.theme.BIRTHDAY
 import com.example.comusenias.presentation.ui.theme.CONTINUE
-import com.example.comusenias.presentation.ui.theme.NAME
+import com.example.comusenias.presentation.ui.theme.COMPLETE_NAME
 import com.example.comusenias.presentation.ui.theme.NUMBER_PHONE
 import com.example.comusenias.presentation.ui.theme.SIZE100
 import com.example.comusenias.presentation.ui.theme.SIZE2
@@ -60,7 +60,7 @@ fun ChildFormContent(
                 value = state.name,
                 onValueChange = { viewModel.onNameInputChanged(it) },
                 validateField = { viewModel.validateName() },
-                label = NAME,
+                label = COMPLETE_NAME,
                 icon = Icons.Default.Person
             )
             TextFieldDate(

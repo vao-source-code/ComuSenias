@@ -7,8 +7,20 @@ import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.models.users.ChildrenModel
 import com.example.comusenias.domain.models.users.SpecialistModel
 import com.example.comusenias.domain.repositories.SpecialistRepository
+import com.example.comusenias.presentation.ui.theme.DATE
+import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
+import com.example.comusenias.presentation.ui.theme.IMAGE
+import com.example.comusenias.presentation.ui.theme.MEDICAL_LICENSE
+import com.example.comusenias.presentation.ui.theme.MEDICAL_LICENSE_EXPIRATION
+import com.example.comusenias.presentation.ui.theme.NAME
+import com.example.comusenias.presentation.ui.theme.SPECIALITY
+import com.example.comusenias.presentation.ui.theme.TEL
+import com.example.comusenias.presentation.ui.theme.TITLE_MEDICAL
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.storage.StorageReference
+import kotlinx.coroutines.channels.ProducerScope
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -23,17 +35,12 @@ class SpecialistRepositoryImpl @Inject constructor(
     @Named(CHILDREN_COLLECTION) private val childrenRef: CollectionReference
 ) : SpecialistRepository {
 
-
     override suspend fun saveImageUserSpecialist(file: File): Response<String> {
         return try {
-            val fromFile = Uri.fromFile(file)
-            val ref = storageSpecialistRef.child(file.name)
-            ref.putFile(fromFile).await()
-            val url = ref.downloadUrl.await()
-            return Response.Success(url.toString())
+            val url = uploadFileToStorage(file)
+            Response.Success(url)
         } catch (e: Exception) {
-            e.printStackTrace()
-            Response.Error(e)
+            handleUploadError(e)
         }
     }
 
@@ -42,8 +49,7 @@ class SpecialistRepositoryImpl @Inject constructor(
             specialistRef.document(user.id).set(user).await()
             Response.Success(true)
         } catch (e: Exception) {
-            e.printStackTrace()
-            Response.Error(e)
+            handleUpdateUserError(e)
         }
     }
 
@@ -59,40 +65,84 @@ class SpecialistRepositoryImpl @Inject constructor(
 
     override suspend fun updateUserSpecialist(user: SpecialistModel): Response<Boolean> {
         return try {
-            val mapImage: MutableMap<String, Any> = HashMap()
-            mapImage["name"] = user.name
-            mapImage["image"] = user.image?.let { it } ?: ""
-            mapImage["date"] = user.date
-            mapImage["tel"] = user.tel
-            mapImage["medicalLicense"] = user.medicalLicense
-            mapImage["speciality"] = user.speciality
-            mapImage["titleMedical"] = user.titleMedical
-            mapImage["medicalLicenseExpiration"] = user.medicalLicenseExpiration
-            specialistRef.document(user.id).update(mapImage).await()
+            val userMap = createUserMap(user)
+            updateUserInDatabase(user.id, userMap)
             Response.Success(true)
         } catch (e: Exception) {
-            e.printStackTrace()
-            Response.Error(e)
+            handleUpdateUserError(e)
         }
+    }
+
+    private fun createUserMap(user: SpecialistModel): MutableMap<String, Any> {
+        val mapImage: MutableMap<String, Any> = HashMap()
+        mapImage[NAME] = user.name
+        mapImage[IMAGE] = user.image ?: EMPTY_STRING
+        mapImage[DATE] = user.date
+        mapImage[TEL] = user.tel
+        mapImage[MEDICAL_LICENSE] = user.medicalLicense
+        mapImage[SPECIALITY] = user.speciality
+        mapImage[TITLE_MEDICAL] = user.titleMedical
+        mapImage[MEDICAL_LICENSE_EXPIRATION] = user.medicalLicenseExpiration
+        return mapImage
+    }
+
+    private suspend fun updateUserInDatabase(userId: String, userMap: Map<String, Any>) {
+        specialistRef.document(userId).update(userMap).await()
+    }
+
+    private fun handleUpdateUserError(e: Exception): Response<Boolean> {
+        e.printStackTrace()
+        return Response.Error(e)
     }
 
     override suspend fun getChildrenForSpecialistById(id: String): Flow<Response<List<ChildrenModel>>> =
         callbackFlow {
             val snapshotListener = childrenRef.whereEqualTo("idSpecialist", id)
-                .addSnapshotListener { snapshot, e ->
-                    if (e != null) {
-                        trySend(Response.Error(e))
-                    }
-                    snapshot.let {
-                        val childrenModelList = snapshot?.toObjects(ChildrenModel::class.java)
-                            ?: ArrayList<ChildrenModel>()
-                        trySend(Response.Success(childrenModelList))
-                    }
+                .addSnapshotListener { snapshot, exception ->
+                    sendException(exception)
+                    sendSuccess(snapshot)
                 }
-
             awaitClose {
                 snapshotListener.remove()
             }
         }
 
+    private fun ProducerScope<Response<List<ChildrenModel>>>.sendSuccess(
+        snapshot: QuerySnapshot?
+    ) {
+        snapshot.let {
+            val childrenModelList = snapshot?.toObjects(ChildrenModel::class.java)
+                ?: ArrayList<ChildrenModel>()
+            trySend(Response.Success(childrenModelList))
+        }
+    }
+
+    private fun ProducerScope<Response<List<ChildrenModel>>>.sendException(
+        exception: FirebaseFirestoreException?
+    ) {
+        exception?.let { e ->
+            trySend(Response.Error(e))
+        }
+    }
+
+    private suspend fun uploadFileToStorage(file: File): String {
+        val fromFile = Uri.fromFile(file)
+        val ref = storageSpecialistRef.child(file.name)
+        uploadFileToStorageRef(fromFile, ref)
+        return getDownloadUrlFromStorageRef(ref)
+    }
+
+    private suspend fun uploadFileToStorageRef(fromFile: Uri, ref: StorageReference) {
+        ref.putFile(fromFile).await()
+    }
+
+    private suspend fun getDownloadUrlFromStorageRef(ref: StorageReference): String {
+        val url = ref.downloadUrl.await()
+        return url.toString()
+    }
+
+    private fun handleUploadError(e: Exception): Response<String> {
+        e.printStackTrace()
+        return Response.Error(e)
+    }
 }
