@@ -90,7 +90,6 @@ class LevelViewModelTest {
 
         viewModel.getLevels()
         viewModel.searchLevelByName("name")
-
         coVerify { levelUsesCases.getLevels() }
         assertEquals(listLevel, viewModel.levels)
     }
