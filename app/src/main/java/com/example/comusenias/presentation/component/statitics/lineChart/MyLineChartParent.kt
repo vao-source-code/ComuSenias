@@ -6,6 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.unit.dp
+import com.example.comusenias.presentation.extensions.statitics.CustomYaxisDrawer
+import com.example.comusenias.presentation.extensions.statitics.StatisticsCalculator
 import com.example.comusenias.presentation.ui.theme.SIZE10
 import com.example.comusenias.presentation.ui.theme.SIZE160
 import com.github.tehras.charts.line.LineChart
@@ -24,6 +26,11 @@ fun MyLineChartParent(statistic: LineChartData) {
         pointDrawer = FilledCircularPointDrawer(
             diameter = SIZE10.dp,
             color = Black
+        ),
+        yAxisDrawer = CustomYaxisDrawer(
+            labelValueFormatter = { value ->
+                (StatisticsCalculator.isValidIntegerNumber(value))
+            }
         )
     )
 }

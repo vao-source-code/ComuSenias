@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType.Companion.Sp
 import androidx.compose.ui.unit.dp
+import com.example.comusenias.presentation.extensions.statitics.StatisticsCalculator.isValidIntegerNumber
 import com.example.comusenias.presentation.ui.theme.SIZE300
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.github.tehras.charts.bar.BarChart
@@ -20,7 +21,9 @@ import com.github.tehras.charts.bar.renderer.yaxis.SimpleYAxisDrawer
 import com.github.tehras.charts.piechart.animation.simpleChartAnimation
 
 @Composable
-fun MyBarChartParent(statistic: List<Bar>) {
+fun MyBarChartParent(
+    statistic: List<Bar>
+) {
     BarChart(
         barChartData = BarChartData(
             bars = statistic
@@ -32,7 +35,9 @@ fun MyBarChartParent(statistic: List<Bar>) {
         barDrawer = SimpleBarDrawer(),
         xAxisDrawer = SimpleXAxisDrawer(),
         yAxisDrawer = SimpleYAxisDrawer(
-            labelTextSize = TextUnit(value = 10f, type = Sp),
+            labelValueFormatter = { value ->
+                (isValidIntegerNumber(value))
+            }
         ),
         labelDrawer = SimpleValueDrawer(
             drawLocation = XAxis,

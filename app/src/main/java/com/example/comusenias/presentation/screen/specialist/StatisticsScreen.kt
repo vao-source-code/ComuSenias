@@ -3,15 +3,12 @@ package com.example.comusenias.presentation.screen.specialist
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.comusenias.domain.models.game.LevelModel
-import com.example.comusenias.presentation.component.defaults.FloatingButtonDefault
 import com.example.comusenias.presentation.component.home.StatusGame
 import com.example.comusenias.presentation.component.home.StatusGame.BLOCKED
 import com.example.comusenias.presentation.component.home.StatusGame.IN_PROGRESS
@@ -22,22 +19,15 @@ import com.example.comusenias.presentation.ui.theme.SIZE36
 
 @Composable
 fun StatisticsScreen() {
-    Scaffold (
-        floatingActionButton = { FloatingButtonDefault()}
-    ) {
-        StatisticsContent(
-            modifier = Modifier.padding(it)
-        )
-    }
+    StatisticsContent()
 }
 
 @Composable
 fun StatisticsContent(
     levelModelMock: List<LevelModel>? = null,
-    modifier: Modifier
 ) {
     LazyColumn(
-        modifier = modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize()
     ) {
         item {
             Spacer(modifier = Modifier.height(SIZE10.dp))

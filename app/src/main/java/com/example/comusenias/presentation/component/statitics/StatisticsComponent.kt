@@ -13,7 +13,6 @@ import com.example.comusenias.presentation.component.specialist.home.Title
 import com.example.comusenias.presentation.component.statitics.barChart.ContentBarChart
 import com.example.comusenias.presentation.component.statitics.lineChart.ContentLineChart
 import com.example.comusenias.presentation.component.statitics.pieChart.PieChartScreenContent
-import com.example.comusenias.presentation.extensions.statitics.StatisticsCalculator
 import com.example.comusenias.presentation.screen.specialist.LevelModelMock
 import com.example.comusenias.presentation.ui.theme.SIZE10
 import com.example.comusenias.presentation.ui.theme.SIZE20
@@ -21,29 +20,6 @@ import com.example.comusenias.presentation.ui.theme.SIZE20
 
 @Composable
 fun StatisticsComponent(levelModel: LevelModelMock) {
-    val statisticsSuccess = StatisticsCalculator.createBarList(
-        levelModel.subLevel,
-        StatisticsCalculator.AttemptType.SUCCESS
-    )
-
-    val statisticsFailure = StatisticsCalculator.createBarList(
-        levelModel.subLevel,
-        StatisticsCalculator.AttemptType.FAILURE
-    )
-
-    val valueSuccess = StatisticsCalculator.sumStatistics(
-        levelModel.subLevel,
-        StatisticsCalculator.AttemptType.SUCCESS
-    ).toFloat()
-    val valueFailure = StatisticsCalculator.sumStatistics(
-        levelModel.subLevel,
-        StatisticsCalculator.AttemptType.FAILURE
-    ).toFloat()
-    val valueTotal = StatisticsCalculator.sumStatistics(
-        levelModel.subLevel,
-        StatisticsCalculator.AttemptType.TOTAL
-    ).toFloat()
-
     Column(
         modifier = Modifier
             .fillMaxWidth(),
@@ -54,23 +30,13 @@ fun StatisticsComponent(levelModel: LevelModelMock) {
             textAlign = TextAlign.Center
         )
         ContentBarChart(
-            statisticsSuccess = statisticsSuccess,
-            statisticsFailures = statisticsFailure,
-            valueSuccess = valueSuccess,
-            valueFailure = valueFailure,
-            valueTotal = valueTotal
+            subLevel = levelModel.subLevel
         )
         ContentLineChart(
-            statisticsSuccess = statisticsSuccess,
-            statisticsFailures = statisticsFailure,
-            valueSuccess = valueSuccess,
-            valueFailure = valueFailure,
-            valueTotal = valueTotal
+            subLevel = levelModel.subLevel
         )
         PieChartScreenContent(
-            valueSuccess = valueSuccess,
-            valueFailure = valueFailure,
-            valueTotal = valueTotal
+            subLevel = levelModel.subLevel
         )
         Spacer(modifier = Modifier.height(SIZE20.dp))
     }

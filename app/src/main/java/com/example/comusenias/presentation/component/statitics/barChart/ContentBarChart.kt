@@ -15,20 +15,34 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.comusenias.presentation.component.statitics.ButtonsStatistics
 import com.example.comusenias.presentation.component.statitics.StatisticsDescriptions
+import com.example.comusenias.presentation.extensions.statitics.StatisticsCalculator
+import com.example.comusenias.presentation.extensions.statitics.StatisticsCalculator.AttemptType.FAILURE
+import com.example.comusenias.presentation.extensions.statitics.StatisticsCalculator.AttemptType.TOTAL
+import com.example.comusenias.presentation.screen.specialist.SubLevelModelMock
 import com.example.comusenias.presentation.ui.theme.SIZE1
 import com.example.comusenias.presentation.ui.theme.SIZE30
 import com.example.comusenias.presentation.ui.theme.SIZE40
 import com.example.comusenias.presentation.ui.theme.line_divisor
-import com.github.tehras.charts.bar.BarChartData.Bar
 
 @Composable
 fun ContentBarChart(
-    statisticsSuccess:  List<Bar>,
-    statisticsFailures:  List<Bar>,
-    valueSuccess: Float = 0f,
-    valueFailure: Float = 0f,
-    valueTotal: Float = 0f
+    subLevel: MutableList<SubLevelModelMock>
 ) {
+    val statisticsSuccess = StatisticsCalculator.createBarList(
+        subLevel,
+        StatisticsCalculator.AttemptType.SUCCESS
+    )
+
+    val statisticsFailure = StatisticsCalculator.createBarList(
+        subLevel,
+        FAILURE
+    )
+
+    val statisticsTotal = StatisticsCalculator.createBarList(
+        subLevel,
+        TOTAL
+    )
+
     var statistic by remember {
         mutableStateOf(statisticsSuccess)
     }
@@ -40,9 +54,9 @@ fun ContentBarChart(
         verticalArrangement = spacedBy(SIZE30.dp)
     ) {
         StatisticsDescriptions(
-            valueSuccess = valueSuccess,
-            valueFailure = valueFailure,
-            valueTotal = valueTotal
+            statisticsSuccess = statisticsSuccess,
+            statisticsFailures = statisticsFailure,
+            statisticsTotal = statisticsTotal
         )
         MyBarChartParent(statistic = statistic)
         ButtonsStatistics(
@@ -50,7 +64,7 @@ fun ContentBarChart(
                 statistic = statisticsSuccess
             },
             onClickIncorrect = {
-                statistic = statisticsFailures
+                statistic = statisticsFailure
             }
         )
         Divider(Modifier.height(SIZE1.dp), color = line_divisor)

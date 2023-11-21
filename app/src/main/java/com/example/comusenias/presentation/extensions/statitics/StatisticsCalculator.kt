@@ -1,16 +1,19 @@
 package com.example.comusenias.presentation.extensions.statitics
 
-import androidx.compose.ui.graphics.Color
+import android.util.Log
 import androidx.compose.ui.graphics.Color.Companion.Red
 import com.example.comusenias.presentation.extensions.statitics.StatisticsCalculator.AttemptType.FAILURE
 import com.example.comusenias.presentation.extensions.statitics.StatisticsCalculator.AttemptType.SUCCESS
 import com.example.comusenias.presentation.extensions.statitics.StatisticsCalculator.AttemptType.TOTAL
 import com.example.comusenias.presentation.screen.specialist.SubLevelModelMock
 import com.example.comusenias.presentation.ui.theme.greenColorApp
+import com.example.comusenias.presentation.ui.theme.primaryColorApp
 import com.github.tehras.charts.bar.BarChartData.Bar
 import com.github.tehras.charts.line.LineChartData.Point
 
 object StatisticsCalculator {
+
+    private var lastConvertedValue: Int = 0
 
     enum class AttemptType {
         SUCCESS,
@@ -19,15 +22,9 @@ object StatisticsCalculator {
     }
 
     fun sumStatistics(
-        subLevel: List<SubLevelModelMock>,
-        attemptType: AttemptType
+        bars: List<Bar>
     ): Int {
-        val value = when (attemptType) {
-            SUCCESS -> subLevel.sumOf { it.successes }
-            FAILURE -> subLevel.sumOf { it.failures }
-            TOTAL -> subLevel.sumOf { it.successes } + subLevel.sumOf { it.failures }
-        }
-        return value
+        return bars.sumOf { it.value.toInt() }
     }
 
     fun createBarList(
@@ -38,23 +35,37 @@ object StatisticsCalculator {
             val value = when (attemptType) {
                 SUCCESS -> subLevel.successes.toFloat()
                 FAILURE -> subLevel.failures.toFloat()
-                else -> {
-                    0f
-                }
+                TOTAL -> subLevel.failures.toFloat() + subLevel.successes.toFloat()
             }
             val color = when (attemptType) {
                 SUCCESS -> greenColorApp
                 FAILURE -> Red
-                else -> {
-                    Color.Black
-                }
+                TOTAL -> primaryColorApp
             }
             Bar(value = value, color = color, label = subLevel.name)
         }
         return bars
     }
 
-    fun getValuesPointList(barList: List<Bar>): List<Point> {
+    fun getValuesPointList(
+        subLevels: List<SubLevelModelMock>,
+        attemptType: AttemptType
+    ): List<Point> {
+        val barList = createBarList(subLevels, attemptType)
         return barList.map { Point(it.value, it.label) }
     }
+
+    fun isValidIntegerNumber(value: Float): String {
+        Log.v("value", value.toString())
+        val rounded = value.toInt()
+
+        if (rounded == lastConvertedValue) {
+            lastConvertedValue += 1
+        } else {
+            lastConvertedValue = rounded
+        }
+
+        return lastConvertedValue.toString()
+    }
 }
+

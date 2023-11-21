@@ -17,6 +17,10 @@ import androidx.compose.ui.unit.dp
 import com.example.comusenias.presentation.component.statitics.ButtonsStatistics
 import com.example.comusenias.presentation.component.statitics.StatisticsDescriptions
 import com.example.comusenias.presentation.extensions.statitics.StatisticsCalculator
+import com.example.comusenias.presentation.extensions.statitics.StatisticsCalculator.AttemptType.FAILURE
+import com.example.comusenias.presentation.extensions.statitics.StatisticsCalculator.AttemptType.SUCCESS
+import com.example.comusenias.presentation.extensions.statitics.StatisticsCalculator.getValuesPointList
+import com.example.comusenias.presentation.screen.specialist.SubLevelModelMock
 import com.example.comusenias.presentation.ui.theme.SIZE1
 import com.example.comusenias.presentation.ui.theme.SIZE30
 import com.example.comusenias.presentation.ui.theme.SIZE40
@@ -28,14 +32,25 @@ import com.github.tehras.charts.line.renderer.line.SolidLineDrawer
 
 @Composable
 fun ContentLineChart(
-    statisticsSuccess:  List<BarChartData.Bar>,
-    statisticsFailures:  List<BarChartData.Bar>,
-    valueSuccess: Float = 0f,
-    valueFailure: Float = 0f,
-    valueTotal: Float = 0f
+    subLevel: MutableList<SubLevelModelMock>
 ) {
-    val correctList = StatisticsCalculator.getValuesPointList(statisticsSuccess)
-    val incorrectList = StatisticsCalculator.getValuesPointList(statisticsFailures)
+    val correctList = getValuesPointList(subLevel, SUCCESS)
+    val incorrectList = getValuesPointList(subLevel, FAILURE)
+
+    val statisticsSuccess = StatisticsCalculator.createBarList(
+        subLevel,
+        StatisticsCalculator.AttemptType.SUCCESS
+    )
+
+    val statisticsFailure = StatisticsCalculator.createBarList(
+        subLevel,
+        FAILURE
+    )
+
+    val statisticsTotal = StatisticsCalculator.createBarList(
+        subLevel,
+        StatisticsCalculator.AttemptType.TOTAL
+    )
 
     val lineChartCorrect = LineChartData(
         points = correctList,
@@ -62,9 +77,9 @@ fun ContentLineChart(
         verticalArrangement = spacedBy(SIZE30.dp)
     ) {
         StatisticsDescriptions(
-            valueSuccess = valueSuccess,
-            valueFailure = valueFailure,
-            valueTotal = valueTotal
+            statisticsSuccess = statisticsSuccess,
+            statisticsFailures = statisticsFailure,
+            statisticsTotal = statisticsTotal
         )
         MyLineChartParent(statistic = statistic)
         ButtonsStatistics(
