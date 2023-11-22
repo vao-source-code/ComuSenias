@@ -70,9 +70,9 @@ class CameraViewModel @Inject constructor(
         }
     }
 
-    fun recordVideo(controller: LifecycleCameraController){
+    fun recordVideo(controller: LifecycleCameraController,lifecycleOwner: LifecycleOwner,navController: NavController){
         viewModelScope.launch(Main) {
-            useCases.recordVideo(controller)
+            useCases.recordVideo(controller,lifecycleOwner,navController)
         }
     }
 }

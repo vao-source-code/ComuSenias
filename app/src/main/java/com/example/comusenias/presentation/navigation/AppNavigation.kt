@@ -2,6 +2,7 @@ package com.example.comusenias.presentation.navigation
 
 import PermissionCameraScreen
 import PermissionRecordCameraScreen
+import VideoPlayer
 import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -151,7 +152,7 @@ private fun GetNavHost(
         }
 
         composable(AppScreen.RecordCameraScreen.route){
-            RecordCameraScreen(levelViewModel = levelViewModel)
+            RecordCameraScreen(levelViewModel = levelViewModel, navController = navController)
         }
 
         //Permission Camera
@@ -162,6 +163,17 @@ private fun GetNavHost(
         //Permission Record Camera
         composable(AppScreen.PermissioRecordCameraScreen.route) {
             PermissionRecordCameraScreen(navController = navController)
+        }
+
+        //VideoPlayer
+        composable(AppScreen.VideoPlayerScreen.route, arguments = listOf(
+            navArgument("path") {
+                type = NavType.StringType
+            }
+        )
+        ) {
+            val path = it.arguments?.getString("path") ?: EMPTY_STRING
+            VideoPlayer(videoUrl = path)
         }
 
 

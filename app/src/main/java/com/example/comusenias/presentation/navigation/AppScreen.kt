@@ -38,6 +38,13 @@ sealed class AppScreen(val route: String) {
 
     object PermissioRecordCameraScreen :AppScreen("record_camera_screen_permission")
 
+    object VideoPlayerScreen:AppScreen("video_player_screen/{path}"){
+        fun createRoute(path: String) = "video_player_screen/${path}"
+    }
+
+    object RecordCameraScreen : AppScreen("record_camera_screen")
+
+
 
     object CameraScreen : AppScreen("camera_screen")
 
@@ -73,7 +80,7 @@ sealed class AppScreen(val route: String) {
 
     object SpecialistScreen : AppScreen("specialist_screen")
 
-    object RecordCameraScreen : AppScreen("record_camera_screen")
+
 
 
 }

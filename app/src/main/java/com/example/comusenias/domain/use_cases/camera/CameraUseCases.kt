@@ -43,7 +43,9 @@ class CameraUseCases @Inject constructor(private val customCameraRepository: Cam
      */
     suspend fun stopCameraPreview() = customCameraRepository.stopCameraPreview()
 
-
-    suspend fun recordVideo(controller: LifecycleCameraController) = customCameraRepository.recordVideo(controller)
+    /**
+     * Graba la cámara.
+     */
+    suspend fun recordVideo(controller: LifecycleCameraController,lifecycleOwner: LifecycleOwner,navController: NavController) = customCameraRepository.recordVideo(controller,lifecycleOwner,navController)
 
 }

@@ -55,12 +55,7 @@ import com.example.comusenias.presentation.view_model.CameraViewModel
 import com.example.comusenias.presentation.view_model.LevelViewModel
 import java.io.File
 
-private var recording: Recording? = null
 
-private val CAMERAX_PERMISSIONS = arrayOf(
-    Manifest.permission.CAMERA,
-    Manifest.permission.RECORD_AUDIO,
-)
 @Composable
 fun RecordCameraScreen(
     levelViewModel: LevelViewModel,
@@ -85,14 +80,14 @@ fun RecordCameraScreen(
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        AndroidView(
+        /*AndroidView(
             factory = {
                 val previewView = PreviewView(it)
                 viewModel.showCameraPreview(previewView, lifecycleOwner)
                 previewView
             },
             modifier = Modifier.fillMaxSize()
-        )
+        )*/
 
         // OverlayView should be adjusted accordingly
         OverlayView(
@@ -100,10 +95,22 @@ fun RecordCameraScreen(
             levelViewModel = levelViewModel
         )
 
+        CameraPreview(
+            controller = controller,
+            modifier = Modifier
+                .fillMaxSize()
+        )
+
+
+
+
+
 
         IconButton(
             onClick = {
-                viewModel.recordVideo(controller)
+
+                viewModel.recordVideo(controller,lifecycleOwner,navController!!)
+
             },
             modifier = Modifier
                 .padding(16.dp)

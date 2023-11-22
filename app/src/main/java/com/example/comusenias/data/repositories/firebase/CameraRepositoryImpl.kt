@@ -25,6 +25,7 @@ import androidx.camera.view.LifecycleCameraController
 import androidx.camera.view.PreviewView
 import androidx.camera.view.video.AudioConfig
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavController
 import com.example.comusenias.domain.models.response.Response
@@ -41,6 +42,7 @@ import com.example.comusenias.presentation.ui.theme.PICTURE_CAMERA_IMAGES
 import com.example.comusenias.presentation.ui.theme.SHOW_CAMERA_PREVIEW
 import com.example.comusenias.presentation.ui.theme.UTF_8
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
@@ -239,15 +241,21 @@ class CameraRepositoryImpl @Inject constructor(
     }
 
     @SuppressLint("MissingPermission")
-    override suspend fun recordVideo(controller: LifecycleCameraController) {
-        // Detener la grabación anterior si está en curso
-        stopRecording()
+    override suspend fun recordVideo(controller: LifecycleCameraController,lifecycleOwner: LifecycleOwner,navController: NavController) {
 
 
-        val videoFile = saveVideo(getVideoContentValues("my-recording.mp4"))
+        if(recording != null) {
+            recording?.stop()
+            recording = null
+            return
+        }
+
+
+        val outputFile = File(context.filesDir, "my-recording.mp4")
+        controller.bindToLifecycle(lifecycleOwner)
 
         recording = controller.startRecording(
-            FileOutputOptions.Builder(videoFile).build(),
+            FileOutputOptions.Builder(outputFile).build(),
             AudioConfig.create(true),
             ContextCompat.getMainExecutor(context),
         ) { event ->
@@ -255,7 +263,9 @@ class CameraRepositoryImpl @Inject constructor(
                 is VideoRecordEvent.Finalize -> {
                     if (event.hasError()) {
                         Log.e("RecordCameraScreen", "Video recording failed: ${event.error}")
-                        Log.e("RecordCameraScreen", "Video recording failed: ${event.cause}")
+                        Log.e("RecordCameraScreen", "Video recording failed: ${event.cause!!.message}")
+                        Log.e("RecordCameraScreen", "Output file path: ${outputFile.absolutePath}")
+
 
 
                         recording?.close()
@@ -269,6 +279,16 @@ class CameraRepositoryImpl @Inject constructor(
                     } else {
                         Log.d("RecordCameraScreen", "Video recording succeeded")
 
+
+                        recording?.close()
+                        recording = null
+
+
+
+                     //   val mp4Uri: Uri = FileProvider.getUriForFile(context, "com.example.comusenias.fileprovider", outputFile)
+                        navController.navigate(AppScreen.VideoPlayerScreen.createRoute("uri"))
+
+
                         Toast.makeText(
                             context,
                             "Video capture succeeded",
@@ -280,48 +300,9 @@ class CameraRepositoryImpl @Inject constructor(
         }
     }
 
-    private fun saveVideo(contentValues: ContentValues): File {
-        try {
-            val videoUri = context.contentResolver.insert(
-                MediaStore.Video.Media.EXTERNAL_CONTENT_URI, contentValues
-            ) ?: throw RuntimeException("Failed to create media file")
 
-            val filePath = videoUri.path
-            if (isFileExists(filePath)) {
-                // Intentar manejar el archivo duplicado generando un nombre único
-                contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, generateUniqueName(contentValues.getAsString(MediaStore.MediaColumns.DISPLAY_NAME)))
-                return saveVideo(contentValues)
-            }
 
-            return File(filePath!!)
-        } catch (e: Exception) {
-            // Manejar otros errores de inserción
-            throw RuntimeException("Error saving video", e)
-        }
-    }
 
-    private fun isFileExists(filePath: String?): Boolean {
-        return filePath?.let { File(it).exists() } ?: false
-    }
-
-    private fun generateUniqueName(baseName: String?): String {
-        // Agregar un sufijo único, por ejemplo, un timestamp
-        return "$baseName-${System.currentTimeMillis()}.mp4"
-    }
-    private fun getVideoContentValues(name: String?) = ContentValues().apply {
-        val uniqueName = generateUniqueName(name)
-        put(MediaStore.MediaColumns.DISPLAY_NAME, uniqueName)
-        put(MediaStore.MediaColumns.MIME_TYPE, "video/mp4")
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            put(MediaStore.MediaColumns.RELATIVE_PATH, "Movies")
-        }
-    }
-
-    private fun stopRecording() {
-        recording?.close()
-        recording = null
-
-    }
 
     override fun onError(error: String, errorCode: Int) {
         Response.Error(Exception(error))
