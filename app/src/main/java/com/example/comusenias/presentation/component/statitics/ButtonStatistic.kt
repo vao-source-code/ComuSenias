@@ -1,5 +1,6 @@
 package com.example.comusenias.presentation.component.statitics
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -20,17 +21,24 @@ import com.example.comusenias.presentation.ui.theme.SIZE50
 fun ButtonStatistic(
     titleButton: String,
     color: Color,
+    isButtonPressed: Boolean = false,
     onClickButton: () -> Unit = {}
 ) {
+
     Button(
-        colors = ButtonDefaults.buttonColors(color),
+        colors = ButtonDefaults.buttonColors(if (isButtonPressed) color else White),
         shape = RoundedCornerShape(SIZE10.dp),
         onClick = { onClickButton() },
         modifier = Modifier
             .height(SIZE50.dp)
+            .border(
+                width = 1.dp,
+                color = if (isButtonPressed) White else color,
+                shape = RoundedCornerShape(SIZE10.dp)
+            )
     ) {
         Text(
-            color = White,
+            color = if (isButtonPressed) White else color,
             text = titleButton,
             fontSize = SIZE14.sp,
             fontWeight = SemiBold

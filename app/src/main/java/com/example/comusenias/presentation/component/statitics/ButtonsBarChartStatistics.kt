@@ -7,6 +7,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.unit.dp
@@ -16,11 +20,15 @@ import com.example.comusenias.presentation.ui.theme.SIZE16
 import com.example.comusenias.presentation.ui.theme.SIZE20
 import com.example.comusenias.presentation.ui.theme.greenColorApp
 
+enum class ButtonState { CORRECT, INCORRECT }
+
 @Composable
 fun ButtonsStatistics(
     onClickCorrect: () -> Unit,
     onClickIncorrect: () -> Unit
 ) {
+    var activeButton by remember { mutableStateOf(ButtonState.CORRECT) }
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -30,7 +38,9 @@ fun ButtonsStatistics(
         ButtonStatistic(
             titleButton = CORRECT,
             color = greenColorApp,
+            isButtonPressed = activeButton == ButtonState.CORRECT,
             onClickButton = {
+                activeButton = ButtonState.CORRECT
                 onClickCorrect()
             }
         )
@@ -40,7 +50,9 @@ fun ButtonsStatistics(
         ButtonStatistic(
             titleButton = INCORRECT,
             color = Red,
+            isButtonPressed = activeButton == ButtonState.INCORRECT,
             onClickButton = {
+                activeButton = ButtonState.INCORRECT
                 onClickIncorrect()
             }
         )
