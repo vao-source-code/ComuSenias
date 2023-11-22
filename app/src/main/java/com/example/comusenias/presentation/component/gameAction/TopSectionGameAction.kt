@@ -1,5 +1,6 @@
 package com.example.comusenias.presentation.component.gameAction
 
+import androidx.annotation.OptIn
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -26,6 +27,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.media3.common.util.UnstableApi
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.comusenias.presentation.component.home.ProgressBar
@@ -41,8 +43,9 @@ import com.example.comusenias.presentation.ui.theme.SIZE24
 import com.example.comusenias.presentation.ui.theme.SIZE50
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
+import com.example.comusenias.util.PlayVideo
 
-@Composable
+@OptIn(UnstableApi::class) @Composable
 fun TopSectionGameAction(
     letterSign: String,
     title: String,
@@ -134,13 +137,22 @@ fun ContentImageGame(
                 )
             )
         } else {
-            AsyncImage(
-                modifier = Modifier
-                    .fillMaxSize(),
-                model = image,
-                contentScale = ContentScale.Fit,
-                contentDescription = AVATAR
-            )
+            ShowImageOrVideo(image)
         }
+    }
+}
+
+@Composable
+private fun ShowImageOrVideo(image: String) {
+    if (image.isNotEmpty()) {
+        AsyncImage(
+            modifier = Modifier
+                .fillMaxSize(),
+            model = image,
+            contentScale = ContentScale.Fit,
+            contentDescription = AVATAR
+        )
+    } else {
+        PlayVideo("https://firebasestorage.googleapis.com/v0/b/comusenias.appspot.com/o/Disculpa.mp4?alt=media&token=964ed6ce-cee3-4b06-89a2-4ddfeee47e06")
     }
 }
