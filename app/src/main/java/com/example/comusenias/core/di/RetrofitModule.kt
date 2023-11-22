@@ -1,6 +1,7 @@
 package com.example.comusenias.core.di
 
 import android.annotation.SuppressLint
+import com.example.comusenias.constants.RetrofitUrl.BASE_URL
 import com.example.comusenias.data.api.ApiService
 import com.example.comusenias.presentation.ui.theme.TLS
 import dagger.Module
@@ -108,7 +109,7 @@ object RetrofitModule {
     @Singleton
     fun provideApiService(okHttpClient: OkHttpClient): ApiService =
         Retrofit.Builder()
-            .baseUrl("http://192.168.0.95:8000")
+            .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()

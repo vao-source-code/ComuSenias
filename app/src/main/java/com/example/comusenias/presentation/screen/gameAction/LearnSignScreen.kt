@@ -3,11 +3,11 @@ package com.example.comusenias.presentation.screen.gameAction
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import com.example.comusenias.domain.models.response.Response
+import com.example.comusenias.presentation.activities.MainActivity.Companion.getLevelViewModel
 import com.example.comusenias.presentation.component.defaults.app.CircularProgressBar
 import com.example.comusenias.presentation.component.defaults.app.ShowRetrySnackBar
 import com.example.comusenias.presentation.component.gameAction.ContentLetterType
 import com.example.comusenias.presentation.component.gameAction.GameAction
-import com.example.comusenias.presentation.navigation.getLevelViewModel
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.CONTINUE
 import com.example.comusenias.presentation.ui.theme.ERROR_RETRY_LEVEL
@@ -38,7 +38,7 @@ fun LearnSignScreen(
         }
 
         is Response.Success -> {
-            subLevelViewModel?.let {
+            subLevelViewModel.let {
                 GameAction(
                     imageSign = it.image,
                     title = LETS_GO,

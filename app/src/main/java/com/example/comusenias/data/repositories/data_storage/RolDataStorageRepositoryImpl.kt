@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.example.comusenias.constants.PreferencesConstant
 import com.example.comusenias.domain.repositories.RolDataStorageRepository
+import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
@@ -32,7 +33,7 @@ class RolDataStorageRepositoryImpl @Inject constructor(private val context: Cont
             json[preferenceKey]
         } catch (e: Exception) {
             e.printStackTrace()
-            ""
+            EMPTY_STRING
         }
     }
 }

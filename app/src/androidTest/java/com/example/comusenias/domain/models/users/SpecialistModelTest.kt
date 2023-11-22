@@ -8,7 +8,6 @@ class SpecialistModelTest {
 
     @Test
     fun shouldCreateASpecialistModelObjectWithAllProperties() {
-        val userModel = UserModel("1", "Dr. Smith", "john.smith@example.com")
         val date = "2023-10-08"
         val medicalLicense = "1234567890"
         val medicalLicenseExpiration = "2024-10-08"

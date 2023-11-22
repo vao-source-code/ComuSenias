@@ -178,7 +178,7 @@ class SpecialistRegisterViewModel @Inject constructor(
     }
 
     fun onTelInputChanged(tel: String) {
-        stateSpecialist = stateSpecialist.copy(tel = tel)
+        stateSpecialist = stateSpecialist.copy(tel = tel.trim())
     }
 
     fun onDateInputChanged(date: String) {

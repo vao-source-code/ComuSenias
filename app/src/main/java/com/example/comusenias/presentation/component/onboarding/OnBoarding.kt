@@ -26,7 +26,7 @@ import androidx.navigation.NavController
 import com.example.comusenias.constants.TestTag
 import com.example.comusenias.domain.models.onBoarding.OnBoardingItem
 import com.example.comusenias.presentation.navigation.AppScreen
-import com.example.comusenias.presentation.ui.theme.IMAGE
+import com.example.comusenias.presentation.ui.theme.IMAGEN
 import com.example.comusenias.presentation.ui.theme.SIZE1
 import com.example.comusenias.presentation.ui.theme.SIZE20
 import com.example.comusenias.presentation.ui.theme.SIZE24
@@ -91,7 +91,7 @@ fun OnBoardingItem(
                 .width(SIZE250.dp),
             painter = painterResource(item.image),
             contentScale = ContentScale.Fit,
-            contentDescription = IMAGE
+            contentDescription = IMAGEN
         )
         Spacer(modifier = Modifier.height(SIZE95.dp))
         Text(

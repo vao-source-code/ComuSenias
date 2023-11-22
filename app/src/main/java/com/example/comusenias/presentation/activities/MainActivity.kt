@@ -13,6 +13,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.comusenias.presentation.navigation.AppNavigation
 import com.example.comusenias.presentation.ui.theme.ComuSeniasTheme
+import com.example.comusenias.presentation.view_model.ChildrenProfileViewModel
+import com.example.comusenias.presentation.view_model.LevelViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,5 +36,10 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    companion object {
+        lateinit var getLevelViewModel: LevelViewModel
+        lateinit var getChildrenProfileViewModel: ChildrenProfileViewModel
     }
 }

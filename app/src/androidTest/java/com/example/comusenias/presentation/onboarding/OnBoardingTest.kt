@@ -8,6 +8,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.example.comusenias.constants.TestTag
@@ -23,40 +24,22 @@ class OnBoardingTest {
     val composeTestRule = createComposeRule()
 
     @Test
-    fun testWhenIsClickInTheFloatingButtonShouldBeShowTheNextOnBardingItem(){
-        val pageOne = 0
-        val pageTwo = 1
-        composeTestRule.setContent {
-            val navController = rememberNavController()
-            OnBoardingScreen(navController = navController, modifier = Modifier )
-        }
-        composeTestRule.onNodeWithTag(TestTag.TAG_ONBOARDING_ITEM + pageOne ).assertIsDisplayed()
-        composeTestRule.onNodeWithTag(TestTag.TAG_BUTTON_NEXT).performClick()
-        composeTestRule.onNodeWithTag(TestTag.TAG_ONBOARDING_ITEM + pageTwo).assertIsDisplayed()
+    fun testWhenIsClickInTheFloatingButtonShouldBeShowTheNextOnBoardingItem() {
+        testOnBoardingItemsNavigation(0, 1)
     }
 
     @Test
-    fun testWhenIndicatorIsSelectWidthIsEqualToSizeIndicatorSelect(){
-        val sizeIndicatorSelect = 16.dp
-        val isSelect = true
-        composeTestRule.setContent {
-           Indicator(isSelected = isSelect)
-        }
-        composeTestRule.onNodeWithTag(TestTag.TAG_INDICATOR + isSelect ).assertWidthIsEqualTo(sizeIndicatorSelect)
+    fun testWhenIndicatorIsSelectWidthIsEqualToSizeIndicatorSelect() {
+        indicatorWidth(true, 16.dp)
     }
 
     @Test
-    fun testWhenIndicatorIsDiSelectWidthIsEqualToSizeIndicatorDiSelect(){
-        val sizeIndicatorDiSelect = 12.dp
-        val isSelect = false
-        composeTestRule.setContent {
-            Indicator(isSelected = isSelect)
-        }
-        composeTestRule.onNodeWithTag(TestTag.TAG_INDICATOR + isSelect ).assertWidthIsEqualTo(sizeIndicatorDiSelect)
+    fun testWhenIndicatorIsDiSelectWidthIsEqualToSizeIndicatorDiSelect() {
+        indicatorWidth(false, 12.dp)
     }
 
     @Test
-    fun testTopSectionWhenExistTextSkip(){
+    fun testTopSectionWhenExistTextSkip() {
         val text = "Saltar"
         composeTestRule.setContent {
             val navController = rememberNavController()
@@ -66,12 +49,27 @@ class OnBoardingTest {
     }
 
     @Test
-    fun testFloatingButtonIsClickAction(){
+    fun testFloatingButtonIsClickAction() {
         composeTestRule.setContent {
-            BottomSection(size = 3, index = 1 ) {
-            }
+            BottomSection(size = 3, index = 1) {}
         }
-        composeTestRule.onNodeWithTag(TestTag.TAG_BUTTON_NEXT).assertIsDisplayed()
-        composeTestRule.onNodeWithTag(TestTag.TAG_BUTTON_NEXT).assertHasClickAction()
+        composeTestRule.onNodeWithTag(TestTag.TAG_BUTTON_NEXT).assertIsDisplayed().assertHasClickAction()
+    }
+
+    private fun testOnBoardingItemsNavigation(pageOne: Int, pageTwo: Int) {
+        composeTestRule.setContent {
+            val navController = rememberNavController()
+            OnBoardingScreen(navController = navController, modifier = Modifier)
+        }
+        composeTestRule.onNodeWithTag(TestTag.TAG_ONBOARDING_ITEM + pageOne).assertIsDisplayed()
+        composeTestRule.onNodeWithTag(TestTag.TAG_BUTTON_NEXT).performClick()
+        composeTestRule.onNodeWithTag(TestTag.TAG_ONBOARDING_ITEM + pageTwo).assertIsDisplayed()
+    }
+
+    private fun indicatorWidth(isSelected: Boolean, expectedWidth: Dp) {
+        composeTestRule.setContent {
+            Indicator(isSelected = isSelected)
+        }
+        composeTestRule.onNodeWithTag(TestTag.TAG_INDICATOR + isSelected).assertWidthIsEqualTo(expectedWidth)
     }
 }

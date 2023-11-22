@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.comusenias.domain.library.LibraryString
+import com.example.comusenias.domain.models.state.PacientState
 import com.example.comusenias.domain.models.users.ChildrenModel
 import com.example.comusenias.domain.models.users.SpecialistModel
 import com.example.comusenias.presentation.component.defaults.FloatingButtonDefault
@@ -72,13 +73,8 @@ fun PatientContainer(
                 if (it.isNotEmpty()) {
                     items(it) { patient ->
                         CardProfileUser(user = patient, onClickCard = {
-                            patient.image = patient.image?.let { image ->
-                                LibraryString.encodeURL(
-                                    image
-                                )
-                            }
                             navController.navigate(
-                                route = AppScreen.ProfilePatientScreen.passPacient(patient.toJson())
+                                route = AppScreen.ProfilePatientScreen.passPacient(getDataPacient(patient).toJson())
                             )
                         })
                     }
@@ -90,6 +86,17 @@ fun PatientContainer(
             }
         }
     }
+}
+
+private fun getDataPacient(patient: ChildrenModel): PacientState {
+    return PacientState(
+        id = patient.id,
+        name = patient.name,
+        phone = patient.phone,
+        email = patient.email,
+        date = patient.date,
+        idSpecialist = patient.idSpecialist,
+    )
 }
 
 

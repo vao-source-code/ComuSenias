@@ -17,7 +17,7 @@ import androidx.compose.ui.text.font.FontWeight.Companion.Normal
 import androidx.compose.ui.text.font.FontWeight.Companion.SemiBold
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.comusenias.presentation.ui.theme.IMAGE
+import com.example.comusenias.presentation.ui.theme.IMAGEN
 import com.example.comusenias.presentation.ui.theme.SIZE10
 import com.example.comusenias.presentation.ui.theme.SIZE12
 import com.example.comusenias.presentation.ui.theme.SIZE14
@@ -38,7 +38,7 @@ fun BenefitsPremiumItem(
         Image(
             modifier = Modifier.size(SIZE40.dp),
             painter = painterResource(id = image),
-            contentDescription = IMAGE,
+            contentDescription = IMAGEN,
             contentScale = Crop
         )
         Column {

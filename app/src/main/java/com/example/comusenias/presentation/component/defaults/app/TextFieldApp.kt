@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -29,18 +30,18 @@ import com.example.comusenias.presentation.ui.theme.placeholderTextColor
 @SuppressLint("SuspiciousIndentation")
 @Composable
 fun TextFieldApp(
-        modifier: Modifier = Modifier,
-        value: String,
-        onValueChange: (value: String) -> Unit,
-        validateField: () -> Unit = {},
-        clickIcon: () -> Unit = {},
-        label: String,
-        icon: ImageVector?,
-        keyboardType: KeyboardType = KeyboardType.Text,
-        hideText: Boolean = false,
-        errorMsg: String = "",
-        readOnly: Boolean = false,
-    ) {
+    modifier: Modifier = Modifier,
+    value: String,
+    onValueChange: (value: String) -> Unit,
+    validateField: () -> Unit = {},
+    clickIcon: () -> Unit = {},
+    label: String,
+    icon: ImageVector?,
+    keyboardType: KeyboardType = KeyboardType.Text,
+    hideText: Boolean = false,
+    errorMsg: String = "",
+    readOnly: Boolean = false,
+) {
     val maxChar = 32
 
     Column {
@@ -55,6 +56,7 @@ fun TextFieldApp(
                     validateField()
                 }
             },
+
             value = value,
             shape = RoundedCornerShape(10.dp),
             colors = OutlinedTextFieldDefaults.colors(
@@ -69,7 +71,10 @@ fun TextFieldApp(
                     fontSize = 14.sp
                 )
             },
-            keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = keyboardType,
+                imeAction = ImeAction.Next
+            ),
             trailingIcon = {
                 if (icon != null) {
                     Icon(
@@ -82,7 +87,8 @@ fun TextFieldApp(
             },
             readOnly = readOnly,
             visualTransformation = if (hideText) PasswordVisualTransformation() else VisualTransformation.None,
-        )
+
+            )
         TextErrorDefault(errorMsg = errorMsg)
     }
 }

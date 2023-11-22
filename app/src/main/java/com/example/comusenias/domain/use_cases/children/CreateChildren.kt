@@ -6,9 +6,6 @@ import javax.inject.Inject
 
 
 class CreateChildren @Inject constructor(private val repository: ChildrenRepository) {
-
     suspend operator fun
             invoke(user: ChildrenModel) = repository.createUserChildren(user)
-
-
 }

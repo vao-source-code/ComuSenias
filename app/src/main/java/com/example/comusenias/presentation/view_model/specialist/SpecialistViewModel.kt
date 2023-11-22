@@ -45,13 +45,13 @@ class SpecialistViewModel @Inject constructor(
 
     init {
         getUserData()
-        getChildrenBySpecialist()
     }
 
     fun getUserData() = viewModelScope.launch {
         currentUser?.let {
             specialistUseCases.getSpecialistById(it.uid).collect { user ->
                 stateSpecialist = user
+                getChildrenBySpecialist()
             }
         }
     }
@@ -81,7 +81,7 @@ class SpecialistViewModel @Inject constructor(
         result?.let {
             stateSpecialist =
                 stateSpecialist.copy(image = ComposeFileProvider.getPathFromBitmap(context, it))
-            file = File(stateSpecialist.image)
+            file = stateSpecialist.image?.let { it1 -> File(it1) }
         }
     }
 
