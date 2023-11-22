@@ -21,6 +21,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 import javax.inject.Inject
 
@@ -30,12 +31,10 @@ class ChildrenProfileViewModel @Inject constructor(
     private val dataRolStorageFactory: DataRolStorageFactory,
     private val childrenUser: ChildrenFactory,
     @ApplicationContext private val context: Context
-
 ) : ViewModel() {
 
     /*---------------------------------Public Variables---------------------------------*/
     var userData by mutableStateOf(ChildrenModel())
-        private set
     val currentUser = authUsesCases.getCurrentUserUseCase()
 
     val resultingActivityHandler = ResultingActivityHandler()
@@ -52,9 +51,7 @@ class ChildrenProfileViewModel @Inject constructor(
         getUserData()
     }
 
-    /*--------------------------------- Private Methods ---------------------------------*/
-
-    private fun getUserData() = viewModelScope.launch {
+    fun getUserData() = viewModelScope.launch {
         currentUser?.let {
             childrenUser.getChildrenById(it.uid).collect { user ->
                 userData = user
@@ -62,7 +59,7 @@ class ChildrenProfileViewModel @Inject constructor(
         }
     }
 
-    private fun update(user: ChildrenModel) = viewModelScope.launch(IO) {
+     fun update(user: ChildrenModel) = viewModelScope.launch(IO) {
         updateResponse = Response.Loading
         val result = childrenUser.updateChildren(user)
         updateResponse = result
@@ -91,21 +88,20 @@ class ChildrenProfileViewModel @Inject constructor(
             saveImageResponse = Response.Loading
             val result = childrenUser.saveImageChildren(it)
             saveImageResponse = result
-        } ?: kotlin.run {
-            onUpdate(state.image!!)
         }
     }
 
-    fun onUpdate(url: String) {
-        val myUser = ChildrenModel(
-            id = userData.id,
-            name = userData.name,
-            phone = userData.phone,
-            email = userData.email,
-            date = userData.date,
+    fun onUpdate(url: String) = viewModelScope.launch {
+        val myUser = withContext(IO) { userData }
+        val updatedUser = ChildrenModel(
+            id = myUser.id,
+            name = myUser.name,
+            phone = myUser.phone,
+            email = myUser.email,
+            date = myUser.date,
             image = url,
         )
-        update(myUser)
+        update(updatedUser)
     }
 
 

@@ -20,7 +20,7 @@ import com.example.comusenias.domain.use_cases.auth.AuthFactoryUseCases
 import com.example.comusenias.domain.use_cases.children.ChildrenFactory
 import com.example.comusenias.domain.use_cases.shared_preferences.DataUserStorageFactory
 import com.example.comusenias.domain.use_cases.users.UsersFactoryUseCases
-import com.example.comusenias.presentation.navigation.getLevelViewModel
+import com.example.comusenias.presentation.activities.MainActivity.Companion.getLevelViewModel
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.INVALID_DATE
 import com.example.comusenias.presentation.ui.theme.INVALID_PHONE
@@ -122,7 +122,7 @@ class ChildrenRegisterViewModel @Inject constructor(
     }
 
     fun onTelInputChanged(tel: String) {
-        stateChildren = stateChildren.copy(phone = tel)
+        stateChildren = stateChildren.copy(phone = tel.trim())
     }
 
     fun onDateInputChanged(date: String) {

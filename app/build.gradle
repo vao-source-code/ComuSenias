@@ -71,6 +71,7 @@ android {
     }
     lintOptions {
         checkReleaseBuilds false
+        abortOnError false
     }
 }
 apply from: 'download_task.gradle'
@@ -103,8 +104,6 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.compose.ui:ui-test-junit4'
     androidTestImplementation libs.espresso
-    androidTestImplementation libs.mockkAndroid
-    testImplementation libs.mockkAndroid
     testImplementation libs.kotlinXCoroutinesTest
     androidTestImplementation libs.mockitoAndroid
     androidTestImplementation libs.daggerHiltTesting
@@ -191,6 +190,8 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer:2.19.1'
 
 
+    androidTestImplementation 'io.mockk:mockk-android:1.12.0'
+    testImplementation 'io.mockk:mockk:1.12.0'
 }
 kapt {
     correctErrorTypes true

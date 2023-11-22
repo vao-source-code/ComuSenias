@@ -8,16 +8,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.comusenias.constants.TestTag
+import com.example.comusenias.presentation.activities.MainActivity.Companion.getChildrenProfileViewModel
+import com.example.comusenias.presentation.activities.MainActivity.Companion.getLevelViewModel
 import com.example.comusenias.presentation.component.defaults.app.ButtonApp
 import com.example.comusenias.presentation.component.gameAction.CongratsContent
 import com.example.comusenias.presentation.component.home.StatusGame
 import com.example.comusenias.presentation.component.home.getAllSubLevels
 import com.example.comusenias.presentation.extensions.validation.getChoicesSelected
 import com.example.comusenias.presentation.navigation.AppScreen
-import com.example.comusenias.presentation.navigation.getChildrenProfileViewModel
-import com.example.comusenias.presentation.navigation.getLevelViewModel
 import com.example.comusenias.presentation.ui.theme.CONTINUE
 import com.example.comusenias.presentation.ui.theme.SIZE30
 
@@ -31,7 +33,8 @@ fun CongratsPlayView(navController: NavHostController, modifier: Modifier) {
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(SIZE30.dp),
+            .padding(SIZE30.dp)
+            .testTag(TestTag.TAG_INDICATOR),
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

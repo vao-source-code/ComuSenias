@@ -11,13 +11,16 @@ import com.example.comusenias.domain.library.LibraryDate
 import com.example.comusenias.domain.models.observation.ObservationModel
 import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.models.state.ChangeProfileState
+import com.example.comusenias.domain.models.state.PacientState
 import com.example.comusenias.domain.models.users.ChildrenModel
 import com.example.comusenias.domain.models.users.SpecialistModel
+import com.example.comusenias.domain.use_cases.children.ChildrenFactory
 import com.example.comusenias.domain.use_cases.observation.ObservationFactory
 import com.example.comusenias.domain.use_cases.specialist.SpecialistFactory
 import com.example.comusenias.presentation.ui.theme.PACIENT
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,6 +29,7 @@ class ProfilePatientViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     @ApplicationContext private val context: Context,
     private val observationUsesCase: ObservationFactory,
+    private val childrenUsesCase: ChildrenFactory,
     private val specialistUsesCase: SpecialistFactory
 ) : ViewModel() {
 
@@ -44,21 +48,34 @@ class ProfilePatientViewModel @Inject constructor(
         private set
 
     val data = savedStateHandle.get<String>(PACIENT)
-    val user = ChildrenModel.fromJson(data!!)
+    var children = PacientState.fromJson(data!!)
+    var user = ChildrenModel()
 
     init {
-        getObservation()
-        getSpecialist()
+        getChildren()
+
+    }
+
+    fun getChildren() = viewModelScope.launch(Dispatchers.IO) {
+        user.name = children.name
+        user.phone = children.phone
+        user.email = children.email
+        user.date = children.date
+        childrenUsesCase.getChildrenById(children.id).collect {
+            user = it
+            getObservation()
+            getSpecialist()
+        }
     }
 
     private fun getSpecialist() = viewModelScope.launch {
-        specialistUsesCase.getSpecialistById(user.idSpecialist).collect { sp ->
+        specialistUsesCase.getSpecialistById(children.idSpecialist).collect { sp ->
             specialist = sp
         }
     }
 
     private fun getObservation() = viewModelScope.launch {
-        observationUsesCase.getObservation(user.id).collect { observation ->
+        observationUsesCase.getObservation(children.id).collect { observation ->
             observationResponse = observation
             if (observation is Response.Success) {
                 listObservation = observation.data

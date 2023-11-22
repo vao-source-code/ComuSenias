@@ -18,6 +18,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.comusenias.presentation.activities.MainActivity
+import com.example.comusenias.presentation.activities.MainActivity.Companion.getChildrenProfileViewModel
+import com.example.comusenias.presentation.activities.MainActivity.Companion.getLevelViewModel
 import com.example.comusenias.presentation.screen.camera.CameraScreen
 import com.example.comusenias.presentation.screen.camera.RecordCameraScreen
 import com.example.comusenias.presentation.screen.camera.TestCamera
@@ -49,9 +51,6 @@ import com.example.comusenias.presentation.ui.theme.SUB_LEVEL
 import com.example.comusenias.presentation.view_model.ChildrenProfileViewModel
 import com.example.comusenias.presentation.view_model.LevelViewModel
 import com.google.firebase.analytics.FirebaseAnalytics.Param.LEVEL
-
-lateinit var getLevelViewModel: LevelViewModel
-lateinit var getChildrenProfileViewModel: ChildrenProfileViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -204,6 +203,7 @@ private fun GetNavHost(
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 private fun NavGraphBuilder.composableSpecialist(
     navController: NavHostController,
     modifier: Modifier

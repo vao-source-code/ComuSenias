@@ -31,7 +31,6 @@ class LettersUseCaseTest {
         )
     }
 
-
     @Test
     fun verificarBusquedaDeImagen() = runBlocking {
         val image = lettersUseCase.getImageUseCase("letra_a.png")
@@ -41,7 +40,6 @@ class LettersUseCaseTest {
 
     @Test
     fun verificarBusquedaDeImagenDeLetraTest() = runBlocking {
-        //Given
         coEvery { letterImageRepositoryImpl.searchLetterImage("a") } returns object :
             Flow<Response<List<LetterModel>>> {
             override suspend fun collect(collector: FlowCollector<Response<List<LetterModel>>>) {
@@ -49,13 +47,8 @@ class LettersUseCaseTest {
             }
         }
 
-        //When
         lettersUseCase.searchImageLetterUseCase("a")
 
-        //Then
         coVerify { letterImageRepositoryImpl.searchLetterImage("a") }
     }
-
-
-
 }

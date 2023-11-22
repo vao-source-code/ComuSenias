@@ -92,16 +92,16 @@ class RegisterViewModel @Inject constructor(
     }
 
     fun onEmailInput(email: String) {
-        state = state.copy(email = email)
+        state = state.copy(email = email.trim())
     }
 
 
     fun onPasswordInput(password: String) {
-        state = state.copy(password = password)
+        state = state.copy(password = password.trim())
     }
 
     fun onConfirmPasswordInput(confirmPassword: String) {
-        state = state.copy(confirmPassword = confirmPassword)
+        state = state.copy(confirmPassword = confirmPassword.trim())
     }
 
     fun onSpecialistRoleInput(isSpecialistRole: Boolean) {
