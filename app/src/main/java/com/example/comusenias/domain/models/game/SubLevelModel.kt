@@ -14,17 +14,19 @@ data class SubLevelModel(
     var randomImage: String = EMPTY_STRING,
     var randomImageOnly: String = EMPTY_STRING,
     var isCompleted: StatusGame = StatusGame.BLOCKED,
+    var esVideo: Boolean = false,
 ) {
     fun toJson(): String = Gson().toJson(
         SubLevelModel(
             idLevel,
             name,
-           image = if (image != EMPTY_STRING) LibraryString.encodeURL(image) else EMPTY_STRING,
-           imageOnly = if (imageOnly != EMPTY_STRING) LibraryString.encodeURL(imageOnly) else EMPTY_STRING,
+            image = if (image != EMPTY_STRING) LibraryString.encodeURL(image) else EMPTY_STRING,
+            imageOnly = if (imageOnly != EMPTY_STRING) LibraryString.encodeURL(imageOnly) else EMPTY_STRING,
             randomLetter,
             randomImage,
             randomImageOnly,
-            isCompleted
+            isCompleted,
+            esVideo
         )
     )
 

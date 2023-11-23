@@ -26,6 +26,7 @@ class LevelViewModel @Inject constructor(
     var levelsResponse by mutableStateOf<Response<List<LevelModel>>?>(Response.Loading)
     var levels by mutableStateOf<List<LevelModel>>(listOf())
     var choiceOfOption by mutableStateOf<MutableList<Boolean>>(mutableListOf())
+    var isVideo by mutableStateOf(false)
     var onOptionSelected by mutableStateOf(EMPTY_STRING)
     var levelSelected by mutableStateOf(EMPTY_STRING)
     var subLevelSelected by mutableStateOf(EMPTY_STRING)
@@ -84,6 +85,7 @@ class LevelViewModel @Inject constructor(
         levelsResponse = if (subLevel != null) Response.Success(levels) else Response.Error(
             exception = Exception(NOT_RESPONSE_SUB_LEVEL)
         )
+        isVideo = subLevel?.esVideo ?: false
         return subLevel ?: throw Exception(NOT_RESPONSE_SUB_LEVEL)
     }
 

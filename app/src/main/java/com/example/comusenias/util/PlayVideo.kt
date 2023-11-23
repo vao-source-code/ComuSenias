@@ -1,7 +1,7 @@
 package com.example.comusenias.util
 
 import androidx.annotation.OptIn
-import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -11,6 +11,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.compose.ui.zIndex
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
@@ -40,22 +41,24 @@ fun PlayVideo(videoUrl: String) {
             videoPlayer.releasePlayer()
         }
     }
-    showVideo(isVideoReady, videoPlayer)
+    ShowVideo(isVideoReady, videoPlayer)
 }
 
 @Composable
-private fun showVideo(
+private fun ShowVideo(
     isVideoReady: MutableState<Boolean>,
     videoPlayer: VideoPlayer
 ) {
-    if (isVideoReady.value) {
-        AndroidView(
-            factory = { videoPlayer.getPlayerView() },
-            modifier = Modifier
-                .aspectRatio(15f / 10f)
-                .fillMaxWidth()
-        )
-    } else {
-        CircularProgressBar()
+    Crossfade(targetState = isVideoReady.value, label = "") { isReady ->
+        if (isReady) {
+            AndroidView(
+                factory = { videoPlayer.getPlayerView() },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .zIndex(1f)
+            )
+        } else {
+            CircularProgressBar()
+        }
     }
 }

@@ -22,7 +22,6 @@ import com.example.comusenias.presentation.activities.MainActivity.Companion.get
 import com.example.comusenias.presentation.activities.MainActivity.Companion.getLevelViewModel
 import com.example.comusenias.presentation.screen.camera.CameraScreen
 import com.example.comusenias.presentation.screen.camera.RecordCameraScreen
-import com.example.comusenias.presentation.screen.camera.TestCamera
 import com.example.comusenias.presentation.screen.gallery.GalleryScreen
 import com.example.comusenias.presentation.screen.gameAction.ChoseTheLetterPlayScreen
 import com.example.comusenias.presentation.screen.gameAction.ChoseTheSignPlayScreen
@@ -82,8 +81,7 @@ private fun GetNavHost(
         authNavGraph(navController = navController, modifier = modifier)
 
         composable(AppScreen.SplashScreen.route) {
-            //SplashScreen(navController)
-           TestCamera(navController = navController)
+            SplashScreen(navController)
         }
 
 

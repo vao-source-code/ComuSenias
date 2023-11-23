@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -18,6 +19,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -25,12 +27,13 @@ import com.example.comusenias.constants.TestTag
 import com.example.comusenias.presentation.activities.MainActivity.Companion.getLevelViewModel
 import com.example.comusenias.presentation.extensions.borderStyle.BorderStyleGames
 import com.example.comusenias.presentation.screen.gameAction.Sign
-import com.example.comusenias.presentation.ui.theme.IMAGE_SIGN
+import com.example.comusenias.presentation.ui.theme.AVATAR
 import com.example.comusenias.presentation.ui.theme.SIZE1
 import com.example.comusenias.presentation.ui.theme.SIZE12
 import com.example.comusenias.presentation.ui.theme.SIZE120
 import com.example.comusenias.presentation.ui.theme.SIZE150
 import com.example.comusenias.presentation.ui.theme.SIZE15
+import com.example.comusenias.util.PlayVideo
 
 @Composable
 fun MatchSign(
@@ -85,12 +88,23 @@ fun ButtonSign(
                 getLevelViewModel.onOptionSelected = sign.imageResource
             }
             .testTag(TestTag.TAG_MATCH_SIGN + sign.letter)
+            .absoluteOffset(y = with(LocalDensity.current) { (-2).toDp() })
     ) {
+        ShowImageOrVideoDos(sign.imageResource)
+    }
+}
+
+@Composable
+fun ShowImageOrVideoDos(image: String) {
+    if (!getLevelViewModel.isVideo) {
         AsyncImage(
-            model = sign.imageResource,
-            contentDescription = IMAGE_SIGN,
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Fit
+            modifier = Modifier
+                .fillMaxSize(),
+            model = image,
+            contentScale = ContentScale.Fit,
+            contentDescription = AVATAR
         )
+    } else {
+        PlayVideo(image)
     }
 }

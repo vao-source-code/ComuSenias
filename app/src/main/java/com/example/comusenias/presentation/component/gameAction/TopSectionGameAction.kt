@@ -44,6 +44,7 @@ import com.example.comusenias.presentation.ui.theme.SIZE50
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
 import com.example.comusenias.util.PlayVideo
+import com.example.comusenias.presentation.activities.MainActivity.Companion.getLevelViewModel
 
 @OptIn(UnstableApi::class) @Composable
 fun TopSectionGameAction(
@@ -143,8 +144,8 @@ fun ContentImageGame(
 }
 
 @Composable
-private fun ShowImageOrVideo(image: String) {
-    if (image.isNotEmpty()) {
+fun ShowImageOrVideo(image: String) {
+    if (!getLevelViewModel.isVideo) {
         AsyncImage(
             modifier = Modifier
                 .fillMaxSize(),
@@ -153,6 +154,6 @@ private fun ShowImageOrVideo(image: String) {
             contentDescription = AVATAR
         )
     } else {
-        PlayVideo("https://firebasestorage.googleapis.com/v0/b/comusenias.appspot.com/o/Disculpa.mp4?alt=media&token=964ed6ce-cee3-4b06-89a2-4ddfeee47e06")
+        PlayVideo(image)
     }
 }
