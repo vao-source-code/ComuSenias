@@ -45,8 +45,12 @@ import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
 import com.example.comusenias.util.PlayVideo
 import com.example.comusenias.presentation.activities.MainActivity.Companion.getLevelViewModel
+import com.example.comusenias.presentation.ui.theme.SIZE300
+import com.example.comusenias.presentation.ui.theme.SIZE350
+import com.example.comusenias.presentation.ui.theme.SIZE400
 
-@OptIn(UnstableApi::class) @Composable
+@OptIn(UnstableApi::class)
+@Composable
 fun TopSectionGameAction(
     letterSign: String,
     title: String,
@@ -110,10 +114,11 @@ fun ContentImageGame(
     image: String,
     letterSign: String
 ) {
+    val height = if (getLevelViewModel.isVideo) SIZE350.dp else SIZE220.dp
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(SIZE220.dp)
+            .height(height)
             .border(
                 width = SIZE2.dp,
                 color = primaryColorApp,
@@ -154,6 +159,6 @@ fun ShowImageOrVideo(image: String) {
             contentDescription = AVATAR
         )
     } else {
-        PlayVideo(image)
+        PlayVideo(videoUrl = image, isVideoYoutube = true)
     }
 }

@@ -8,7 +8,7 @@ import com.google.gson.Gson
 data class SubLevelModel(
     var idLevel: String = EMPTY_STRING,
     var name: String = EMPTY_STRING,
-    val image: String = EMPTY_STRING,
+    var image: String = EMPTY_STRING,
     val imageOnly: String = EMPTY_STRING,
     var randomLetter: String = EMPTY_STRING,
     var randomImage: String = EMPTY_STRING,

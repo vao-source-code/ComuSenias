@@ -90,21 +90,6 @@ fun ButtonSign(
             .testTag(TestTag.TAG_MATCH_SIGN + sign.letter)
             .absoluteOffset(y = with(LocalDensity.current) { (-2).toDp() })
     ) {
-        ShowImageOrVideoDos(sign.imageResource)
-    }
-}
-
-@Composable
-fun ShowImageOrVideoDos(image: String) {
-    if (!getLevelViewModel.isVideo) {
-        AsyncImage(
-            modifier = Modifier
-                .fillMaxSize(),
-            model = image,
-            contentScale = ContentScale.Fit,
-            contentDescription = AVATAR
-        )
-    } else {
-        PlayVideo(image)
+      ShowImageOrVideo(sign.imageResource)
     }
 }
