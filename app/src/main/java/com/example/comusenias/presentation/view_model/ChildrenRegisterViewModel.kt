@@ -112,7 +112,7 @@ class ChildrenRegisterViewModel @Inject constructor(
             phone = stateChildren.phone,
             email = user.email,
             date = stateChildren.date,
-            levels = getLevelViewModel.levels,
+        //    levels = getLevelViewModel.levels,
         )
         childrenFactoryUsesCases.createChildren(childrenModel)
     }

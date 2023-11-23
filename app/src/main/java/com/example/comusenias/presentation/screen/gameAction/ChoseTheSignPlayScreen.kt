@@ -38,6 +38,22 @@ fun ChoseTheSignPlayScreen(
     subLevel: String,
     levelViewModel: LevelViewModel
 ) {
+
+    val isButtonEnabled = remember { mutableStateOf(true) }
+    val onMatchResult: (Boolean) -> Unit = {
+        isButtonEnabled.value = it
+    }
+
+
+            ShowChoseTheSign(getLevelViewModel.subLevelModelSelected, isButtonEnabled, navController, onMatchResult)
+
+}/*@Composable
+fun ChoseTheSignPlayScreen(
+    navController: NavHostController,
+    level: String,
+    subLevel: String,
+    levelViewModel: LevelViewModel
+) {
     val subLevelViewModel = levelViewModel.getSubLevelById(level, subLevel)
 
     val isButtonEnabled = remember { mutableStateOf(true) }
@@ -64,7 +80,7 @@ fun ChoseTheSignPlayScreen(
 //            ContentProgressBar(null)
         }
     }
-}
+}*/
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable

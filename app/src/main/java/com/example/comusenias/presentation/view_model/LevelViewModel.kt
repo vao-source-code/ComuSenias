@@ -6,10 +6,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.comusenias.R
 import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.models.game.LevelModel
 import com.example.comusenias.domain.models.game.SubLevelModel
 import com.example.comusenias.domain.use_cases.level.LevelFactory
+import com.example.comusenias.presentation.component.home.StatusGame
 import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.NOT_RESPONSE_SUB_LEVEL
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,10 +32,12 @@ class LevelViewModel @Inject constructor(
     var onOptionSelected by mutableStateOf(EMPTY_STRING)
     var levelSelected by mutableStateOf(EMPTY_STRING)
     var subLevelSelected by mutableStateOf(EMPTY_STRING)
-
+    var subLevelModelSelected by mutableStateOf(SubLevelModel())
+/*
     init {
         getLevels()
     }
+*/
 
     /**
      * Obtiene una lista de niveles utilizando el caso de uso [levelUsesCases.getLevels].
@@ -64,32 +68,41 @@ class LevelViewModel @Inject constructor(
         return levels.filter { it.name == nameLevel }
     }
 
-    /**
-     * Obtiene un subnivel a partir de su identificador y nombre.
-     *
-     * @param idLevel El identificador del nivel que contiene el subnivel.
-     * @param nameSubLevel El nombre del subnivel que se busca.
-     *
-     * @return El [SubLevelModel] del subnivel si se encuentra.
-     * @throws Exception si no se encuentra el subnivel.
-     *
-     * Esta función realiza las siguientes acciones:
-     * 1. Establece [levelsResponse] a [Response.Loading].
-     * 2. Busca en la lista [levels] un nivel con el identificador [idLevel] y, dentro de ese nivel, un subnivel con el nombre [nameSubLevel].
-     * 3. Establece [levelsResponse] a [Response.Success] con la lista [levels] si se encuentra el subnivel, o a [Response.Error] con una excepción si no se encuentra.
-     * 4. Devuelve el [SubLevelModel] del subnivel si se encuentra, o lanza una excepción si no se encuentra.
-     */
+
     fun getSubLevelById(idLevel: String, nameSubLevel: String): SubLevelModel {
-        levelsResponse = Response.Loading
-        val subLevel = levels.find { it.id == idLevel }?.subLevel?.find { it.name == nameSubLevel }
-        levelsResponse = if (subLevel != null) Response.Success(levels) else Response.Error(
-            exception = Exception(NOT_RESPONSE_SUB_LEVEL)
-        )
-        isVideo = subLevel?.esVideo ?: false
-        return subLevel ?: throw Exception(NOT_RESPONSE_SUB_LEVEL)
+        if(this.levelSelected != idLevel  || this.subLevelSelected != nameSubLevel) {
+            levelSelected = idLevel
+            subLevelSelected = nameSubLevel
+            levelsResponse = Response.Loading
+            val subLevel = returnSubLevelModel()
+            levelsResponse = if (subLevel != null) Response.Success(levels) else Response.Error(
+                exception = Exception(NOT_RESPONSE_SUB_LEVEL)
+            )
+            isVideo = subLevel?.esVideo ?: false
+            subLevelModelSelected = subLevel ?: SubLevelModel()
+            return subLevel ?: throw Exception(NOT_RESPONSE_SUB_LEVEL)
+        }
+        return subLevelModelSelected
     }
 
     fun validateLetterCamera(): Boolean {
         return onOptionSelected.equals(subLevelSelected, ignoreCase = true)
     }
+
+    fun returnSubLevelModel () =
+        SubLevelModel(
+            "1",
+            "prueba",
+            "https://noticias.nmas.com.mx/wp-content/uploads/2022/03/WhatsApp-ok-mano.jpg",
+            "https://firebasestorage.googleapis.com/v0/b/pruebacomu-c4bd2.appspot.com/o/Permiso.mp4?alt=media&token=25801565-2121-4524-819d-b4555e301866",
+            "Permiso",
+            "https://noticias.nmas.com.mx/wp-content/uploads/2022/03/WhatsApp-ok-mano.jpg",
+            "https://firebasestorage.googleapis.com/v0/b/pruebacomu-c4bd2.appspot.com/o/Permiso.mp4?alt=media&token=25801565-2121-4524-819d-b4555e301866",
+            StatusGame.IN_PROGRESS,
+            true
+        )
+
 }
+
+
+

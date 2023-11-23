@@ -29,6 +29,30 @@ fun ChoseTheLetterPlayScreen(
 ) {
     getLevelViewModel.levelSelected = level
     getLevelViewModel.subLevelSelected = subLevel
+    //val subLevelViewModel = getLevelViewModel.getSubLevelById(level, subLevel)
+    val isButtonEnabled = remember { mutableStateOf(false) }
+    val onMatchResult: (Boolean) -> Unit = {
+        isButtonEnabled.value = it
+    }
+
+    ShowScreenChoseTheLetter(
+        getLevelViewModel.subLevelModelSelected,
+        isButtonEnabled,
+        navController,
+        level,
+        onMatchResult,
+    )
+}
+
+/*@Composable
+fun ChoseTheLetterPlayScreen(
+    navController: NavHostController,
+    level: String,
+    subLevel: String,
+    levelViewModel: LevelViewModel
+) {
+    getLevelViewModel.levelSelected = level
+    getLevelViewModel.subLevelSelected = subLevel
     val subLevelViewModel = getLevelViewModel.getSubLevelById(level, subLevel)
     val isButtonEnabled = remember { mutableStateOf(false) }
     val onMatchResult: (Boolean) -> Unit = {
@@ -60,7 +84,7 @@ fun ChoseTheLetterPlayScreen(
 //            ContentProgressBar(null)
         }
     }
-}
+}*/
 
 @Composable
 private fun ShowScreenChoseTheLetter(

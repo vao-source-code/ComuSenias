@@ -52,7 +52,7 @@ fun ContentCardGame(
     val blur: Int
     val iconImage: Int
 
-    when (status) {
+    when (IN_PROGRESS) {
         COMPLETED -> {
             lineColor = greenColorApp
             backgroundColorCard = White

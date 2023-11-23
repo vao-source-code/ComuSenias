@@ -145,15 +145,5 @@ fun ContentImageGame(
 
 @Composable
 fun ShowImageOrVideo(image: String) {
-    if (!getLevelViewModel.isVideo) {
-        AsyncImage(
-            modifier = Modifier
-                .fillMaxSize(),
-            model = image,
-            contentScale = ContentScale.Fit,
-            contentDescription = AVATAR
-        )
-    } else {
-        PlayVideo(image)
-    }
+    PlayVideo(image)
 }

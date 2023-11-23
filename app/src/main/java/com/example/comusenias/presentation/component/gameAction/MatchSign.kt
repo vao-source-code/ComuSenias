@@ -22,6 +22,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import coil.compose.AsyncImage
 import com.example.comusenias.constants.TestTag
 import com.example.comusenias.presentation.activities.MainActivity.Companion.getLevelViewModel
@@ -88,23 +89,9 @@ fun ButtonSign(
                 getLevelViewModel.onOptionSelected = sign.imageResource
             }
             .testTag(TestTag.TAG_MATCH_SIGN + sign.letter)
+            .zIndex(1f)
             .absoluteOffset(y = with(LocalDensity.current) { (-2).toDp() })
     ) {
-        ShowImageOrVideoDos(sign.imageResource)
-    }
-}
-
-@Composable
-fun ShowImageOrVideoDos(image: String) {
-    if (!getLevelViewModel.isVideo) {
-        AsyncImage(
-            modifier = Modifier
-                .fillMaxSize(),
-            model = image,
-            contentScale = ContentScale.Fit,
-            contentDescription = AVATAR
-        )
-    } else {
-        PlayVideo(image)
+        ShowImageOrVideo(sign.imageResource)
     }
 }
