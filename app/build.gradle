@@ -178,7 +178,7 @@ dependencies {
     implementation 'com.github.GrenderG:Toasty:1.5.2'
 
     //Statitics
-    implementation libs.charts
+    implementation "com.github.tehras:charts:0.2.4-alpha"
 
     androidTestImplementation 'io.mockk:mockk-android:1.12.0'
     testImplementation 'io.mockk:mockk:1.12.0'

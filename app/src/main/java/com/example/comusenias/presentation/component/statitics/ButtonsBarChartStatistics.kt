@@ -14,20 +14,22 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.unit.dp
+import com.example.comusenias.presentation.component.statitics.ButtonState.CORRECT_BUTTON
+import com.example.comusenias.presentation.component.statitics.ButtonState.INCORRECT_BUTTON
 import com.example.comusenias.presentation.ui.theme.CORRECT
 import com.example.comusenias.presentation.ui.theme.INCORRECT
 import com.example.comusenias.presentation.ui.theme.SIZE16
 import com.example.comusenias.presentation.ui.theme.SIZE20
 import com.example.comusenias.presentation.ui.theme.greenColorApp
 
-enum class ButtonState { CORRECT, INCORRECT }
+enum class ButtonState { CORRECT_BUTTON, INCORRECT_BUTTON }
 
 @Composable
 fun ButtonsStatistics(
     onClickCorrect: () -> Unit,
     onClickIncorrect: () -> Unit
 ) {
-    var activeButton by remember { mutableStateOf(ButtonState.CORRECT) }
+    var activeButton by remember { mutableStateOf(CORRECT_BUTTON) }
 
     Row(
         modifier = Modifier
@@ -38,9 +40,9 @@ fun ButtonsStatistics(
         ButtonStatistic(
             titleButton = CORRECT,
             color = greenColorApp,
-            isButtonPressed = activeButton == ButtonState.CORRECT,
+            isButtonPressed = activeButton == CORRECT_BUTTON,
             onClickButton = {
-                activeButton = ButtonState.CORRECT
+                activeButton = CORRECT_BUTTON
                 onClickCorrect()
             }
         )
@@ -50,9 +52,9 @@ fun ButtonsStatistics(
         ButtonStatistic(
             titleButton = INCORRECT,
             color = Red,
-            isButtonPressed = activeButton == ButtonState.INCORRECT,
+            isButtonPressed = activeButton == INCORRECT_BUTTON,
             onClickButton = {
-                activeButton = ButtonState.INCORRECT
+                activeButton = INCORRECT_BUTTON
                 onClickIncorrect()
             }
         )
