@@ -1,18 +1,13 @@
 package com.example.comusenias.util
 
-import android.util.Log
-import android.view.View
+
 import android.view.ViewGroup
 import androidx.annotation.OptIn
 import androidx.compose.animation.Crossfade
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.MutableState
@@ -30,7 +25,6 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
-import com.example.comusenias.constants.FirebaseConstants.UTILIZATION_YOUTUBE_COLLECTION
 import com.example.comusenias.presentation.component.defaults.app.CircularProgressBar
 import com.example.comusenias.presentation.ui.theme.SIZE16
 import com.example.comusenias.presentation.ui.theme.SIZE8
@@ -42,13 +36,14 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 
 @OptIn(UnstableApi::class)
 @Composable
-fun PlayVideo(videoUrl: String , isVideoYoutube : Boolean = false) {
+fun PlayVideo(videoUrl: String, isVideoYoutube: Boolean = false) {
     if (isVideoYoutube) {
         val lifecycleOwner = LocalLifecycleOwner.current
         YoutubePlayer(videoUrl, lifecycleOwner)
     } else {
         val context = LocalContext.current
-        val videoPlayer = remember { VideoPlayer(context, videoUrl) }
+        val videoPlayer =
+            remember { VideoPlayer(context, videoUrl) }
         val isVideoReady = remember { mutableStateOf(false) }
         DisposableEffect(videoPlayer) {
             val exoPlayer = videoPlayer.initializePlayer()
@@ -65,12 +60,8 @@ fun PlayVideo(videoUrl: String , isVideoYoutube : Boolean = false) {
                 videoPlayer.releasePlayer()
             }
         }
-        /*
-        Me base de esto
-         */
         ShowVideo(isVideoReady, videoPlayer)
     }
-
 }
 
 @Composable
@@ -111,9 +102,6 @@ fun YoutubePlayer(
     youtubeVideoId: String,
     lifecycleOwner: LifecycleOwner
 ) {
-
-
-
     AndroidView(
         modifier = Modifier
             .fillMaxWidth()
@@ -129,7 +117,6 @@ fun YoutubePlayer(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT
                 )
-                //lifecycleOwner.lifecycle.addObserver(this)
                 lifecycleOwner.lifecycle.addObserver(object : DefaultLifecycleObserver {
                     override fun onDestroy(owner: LifecycleOwner) {
                         youTubePlayerView.release()
@@ -138,9 +125,20 @@ fun YoutubePlayer(
                 addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
                     override fun onReady(youTubePlayer: YouTubePlayer) {
                         youTubePlayer.loadVideo(youtubeVideoId, 0f)
+                        youTubePlayer.play()
+                        youTubePlayer.setVolume(100)
+                    }
+
+                    override fun onStateChange(
+                        youTubePlayer: YouTubePlayer,
+                        state: PlayerConstants.PlayerState
+                    ) {
+                        if (state == PlayerConstants.PlayerState.ENDED) {
+                            youTubePlayer.loadVideo(youtubeVideoId, 0f)
+                            youTubePlayer.play()
+                        }
                     }
                 })
             }
         })
-
 }

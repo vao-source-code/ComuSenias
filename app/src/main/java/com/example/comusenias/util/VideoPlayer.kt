@@ -48,6 +48,7 @@ import androidx.media3.ui.PlayerView
      fun getPlayerView(): PlayerView {
          return PlayerView(context).apply {
              player = exoPlayer
+             useController = false
          }
      }
  }

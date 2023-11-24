@@ -45,9 +45,6 @@ import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
 import com.example.comusenias.util.PlayVideo
 import com.example.comusenias.presentation.activities.MainActivity.Companion.getLevelViewModel
-import com.example.comusenias.presentation.ui.theme.SIZE300
-import com.example.comusenias.presentation.ui.theme.SIZE350
-import com.example.comusenias.presentation.ui.theme.SIZE400
 
 @OptIn(UnstableApi::class)
 @Composable
@@ -114,7 +111,7 @@ fun ContentImageGame(
     image: String,
     letterSign: String
 ) {
-    val height = if (getLevelViewModel.isVideo) SIZE350.dp else SIZE220.dp
+    val height = if (getLevelViewModel.isVideo) SIZE220.dp else SIZE220.dp
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -159,6 +156,6 @@ fun ShowImageOrVideo(image: String) {
             contentDescription = AVATAR
         )
     } else {
-        PlayVideo(videoUrl = image, isVideoYoutube = true)
+        PlayVideo(videoUrl = image, isVideoYoutube = false)
     }
 }

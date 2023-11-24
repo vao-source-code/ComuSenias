@@ -18,11 +18,9 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
 import com.example.comusenias.constants.TestTag
 import com.example.comusenias.presentation.activities.MainActivity.Companion.getLevelViewModel
 import com.example.comusenias.presentation.extensions.borderStyle.BorderStyleGames
@@ -90,6 +88,14 @@ fun ButtonSign(
             .testTag(TestTag.TAG_MATCH_SIGN + sign.letter)
             .absoluteOffset(y = with(LocalDensity.current) { (-2).toDp() })
     ) {
-      ShowImageOrVideo(sign.imageResource)
+        ShowImageOrVideo(sign.imageResource)
+        Box(
+            modifier = Modifier
+                .matchParentSize()
+                .clickable {
+                    selectedButtonIndex.value = index
+                    getLevelViewModel.onOptionSelected = sign.imageResource
+                }
+        )
     }
 }
