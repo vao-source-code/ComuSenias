@@ -20,8 +20,10 @@ import androidx.navigation.navArgument
 import com.example.comusenias.presentation.activities.MainActivity
 import com.example.comusenias.presentation.activities.MainActivity.Companion.getChildrenProfileViewModel
 import com.example.comusenias.presentation.activities.MainActivity.Companion.getLevelViewModel
+import com.example.comusenias.presentation.component.gameAction.ShowImageOrVideo
 import com.example.comusenias.presentation.screen.camera.CameraScreen
 import com.example.comusenias.presentation.screen.camera.RecordCameraScreen
+import com.example.comusenias.presentation.screen.camera.TestCamera
 import com.example.comusenias.presentation.screen.gallery.GalleryScreen
 import com.example.comusenias.presentation.screen.gameAction.ChoseTheLetterPlayScreen
 import com.example.comusenias.presentation.screen.gameAction.ChoseTheSignPlayScreen
@@ -49,6 +51,7 @@ import com.example.comusenias.presentation.ui.theme.SPECIALIST_PROFILE
 import com.example.comusenias.presentation.ui.theme.SUB_LEVEL
 import com.example.comusenias.presentation.view_model.ChildrenProfileViewModel
 import com.example.comusenias.presentation.view_model.LevelViewModel
+import com.example.comusenias.util.VideoPlayer
 import com.google.firebase.analytics.FirebaseAnalytics.Param.LEVEL
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -75,7 +78,7 @@ private fun GetNavHost(
 
     NavHost(
         navController = navController,
-        startDestination = AppScreen.SplashScreen.route
+        startDestination = AppScreen.HomeScreen.route
     ) {
 
         authNavGraph(navController = navController, modifier = modifier)
@@ -162,15 +165,12 @@ private fun GetNavHost(
             PermissionRecordCameraScreen(navController = navController)
         }
 
-        //VideoPlayer
-        composable(AppScreen.VideoPlayerScreen.route, arguments = listOf(
-            navArgument("path") {
-                type = NavType.StringType
-            }
-        )
-        ) {
-            val path = it.arguments?.getString("path") ?: EMPTY_STRING
-            VideoPlayer(videoUrl = path)
+        //ShowVideoOrImageScree  aca se rompe la uri
+        composable(AppScreen.ShowVideoOrImageScreen.route + "/{path}",
+            arguments = listOf(navArgument("path") { type = NavType.StringType })
+        ) { navBackStackEntry ->
+            val path = navBackStackEntry.arguments?.getString("path") ?: ""
+            VideoPlayer(path)
         }
 
 

@@ -1,5 +1,7 @@
 package com.example.comusenias.presentation.navigation
 
+import android.net.Uri
+
 sealed class AppScreen(val route: String) {
 
     object LoginScreen : AppScreen("login_screen")
@@ -42,9 +44,13 @@ sealed class AppScreen(val route: String) {
         fun createRoute(path: String) = "video_player_screen/${path}"
     }
 
-    object RecordCameraScreen : AppScreen("record_camera_screen")
 
+    object RecordCameraScreen : AppScreen("record_camera_screen/{path}")
 
+    object ShowVideoOrImageScreen:AppScreen("show_video_or_image_screen/{path}"){
+        fun createRoute(path: String) = "show_video_or_image_screen/${path}"
+
+    }
 
     object CameraScreen : AppScreen("camera_screen")
 

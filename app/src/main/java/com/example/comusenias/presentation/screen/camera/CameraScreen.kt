@@ -10,12 +10,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.comusenias.constants.PreferencesConstant
+import com.example.comusenias.core.PreferenceManager
 import com.example.comusenias.presentation.component.gameAction.CounterAction
 import com.example.comusenias.presentation.view_model.CameraViewModel
 import com.example.comusenias.presentation.view_model.LevelViewModel
@@ -28,6 +31,9 @@ fun CameraScreen(
     navController: NavController? = null,
 ) {
     val context = LocalContext.current
+    val preferenceManager = remember { PreferenceManager(context) }
+    preferenceManager.saveInt(PreferencesConstant.PREFERENCE_LEVEL, 1) // capturar el level de mejor manera
+
     val activity = (context as? Activity)
     val lifecycleOwner = LocalLifecycleOwner.current
     val recognitionResultsState = viewModel.recognitionResults.collectAsState()
@@ -40,7 +46,7 @@ fun CameraScreen(
         AndroidView(
             factory = {
                 val previewView = PreviewView(it)
-                viewModel.showCameraPreview(previewView, lifecycleOwner)
+                viewModel.showCameraPreview(previewView,null,lifecycleOwner)
                 previewView
             },
             modifier = Modifier.fillMaxSize()

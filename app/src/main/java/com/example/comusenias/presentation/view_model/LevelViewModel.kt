@@ -32,6 +32,7 @@ class LevelViewModel @Inject constructor(
     var onOptionSelected by mutableStateOf(EMPTY_STRING)
     var levelSelected by mutableStateOf(EMPTY_STRING)
     var subLevelSelected by mutableStateOf(EMPTY_STRING)
+    var pathVideo by mutableStateOf(EMPTY_STRING)
 
     var subLevelModel by mutableStateOf(SubLevelModel())
 

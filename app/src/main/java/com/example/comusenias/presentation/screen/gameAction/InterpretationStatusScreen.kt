@@ -34,7 +34,7 @@ fun InterpretationStatusScreen(
         getLevelViewModel.choiceOfOption.add(status == Status.CORRECT)
     }
     GameAction(
-        imageSign = path,
+        imageSign = if (getLevelViewModel.isVideo) getLevelViewModel.pathVideo else path,
         enabledButton = true,
         title = THE_SIGN_IS,
         titleButton = FINISH,
