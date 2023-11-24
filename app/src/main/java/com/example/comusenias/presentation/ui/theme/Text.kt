@@ -122,6 +122,7 @@ const val ERROR_NOT_RESPONSE_VIDEO: String = "Frame at specified time could not 
 const val ERROR_NOT_USING_RUNNING_MODE_IMAGE: String = "Attempting to call detectImage while not using RunningMode.IMAGE"
 const val UNKNOWN_ERROR: String = "An unknown error has occurred"
 const val MP_RECOGNIZER_TASK = "gesture_recognizer_lsa.task"
+const val MP_RECOGNIZER_WORDS_TASK = "gesture_recognizer_words.task"
 const val DATE_CAPTURE_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
 const val PICTURE_CAMERA_IMAGES = "Pictures/My-Camera-App-Images"
 const val UTF_8 = "UTF-8"

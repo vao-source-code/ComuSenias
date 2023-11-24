@@ -8,6 +8,9 @@ import android.net.Uri
 import android.os.SystemClock
 import androidx.annotation.VisibleForTesting
 import androidx.camera.core.ImageProxy
+import androidx.compose.runtime.remember
+import com.example.comusenias.constants.PreferencesConstant.PREFERENCE_LEVEL
+import com.example.comusenias.core.PreferenceManager
 import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.models.recognizerSign.ResultBundle
 import com.example.comusenias.presentation.ui.theme.DEFAULT_HAND_DETECTION_CONFIDENCE
@@ -19,6 +22,7 @@ import com.example.comusenias.presentation.ui.theme.ERROR_NOT_RECOGNIZE_VIDEO_FI
 import com.example.comusenias.presentation.ui.theme.ERROR_NOT_RESPONSE_VIDEO
 import com.example.comusenias.presentation.ui.theme.ERROR_NOT_USING_RUNNING_MODE_IMAGE
 import com.example.comusenias.presentation.ui.theme.MP_RECOGNIZER_TASK
+import com.example.comusenias.presentation.ui.theme.MP_RECOGNIZER_WORDS_TASK
 import com.example.comusenias.presentation.ui.theme.OTHER_ERROR
 import com.example.comusenias.presentation.ui.theme.UNKNOWN_ERROR
 import com.example.comusenias.presentation.ui.theme.UNRECOGNIZED_DELEGATE
@@ -71,6 +75,11 @@ class GestureRecognizerHelper(
      */
     private fun setupGestureRecognizer() {
         try {
+            var recognizerTask : String = if(PreferenceManager(context).getInt(PREFERENCE_LEVEL , 1) == 1 )
+                MP_RECOGNIZER_TASK
+            else
+                MP_RECOGNIZER_WORDS_TASK
+
             val baseOptions = BaseOptions.builder()
                 .setDelegate(
                     when (currentDelegate) {
@@ -79,7 +88,7 @@ class GestureRecognizerHelper(
                         else -> throw IllegalStateException(UNRECOGNIZED_DELEGATE + currentDelegate)
                     }
                 )
-                .setModelAssetPath(MP_RECOGNIZER_TASK)
+                .setModelAssetPath(recognizerTask)
                 .build()
 
             val optionsBuilder = GestureRecognizer.GestureRecognizerOptions.builder()

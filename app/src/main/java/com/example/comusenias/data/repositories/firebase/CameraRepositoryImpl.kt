@@ -20,18 +20,22 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.video.FileOutputOptions
 import androidx.camera.video.Recording
+import androidx.camera.video.VideoCapture
 import androidx.camera.video.VideoRecordEvent
+import androidx.camera.view.CameraController
 import androidx.camera.view.LifecycleCameraController
 import androidx.camera.view.PreviewView
 import androidx.camera.view.video.AudioConfig
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavController
 import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.models.overlayView.ResultOverlayView
 import com.example.comusenias.domain.models.recognizerSign.ResultBundle
 import com.example.comusenias.domain.repositories.CameraRepository
+import com.example.comusenias.presentation.activities.MainActivity.Companion.getLevelViewModel
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.DATE_CAPTURE_FORMAT
 import com.example.comusenias.presentation.ui.theme.ERROR_BINDING_CAMERA
@@ -48,6 +52,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.withContext
 import java.io.File
+import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -63,9 +68,11 @@ class CameraRepositoryImpl @Inject constructor(
     private val gestureRecognizerHelper: GestureRecognizerHelper
 ) : CameraRepository, GestureRecognizerHelper.GestureRecognizerListener {
 
+
     private var recording: Recording? = null
     private var imageAnalysis: ImageAnalysis? = null
     private val recognitionResultsMutableFlow = MutableStateFlow<ResultOverlayView?>(null)
+    private var cameraController: LifecycleCameraController? = null
 
     init {
         setupImageAnalysis()
@@ -186,23 +193,33 @@ class CameraRepositoryImpl @Inject constructor(
      */
     override suspend fun showCameraPreview(
         previewView: PreviewView,
+        controller: LifecycleCameraController?,
         lifecycleOwner: LifecycleOwner
     ) {
         withContext(Dispatchers.Main) {
             preview.setSurfaceProvider(previewView.surfaceProvider)
-            bindCameraToLifecycle(lifecycleOwner)
+            bindCameraToLifecycle(controller!!, lifecycleOwner)
         }
     }
 
-    private fun bindCameraToLifecycle(lifecycleOwner: LifecycleOwner) = try {
+    private fun bindCameraToLifecycle(
+        controller: LifecycleCameraController,
+        lifecycleOwner: LifecycleOwner
+    ) = try {
         cameraProvider.unbindAll()
+
+        cameraController = controller
+        cameraController?.bindToLifecycle(lifecycleOwner)
+
+
         cameraProvider.bindToLifecycle(
             lifecycleOwner,
             cameraSelector,
             preview,
             imageAnalysis,
-            imageCapture
+            imageCapture,
         )
+
     } catch (e: Exception) {
         Log.e(SHOW_CAMERA_PREVIEW, ERROR_BINDING_CAMERA, e)
         Response.Error(e)
@@ -253,67 +270,80 @@ class CameraRepositoryImpl @Inject constructor(
     }
 
     @SuppressLint("MissingPermission")
-    override suspend fun recordVideo(controller: LifecycleCameraController,lifecycleOwner: LifecycleOwner,navController: NavController) {
+    override suspend fun recordVideo(
+        navController: NavController,
+        lifecycleOwner: LifecycleOwner
+    ) {
+        cameraController?.let {
+
+            if (recording != null) {
+                recording?.stop()
+                recording = null
+                return
+            }
+
+            // Utilizar el LifecycleCameraController local
+            cameraController?.bindToLifecycle(lifecycleOwner)
+
+            // Crear una carpeta en el directorio de archivos de la aplicación
+            val videoFolder = File(context.filesDir, "videos").apply {
+                mkdirs()
+            }
+
+            val outputFile = File(videoFolder, "my-recording.mp4")
+
+            recording = it.startRecording(
+                FileOutputOptions.Builder(outputFile).build(),
+                AudioConfig.create(true),
+                ContextCompat.getMainExecutor(context),
+            ) { event ->
+                when (event) {
+                    is VideoRecordEvent.Finalize -> {
+                        if (event.hasError()) {
+                            Log.e("RecordCameraScreen", "Video recording failed: ${event.error}")
+                            Log.e(
+                                "RecordCameraScreen",
+                                "Video recording failed: ${event.cause!!.message}"
+                            )
+                            Log.e(
+                                "RecordCameraScreen",
+                                "Output file path: ${outputFile.absolutePath}"
+                            )
+                            recording?.close()
+                            recording = null
+
+                            Toast.makeText(
+                                context,
+                                "Video capture failed",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        } else {
+                            Log.d("RecordCameraScreen", "Video recording succeeded")
 
 
-        if(recording != null) {
-            recording?.stop()
-            recording = null
-            return
-        }
+                            recording?.close()
+                            recording = null
+
+                            val videoFolderPath = videoFolder.toUri().toString()
+                            val videoFileName = outputFile.name
+
+                            val videoUrl = "$videoFolderPath/$videoFileName"
+                            getLevelViewModel.pathVideo = videoUrl
+                            navController.navigate(AppScreen.InterpretationStatusScreen.route)
+                            Log.d("UriVideo", videoUrl)
 
 
-        val outputFile = File(context.filesDir, "my-recording.mp4")
-        controller.bindToLifecycle(lifecycleOwner)
-
-        recording = controller.startRecording(
-            FileOutputOptions.Builder(outputFile).build(),
-            AudioConfig.create(true),
-            ContextCompat.getMainExecutor(context),
-        ) { event ->
-            when (event) {
-                is VideoRecordEvent.Finalize -> {
-                    if (event.hasError()) {
-                        Log.e("RecordCameraScreen", "Video recording failed: ${event.error}")
-                        Log.e("RecordCameraScreen", "Video recording failed: ${event.cause!!.message}")
-                        Log.e("RecordCameraScreen", "Output file path: ${outputFile.absolutePath}")
-
-
-
-                        recording?.close()
-                        recording = null
-
-                        Toast.makeText(
-                            context,
-                            "Video capture failed",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    } else {
-                        Log.d("RecordCameraScreen", "Video recording succeeded")
-
-
-                        recording?.close()
-                        recording = null
-
-
-
-                     //   val mp4Uri: Uri = FileProvider.getUriForFile(context, "com.example.comusenias.fileprovider", outputFile)
-                        navController.navigate(AppScreen.VideoPlayerScreen.createRoute("uri"))
-
-
-                        Toast.makeText(
-                            context,
-                            "Video capture succeeded",
-                            Toast.LENGTH_LONG
-                        ).show()
+                            Toast.makeText(
+                                context,
+                                "Video capture succeeded",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
                     }
                 }
             }
         }
     }
-
-
-
 
 
     override fun onError(error: String, errorCode: Int) {
@@ -335,4 +365,6 @@ class CameraRepositoryImpl @Inject constructor(
         recognitionResultsMutableFlow.value =
             ResultOverlayView(results, inputImageHeight, inputImageWidth)
     }
+
+
 }
