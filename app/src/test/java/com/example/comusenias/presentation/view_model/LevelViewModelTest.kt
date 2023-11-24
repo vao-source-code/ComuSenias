@@ -47,6 +47,8 @@ class LevelViewModelTest {
                 imageOnly = "imageOnly",
                 randomLetter = "C",
                 randomImage = "randomImage",
+                successes = 0,
+                failures = 0
             ),
             SubLevelModel(
                 name = "E",
@@ -54,6 +56,8 @@ class LevelViewModelTest {
                 imageOnly = "imageOnly",
                 randomLetter = "E",
                 randomImage = "randomImage",
+                successes = 0,
+                failures = 0
             )
         )
 
