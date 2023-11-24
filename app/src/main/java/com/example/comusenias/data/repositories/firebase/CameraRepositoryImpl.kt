@@ -5,8 +5,10 @@ import android.content.ContentValues
 import android.content.Context
 import android.net.Uri
 import android.os.Build
+import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
+import android.util.Size
 import android.view.Surface
 import android.widget.Toast
 import androidx.annotation.OptIn
@@ -18,17 +20,17 @@ import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.camera.video.FileOutputOptions
+import androidx.camera.video.FallbackStrategy
+import androidx.camera.video.MediaStoreOutputOptions
+import androidx.camera.video.Quality
+import androidx.camera.video.QualitySelector
+import androidx.camera.video.Recorder
 import androidx.camera.video.Recording
 import androidx.camera.video.VideoCapture
 import androidx.camera.video.VideoRecordEvent
-import androidx.camera.view.CameraController
-import androidx.camera.view.LifecycleCameraController
 import androidx.camera.view.PreviewView
-import androidx.camera.view.video.AudioConfig
 import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
-import androidx.core.net.toUri
+import androidx.core.util.Consumer
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavController
 import com.example.comusenias.domain.models.response.Response
@@ -72,12 +74,31 @@ class CameraRepositoryImpl @Inject constructor(
     private var recording: Recording? = null
     private var imageAnalysis: ImageAnalysis? = null
     private val recognitionResultsMutableFlow = MutableStateFlow<ResultOverlayView?>(null)
-    private var cameraController: LifecycleCameraController? = null
+
+
+    private val selector = QualitySelector
+        .from(
+            Quality.UHD,
+            FallbackStrategy.higherQualityOrLowerThan(Quality.SD)
+        )
+
+    private val recorder = Recorder.Builder()
+        .setQualitySelector(selector)
+        .build()
+
+    private val videoCapture = VideoCapture.withOutput(recorder)
 
     init {
         setupImageAnalysis()
         gestureRecognizerHelper.setListener(this)
     }
+
+
+
+
+
+    // Create the VideoCapture UseCase and make it available to use
+// in the other part of the application.
 
     /**
      * Captura una imagen utilizando la cámara y la guarda en el almacenamiento del dispositivo.
@@ -193,31 +214,25 @@ class CameraRepositoryImpl @Inject constructor(
      */
     override suspend fun showCameraPreview(
         previewView: PreviewView,
-        controller: LifecycleCameraController?,
         lifecycleOwner: LifecycleOwner
     ) {
         withContext(Dispatchers.Main) {
             preview.setSurfaceProvider(previewView.surfaceProvider)
-            bindCameraToLifecycle(controller!!, lifecycleOwner)
+            bindCameraToLifecycle(lifecycleOwner)
         }
     }
 
     private fun bindCameraToLifecycle(
-        controller: LifecycleCameraController,
         lifecycleOwner: LifecycleOwner
     ) = try {
         cameraProvider.unbindAll()
-
-        cameraController = controller
-        cameraController?.bindToLifecycle(lifecycleOwner)
-
-
         cameraProvider.bindToLifecycle(
             lifecycleOwner,
             cameraSelector,
             preview,
             imageAnalysis,
             imageCapture,
+            videoCapture
         )
 
     } catch (e: Exception) {
@@ -270,80 +285,164 @@ class CameraRepositoryImpl @Inject constructor(
     }
 
     @SuppressLint("MissingPermission")
-    override suspend fun recordVideo(
-        navController: NavController,
-        lifecycleOwner: LifecycleOwner
-    ) {
-        cameraController?.let {
+    override suspend fun recordVideo(navController: NavController) {
+// Detener la grabación actual antes de comenzar una nueva.
+        stopRecording()
 
-            if (recording != null) {
-                recording?.stop()
-                recording = null
-                return
-            }
+        if (recording != null) {
+            // Detener la grabación actual antes de comenzar una nueva.
+            stopRecording()
+        }
 
-            // Utilizar el LifecycleCameraController local
-            cameraController?.bindToLifecycle(lifecycleOwner)
+        val videoFolder = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES), "CameraXVideos")
+        if (!videoFolder.exists()) {
+            videoFolder.mkdirs()
+        }
 
-            // Crear una carpeta en el directorio de archivos de la aplicación
-            val videoFolder = File(context.filesDir, "videos").apply {
-                mkdirs()
-            }
+        val videoFileName = "CameraX-VideoCapture-${System.currentTimeMillis()}.mp4"
 
-            val outputFile = File(videoFolder, "my-recording.mp4")
+        val contentValues = ContentValues().apply {
+            put(MediaStore.MediaColumns.DISPLAY_NAME, videoFileName)
+            put(MediaStore.MediaColumns.MIME_TYPE, "video/mp4")
+        }
 
-            recording = it.startRecording(
-                FileOutputOptions.Builder(outputFile).build(),
-                AudioConfig.create(true),
-                ContextCompat.getMainExecutor(context),
-            ) { event ->
-                when (event) {
-                    is VideoRecordEvent.Finalize -> {
-                        if (event.hasError()) {
-                            Log.e("RecordCameraScreen", "Video recording failed: ${event.error}")
-                            Log.e(
-                                "RecordCameraScreen",
-                                "Video recording failed: ${event.cause!!.message}"
-                            )
-                            Log.e(
-                                "RecordCameraScreen",
-                                "Output file path: ${outputFile.absolutePath}"
-                            )
-                            recording?.close()
-                            recording = null
-
-                            Toast.makeText(
-                                context,
-                                "Video capture failed",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        } else {
-                            Log.d("RecordCameraScreen", "Video recording succeeded")
+        val mediaStoreOutputOptions = MediaStoreOutputOptions
+            .Builder(context.contentResolver, MediaStore.Video.Media.EXTERNAL_CONTENT_URI)
+            .setContentValues(contentValues)
+            .build()
 
 
-                            recording?.close()
-                            recording = null
+        val recordingListener = Consumer<VideoRecordEvent> { event ->
+            when (event) {
+                is VideoRecordEvent.Start -> {
 
-                            val videoFolderPath = videoFolder.toUri().toString()
-                            val videoFileName = outputFile.name
+                    Toast.makeText(
+                        context,
+                        "Video capture Start",
+                        Toast.LENGTH_LONG
+                    ).show()
 
-                            val videoUrl = "$videoFolderPath/$videoFileName"
-                            getLevelViewModel.pathVideo = videoUrl
-                            navController.navigate(AppScreen.InterpretationStatusScreen.route)
-                            Log.d("UriVideo", videoUrl)
+                }
+                is VideoRecordEvent.Finalize -> {
+                    if (!event.hasError()) {
+
+                        Toast.makeText(
+                            context,
+                            "Video capture Success",
+                            Toast.LENGTH_LONG
+                        ).show()
 
 
-                            Toast.makeText(
-                                context,
-                                "Video capture succeeded",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
+
+                        getLevelViewModel.pathVideo = videoFileName
+
+                        navController.navigate(AppScreen.InterpretationStatusScreen.route)
+
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Video failed",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        "Video capture ends with error: ${event.error}"
+
                     }
                 }
             }
         }
+
+
+        try {
+             recording = videoCapture.output
+                .prepareRecording(context, mediaStoreOutputOptions)
+                .withAudioEnabled()
+                .start(ContextCompat.getMainExecutor(context), recordingListener)
+        } catch (e: Exception) {
+            // Log the error or handle it appropriately
+            Log.e("VideoCaptureError", "Error starting video recording", e)
+        }
+
+
+
     }
+
+    private fun stopRecording() {
+        if (recording != null) {
+            recording?.stop()
+            recording = null
+        }
+    }
+
+
+    /* cameraController?.let {
+
+         if (recording != null) {
+             recording?.stop()
+             recording = null
+             return
+         }
+
+         // Utilizar el LifecycleCameraController local
+         cameraController?.bindToLifecycle(lifecycleOwner)
+
+         // Crear una carpeta en el directorio de archivos de la aplicación
+         val videoFolder = File(context.filesDir, "videos").apply {
+             mkdirs()
+         }
+
+         val outputFile = File(videoFolder, "my-recording.mp4")
+
+         recording = it.startRecording(
+             FileOutputOptions.Builder(outputFile).build(),
+             AudioConfig.create(true),
+             ContextCompat.getMainExecutor(context),
+         ) { event ->
+             when (event) {
+                 is VideoRecordEvent.Finalize -> {
+                     if (event.hasError()) {
+                         Log.e("RecordCameraScreen", "Video recording failed: ${event.error}")
+                         Log.e(
+                             "RecordCameraScreen",
+                             "Video recording failed: ${event.cause!!.message}"
+                         )
+                         Log.e(
+                             "RecordCameraScreen",
+                             "Output file path: ${outputFile.absolutePath}"
+                         )
+                         recording?.close()
+                         recording = null
+
+                         Toast.makeText(
+                             context,
+                             "Video capture failed",
+                             Toast.LENGTH_LONG
+                         ).show()
+                     } else {
+                         Log.d("RecordCameraScreen", "Video recording succeeded")
+
+
+                         recording?.close()
+                         recording = null
+
+                         val videoFolderPath = videoFolder.toUri().toString()
+                         val videoFileName = outputFile.name
+
+                         val videoUrl = "$videoFolderPath/$videoFileName"
+                         getLevelViewModel.pathVideo = videoUrl
+                         navController.navigate(AppScreen.InterpretationStatusScreen.route)
+                         Log.d("UriVideo", videoUrl)
+
+
+                         Toast.makeText(
+                             context,
+                             "Video capture succeeded",
+                             Toast.LENGTH_LONG
+                         ).show()
+                     }
+                 }
+             }
+         }
+     }*/
 
 
     override fun onError(error: String, errorCode: Int) {

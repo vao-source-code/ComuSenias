@@ -24,10 +24,9 @@ class CameraUseCases @Inject constructor(private val customCameraRepository: Cam
      */
     suspend fun showCameraPreview(
         previewView: PreviewView,
-        controller: LifecycleCameraController?,
         lifecycleOwner: LifecycleOwner
     ) =
-        customCameraRepository.showCameraPreview(previewView,controller, lifecycleOwner)
+        customCameraRepository.showCameraPreview(previewView, lifecycleOwner)
 
     /**
      * Captura y guarda una imagen.
@@ -50,6 +49,6 @@ class CameraUseCases @Inject constructor(private val customCameraRepository: Cam
     /**
      * Graba la cámara.
      */
-    suspend fun recordVideo(navController: NavController,lifecycleOwner: LifecycleOwner) = customCameraRepository.recordVideo(navController,lifecycleOwner)
+    suspend fun recordVideo(navController: NavController) = customCameraRepository.recordVideo(navController)
 
 }

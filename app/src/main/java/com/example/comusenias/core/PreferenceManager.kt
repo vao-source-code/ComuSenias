@@ -23,6 +23,11 @@ class PreferenceManager(private val context: Context) {
         editor.apply()
     }
 
+    fun clearInt(key: String){
+        val editor = getSharedPreferences().edit()
+        editor.remove(key)
+        editor.apply()
+    }
     fun getString(key: String, defaultValue: String): String {
         return getSharedPreferences().getString(key, defaultValue) ?: defaultValue
     }

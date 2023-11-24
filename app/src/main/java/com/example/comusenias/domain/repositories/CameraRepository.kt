@@ -9,9 +9,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface CameraRepository {
     suspend fun captureAndSaveImage(navController: NavController)
-    suspend fun showCameraPreview(previewView: PreviewView,cameraController: LifecycleCameraController?, lifecycleOwner: LifecycleOwner)
+    suspend fun showCameraPreview(previewView: PreviewView, lifecycleOwner: LifecycleOwner)
     suspend fun stopCameraPreview()
     fun startObjectDetection(): Flow<ResultOverlayView>
 
-    suspend fun recordVideo(navController: NavController,lifecycleOwner: LifecycleOwner)
+    suspend fun recordVideo(navController: NavController)
 }

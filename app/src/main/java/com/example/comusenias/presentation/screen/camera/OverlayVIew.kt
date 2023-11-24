@@ -1,3 +1,4 @@
+import androidx.annotation.OptIn
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
@@ -8,6 +9,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.media3.common.util.Log
+import androidx.media3.common.util.UnstableApi
 import com.example.comusenias.R
 import com.example.comusenias.domain.models.overlayView.ResultOverlayView
 import com.example.comusenias.presentation.ui.theme.LANDMARK_STROKE_WIDTH
@@ -15,7 +18,7 @@ import com.example.comusenias.presentation.ui.theme.NONE
 import com.example.comusenias.presentation.view_model.LevelViewModel
 import com.google.mediapipe.tasks.vision.handlandmarker.HandLandmarker
 
-@Composable
+@OptIn(UnstableApi::class) @Composable
 fun OverlayView(
     resultOverlayView: ResultOverlayView?,
     levelViewModel: LevelViewModel
@@ -37,6 +40,12 @@ fun OverlayView(
             val landmarksResult = it.landmarks()
             val isCorrect = verifyOptionSelected(category, levelViewModel)
             levelViewModel.onOptionSelected = category
+
+
+
+            Log.d("VideoSign",gestures.toString())
+
+
 
             Canvas(
                 modifier = Modifier.fillMaxSize()

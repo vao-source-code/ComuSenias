@@ -18,6 +18,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Videocam
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -28,84 +29,53 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.comusenias.constants.PreferencesConstant
 import com.example.comusenias.constants.PreferencesConstant.PREFERENCE_LEVEL
 import com.example.comusenias.core.PreferenceManager
 import com.example.comusenias.presentation.component.gameAction.CounterAction
 import com.example.comusenias.presentation.view_model.CameraViewModel
 import com.example.comusenias.presentation.view_model.LevelViewModel
+import kotlinx.coroutines.delay
 
 
 @Composable
 fun RecordCameraScreen(
     levelViewModel: LevelViewModel,
-    viewModel: CameraViewModel = hiltViewModel(),
+    viewModel: CameraViewModel,
     navController: NavController? = null,
 ) {
 
     val context = LocalContext.current
     val preferenceManager = remember { PreferenceManager(context) }
-    preferenceManager.saveInt(PREFERENCE_LEVEL, 2) // capt
+    preferenceManager.saveInt(PREFERENCE_LEVEL, 1) // capturar el level de mejor manera
+
     val activity = (context as? Activity)
     val lifecycleOwner = LocalLifecycleOwner.current
+    val recognitionResultsState = viewModel.recognitionResults.collectAsState()
+    val recognitionResults = recognitionResultsState.value
 
 
-    val controller = remember {
-        LifecycleCameraController(context).apply {
-            setEnabledUseCases(
-                CameraController.VIDEO_CAPTURE
-            )
-        }
-    }
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        val lifecycleOwner = LocalLifecycleOwner.current
-
-        /*AndroidView(
-
+        AndroidView(
             factory = {
-              //  this.controller = controller
-                val previewView = PreviewView(it).apply {
-                    this.controller = controller
-                    viewModel.showCameraPreview(this, lifecycleOwner)
-
-                }
+                val previewView = PreviewView(it)
+                viewModel.showCameraPreview(previewView,lifecycleOwner)
                 previewView
-
-                /*PreviewView(it).apply {
-                    this.controller = controller
-                    viewModel.showCameraPreview(this, lifecycleOwner)
-                    //controller.cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA
-                    //controller.bindToLifecycle(lifecycleOwner)
-                }*/
             },
             modifier = Modifier.fillMaxSize()
-        )*/
-
-        // OverlayView should be adjusted accordingly
-
-
-        CameraPreview(
-            controller = controller,
-            modifier = Modifier
-                .fillMaxSize(), viewModel = viewModel, levelViewModel = levelViewModel
         )
 
-        /*recognitionResults?.result.let {
-            it?.forEach {
-                Log.d("RecordVideoSign",   it.gestures().toString())
-
-            }
-        }*/
-
-
+        OverlayView(
+            resultOverlayView = recognitionResults,
+            levelViewModel = levelViewModel
+        )
 
 
         IconButton(
             onClick = {
-                // viewModel.recordVideo(controller,lifecycleOwner,navController!!)
-
-                viewModel.recordVideo(navController!!,  lifecycleOwner)
+                viewModel.recordVideo(navController = navController!!)
             },
             modifier = Modifier
                 .padding(16.dp)
@@ -118,19 +88,20 @@ fun RecordCameraScreen(
             )
         }
 
+        CounterAction()
+
+        BackHandler {
+            activity?.finish()
+        }
+
+        DisposableEffect(Unit) {
+            viewModel.startObjectDetection()
+            onDispose { }
+        }
+
     }
 
 
-    CounterAction()
-
-    BackHandler {
-        activity?.finish()
-    }
-
-    /*DisposableEffect(Unit) {
-        viewModel.startObjectDetection()
-        onDispose { }
-    }*/
 }
 
 

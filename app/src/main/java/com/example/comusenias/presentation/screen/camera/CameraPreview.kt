@@ -5,7 +5,9 @@ import androidx.annotation.OptIn
 import androidx.camera.core.CameraSelector
 import androidx.camera.view.LifecycleCameraController
 import androidx.camera.view.PreviewView
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -18,8 +20,6 @@ import com.example.comusenias.presentation.view_model.LevelViewModel
 
 @OptIn(UnstableApi::class) @Composable
 fun CameraPreview(
-    controller: LifecycleCameraController,
-    modifier: Modifier = Modifier,
     viewModel:CameraViewModel = hiltViewModel(),
     levelViewModel: LevelViewModel
 ) {
@@ -30,30 +30,25 @@ fun CameraPreview(
 
     AndroidView(
         factory = {
-
-            PreviewView(it).apply {
-                this.controller = controller
-               // controller.cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA
-                viewModel.showCameraPreview(this,controller,lifecycleOwner)
-            }
+            val previewView = PreviewView(it)
+            viewModel.showCameraPreview(previewView,lifecycleOwner)
+            previewView
         },
-        modifier = modifier
+        modifier = Modifier.fillMaxSize()
     )
 
     OverlayView(
         resultOverlayView = recognitionResults,
         levelViewModel = levelViewModel
     )
-    recognitionResults?.result.let {
-        it?.forEach {
-            Log.d("VideoSign",it.gestures().toString())
-        }
+
+
+
+
+    DisposableEffect(Unit) {
+        viewModel.startObjectDetection()
+        onDispose { }
     }
-
-
-
-    viewModel.startObjectDetection()
-
 
 
 }

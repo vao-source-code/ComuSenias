@@ -46,7 +46,7 @@ fun CameraScreen(
         AndroidView(
             factory = {
                 val previewView = PreviewView(it)
-                viewModel.showCameraPreview(previewView,null,lifecycleOwner)
+                viewModel.showCameraPreview(previewView,lifecycleOwner)
                 previewView
             },
             modifier = Modifier.fillMaxSize()

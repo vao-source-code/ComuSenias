@@ -9,10 +9,12 @@ import android.os.SystemClock
 import androidx.annotation.VisibleForTesting
 import androidx.camera.core.ImageProxy
 import androidx.compose.runtime.remember
+import com.example.comusenias.constants.PreferencesConstant
 import com.example.comusenias.constants.PreferencesConstant.PREFERENCE_LEVEL
 import com.example.comusenias.core.PreferenceManager
 import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.models.recognizerSign.ResultBundle
+import com.example.comusenias.presentation.activities.MainActivity.Companion.getLevelViewModel
 import com.example.comusenias.presentation.ui.theme.DEFAULT_HAND_DETECTION_CONFIDENCE
 import com.example.comusenias.presentation.ui.theme.DEFAULT_HAND_PRESENCE_CONFIDENCE
 import com.example.comusenias.presentation.ui.theme.DEFAULT_HAND_TRACKING_CONFIDENCE
@@ -75,10 +77,13 @@ class GestureRecognizerHelper(
      */
     private fun setupGestureRecognizer() {
         try {
-            var recognizerTask : String = if(PreferenceManager(context).getInt(PREFERENCE_LEVEL , 1) == 1 )
+
+            var recognizerTask : String = if(getLevelViewModel.levelSelected == "1")
                 MP_RECOGNIZER_TASK
             else
                 MP_RECOGNIZER_WORDS_TASK
+
+
 
             val baseOptions = BaseOptions.builder()
                 .setDelegate(

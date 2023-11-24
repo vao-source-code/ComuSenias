@@ -49,6 +49,7 @@ import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.PACIENT
 import com.example.comusenias.presentation.ui.theme.SPECIALIST_PROFILE
 import com.example.comusenias.presentation.ui.theme.SUB_LEVEL
+import com.example.comusenias.presentation.view_model.CameraViewModel
 import com.example.comusenias.presentation.view_model.ChildrenProfileViewModel
 import com.example.comusenias.presentation.view_model.LevelViewModel
 import com.example.comusenias.util.VideoPlayer
@@ -73,6 +74,8 @@ private fun GetNavHost(
 ) {
     val levelViewModel: LevelViewModel = hiltViewModel()
     val childrenProfileViewModel: ChildrenProfileViewModel = hiltViewModel()
+    val cameraViewModel:CameraViewModel = hiltViewModel()
+
     getLevelViewModel = levelViewModel
     getChildrenProfileViewModel = childrenProfileViewModel
 
@@ -152,7 +155,7 @@ private fun GetNavHost(
         }
 
         composable(AppScreen.RecordCameraScreen.route){
-            RecordCameraScreen(levelViewModel = levelViewModel, navController = navController)
+            RecordCameraScreen(levelViewModel = levelViewModel, viewModel = cameraViewModel ,navController = navController)
         }
 
         //Permission Camera
