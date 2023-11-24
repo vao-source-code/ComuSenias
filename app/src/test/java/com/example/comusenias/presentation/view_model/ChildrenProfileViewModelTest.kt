@@ -81,7 +81,7 @@ class ChildrenProfileViewModelTest {
     }
 
     @Test
-    fun `logout session actual `() = runTest {
+    fun logoutSessionActual() = runTest {
         viewModel.logout()
 
         coVerify {
