@@ -2,10 +2,10 @@ package com.example.comusenias.presentation.extensions.statitics
 
 import android.util.Log
 import androidx.compose.ui.graphics.Color.Companion.Red
+import com.example.comusenias.domain.models.game.SubLevelModel
 import com.example.comusenias.presentation.extensions.statitics.StatisticsCalculator.AttemptType.FAILURE
 import com.example.comusenias.presentation.extensions.statitics.StatisticsCalculator.AttemptType.SUCCESS
 import com.example.comusenias.presentation.extensions.statitics.StatisticsCalculator.AttemptType.TOTAL
-import com.example.comusenias.presentation.screen.specialist.SubLevelModelMock
 import com.example.comusenias.presentation.ui.theme.greenColorApp
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
 import com.github.tehras.charts.bar.BarChartData.Bar
@@ -28,7 +28,7 @@ object StatisticsCalculator {
     }
 
     fun createBarList(
-        subLevels: List<SubLevelModelMock>,
+        subLevels: List<SubLevelModel>,
         attemptType: AttemptType
     ): List<Bar> {
         val bars = subLevels.map { subLevel ->
@@ -48,7 +48,7 @@ object StatisticsCalculator {
     }
 
     fun getValuesPointList(
-        subLevels: List<SubLevelModelMock>,
+        subLevels: List<SubLevelModel>,
         attemptType: AttemptType
     ): List<Point> {
         val barList = createBarList(subLevels, attemptType)

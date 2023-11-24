@@ -36,7 +36,7 @@ fun PatientProfileContent(
         TabsPage(
             tabContent = listOf(
                 {
-                    StatisticsScreen()
+                    StatisticsScreen(navController = navController , viewModel = viewModel)
                 },
                 {
                     ResponseStatusObservationScreen(

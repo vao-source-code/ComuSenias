@@ -13,13 +13,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.unit.dp
+import com.example.comusenias.domain.models.game.SubLevelModel
 import com.example.comusenias.presentation.component.statitics.StatisticsDescriptions
 import com.example.comusenias.presentation.extensions.statitics.StatisticsCalculator.AttemptType.FAILURE
 import com.example.comusenias.presentation.extensions.statitics.StatisticsCalculator.AttemptType.SUCCESS
 import com.example.comusenias.presentation.extensions.statitics.StatisticsCalculator.AttemptType.TOTAL
 import com.example.comusenias.presentation.extensions.statitics.StatisticsCalculator.createBarList
 import com.example.comusenias.presentation.extensions.statitics.StatisticsCalculator.sumStatistics
-import com.example.comusenias.presentation.screen.specialist.SubLevelModelMock
 import com.example.comusenias.presentation.ui.theme.SIZE1
 import com.example.comusenias.presentation.ui.theme.SIZE10
 import com.example.comusenias.presentation.ui.theme.SIZE100
@@ -31,7 +31,7 @@ import com.github.tehras.charts.piechart.PieChartData.Slice
 
 @Composable
 fun PieChartScreenContent(
-    subLevel: MutableList<SubLevelModelMock>
+    subLevel: MutableList<SubLevelModel>
 ) {
     val statisticsSuccess = createBarList(
         subLevel,

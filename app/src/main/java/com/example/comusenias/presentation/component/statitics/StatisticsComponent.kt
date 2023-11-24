@@ -9,17 +9,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.example.comusenias.domain.models.game.LevelModel
 import com.example.comusenias.presentation.component.specialist.home.Title
 import com.example.comusenias.presentation.component.statitics.barChart.ContentBarChart
 import com.example.comusenias.presentation.component.statitics.lineChart.ContentLineChart
 import com.example.comusenias.presentation.component.statitics.pieChart.PieChartScreenContent
-import com.example.comusenias.presentation.screen.specialist.LevelModelMock
 import com.example.comusenias.presentation.ui.theme.SIZE10
 import com.example.comusenias.presentation.ui.theme.SIZE20
 
 
 @Composable
-fun StatisticsComponent(levelModel: LevelModelMock) {
+fun StatisticsComponent(levelModel: LevelModel) {
     Column(
         modifier = Modifier
             .fillMaxWidth(),
