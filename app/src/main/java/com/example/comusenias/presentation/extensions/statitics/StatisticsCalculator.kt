@@ -13,7 +13,7 @@ import com.github.tehras.charts.line.LineChartData.Point
 
 object StatisticsCalculator {
 
-    private var lastConvertedValue: Int = 0
+    val convertedValues: MutableList<String> = mutableListOf()
 
     enum class AttemptType {
         SUCCESS,
@@ -57,15 +57,24 @@ object StatisticsCalculator {
 
     fun isValidIntegerNumber(value: Float): String {
         Log.v("value", value.toString())
+        Log.v("convertedValues", convertedValues.toString())
+        convertedValues.clear()
         val rounded = value.toInt()
 
-        if (rounded == lastConvertedValue) {
-            lastConvertedValue += 1
-        } else {
-            lastConvertedValue = rounded
+        if (rounded == 0 || convertedValues.contains(rounded.toString())) {
+            // Devolver un string vacío si el valor redondeado es cero o ya está en el array
+            return ""
         }
 
-        return lastConvertedValue.toString()
+        if (convertedValues.isEmpty() || rounded != convertedValues.last().toInt()) {
+            // Agregar el valor actual al array si está vacío o si es diferente al último valor
+            convertedValues.add(rounded.toString())
+        } else {
+            // Incrementar el último valor si es igual al valor redondeado actual
+            convertedValues[convertedValues.size - 1] = (convertedValues.last().toInt() + 1).toString()
+        }
+
+        return convertedValues.last()
     }
 }
 

@@ -1,7 +1,7 @@
 package com.example.comusenias.presentation.component.specialist.home
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,15 +13,17 @@ import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.ContentScale.Companion.Crop
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.example.comusenias.R.drawable.profile_avatar
 import com.example.comusenias.domain.models.users.ChildrenModel
 import com.example.comusenias.presentation.ui.theme.PROFILE_USER
 import com.example.comusenias.presentation.ui.theme.SIZE1
@@ -41,12 +43,12 @@ fun CardProfileUser(user: ChildrenModel, onClickCard: () -> Unit) {
         modifier = Modifier
             .fillMaxSize()
             .clickable { onClickCard() },
-        verticalArrangement = Arrangement.spacedBy(SIZE10.dp)
+        verticalArrangement = spacedBy(SIZE10.dp)
     ) {
         Row(
             modifier = Modifier.fillMaxSize(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(SIZE36.dp)
+            verticalAlignment = CenterVertically,
+            horizontalArrangement = spacedBy(SIZE36.dp)
         ) {
             if (image != null) {
                 AsyncImage(
@@ -55,8 +57,8 @@ fun CardProfileUser(user: ChildrenModel, onClickCard: () -> Unit) {
                     modifier = Modifier
                         .size(SIZE50.dp)
                         .clip(CircleShape),
-                    contentScale = ContentScale.Crop,
-
+                    contentScale = Crop,
+                    error = painterResource(id = profile_avatar)
                     )
             }
             Text(

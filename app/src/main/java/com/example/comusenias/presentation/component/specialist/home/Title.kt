@@ -22,6 +22,7 @@ fun Title(
     color: Color = blackColorApp,
 ) {
     Text(
+
         modifier = modifier.fillMaxWidth(),
         text = title,
         style = TextStyle(
