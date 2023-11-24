@@ -75,13 +75,15 @@ class GestureRecognizerHelper(
      *
      * @throws IllegalStateException si hay un problema al crear el GestureRecognizer o si currentDelegate no es ni DELEGATE_CPU ni DELEGATE_GPU.
      */
-    private fun setupGestureRecognizer() {
+    fun setupGestureRecognizer() {
         try {
-
-            var recognizerTask : String = if(getLevelViewModel.levelSelected == "1")
+            /*val recognizerTask = if(PreferenceManager(context).getInt(PREFERENCE_LEVEL,1) == 1 ) {
                 MP_RECOGNIZER_TASK
-            else
-                MP_RECOGNIZER_WORDS_TASK
+            }
+            else{
+               MP_RECOGNIZER_WORDS_TASK
+            }*/
+
 
 
 
@@ -93,7 +95,7 @@ class GestureRecognizerHelper(
                         else -> throw IllegalStateException(UNRECOGNIZED_DELEGATE + currentDelegate)
                     }
                 )
-                .setModelAssetPath(recognizerTask)
+                .setModelAssetPath(MP_RECOGNIZER_TASK)
                 .build()
 
             val optionsBuilder = GestureRecognizer.GestureRecognizerOptions.builder()

@@ -47,7 +47,7 @@ fun RecordCameraScreen(
 
     val context = LocalContext.current
     val preferenceManager = remember { PreferenceManager(context) }
-    preferenceManager.saveInt(PREFERENCE_LEVEL, 1) // capturar el level de mejor manera
+    preferenceManager.saveInt(PREFERENCE_LEVEL, 2) // capturar el level de mejor manera
 
     val activity = (context as? Activity)
     val lifecycleOwner = LocalLifecycleOwner.current

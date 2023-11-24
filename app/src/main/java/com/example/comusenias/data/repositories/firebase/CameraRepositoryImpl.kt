@@ -94,12 +94,6 @@ class CameraRepositoryImpl @Inject constructor(
     }
 
 
-
-
-
-    // Create the VideoCapture UseCase and make it available to use
-// in the other part of the application.
-
     /**
      * Captura una imagen utilizando la cámara y la guarda en el almacenamiento del dispositivo.
      *
@@ -374,75 +368,7 @@ class CameraRepositoryImpl @Inject constructor(
     }
 
 
-    /* cameraController?.let {
 
-         if (recording != null) {
-             recording?.stop()
-             recording = null
-             return
-         }
-
-         // Utilizar el LifecycleCameraController local
-         cameraController?.bindToLifecycle(lifecycleOwner)
-
-         // Crear una carpeta en el directorio de archivos de la aplicación
-         val videoFolder = File(context.filesDir, "videos").apply {
-             mkdirs()
-         }
-
-         val outputFile = File(videoFolder, "my-recording.mp4")
-
-         recording = it.startRecording(
-             FileOutputOptions.Builder(outputFile).build(),
-             AudioConfig.create(true),
-             ContextCompat.getMainExecutor(context),
-         ) { event ->
-             when (event) {
-                 is VideoRecordEvent.Finalize -> {
-                     if (event.hasError()) {
-                         Log.e("RecordCameraScreen", "Video recording failed: ${event.error}")
-                         Log.e(
-                             "RecordCameraScreen",
-                             "Video recording failed: ${event.cause!!.message}"
-                         )
-                         Log.e(
-                             "RecordCameraScreen",
-                             "Output file path: ${outputFile.absolutePath}"
-                         )
-                         recording?.close()
-                         recording = null
-
-                         Toast.makeText(
-                             context,
-                             "Video capture failed",
-                             Toast.LENGTH_LONG
-                         ).show()
-                     } else {
-                         Log.d("RecordCameraScreen", "Video recording succeeded")
-
-
-                         recording?.close()
-                         recording = null
-
-                         val videoFolderPath = videoFolder.toUri().toString()
-                         val videoFileName = outputFile.name
-
-                         val videoUrl = "$videoFolderPath/$videoFileName"
-                         getLevelViewModel.pathVideo = videoUrl
-                         navController.navigate(AppScreen.InterpretationStatusScreen.route)
-                         Log.d("UriVideo", videoUrl)
-
-
-                         Toast.makeText(
-                             context,
-                             "Video capture succeeded",
-                             Toast.LENGTH_LONG
-                         ).show()
-                     }
-                 }
-             }
-         }
-     }*/
 
 
     override fun onError(error: String, errorCode: Int) {
