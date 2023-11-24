@@ -288,12 +288,19 @@ class CameraRepositoryImpl @Inject constructor(
             stopRecording()
         }
 
-        val videoFolder = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES), "CameraXVideos")
+        val videoFolder = File(
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES),
+            "CameraXVideos"
+        )
         if (!videoFolder.exists()) {
             videoFolder.mkdirs()
         }
 
-        val videoFileName = "CameraX-VideoCapture-${System.currentTimeMillis()}.mp4"
+        val outputFile = File(videoFolder, "my-recording.mp4")
+
+        val videoFolderPath = videoFolder.absolutePath
+        val videoFileName = outputFile.name
+
 
         val contentValues = ContentValues().apply {
             put(MediaStore.MediaColumns.DISPLAY_NAME, videoFileName)
@@ -304,7 +311,6 @@ class CameraRepositoryImpl @Inject constructor(
             .Builder(context.contentResolver, MediaStore.Video.Media.EXTERNAL_CONTENT_URI)
             .setContentValues(contentValues)
             .build()
-
 
         val recordingListener = Consumer<VideoRecordEvent> { event ->
             when (event) {
@@ -317,6 +323,7 @@ class CameraRepositoryImpl @Inject constructor(
                     ).show()
 
                 }
+
                 is VideoRecordEvent.Finalize -> {
                     if (!event.hasError()) {
 
@@ -326,10 +333,8 @@ class CameraRepositoryImpl @Inject constructor(
                             Toast.LENGTH_LONG
                         ).show()
 
-
-
-                        getLevelViewModel.pathVideo = videoFileName
-
+                        val videoUri = event.outputResults.outputUri
+                        getLevelViewModel.pathVideo = videoUri.toString()
                         navController.navigate(AppScreen.InterpretationStatusScreen.route)
 
                     } else {
@@ -345,21 +350,17 @@ class CameraRepositoryImpl @Inject constructor(
             }
         }
 
-
         try {
-             recording = videoCapture.output
+            recording = videoCapture.output
                 .prepareRecording(context, mediaStoreOutputOptions)
                 .withAudioEnabled()
                 .start(ContextCompat.getMainExecutor(context), recordingListener)
         } catch (e: Exception) {
             // Log the error or handle it appropriately
             Log.e("VideoCaptureError", "Error starting video recording", e)
+
         }
-
-
-
     }
-
     private fun stopRecording() {
         if (recording != null) {
             recording?.stop()
