@@ -344,8 +344,7 @@ class CameraRepositoryImpl @Inject constructor(
             cameraProvider.bindToLifecycle(
                 lifecycleOwner,
                 cameraSelector,
-                videoCapture,
-                preview
+                videoCapture
             )
 
             recording = videoCapture.output
