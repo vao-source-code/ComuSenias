@@ -18,13 +18,14 @@ import com.example.comusenias.presentation.ui.theme.NONE
 import com.example.comusenias.presentation.view_model.LevelViewModel
 import com.google.mediapipe.tasks.vision.handlandmarker.HandLandmarker
 
-@OptIn(UnstableApi::class) @Composable
+val listCategory = mutableListOf<String>()
+@OptIn(UnstableApi::class)
+@Composable
 fun OverlayView(
     resultOverlayView: ResultOverlayView?,
     levelViewModel: LevelViewModel
 ) {
     val context = LocalContext.current
-
     if (resultOverlayView != null) {
         val density = LocalDensity.current.density
         val imageHeight = resultOverlayView.inputImageHeight.toFloat()
@@ -38,14 +39,12 @@ fun OverlayView(
             val category = firstGesture?.get(0)?.categoryName()
                 ?: context.getString(R.string.noneResultGesture)
             val landmarksResult = it.landmarks()
-            val isCorrect = verifyOptionSelected(category, levelViewModel)
-            levelViewModel.onOptionSelected = category
+            listCategory.add(category)
+            val isCorrect = verifyOptionSelected( category, levelViewModel)
 
-
-
-            Log.d("VideoSign",gestures.toString())
-
-
+            if (listCategory.contains(levelViewModel.subLevelSelected)) {
+                levelViewModel.onOptionSelected =   levelViewModel.subLevelSelected
+            }
 
             Canvas(
                 modifier = Modifier.fillMaxSize()

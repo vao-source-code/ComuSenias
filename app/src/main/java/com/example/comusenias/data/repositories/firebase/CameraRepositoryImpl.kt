@@ -8,7 +8,6 @@ import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
-import android.util.Size
 import android.view.Surface
 import android.widget.Toast
 import androidx.annotation.OptIn
@@ -48,13 +47,11 @@ import com.example.comusenias.presentation.ui.theme.PICTURE_CAMERA_IMAGES
 import com.example.comusenias.presentation.ui.theme.SHOW_CAMERA_PREVIEW
 import com.example.comusenias.presentation.ui.theme.UTF_8
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.withContext
 import java.io.File
-import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -69,7 +66,7 @@ class CameraRepositoryImpl @Inject constructor(
     private val context: Context,
     private val gestureRecognizerHelper: GestureRecognizerHelper
 ) : CameraRepository, GestureRecognizerHelper.GestureRecognizerListener {
-
+    private lateinit var lifecycleOwner: LifecycleOwner
 
     private var recording: Recording? = null
     private var imageAnalysis: ImageAnalysis? = null
@@ -210,6 +207,9 @@ class CameraRepositoryImpl @Inject constructor(
         previewView: PreviewView,
         lifecycleOwner: LifecycleOwner
     ) {
+        lifecycleOwner.let {
+            this.lifecycleOwner = it
+        }
         withContext(Dispatchers.Main) {
             preview.setSurfaceProvider(previewView.surfaceProvider)
             bindCameraToLifecycle(lifecycleOwner)
@@ -288,12 +288,20 @@ class CameraRepositoryImpl @Inject constructor(
             stopRecording()
         }
 
-        val videoFolder = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES), "CameraXVideos")
+        val videoFolder = File(
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES),
+            "CameraXVideos"
+        )
         if (!videoFolder.exists()) {
             videoFolder.mkdirs()
         }
 
-        val videoFileName = "CameraX-VideoCapture-${System.currentTimeMillis()}.mp4"
+        val outputFile = File(videoFolder, "my-recording.mp4")
+
+        val videoFolderPath = videoFolder.absolutePath
+        val videoFileName = outputFile.name
+
+        val videoUrl = "$videoFolderPath/$videoFileName"
 
         val contentValues = ContentValues().apply {
             put(MediaStore.MediaColumns.DISPLAY_NAME, videoFileName)
@@ -304,7 +312,6 @@ class CameraRepositoryImpl @Inject constructor(
             .Builder(context.contentResolver, MediaStore.Video.Media.EXTERNAL_CONTENT_URI)
             .setContentValues(contentValues)
             .build()
-
 
         val recordingListener = Consumer<VideoRecordEvent> { event ->
             when (event) {
@@ -317,6 +324,7 @@ class CameraRepositoryImpl @Inject constructor(
                     ).show()
 
                 }
+
                 is VideoRecordEvent.Finalize -> {
                     if (!event.hasError()) {
 
@@ -325,11 +333,9 @@ class CameraRepositoryImpl @Inject constructor(
                             "Video capture Success",
                             Toast.LENGTH_LONG
                         ).show()
-
-
-
-                        getLevelViewModel.pathVideo = videoFileName
-
+                        cameraProvider.unbindAll()
+                        val videoUri = event.outputResults.outputUri
+                        getLevelViewModel.pathVideo = videoUri.toString()
                         navController.navigate(AppScreen.InterpretationStatusScreen.route)
 
                     } else {
@@ -345,30 +351,31 @@ class CameraRepositoryImpl @Inject constructor(
             }
         }
 
-
         try {
-             recording = videoCapture.output
+            cameraProvider.unbindAll()
+            cameraProvider.bindToLifecycle(
+                lifecycleOwner,
+                cameraSelector,
+                videoCapture
+            )
+
+            recording = videoCapture.output
                 .prepareRecording(context, mediaStoreOutputOptions)
                 .withAudioEnabled()
                 .start(ContextCompat.getMainExecutor(context), recordingListener)
         } catch (e: Exception) {
-            // Log the error or handle it appropriately
             Log.e("VideoCaptureError", "Error starting video recording", e)
         }
-
-
-
     }
 
-    private fun stopRecording() {
-        if (recording != null) {
-            recording?.stop()
+    override suspend fun stopRecording() {
+        recording?.let {
+            it.stop()
+            it.close()
             recording = null
         }
+        bindCameraToLifecycle(lifecycleOwner)
     }
-
-
-
 
 
     override fun onError(error: String, errorCode: Int) {
@@ -390,6 +397,4 @@ class CameraRepositoryImpl @Inject constructor(
         recognitionResultsMutableFlow.value =
             ResultOverlayView(results, inputImageHeight, inputImageWidth)
     }
-
-
 }
