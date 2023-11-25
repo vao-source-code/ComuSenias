@@ -31,6 +31,7 @@ import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
 import androidx.core.util.Consumer
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.models.overlayView.ResultOverlayView
@@ -50,10 +51,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.net.URLEncoder
 import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 import java.util.concurrent.Executors
 import javax.inject.Inject
@@ -295,11 +298,13 @@ class CameraRepositoryImpl @Inject constructor(
         if (!videoFolder.exists()) {
             videoFolder.mkdirs()
         }
-
+        val filenameFormat = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss", Locale.US)
+        val currentTimestamp: String = filenameFormat.format(Date())
+        val videoFileName = "my-recording-$currentTimestamp.mp4"
         val outputFile = File(videoFolder, "my-recording.mp4")
 
         val videoFolderPath = videoFolder.absolutePath
-        val videoFileName = outputFile.name
+       // val videoFileName = outputFile.name
 
         val videoUrl = "$videoFolderPath/$videoFileName"
 
@@ -322,10 +327,14 @@ class CameraRepositoryImpl @Inject constructor(
                 is VideoRecordEvent.Finalize -> {
                     if (!event.hasError()) {
 
+                        lifecycleOwner.lifecycleScope.launch {
+                            stopRecording()
+                        }
                         cameraProvider.unbindAll()
                         val videoUri = event.outputResults.outputUri
                         getLevelViewModel.pathVideo = videoUri.toString()
                         navController.navigate(AppScreen.InterpretationStatusScreen.route)
+
 
                     } else {
                         Toast.makeText(
@@ -344,7 +353,8 @@ class CameraRepositoryImpl @Inject constructor(
             cameraProvider.bindToLifecycle(
                 lifecycleOwner,
                 cameraSelector,
-                videoCapture
+                videoCapture,
+                preview
             )
 
             recording = videoCapture.output

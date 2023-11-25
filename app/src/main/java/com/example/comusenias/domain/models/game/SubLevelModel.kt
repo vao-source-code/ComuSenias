@@ -28,7 +28,7 @@ data class SubLevelModel(
             randomImage,
             randomImageOnly,
             isCompleted,
-            esVideo
+            esVideo,
             failures,
             successes
         )
