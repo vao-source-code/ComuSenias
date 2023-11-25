@@ -8,6 +8,7 @@ import androidx.navigation.NavController
 import com.example.comusenias.domain.models.overlayView.ResultOverlayView
 import com.example.comusenias.domain.use_cases.camera.CameraUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -29,7 +30,7 @@ class CameraViewModel @Inject constructor(
      */
     fun showCameraPreview(preview: PreviewView, lifecycleOwner: LifecycleOwner) {
         viewModelScope.launch {
-            useCases.showCameraPreview(preview, lifecycleOwner)
+            useCases.showCameraPreview(preview,lifecycleOwner)
         }
     }
 
@@ -64,6 +65,18 @@ class CameraViewModel @Inject constructor(
     fun stopCameraPreview() {
         viewModelScope.launch {
             useCases.stopCameraPreview()
+        }
+    }
+
+    fun recordVideo(navController: NavController){
+        viewModelScope.launch(Main){
+            useCases.recordVideo(navController)
+        }
+    }
+
+    fun stopVideo(){
+        viewModelScope.launch(Main){
+            useCases.stopRecording()
         }
     }
 }

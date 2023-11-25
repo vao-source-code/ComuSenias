@@ -36,6 +36,7 @@ import com.example.comusenias.presentation.ui.theme.SIZE120
 import com.example.comusenias.presentation.ui.theme.SIZE150
 import com.example.comusenias.presentation.ui.theme.SIZE50
 import com.example.comusenias.presentation.ui.theme.SIZE15
+import com.example.comusenias.presentation.ui.theme.SIZE20
 
 @Composable
 fun MatchLetter(
@@ -96,7 +97,7 @@ fun ButtonLetter(
                 .align(Alignment.Center),
             text = text.uppercase(),
             style = TextStyle(
-                fontSize = SIZE50.sp,
+                fontSize = if (getLevelViewModel.isVideo) SIZE20.sp else SIZE50.sp,
                 fontWeight = FontWeight.SemiBold,
                 textAlign = TextAlign.Center
             )

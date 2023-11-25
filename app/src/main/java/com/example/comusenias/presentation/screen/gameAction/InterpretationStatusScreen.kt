@@ -33,9 +33,8 @@ fun InterpretationStatusScreen(
         status = if (getLevelViewModel.validateLetterCamera()) Status.CORRECT else Status.INCORRECT
         getLevelViewModel.choiceOfOption.add(status == Status.CORRECT)
     }
-
     GameAction(
-        imageSign = path,
+        imageSign = if (getLevelViewModel.isVideo) getLevelViewModel.pathVideo else path,
         enabledButton = true,
         title = THE_SIGN_IS,
         titleButton = FINISH,

@@ -8,7 +8,7 @@ import com.google.gson.Gson
 data class SubLevelModel(
     var idLevel: String = EMPTY_STRING,
     var name: String = EMPTY_STRING,
-    val image: String = EMPTY_STRING,
+    var image: String = EMPTY_STRING,
     val imageOnly: String = EMPTY_STRING,
     var randomLetter: String = EMPTY_STRING,
     var randomImage: String = EMPTY_STRING,
@@ -16,6 +16,7 @@ data class SubLevelModel(
     var isCompleted: StatusGame = StatusGame.BLOCKED,
     var failures : Int = 0,
     var successes : Int = 0,
+    var esVideo: Boolean = false,
 ) {
     fun toJson(): String = Gson().toJson(
         SubLevelModel(
@@ -28,7 +29,8 @@ data class SubLevelModel(
             randomImageOnly,
             isCompleted,
             failures,
-            successes
+            successes,
+            esVideo
         )
     )
 
