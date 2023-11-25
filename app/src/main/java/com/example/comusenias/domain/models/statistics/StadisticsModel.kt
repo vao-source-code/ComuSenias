@@ -1,4 +1,4 @@
-package com.example.comusenias.domain.models.stadistics
+package com.example.comusenias.domain.models.statistics
 
 data class StadisticsModel(
     var chooseLetter : MutableMap<String, String> = mutableMapOf(),

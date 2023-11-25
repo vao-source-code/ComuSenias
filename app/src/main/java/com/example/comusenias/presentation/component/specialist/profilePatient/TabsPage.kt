@@ -1,7 +1,7 @@
 package com.example.comusenias.presentation.component.specialist.profilePatient
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Tab
@@ -15,11 +15,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.comusenias.presentation.ui.theme.OBSERVATIONS
+import com.example.comusenias.presentation.ui.theme.PROGRESS_GAME
 import com.example.comusenias.presentation.ui.theme.SIZE10
-import com.example.comusenias.presentation.ui.theme.SIZE14
 import com.example.comusenias.presentation.ui.theme.SIZE16
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 
@@ -27,7 +28,7 @@ import com.example.comusenias.presentation.ui.theme.blackColorApp
 fun TabsPage(
     tabContent: List<@Composable () -> Unit>
 ) {
-    val titles = listOf("Progreso", "Observaciones")
+    val titles = listOf(PROGRESS_GAME, OBSERVATIONS)
     var tabIndex by remember { mutableStateOf(0) }
 
     Scaffold(
@@ -49,11 +50,11 @@ fun TabsPage(
             }
         },
         content = { paddingValues ->
-            Column(
+            Box(
                 modifier = Modifier
                     .padding(paddingValues)
-                    .fillMaxWidth()
-                    .padding(horizontal = SIZE14.dp),
+                    .padding(horizontal = SIZE16.dp)
+                    .fillMaxSize(),
             ) {
                 tabContent[tabIndex]()
             }
@@ -71,7 +72,7 @@ fun TiltePage(
         text = title,
         style = TextStyle(
             fontSize = SIZE16.sp,
-            fontWeight = FontWeight.Bold,
+            fontWeight = Bold,
             color = color
         )
     )

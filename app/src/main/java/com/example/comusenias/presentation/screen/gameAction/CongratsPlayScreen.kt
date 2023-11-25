@@ -68,6 +68,11 @@ fun setStatusBySubLevel() {
             if (subLevel.name == getLevelViewModel.subLevelSelected) {
                 subLevel.isCompleted =
                     if (getChoicesSelected(getLevelViewModel)) StatusGame.COMPLETED else StatusGame.IN_PROGRESS
+                if (getChoicesSelected(getLevelViewModel)) {
+                    subLevel.successes += 1
+                } else {
+                    subLevel.failures += 1
+                }
             }
         }
     }

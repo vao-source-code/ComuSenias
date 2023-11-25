@@ -1,6 +1,7 @@
 [versions]
 accompanistPager = "0.12.0"
 accompanistSystemuicontroller = "0.18.0"
+charts = "0.2.4-alpha"
 compressor = "3.0.1"
 constraintlayoutCompose = "1.0.1"
 core = "1.10.1"
@@ -49,6 +50,7 @@ zxingAndroidEmbedded = "4.3.0"
 accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanistPager" }
 accompanist-pager-indicators = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanistPager" }
 accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanistSystemuicontroller" }
+charts = { module = "com.github.tehras:charts", version.ref = "charts" }
 compressor = { module = "id.zelory:compressor", version.ref = "compressor" }
 constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayoutCompose" }
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "core" }
