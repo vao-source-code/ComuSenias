@@ -75,4 +75,10 @@ class CameraViewModel @Inject constructor(
             useCases.recordVideo(navController)
         }
     }
+    fun stopVideo() {
+        viewModelScope.launch(Main) {
+            useCases.stopRecording()
+
+        }
+    }
 }

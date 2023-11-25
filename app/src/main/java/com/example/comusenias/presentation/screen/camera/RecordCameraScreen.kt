@@ -28,6 +28,7 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import com.example.comusenias.constants.PreferencesConstant
 import com.example.comusenias.constants.PreferencesConstant.PREFERENCE_LEVEL
@@ -46,8 +47,7 @@ fun RecordCameraScreen(
 ) {
 
     val context = LocalContext.current
-    val preferenceManager = remember { PreferenceManager(context) }
-    preferenceManager.saveInt(PREFERENCE_LEVEL, 2) // capturar el level de mejor manera
+
 
     val activity = (context as? Activity)
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -61,7 +61,7 @@ fun RecordCameraScreen(
         AndroidView(
             factory = {
                 val previewView = PreviewView(it)
-                viewModel.showCameraPreview(previewView,lifecycleOwner)
+                viewModel.showCameraPreview(previewView, lifecycleOwner)
                 previewView
             },
             modifier = Modifier.fillMaxSize()
@@ -73,7 +73,7 @@ fun RecordCameraScreen(
         )
 
 
-        IconButton(
+        /*IconButton(
             onClick = {
                 viewModel.recordVideo(navController = navController!!)
             },
@@ -86,7 +86,7 @@ fun RecordCameraScreen(
                 imageVector = Icons.Default.Videocam,
                 contentDescription = "Record video"
             )
-        }
+        }*/
 
         CounterAction()
 
@@ -96,9 +96,17 @@ fun RecordCameraScreen(
 
         DisposableEffect(Unit) {
             viewModel.startObjectDetection()
-            onDispose { }
-        }
 
+            // Inicia la grabación una vez que la cámara está lista
+            lifecycleOwner.lifecycleScope.launchWhenCreated {
+                viewModel.recordVideo(navController = navController!!)
+                delay(6000)
+                viewModel.stopVideo()
+            }
+
+            onDispose { }
+
+        }
     }
 
 

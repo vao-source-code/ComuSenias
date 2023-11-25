@@ -14,11 +14,14 @@ import androidx.media3.common.util.UnstableApi
 import com.example.comusenias.R
 import com.example.comusenias.core.PreferenceManager
 import com.example.comusenias.domain.models.overlayView.ResultOverlayView
+import com.example.comusenias.presentation.activities.MainActivity.Companion.getLevelViewModel
 import com.example.comusenias.presentation.ui.theme.LANDMARK_STROKE_WIDTH
 import com.example.comusenias.presentation.ui.theme.NONE
 import com.example.comusenias.presentation.view_model.LevelViewModel
 import com.google.mediapipe.tasks.vision.handlandmarker.HandLandmarker
 import companion.KEY_CATEGORY
+
+var listCategory = mutableListOf<String>()
 
 @OptIn(UnstableApi::class) @Composable
 fun OverlayView(
@@ -26,6 +29,7 @@ fun OverlayView(
     levelViewModel: LevelViewModel
 ) {
     val context = LocalContext.current
+
 
     if (resultOverlayView != null) {
         val density = LocalDensity.current.density
@@ -41,21 +45,17 @@ fun OverlayView(
                 ?: context.getString(R.string.noneResultGesture)
             val landmarksResult = it.landmarks()
 
-            val isCorrect = verifyOptionSelected( category, levelViewModel)
+            listCategory.add(category)
 
+
+            val isCorrect = verifyOptionSelected( category, getLevelViewModel)
             val listaDePrueba  = listOf<String>("A","E","I","O","U","Hola","Chau","Permiso","Disculpa","Gracias")
 
-            if (listaDePrueba.contains(category)) {
-                levelViewModel.onOptionSelected =   category
+            if (listCategory.contains(getLevelViewModel.subLevelSelected)) {
+                getLevelViewModel.onOptionSelected =   getLevelViewModel.subLevelSelected
             }
 
-
-
-
-
-
-
-                Log.d("VideoSign", gestures.toString())
+            Log.d("VideoSign", gestures.toString())
 
 
 

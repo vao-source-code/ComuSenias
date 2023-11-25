@@ -14,4 +14,6 @@ interface CameraRepository {
     fun startObjectDetection(): Flow<ResultOverlayView>
 
     suspend fun recordVideo(navController: NavController)
+
+    suspend fun stopRecording()
 }

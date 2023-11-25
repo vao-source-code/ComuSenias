@@ -47,11 +47,15 @@ import com.example.comusenias.presentation.ui.theme.IMAGE_JPEG
 import com.example.comusenias.presentation.ui.theme.PICTURE_CAMERA_IMAGES
 import com.example.comusenias.presentation.ui.theme.SHOW_CAMERA_PREVIEW
 import com.example.comusenias.presentation.ui.theme.UTF_8
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.UnsupportedEncodingException
@@ -280,11 +284,12 @@ class CameraRepositoryImpl @Inject constructor(
 
     @SuppressLint("MissingPermission")
     override suspend fun recordVideo(navController: NavController) {
-// Detener la grabación actual antes de comenzar una nueva.
-        stopRecording()
+        // Detener la grabación actual antes de comenzar una nueva.
+       // stopRecording()
 
         if (recording != null) {
             // Detener la grabación actual antes de comenzar una nueva.
+
             stopRecording()
         }
 
@@ -295,12 +300,12 @@ class CameraRepositoryImpl @Inject constructor(
         if (!videoFolder.exists()) {
             videoFolder.mkdirs()
         }
+        val name = SimpleDateFormat(FILENAME_FORMAT, Locale.getDefault()).format(System.currentTimeMillis())
 
-        val outputFile = File(videoFolder, "my-recording.mp4")
+        val outputFile = File(videoFolder, "${name}.mp4")
 
         val videoFolderPath = videoFolder.absolutePath
         val videoFileName = outputFile.name
-
 
         val contentValues = ContentValues().apply {
             put(MediaStore.MediaColumns.DISPLAY_NAME, videoFileName)
@@ -315,14 +320,14 @@ class CameraRepositoryImpl @Inject constructor(
         val recordingListener = Consumer<VideoRecordEvent> { event ->
             when (event) {
                 is VideoRecordEvent.Start -> {
-
-                    Toast.makeText(
-                        context,
-                        "Video capture Start",
-                        Toast.LENGTH_LONG
-                    ).show()
+                        Toast.makeText(
+                            context,
+                            "Video capture Start",
+                            Toast.LENGTH_LONG
+                        ).show()
 
                 }
+
 
                 is VideoRecordEvent.Finalize -> {
                     if (!event.hasError()) {
@@ -346,6 +351,9 @@ class CameraRepositoryImpl @Inject constructor(
                         "Video capture ends with error: ${event.error}"
 
                     }
+                    GlobalScope.launch {
+                        stopRecording()
+                    }
                 }
             }
         }
@@ -361,9 +369,10 @@ class CameraRepositoryImpl @Inject constructor(
 
         }
     }
-    private fun stopRecording() {
-        if (recording != null) {
-            recording?.stop()
+    override suspend fun stopRecording() {
+        recording?.let {
+            it.stop()
+            it.close()
             recording = null
         }
     }
@@ -392,5 +401,12 @@ class CameraRepositoryImpl @Inject constructor(
             ResultOverlayView(results, inputImageHeight, inputImageWidth)
     }
 
+    companion object {
+
+        private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SS"
+    }
 
 }
+
+
+

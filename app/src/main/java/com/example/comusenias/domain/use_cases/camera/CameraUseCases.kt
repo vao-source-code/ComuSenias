@@ -51,4 +51,5 @@ class CameraUseCases @Inject constructor(private val customCameraRepository: Cam
      */
     suspend fun recordVideo(navController: NavController) = customCameraRepository.recordVideo(navController)
 
+    suspend fun stopRecording() = customCameraRepository.stopRecording()
 }
