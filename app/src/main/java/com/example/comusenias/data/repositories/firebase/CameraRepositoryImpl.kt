@@ -313,6 +313,7 @@ class CameraRepositoryImpl @Inject constructor(
             .setContentValues(contentValues)
             .build()
 
+
         val recordingListener = Consumer<VideoRecordEvent> { event ->
             when (event) {
                 is VideoRecordEvent.Start -> {
@@ -324,7 +325,6 @@ class CameraRepositoryImpl @Inject constructor(
                     ).show()
 
                 }
-
                 is VideoRecordEvent.Finalize -> {
                     if (!event.hasError()) {
 
@@ -376,7 +376,6 @@ class CameraRepositoryImpl @Inject constructor(
         }
         bindCameraToLifecycle(lifecycleOwner)
     }
-
 
     override fun onError(error: String, errorCode: Int) {
         Response.Error(Exception(error))
