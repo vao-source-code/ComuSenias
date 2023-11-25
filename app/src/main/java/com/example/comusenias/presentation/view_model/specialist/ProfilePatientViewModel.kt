@@ -8,6 +8,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.comusenias.domain.library.LibraryDate
+import com.example.comusenias.domain.models.game.LevelModel
 import com.example.comusenias.domain.models.observation.ObservationModel
 import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.models.state.ChangeProfileState
@@ -65,8 +66,14 @@ class ProfilePatientViewModel @Inject constructor(
             user = it
             getObservation()
             getSpecialist()
+            getStatistics()
         }
     }
+
+    fun getStatistics() : List<LevelModel> {
+        return user.levels
+    }
+
 
     private fun getSpecialist() = viewModelScope.launch {
         specialistUsesCase.getSpecialistById(children.idSpecialist).collect { sp ->

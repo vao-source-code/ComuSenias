@@ -9,12 +9,14 @@ data class SubLevelModel(
     var idLevel: String = EMPTY_STRING,
     var name: String = EMPTY_STRING,
     var image: String = EMPTY_STRING,
-    val imageOnly: String = EMPTY_STRING,
+    var imageOnly: String = EMPTY_STRING,
     var randomLetter: String = EMPTY_STRING,
     var randomImage: String = EMPTY_STRING,
     var randomImageOnly: String = EMPTY_STRING,
     var isCompleted: StatusGame = StatusGame.BLOCKED,
     var esVideo: Boolean = false,
+    var failures : Int = 0,
+    var successes : Int = 0,
 ) {
     fun toJson(): String = Gson().toJson(
         SubLevelModel(
@@ -27,6 +29,8 @@ data class SubLevelModel(
             randomImageOnly,
             isCompleted,
             esVideo
+            failures,
+            successes
         )
     )
 

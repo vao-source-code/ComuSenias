@@ -3,6 +3,7 @@ package com.example.comusenias.presentation.component.specialist.profilePatient
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -28,6 +29,7 @@ import com.example.comusenias.presentation.ui.theme.SIZE1
 import com.example.comusenias.presentation.ui.theme.SIZE10
 import com.example.comusenias.presentation.ui.theme.SIZE14
 import com.example.comusenias.presentation.ui.theme.SIZE16
+import com.example.comusenias.presentation.ui.theme.SIZE20
 import com.example.comusenias.presentation.ui.theme.SIZE6
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.line_divisor
@@ -59,7 +61,6 @@ fun ObservationsScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-
             ListObservations(observations = observations)
         }
     }
@@ -70,8 +71,14 @@ fun ListObservations(observations: List<ObservationModel>) {
     LazyColumn(
         modifier = Modifier.fillMaxSize()
     ) {
+        item {
+            Spacer(modifier = Modifier.height(SIZE20.dp))
+        }
         items(observations) { observation ->
             CardObservation(observation = observation)
+        }
+        item {
+            Spacer(modifier = Modifier.height(SIZE20.dp))
         }
     }
 }
