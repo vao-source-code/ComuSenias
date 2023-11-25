@@ -19,6 +19,7 @@ import com.example.comusenias.presentation.component.gameAction.CounterAction
 import com.example.comusenias.presentation.view_model.CameraViewModel
 import com.example.comusenias.presentation.view_model.LevelViewModel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun RecordCameraScreen(
@@ -52,12 +53,12 @@ fun RecordCameraScreen(
         }
         DisposableEffect(Unit) {
             viewModel.startObjectDetection()
-            lifecycleOwner.lifecycleScope.launchWhenCreated {
+            val cameraCapturingJob =   lifecycleOwner.lifecycleScope.launch {
                 viewModel.recordVideo(navController = navController!!)
                 delay(6000)
                 viewModel.stopVideo()
             }
-            onDispose { }
+            onDispose { cameraCapturingJob.cancel()}
         }
     }
 }

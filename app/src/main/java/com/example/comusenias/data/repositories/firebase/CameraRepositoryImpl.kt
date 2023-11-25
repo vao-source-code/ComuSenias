@@ -318,21 +318,10 @@ class CameraRepositoryImpl @Inject constructor(
             when (event) {
                 is VideoRecordEvent.Start -> {
 
-                    Toast.makeText(
-                        context,
-                        "Video capture Start",
-                        Toast.LENGTH_LONG
-                    ).show()
-
                 }
                 is VideoRecordEvent.Finalize -> {
                     if (!event.hasError()) {
 
-                        Toast.makeText(
-                            context,
-                            "Video capture Success",
-                            Toast.LENGTH_LONG
-                        ).show()
                         cameraProvider.unbindAll()
                         val videoUri = event.outputResults.outputUri
                         getLevelViewModel.pathVideo = videoUri.toString()
@@ -345,7 +334,6 @@ class CameraRepositoryImpl @Inject constructor(
                             Toast.LENGTH_LONG
                         ).show()
                         "Video capture ends with error: ${event.error}"
-
                     }
                 }
             }

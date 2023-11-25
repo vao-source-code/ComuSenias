@@ -45,6 +45,8 @@ import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
 import com.example.comusenias.util.PlayVideo
 import com.example.comusenias.presentation.activities.MainActivity.Companion.getLevelViewModel
+import com.example.comusenias.presentation.ui.theme.DISCULPA
+import com.example.comusenias.presentation.ui.theme.PERMISO
 
 @OptIn(UnstableApi::class)
 @Composable
@@ -133,7 +135,7 @@ fun ContentImageGame(
                     .align(Alignment.Center),
                 text = letterSign.uppercase(),
                 style = TextStyle(
-                    fontSize = SIZE100.sp,
+                    fontSize = if (getLevelViewModel.subLevelSelected == DISCULPA || getLevelViewModel.subLevelSelected == PERMISO) 70.sp else SIZE100.sp,
                     fontWeight = FontWeight.SemiBold,
                     color = blackColorApp,
                     textAlign = TextAlign.Center,

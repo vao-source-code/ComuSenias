@@ -1,7 +1,6 @@
 import androidx.annotation.OptIn
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -9,7 +8,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.media3.common.util.Log
 import androidx.media3.common.util.UnstableApi
 import com.example.comusenias.R
 import com.example.comusenias.domain.models.overlayView.ResultOverlayView
@@ -101,11 +99,6 @@ fun OverlayView(
                 }
             }
         }
-    } else {
-        Text(
-            text = context.getString(R.string.loadingResults),
-            color = Color.Gray
-        )
     }
 }
 
