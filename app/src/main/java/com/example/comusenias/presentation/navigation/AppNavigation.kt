@@ -169,12 +169,12 @@ private fun GetNavHost(
         }
 
         //ShowVideoOrImageScree  aca se rompe la uri
-        composable(AppScreen.ShowVideoOrImageScreen.route + "/{path}",
+       /* composable(AppScreen.ShowVideoOrImageScreen.route + "/{path}",
             arguments = listOf(navArgument("path") { type = NavType.StringType })
         ) { navBackStackEntry ->
             val path = navBackStackEntry.arguments?.getString("path") ?: ""
             VideoPlayer(path)
-        }
+        }*/
 
 
         //Permission Gallery
