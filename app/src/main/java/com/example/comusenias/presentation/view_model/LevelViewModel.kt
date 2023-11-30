@@ -1,6 +1,7 @@
 package com.example.comusenias.presentation.view_model
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -15,6 +16,7 @@ import com.example.comusenias.presentation.ui.theme.NOT_RESPONSE_SUB_LEVEL
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.sql.Date
 import javax.inject.Inject
 
 @SuppressLint("MutableCollectionMutableState")
@@ -26,12 +28,19 @@ class LevelViewModel @Inject constructor(
     var levelsResponse by mutableStateOf<Response<List<LevelModel>>?>(Response.Loading)
     var levels by mutableStateOf<List<LevelModel>>(listOf())
     var choiceOfOption by mutableStateOf<MutableList<Boolean>>(mutableListOf())
+    var isVideo by mutableStateOf(false)
     var onOptionSelected by mutableStateOf(EMPTY_STRING)
     var levelSelected by mutableStateOf(EMPTY_STRING)
     var subLevelSelected by mutableStateOf(EMPTY_STRING)
+    var pathVideo by mutableStateOf(EMPTY_STRING)
+
+    var subLevelModel by mutableStateOf(SubLevelModel())
 
     init {
+        //todo SE DEBERIA CORREGIR PARA QUE SE LLAME UNA VEZ
+        Log.i("LevelViewModel", "init: " + Date(System.currentTimeMillis()))
         getLevels()
+        Log.i("LevelViewModel", "fin: " + Date(System.currentTimeMillis()))
     }
 
     /**
@@ -42,6 +51,7 @@ class LevelViewModel @Inject constructor(
      * Los resultados se recogen en un flujo y se almacenan en [levelsResponse]. Si la respuesta es un éxito, la lista de niveles se almacena en [levels].
      */
     fun getLevels() = viewModelScope.launch(Dispatchers.IO) {
+        Log.i("LevelViewModel", "getLevels:")
         levelUsesCases.getLevels().collect { response ->
             levelsResponse = response
             if (response is Response.Success) {
@@ -79,12 +89,20 @@ class LevelViewModel @Inject constructor(
      * 4. Devuelve el [SubLevelModel] del subnivel si se encuentra, o lanza una excepción si no se encuentra.
      */
     fun getSubLevelById(idLevel: String, nameSubLevel: String): SubLevelModel {
-        levelsResponse = Response.Loading
-        val subLevel = levels.find { it.id == idLevel }?.subLevel?.find { it.name == nameSubLevel }
-        levelsResponse = if (subLevel != null) Response.Success(levels) else Response.Error(
-            exception = Exception(NOT_RESPONSE_SUB_LEVEL)
-        )
-        return subLevel ?: throw Exception(NOT_RESPONSE_SUB_LEVEL)
+        if (this.levelSelected != idLevel || this.subLevelSelected != nameSubLevel) {
+            Log.d("LevelViewModel", "getSubLevelById: $idLevel $nameSubLevel")
+            levelSelected = idLevel
+            subLevelSelected = nameSubLevel
+            val subLevel =
+                levels.find { it.id == idLevel }?.subLevel?.find { it.name == nameSubLevel }
+            levelsResponse = if (subLevel != null) Response.Success(levels) else Response.Error(
+                exception = Exception(NOT_RESPONSE_SUB_LEVEL)
+            )
+            isVideo = subLevel?.esVideo ?: false
+            subLevelModel = subLevel ?: SubLevelModel()
+            return subLevel ?: throw Exception(NOT_RESPONSE_SUB_LEVEL)
+        }
+        return subLevelModel
     }
 
     fun validateLetterCamera(): Boolean {

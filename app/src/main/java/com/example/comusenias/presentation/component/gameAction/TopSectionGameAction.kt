@@ -1,5 +1,6 @@
 package com.example.comusenias.presentation.component.gameAction
 
+import androidx.annotation.OptIn
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -26,6 +27,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.media3.common.util.UnstableApi
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.comusenias.presentation.component.home.ProgressBar
@@ -41,7 +43,12 @@ import com.example.comusenias.presentation.ui.theme.SIZE24
 import com.example.comusenias.presentation.ui.theme.SIZE50
 import com.example.comusenias.presentation.ui.theme.blackColorApp
 import com.example.comusenias.presentation.ui.theme.primaryColorApp
+import com.example.comusenias.util.PlayVideo
+import com.example.comusenias.presentation.activities.MainActivity.Companion.getLevelViewModel
+import com.example.comusenias.presentation.ui.theme.DISCULPA
+import com.example.comusenias.presentation.ui.theme.PERMISO
 
+@OptIn(UnstableApi::class)
 @Composable
 fun TopSectionGameAction(
     letterSign: String,
@@ -106,10 +113,11 @@ fun ContentImageGame(
     image: String,
     letterSign: String
 ) {
+    val height = if (getLevelViewModel.isVideo) SIZE220.dp else SIZE220.dp
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(SIZE220.dp)
+            .height(height)
             .border(
                 width = SIZE2.dp,
                 color = primaryColorApp,
@@ -127,20 +135,29 @@ fun ContentImageGame(
                     .align(Alignment.Center),
                 text = letterSign.uppercase(),
                 style = TextStyle(
-                    fontSize = SIZE100.sp,
+                    fontSize = if (getLevelViewModel.subLevelSelected == DISCULPA || getLevelViewModel.subLevelSelected == PERMISO) 70.sp else SIZE100.sp,
                     fontWeight = FontWeight.SemiBold,
                     color = blackColorApp,
                     textAlign = TextAlign.Center,
                 )
             )
         } else {
-            AsyncImage(
-                modifier = Modifier
-                    .fillMaxSize(),
-                model = image,
-                contentScale = ContentScale.Fit,
-                contentDescription = AVATAR
-            )
+            ShowImageOrVideo(image)
         }
+    }
+}
+
+@Composable
+fun ShowImageOrVideo(image: String) {
+    if (!getLevelViewModel.isVideo) {
+        AsyncImage(
+            modifier = Modifier
+                .fillMaxSize(),
+            model = image,
+            contentScale = ContentScale.Fit,
+            contentDescription = AVATAR
+        )
+    } else {
+        PlayVideo(videoUrl = image, isVideoYoutube = false)
     }
 }

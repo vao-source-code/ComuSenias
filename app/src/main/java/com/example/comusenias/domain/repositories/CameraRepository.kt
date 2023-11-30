@@ -1,5 +1,6 @@
 package com.example.comusenias.domain.repositories
 
+import androidx.camera.view.LifecycleCameraController
 import androidx.camera.view.PreviewView
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavController
@@ -11,4 +12,7 @@ interface CameraRepository {
     suspend fun showCameraPreview(previewView: PreviewView, lifecycleOwner: LifecycleOwner)
     suspend fun stopCameraPreview()
     fun startObjectDetection(): Flow<ResultOverlayView>
+
+    suspend fun recordVideo(navController: NavController)
+    suspend fun stopRecording()
 }

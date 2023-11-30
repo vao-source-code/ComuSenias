@@ -1,5 +1,6 @@
 package com.example.comusenias.presentation.component.home
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement.SpaceBetween
@@ -19,12 +20,14 @@ import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight.Companion.SemiBold
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.comusenias.data.repositories.firebase.GestureRecognizerHelper
 import com.example.comusenias.domain.models.game.SubLevelModel
 import com.example.comusenias.presentation.component.home.StatusGame.BLOCKED
 import com.example.comusenias.presentation.navigation.AppScreen
@@ -52,6 +55,7 @@ fun CardGame(
     navController: NavController,
     status: StatusGame
 ) {
+    val context = LocalContext.current
     Card(
         modifier = Modifier
             .background(backgroundCard.value, shape = RoundedCornerShape(SIZE12.dp))
@@ -63,7 +67,7 @@ fun CardGame(
         Row(
             modifier = Modifier
                 .clickable(enabled = status != BLOCKED) {
-                    navigateToLearSign(navController, level, subLevel)
+                    navigateToLearSign(navController, level, subLevel,context)
                 }
                 .fillMaxSize()
                 .padding(start = SIZE15.dp, end = SIZE27.dp),
@@ -101,7 +105,10 @@ fun CardGame(
 private fun navigateToLearSign(
     navController: NavController,
     level: String,
-    subLevel: SubLevelModel
+    subLevel: SubLevelModel,
+    context: Context
 ) {
+    val gesture = GestureRecognizerHelper(context = context)
+    gesture.setupGestureRecognizer()
     navController.navigate(AppScreen.LearnSignScreen.createRoute(level, subLevel.name))
 }

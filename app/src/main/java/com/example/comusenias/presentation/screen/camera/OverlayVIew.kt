@@ -1,6 +1,6 @@
+import androidx.annotation.OptIn
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -8,6 +8,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.media3.common.util.UnstableApi
 import com.example.comusenias.R
 import com.example.comusenias.domain.models.overlayView.ResultOverlayView
 import com.example.comusenias.presentation.ui.theme.LANDMARK_STROKE_WIDTH
@@ -15,13 +16,14 @@ import com.example.comusenias.presentation.ui.theme.NONE
 import com.example.comusenias.presentation.view_model.LevelViewModel
 import com.google.mediapipe.tasks.vision.handlandmarker.HandLandmarker
 
+val listCategory = mutableListOf<String>()
+@OptIn(UnstableApi::class)
 @Composable
 fun OverlayView(
     resultOverlayView: ResultOverlayView?,
     levelViewModel: LevelViewModel
 ) {
     val context = LocalContext.current
-
     if (resultOverlayView != null) {
         val density = LocalDensity.current.density
         val imageHeight = resultOverlayView.inputImageHeight.toFloat()
@@ -35,8 +37,12 @@ fun OverlayView(
             val category = firstGesture?.get(0)?.categoryName()
                 ?: context.getString(R.string.noneResultGesture)
             val landmarksResult = it.landmarks()
-            val isCorrect = verifyOptionSelected(category, levelViewModel)
-            levelViewModel.onOptionSelected = category
+            listCategory.add(category)
+            val isCorrect = verifyOptionSelected( category, levelViewModel)
+
+            if (listCategory.contains(levelViewModel.subLevelSelected)) {
+                levelViewModel.onOptionSelected =   levelViewModel.subLevelSelected
+            }
 
             Canvas(
                 modifier = Modifier.fillMaxSize()
@@ -93,11 +99,6 @@ fun OverlayView(
                 }
             }
         }
-    } else {
-        Text(
-            text = context.getString(R.string.loadingResults),
-            color = Color.Gray
-        )
     }
 }
 

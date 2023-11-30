@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.comusenias.R
+import com.example.comusenias.core.PreferenceManager
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.CHILD_FILE
 import com.example.comusenias.presentation.ui.theme.ERROR_TAKE_PHOTO

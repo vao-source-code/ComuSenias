@@ -29,6 +29,7 @@ fun HomeScreen(
             Surface(shadowElevation = SIZE3.dp) {
                 TopBarHome(
                     name = childrenModel.userData.name,
+                    image = childrenModel.userData.image,
                     onClickNotification = { navController.navigate(AppScreen.NotificationScreen.route) })
             }
         },

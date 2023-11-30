@@ -4,10 +4,12 @@ import com.example.comusenias.data.repositories.firebase.CameraRepositoryImpl
 import android.app.Application
 import android.content.Context
 import android.view.Surface
+import androidx.camera.core.AspectRatio
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.camera.video.VideoCapture
 import com.example.comusenias.data.repositories.firebase.GestureRecognizerHelper
 import com.example.comusenias.domain.repositories.CameraRepository
 import dagger.Module
@@ -30,6 +32,8 @@ object CameraModule {
         CameraSelector.LENS_FACING_FRONT
     ).build()
 
+
+    
     @Singleton
     @Provides
     fun provideCameraProvider(application: Application): ProcessCameraProvider =
@@ -51,6 +55,9 @@ object CameraModule {
         context: Context
     ): GestureRecognizerHelper =
         GestureRecognizerHelper(context = context)
+
+
+
 
     @Provides
     fun provideCameraRepository(
