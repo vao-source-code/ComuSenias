@@ -358,7 +358,6 @@ class CameraRepositoryImpl @Inject constructor(
                             Toast.LENGTH_LONG
                         ).show()
 
-                        videoCapture = null
                     }
                 }
             }
