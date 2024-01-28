@@ -1,9 +1,11 @@
 package com.example.comusenias.data.repositories.firebase
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.net.Uri
 import android.os.Build
+import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.view.Surface
@@ -17,14 +19,24 @@ import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.camera.video.FallbackStrategy
+import androidx.camera.video.MediaStoreOutputOptions
+import androidx.camera.video.Quality
+import androidx.camera.video.QualitySelector
+import androidx.camera.video.Recorder
+import androidx.camera.video.Recording
+import androidx.camera.video.VideoCapture
+import androidx.camera.video.VideoRecordEvent
 import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
+import androidx.core.util.Consumer
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavController
 import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.models.overlayView.ResultOverlayView
 import com.example.comusenias.domain.models.recognizerSign.ResultBundle
 import com.example.comusenias.domain.repositories.CameraRepository
+import com.example.comusenias.presentation.activities.MainActivity.Companion.getLevelViewModel
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.DATE_CAPTURE_FORMAT
 import com.example.comusenias.presentation.ui.theme.ERROR_BINDING_CAMERA
@@ -39,6 +51,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.withContext
+import java.io.File
 import java.net.URLEncoder
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -53,14 +66,33 @@ class CameraRepositoryImpl @Inject constructor(
     private val context: Context,
     private val gestureRecognizerHelper: GestureRecognizerHelper
 ) : CameraRepository, GestureRecognizerHelper.GestureRecognizerListener {
+    private lateinit var lifecycleOwner: LifecycleOwner
 
+    private var recording: Recording? = null
     private var imageAnalysis: ImageAnalysis? = null
     private val recognitionResultsMutableFlow = MutableStateFlow<ResultOverlayView?>(null)
 
+
+    private val selector = QualitySelector
+        .from(
+            Quality.UHD,
+            FallbackStrategy.higherQualityOrLowerThan(Quality.SD)
+        )
+
+    private val recorder = Recorder.Builder()
+        .setQualitySelector(selector)
+        .build()
+
+    private var videoCapture:VideoCapture<Recorder>? = null
+
+
+
     init {
+
         setupImageAnalysis()
         gestureRecognizerHelper.setListener(this)
     }
+
 
     /**
      * Captura una imagen utilizando la cámara y la guarda en el almacenamiento del dispositivo.
@@ -178,21 +210,32 @@ class CameraRepositoryImpl @Inject constructor(
         previewView: PreviewView,
         lifecycleOwner: LifecycleOwner
     ) {
+        lifecycleOwner.let {
+            this.lifecycleOwner = it
+        }
         withContext(Dispatchers.Main) {
             preview.setSurfaceProvider(previewView.surfaceProvider)
             bindCameraToLifecycle(lifecycleOwner)
         }
     }
 
-    private fun bindCameraToLifecycle(lifecycleOwner: LifecycleOwner) = try {
+    private fun bindCameraToLifecycle(
+        lifecycleOwner: LifecycleOwner
+    ) = try {
+
+        videoCapture = VideoCapture.withOutput(recorder)
+
+
         cameraProvider.unbindAll()
         cameraProvider.bindToLifecycle(
             lifecycleOwner,
             cameraSelector,
             preview,
             imageAnalysis,
-            imageCapture
+            imageCapture,
+            videoCapture
         )
+
     } catch (e: Exception) {
         Log.e(SHOW_CAMERA_PREVIEW, ERROR_BINDING_CAMERA, e)
         Response.Error(e)
@@ -226,6 +269,8 @@ class CameraRepositoryImpl @Inject constructor(
             .build()
     }
 
+
+
     /**
      * Inicia la detección de objetos en las imágenes capturadas por el análisis de imágenes.
      *
@@ -240,6 +285,98 @@ class CameraRepositoryImpl @Inject constructor(
             imageProxy.close()
         }
         return recognitionResultsMutableFlow.filterNotNull()
+    }
+
+
+
+
+    @SuppressLint("MissingPermission")
+    override suspend fun recordVideo(navController: NavController) {
+
+
+        if(recording != null) {
+            recording?.stop()
+            recording = null
+            return
+        }
+
+        val videoFolder = File(context.filesDir, "CameraXVideos")
+
+        if (!videoFolder.exists()) {
+            videoFolder.mkdirs()
+        }
+
+
+        val contentValues = ContentValues().apply {
+            put(MediaStore.MediaColumns.DISPLAY_NAME, videoFolder.name)
+            put(MediaStore.MediaColumns.MIME_TYPE, "video/mp4")
+        }
+
+        val mediaStoreOutputOptions = MediaStoreOutputOptions
+            .Builder(context.contentResolver, MediaStore.Video.Media.EXTERNAL_CONTENT_URI)
+            .setContentValues(contentValues)
+            .build()
+
+
+        val recordingListener = Consumer<VideoRecordEvent> { event ->
+            when (event) {
+                is VideoRecordEvent.Start -> {
+                    Toast.makeText(
+                        context,
+                        "Video capture Start",
+                        Toast.LENGTH_LONG
+                    ).show()
+
+                }
+
+
+
+                is VideoRecordEvent.Finalize -> {
+                    if (event.hasError()) {
+
+                        Toast.makeText(
+                            context,
+                            "Video capture Failed",
+                            Toast.LENGTH_LONG
+                        ).show()
+
+                        "Video capture ends with error: ${event.error}"
+
+                        recording?.close()
+                        recording = null
+
+
+                    } else {
+
+                        val videoUri = event.outputResults.outputUri
+                        getLevelViewModel.pathVideo = videoUri.toString()
+                        navController.navigate(AppScreen.InterpretationStatusScreen.route)
+
+                        Toast.makeText(
+                            context,
+                            "Video Success",
+                            Toast.LENGTH_LONG
+                        ).show()
+
+                    }
+                }
+            }
+        }
+
+
+        recording = videoCapture!!.output
+            .prepareRecording(context, mediaStoreOutputOptions)
+            .withAudioEnabled()
+            .start(ContextCompat.getMainExecutor(context), recordingListener)
+
+    }
+
+    override suspend fun stopRecording() {
+        recording?.let {
+            it.stop()
+            it.close()
+            recording = null
+        }
     }
 
     override fun onError(error: String, errorCode: Int) {

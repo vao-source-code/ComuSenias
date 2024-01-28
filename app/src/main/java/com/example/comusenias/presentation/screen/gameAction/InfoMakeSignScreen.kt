@@ -23,6 +23,7 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants.IterateForever
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.comusenias.R.raw.loading
+import com.example.comusenias.presentation.activities.MainActivity.Companion.getLevelViewModel
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.INFO_TEXT_OPEN_CAMERA
 import com.example.comusenias.presentation.ui.theme.SIZE24
@@ -35,7 +36,13 @@ fun InfoMakeSignScreen(navController: NavController) {
 
     LaunchedEffect(Unit) {
         delay(6000)
-        navController.navigate(AppScreen.CameraScreen.route)
+        if (getLevelViewModel.isVideo) {
+           // navController.navigate(AppScreen.RecordCameraScreen.route)
+            navController.navigate(AppScreen.PermissioRecordCameraScreen.route)
+
+        } else {
+            navController.navigate(AppScreen.CameraScreen.route)
+        }
     }
     Column(
         modifier = Modifier
