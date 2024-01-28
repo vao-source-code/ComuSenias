@@ -72,6 +72,7 @@ fun RecordCameraScreen(
 
             }
             onDispose { cameraCapturingJob.cancel() }
+
         }
     }
 }
