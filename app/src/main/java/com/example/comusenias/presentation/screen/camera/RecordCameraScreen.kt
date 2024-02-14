@@ -62,10 +62,3 @@ fun RecordCameraScreen(
         }
     }
 }
-
-
-
-
-
-
-

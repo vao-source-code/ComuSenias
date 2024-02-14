@@ -33,7 +33,3 @@ fun TestCamera(navController: NavController) {
 
     }
 }
-
-
-
-

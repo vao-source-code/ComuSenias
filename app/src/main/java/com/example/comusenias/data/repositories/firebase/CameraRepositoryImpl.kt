@@ -93,7 +93,6 @@ class CameraRepositoryImpl @Inject constructor(
         gestureRecognizerHelper.setListener(this)
     }
 
-
     /**
      * Captura una imagen utilizando la cámara y la guarda en el almacenamiento del dispositivo.
      *
@@ -304,7 +303,7 @@ class CameraRepositoryImpl @Inject constructor(
         val outputFile = File(videoFolder, "my-recording.mp4")
 
         val videoFolderPath = videoFolder.absolutePath
-       // val videoFileName = outputFile.name
+        // val videoFileName = outputFile.name
 
         val videoUrl = "$videoFolderPath/$videoFileName"
 
@@ -324,6 +323,7 @@ class CameraRepositoryImpl @Inject constructor(
                 is VideoRecordEvent.Start -> {
 
                 }
+
                 is VideoRecordEvent.Finalize -> {
                     if (!event.hasError()) {
 
