@@ -71,16 +71,6 @@ class GestureRecognizerHelper(
      */
     fun setupGestureRecognizer() {
         try {
-            /*val recognizerTask = if(PreferenceManager(context).getInt(PREFERENCE_LEVEL,1) == 1 ) {
-                MP_RECOGNIZER_TASK
-            }
-            else{
-               MP_RECOGNIZER_WORDS_TASK
-            }*/
-
-
-
-
             val baseOptions = BaseOptions.builder()
                 .setDelegate(
                     when (currentDelegate) {

@@ -52,9 +52,6 @@ object CameraModule {
     ): GestureRecognizerHelper =
         GestureRecognizerHelper(context = context)
 
-
-
-
     @Provides
     fun provideCameraRepository(
         cameraProvider: ProcessCameraProvider,

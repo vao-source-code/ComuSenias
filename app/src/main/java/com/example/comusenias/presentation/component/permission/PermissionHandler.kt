@@ -56,7 +56,7 @@ fun PermissionCameraScreen(
 ) {
     val context = LocalContext.current
     var permissionStatus by remember {
-         mutableStateOf(false)
+        mutableStateOf(false)
     }
 
     RequestPermissions {
@@ -103,8 +103,6 @@ fun RequestPermissionsRecord(
         )
         onDispose { }
     }
-
-
 }
 
 @Composable
