@@ -198,6 +198,13 @@ dependencies {
     //Reproductor video de youtube
     implementation libs.chromecast.sender
 
+  //Flipper and soloader
+    debugImplementation libs.flipper
+    debugImplementation libs.soloader
+    debugImplementation libs.flipper.network.plugin
+    releaseImplementation libs.flipper.noop
+
+
 }
 kapt {
     correctErrorTypes true

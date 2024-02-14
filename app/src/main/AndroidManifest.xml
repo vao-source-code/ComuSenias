@@ -21,6 +21,7 @@
         tools:ignore="ScopedStorage" />
 
 
+
     <application
         android:name=".ComuseniasApp"
         android:allowBackup="true"
@@ -45,6 +46,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.facebook.flipper.android.diagnostics.FlipperDiagnosticActivity"
+            android:exported="true"/>
 
         <provider
             android:name=".domain.library.ComposeFileProvider"
