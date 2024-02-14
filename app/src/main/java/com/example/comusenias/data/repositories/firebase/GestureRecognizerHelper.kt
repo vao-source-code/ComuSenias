@@ -69,7 +69,7 @@ class GestureRecognizerHelper(
      *
      * @throws IllegalStateException si hay un problema al crear el GestureRecognizer o si currentDelegate no es ni DELEGATE_CPU ni DELEGATE_GPU.
      */
-    private fun setupGestureRecognizer() {
+    fun setupGestureRecognizer() {
         try {
             val baseOptions = BaseOptions.builder()
                 .setDelegate(

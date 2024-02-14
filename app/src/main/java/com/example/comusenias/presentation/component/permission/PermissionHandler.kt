@@ -1,5 +1,6 @@
 import android.Manifest.permission.CAMERA
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.Manifest.permission.RECORD_AUDIO
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.content.Intent
 import android.net.Uri
@@ -55,7 +56,7 @@ fun PermissionCameraScreen(
 ) {
     val context = LocalContext.current
     var permissionStatus by remember {
-         mutableStateOf(false)
+        mutableStateOf(false)
     }
 
     RequestPermissions {
@@ -73,6 +74,53 @@ fun PermissionCameraScreen(
     } else {
         navController.navigate(AppScreen.InfoMakeSignScreen.route)
     }
+}
+
+@Composable
+fun RequestPermissionsRecord(
+    onPermissionGranted: () -> Unit,
+    onPermissionDenied: () -> Unit
+) {
+
+    val requestPermissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        if (permissions.all { it.value }) {
+            onPermissionGranted()
+        } else {
+            onPermissionDenied()
+        }
+    }
+
+    DisposableEffect(Unit) {
+        requestPermissionLauncher.launch(
+            arrayOf(
+                CAMERA,
+                WRITE_EXTERNAL_STORAGE,
+                READ_EXTERNAL_STORAGE,
+                RECORD_AUDIO
+            )
+        )
+        onDispose { }
+    }
+}
+
+@Composable
+fun PermissionRecordCameraScreen(navController: NavHostController) {
+    val context = LocalContext.current
+    RequestPermissionsRecord(
+        onPermissionGranted = {
+            navController.navigate(AppScreen.RecordCameraScreen.route)
+        },
+        onPermissionDenied = {
+            Toast.makeText(
+                context,
+                context.getString(R.string.permissionRecordText),
+                LENGTH_SHORT
+            )
+                .show()
+        }
+    )
 }
 
 @Composable

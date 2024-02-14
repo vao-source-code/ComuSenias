@@ -40,7 +40,7 @@ fun LearnSignScreen(
         is Response.Success -> {
             subLevelViewModel.let {
                 GameAction(
-                    imageSign = it.image,
+                    if (!it.esVideo) it.image else it.imageOnly,
                     title = LETS_GO,
                     titleButton = CONTINUE,
                     currentSteps = STEP_ONE,

@@ -100,6 +100,7 @@ private fun ShowChoseTheSign(
     }
 
     subLevel?.let {
+        //TODO en caso de ser video se podria usar las imagenes mejor y que decida
         val sign = Sign(imageResource = it.imageOnly, letter = it.name)
         val randomSign = Sign(imageResource = it.randomImageOnly, letter = it.randomLetter)
         GameAction(

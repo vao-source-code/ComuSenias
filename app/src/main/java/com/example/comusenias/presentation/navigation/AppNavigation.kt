@@ -1,6 +1,8 @@
 package com.example.comusenias.presentation.navigation
 
 import PermissionCameraScreen
+import PermissionRecordCameraScreen
+import VideoPlayer
 import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -18,7 +20,10 @@ import androidx.navigation.navArgument
 import com.example.comusenias.presentation.activities.MainActivity
 import com.example.comusenias.presentation.activities.MainActivity.Companion.getChildrenProfileViewModel
 import com.example.comusenias.presentation.activities.MainActivity.Companion.getLevelViewModel
+import com.example.comusenias.presentation.component.gameAction.ShowImageOrVideo
 import com.example.comusenias.presentation.screen.camera.CameraScreen
+import com.example.comusenias.presentation.screen.camera.RecordCameraScreen
+import com.example.comusenias.presentation.screen.camera.TestCamera
 import com.example.comusenias.presentation.screen.gallery.GalleryScreen
 import com.example.comusenias.presentation.screen.gameAction.ChoseTheLetterPlayScreen
 import com.example.comusenias.presentation.screen.gameAction.ChoseTheSignPlayScreen
@@ -44,8 +49,10 @@ import com.example.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.example.comusenias.presentation.ui.theme.PACIENT
 import com.example.comusenias.presentation.ui.theme.SPECIALIST_PROFILE
 import com.example.comusenias.presentation.ui.theme.SUB_LEVEL
+import com.example.comusenias.presentation.view_model.CameraViewModel
 import com.example.comusenias.presentation.view_model.ChildrenProfileViewModel
 import com.example.comusenias.presentation.view_model.LevelViewModel
+import com.example.comusenias.util.VideoPlayer
 import com.google.firebase.analytics.FirebaseAnalytics.Param.LEVEL
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -67,12 +74,14 @@ private fun GetNavHost(
 ) {
     val levelViewModel: LevelViewModel = hiltViewModel()
     val childrenProfileViewModel: ChildrenProfileViewModel = hiltViewModel()
+    val cameraViewModel: CameraViewModel = hiltViewModel()
+
     getLevelViewModel = levelViewModel
     getChildrenProfileViewModel = childrenProfileViewModel
 
     NavHost(
         navController = navController,
-        startDestination = AppScreen.SplashScreen.route
+        startDestination = AppScreen.HomeScreen.route
     ) {
 
         authNavGraph(navController = navController, modifier = modifier)
@@ -80,8 +89,6 @@ private fun GetNavHost(
         composable(AppScreen.SplashScreen.route) {
             SplashScreen(navController)
         }
-
-        /*------------Children-----------------------*/
 
         composable(AppScreen.ChildrenProfileScreen.route) {
             ChildrenProfileScreen(navController = navController, modifier = modifier)
@@ -143,17 +150,35 @@ private fun GetNavHost(
             CameraScreen(navController = navController, levelViewModel = levelViewModel)
         }
 
+        composable(AppScreen.RecordCameraScreen.route) {
+            RecordCameraScreen(
+                levelViewModel = levelViewModel,
+                viewModel = cameraViewModel,
+                navController = navController
+            )
+        }
+
         //Permission Camera
         composable(AppScreen.CameraScreenPermission.route) {
             PermissionCameraScreen(navController = navController)
         }
 
+        //Permission Record Camera
+        composable(AppScreen.PermissioRecordCameraScreen.route) {
+            PermissionRecordCameraScreen(navController = navController)
+        }
 
-        //Permission Gallery
+        composable(
+            AppScreen.ShowVideoOrImageScreen.route + "/{path}",
+            arguments = listOf(navArgument("path") { type = NavType.StringType })
+        ) { navBackStackEntry ->
+            val path = navBackStackEntry.arguments?.getString("path") ?: ""
+            VideoPlayer(path)
+        }
+
         composable(AppScreen.GaleryScreenPermission.route) {
             PermissionCameraScreen(navController = navController)
         }
-
 
         composable(
             AppScreen.GalleryScreen.route, arguments = listOf(
@@ -169,10 +194,7 @@ private fun GetNavHost(
                 levelViewModel = levelViewModel
             )
         }
-
-        /*------------Specialist-----------------------*/
         composableSpecialist(navController, modifier)
-
     }
 }
 
@@ -247,7 +269,6 @@ private fun NavGraphBuilder.composableSpecialist(
             )
         }
     }
-
 }
 
 
@@ -296,7 +317,6 @@ private fun NavGraphBuilder.composableChoseTheLetterPlay(
             subLevel,
             levelViewModel = levelViewModel
         )
-
     }
 }
 
@@ -318,5 +338,4 @@ private fun NavGraphBuilder.composableChoseTheSignPlay(
         val subLevel = it.arguments?.getString(SUB_LEVEL) ?: EMPTY_STRING
         ChoseTheSignPlayScreen(navController = navController, level, subLevel, levelViewModel)
     }
-
 }
