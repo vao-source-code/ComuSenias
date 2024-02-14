@@ -62,7 +62,7 @@ class LevelViewModel @Inject constructor(
 
     /**
      * Busca niveles por su nombre.
-     *
+
      * @param nameLevel El nombre del nivel que se busca.
      *
      * @return Una lista de [LevelModel] que coincide con el nombre proporcionado.
