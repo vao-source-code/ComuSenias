@@ -52,8 +52,9 @@ fun RecordCameraScreen(
             activity?.finish()
         }
         DisposableEffect(Unit) {
+            viewModel.startObjectDetection()
             val cameraCapturingJob =   lifecycleOwner.lifecycleScope.launch {
-                viewModel.startObjectDetection()
+
                 viewModel.recordVideo(navController = navController!!)
                 delay(6000)
                 viewModel.stopVideo()
