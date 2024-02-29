@@ -6,9 +6,15 @@ import androidx.activity.compose.BackHandler
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.PhotoCamera
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -43,22 +49,37 @@ fun RecordCameraScreen(
             },
             modifier = Modifier.fillMaxSize()
         )
+
+
         OverlayView(
             resultOverlayView = recognitionResults,
             levelViewModel = levelViewModel
         )
-        CounterAction()
+
         BackHandler {
             activity?.finish()
         }
+
+        CounterAction()
+
+
         DisposableEffect(Unit) {
             viewModel.startObjectDetection()
+
             val cameraCapturingJob =   lifecycleOwner.lifecycleScope.launch {
                 viewModel.recordVideo(navController = navController!!)
                 delay(6000)
                 viewModel.stopVideo()
+
             }
-            onDispose { cameraCapturingJob.cancel()}
+            onDispose { cameraCapturingJob.cancel() }
         }
     }
 }
+
+
+
+
+
+
+

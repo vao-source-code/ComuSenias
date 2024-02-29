@@ -74,7 +74,7 @@ private fun GetNavHost(
 ) {
     val levelViewModel: LevelViewModel = hiltViewModel()
     val childrenProfileViewModel: ChildrenProfileViewModel = hiltViewModel()
-    val cameraViewModel: CameraViewModel = hiltViewModel()
+    val cameraViewModel:CameraViewModel = hiltViewModel()
 
     getLevelViewModel = levelViewModel
     getChildrenProfileViewModel = childrenProfileViewModel
@@ -146,21 +146,14 @@ private fun GetNavHost(
             NotificationScreen(navController = navController)
         }
 
-        composable(AppScreen.CameraScreen.route) {
-            CameraScreen(navController = navController, levelViewModel = levelViewModel)
-        }
-
-        composable(AppScreen.RecordCameraScreen.route) {
-            RecordCameraScreen(
-                levelViewModel = levelViewModel,
-                viewModel = cameraViewModel,
-                navController = navController
-            )
-        }
 
         //Permission Camera
         composable(AppScreen.CameraScreenPermission.route) {
             PermissionCameraScreen(navController = navController)
+        }
+        // Camera
+        composable(AppScreen.CameraScreen.route) {
+            CameraScreen(navController = navController, levelViewModel = levelViewModel)
         }
 
         //Permission Record Camera
@@ -168,33 +161,26 @@ private fun GetNavHost(
             PermissionRecordCameraScreen(navController = navController)
         }
 
-        composable(
-            AppScreen.ShowVideoOrImageScreen.route + "/{path}",
+        //Record Camera
+        composable(AppScreen.RecordCameraScreen.route){
+            RecordCameraScreen(levelViewModel = levelViewModel, viewModel = cameraViewModel ,navController = navController)
+        }
+
+
+        //ShowVideoOrImageScree  aca se rompe la uri
+       /* composable(AppScreen.ShowVideoOrImageScreen.route + "/{path}",
             arguments = listOf(navArgument("path") { type = NavType.StringType })
         ) { navBackStackEntry ->
             val path = navBackStackEntry.arguments?.getString("path") ?: ""
             VideoPlayer(path)
-        }
+        }*/
 
-        composable(AppScreen.GaleryScreenPermission.route) {
-            PermissionCameraScreen(navController = navController)
-        }
 
-        composable(
-            AppScreen.GalleryScreen.route, arguments = listOf(
-                navArgument("path") {
-                    type = NavType.StringType
-                }
-            )
-        ) {
-            val path = it.arguments?.getString("path") ?: EMPTY_STRING
-            GalleryScreen(
-                navController = navController,
-                path = path,
-                levelViewModel = levelViewModel
-            )
-        }
+
+
+        /*------------Specialist-----------------------*/
         composableSpecialist(navController, modifier)
+
     }
 }
 
@@ -269,6 +255,7 @@ private fun NavGraphBuilder.composableSpecialist(
             )
         }
     }
+
 }
 
 
@@ -317,6 +304,7 @@ private fun NavGraphBuilder.composableChoseTheLetterPlay(
             subLevel,
             levelViewModel = levelViewModel
         )
+
     }
 }
 
@@ -338,4 +326,5 @@ private fun NavGraphBuilder.composableChoseTheSignPlay(
         val subLevel = it.arguments?.getString(SUB_LEVEL) ?: EMPTY_STRING
         ChoseTheSignPlayScreen(navController = navController, level, subLevel, levelViewModel)
     }
+
 }

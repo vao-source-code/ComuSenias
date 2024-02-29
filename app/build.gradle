@@ -107,6 +107,7 @@ dependencies {
     testImplementation libs.kotlinXCoroutinesTest
     androidTestImplementation libs.mockitoAndroid
     androidTestImplementation libs.daggerHiltTesting
+    androidTestImplementation 'org.testng:testng:6.9.6'
     androidTestAnnotationProcessor libs.daggerHiltCompiler
     testImplementation libs.daggerHiltTesting
     testAnnotationProcessor libs.daggerHiltCompiler

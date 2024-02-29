@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import com.example.comusenias.R
+import com.example.comusenias.domain.library.toast
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
@@ -109,66 +110,10 @@ fun RequestPermissionsRecord(
 fun PermissionRecordCameraScreen(navController: NavHostController) {
     val context = LocalContext.current
     RequestPermissionsRecord(
-        onPermissionGranted = {
-            navController.navigate(AppScreen.RecordCameraScreen.route)
-        },
-        onPermissionDenied = {
-            Toast.makeText(
-                context,
-                context.getString(R.string.permissionRecordText),
-                LENGTH_SHORT
-            )
-                .show()
-        }
+        onPermissionGranted = { navController.navigate(AppScreen.RecordCameraScreen.route) },
+        onPermissionDenied = { context.toast(context.getString(R.string.permissionRecordText)) }
     )
 }
 
-@Composable
-fun RequestPermissionsGallery(
-    onPermissionGranted: () -> Unit,
-    onPermissionDenied: () -> Unit
-) {
 
-    val requestPermissionLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestMultiplePermissions()
-    ) { permissions ->
-        if (permissions.all { it.value }) {
-            onPermissionGranted()
-        } else {
-            onPermissionDenied()
-        }
-    }
 
-    DisposableEffect(Unit) {
-        requestPermissionLauncher.launch(
-            arrayOf(
-                //TODO ver que esto falla en android 33
-                WRITE_EXTERNAL_STORAGE,
-                READ_EXTERNAL_STORAGE
-            )
-        )
-        onDispose { }
-    }
-
-    DisposableEffect(Unit) {
-        onDispose { }
-    }
-}
-
-@Composable
-fun PermissionGalleryScreen(navController: NavHostController) {
-    val context = LocalContext.current
-    RequestPermissionsGallery(
-        onPermissionGranted = {
-            navController.navigate(AppScreen.GalleryScreen.route)
-        },
-        onPermissionDenied = {
-            Toast.makeText(
-                context,
-                context.getString(R.string.permissionGalleryText),
-                LENGTH_SHORT
-            )
-                .show()
-        }
-    )
-}
