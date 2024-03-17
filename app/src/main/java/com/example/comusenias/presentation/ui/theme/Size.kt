@@ -61,3 +61,10 @@ const val OTHER_ERROR = 0
 const val LANDMARK_STROKE_WIDTH = 10f
 
 
+const val TAG = "FaceLandmarkerHelper"
+
+const val DEFAULT_FACE_DETECTION_CONFIDENCE = 0.5F
+const val DEFAULT_FACE_TRACKING_CONFIDENCE = 0.5F
+const val DEFAULT_FACE_PRESENCE_CONFIDENCE = 0.5F
+const val DEFAULT_NUM_FACES = 1
+const val GPU_ERROR = 1

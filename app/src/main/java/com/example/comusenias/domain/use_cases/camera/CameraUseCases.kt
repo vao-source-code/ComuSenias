@@ -36,9 +36,17 @@ class CameraUseCases @Inject constructor(private val customCameraRepository: Cam
         customCameraRepository.captureAndSaveImage(navController)
 
     /**
-     * Inicia la detección de objetos.
+     * Inicia la detección.
      */
-    fun startObjectDetection() = customCameraRepository.startObjectDetection()
+    suspend fun startDetection() = customCameraRepository.startDetection()
+
+
+    suspend fun resultHands() =  customCameraRepository.resultHands()
+
+    suspend fun resultFace() = customCameraRepository.resultFace()
+
+    suspend fun resultPose() = customCameraRepository.resultPose()
+
 
     /**
      * Detiene la vista previa de la cámara.

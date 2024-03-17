@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.SystemClock
 import androidx.annotation.VisibleForTesting
 import androidx.camera.core.ImageProxy
+import com.example.comusenias.domain.models.mediapipe.DetectionHand
 import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.models.recognizerSign.ResultBundle
 import com.example.comusenias.presentation.ui.theme.DEFAULT_HAND_DETECTION_CONFIDENCE
@@ -18,7 +19,7 @@ import com.example.comusenias.presentation.ui.theme.DELEGATE_GPU
 import com.example.comusenias.presentation.ui.theme.ERROR_NOT_RECOGNIZE_VIDEO_FILE
 import com.example.comusenias.presentation.ui.theme.ERROR_NOT_RESPONSE_VIDEO
 import com.example.comusenias.presentation.ui.theme.ERROR_NOT_USING_RUNNING_MODE_IMAGE
-import com.example.comusenias.presentation.ui.theme.MP_RECOGNIZER_TASK
+import com.example.comusenias.presentation.ui.theme.MP_RECOGNIZER_HAND
 import com.example.comusenias.presentation.ui.theme.OTHER_ERROR
 import com.example.comusenias.presentation.ui.theme.UNKNOWN_ERROR
 import com.example.comusenias.presentation.ui.theme.UNRECOGNIZED_DELEGATE
@@ -79,7 +80,7 @@ class GestureRecognizerHelper(
                         else -> throw IllegalStateException(UNRECOGNIZED_DELEGATE + currentDelegate)
                     }
                 )
-                .setModelAssetPath(MP_RECOGNIZER_TASK)
+                .setModelAssetPath(MP_RECOGNIZER_HAND)
                 .build()
 
             val optionsBuilder = GestureRecognizer.GestureRecognizerOptions.builder()
@@ -87,6 +88,7 @@ class GestureRecognizerHelper(
                 .setMinHandDetectionConfidence(minHandDetectionConfidence)
                 .setMinTrackingConfidence(minHandTrackingConfidence)
                 .setMinHandPresenceConfidence(minHandPresenceConfidence)
+                .setNumHands(2)
                 .setRunningMode(runningMode)
 
             if (runningMode == RunningMode.LIVE_STREAM) {
@@ -128,7 +130,6 @@ class GestureRecognizerHelper(
         val buffer = imageProxy.planes[0].buffer
         bitmapBuffer.copyPixelsFromBuffer(buffer)
 
-        imageProxy.close()
 
         val matrix = Matrix().apply {
             postRotate(imageProxy.imageInfo.rotationDegrees.toFloat())
@@ -148,6 +149,8 @@ class GestureRecognizerHelper(
         val mpImage = BitmapImageBuilder(rotatedBitmap).build()
 
         recognizeAsync(mpImage, frameTime)
+
+
     }
 
     /**
@@ -203,7 +206,7 @@ class GestureRecognizerHelper(
             resultList,
             inferenceTimePerFrameMs,
             height,
-            width
+            width,
         )
     }
 
@@ -277,7 +280,7 @@ class GestureRecognizerHelper(
                 listOf(recognizerResult),
                 inferenceTimeMs,
                 image.height,
-                image.width
+                image.width,
             )
         }
         return null
@@ -301,9 +304,9 @@ class GestureRecognizerHelper(
         val finishTimeMs = SystemClock.uptimeMillis()
         val inferenceTime = finishTimeMs - result.timestampMs()
 
-        gestureRecognizerListener?.onResults(
-            ResultBundle(
-                listOf(result), inferenceTime, input.height, input.width
+        gestureRecognizerListener?.onResultsHand(
+            DetectionHand(
+                listOf(result), input.height, input.width
             )
         )
     }
@@ -313,11 +316,22 @@ class GestureRecognizerHelper(
     }
 
     interface GestureRecognizerListener {
-        fun onError(error: String, errorCode: Int = OTHER_ERROR)
-        fun onResults(resultBundle: ResultBundle)
+        fun onErrorHand(error: String, errorCode: Int = OTHER_ERROR)
+        fun onResultsHand(resultBundle: DetectionHand)
     }
 
     fun setListener(listener: GestureRecognizerListener) {
         gestureRecognizerListener = listener
     }
+
+    fun setDelegateToGPU() {
+        currentDelegate = DELEGATE_GPU
+        setupGestureRecognizer() // Reinicializa el GestureRecognizer con el nuevo delegado
+    }
+
+    fun setDelegateToCPU(){
+        currentDelegate = DELEGATE_CPU
+        setupGestureRecognizer() // Reinicializa el GestureRecognizer con el nuevo delegado
+    }
+
 }

@@ -20,11 +20,8 @@ import androidx.navigation.navArgument
 import com.example.comusenias.presentation.activities.MainActivity
 import com.example.comusenias.presentation.activities.MainActivity.Companion.getChildrenProfileViewModel
 import com.example.comusenias.presentation.activities.MainActivity.Companion.getLevelViewModel
-import com.example.comusenias.presentation.component.gameAction.ShowImageOrVideo
 import com.example.comusenias.presentation.screen.camera.CameraScreen
 import com.example.comusenias.presentation.screen.camera.RecordCameraScreen
-import com.example.comusenias.presentation.screen.camera.TestCamera
-import com.example.comusenias.presentation.screen.gallery.GalleryScreen
 import com.example.comusenias.presentation.screen.gameAction.ChoseTheLetterPlayScreen
 import com.example.comusenias.presentation.screen.gameAction.ChoseTheSignPlayScreen
 import com.example.comusenias.presentation.screen.gameAction.CongratsPlayScreen
@@ -174,9 +171,6 @@ private fun GetNavHost(
             val path = navBackStackEntry.arguments?.getString("path") ?: ""
             VideoPlayer(path)
         }*/
-
-
-
 
         /*------------Specialist-----------------------*/
         composableSpecialist(navController, modifier)

@@ -5,7 +5,9 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
-import com.example.comusenias.domain.models.overlayView.ResultOverlayView
+import com.example.comusenias.domain.models.mediapipe.DetectionFace
+import com.example.comusenias.domain.models.mediapipe.DetectionHand
+import com.example.comusenias.domain.models.recognizerSign.DetectionPose
 import com.example.comusenias.domain.use_cases.camera.CameraUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.Main
@@ -19,8 +21,16 @@ class CameraViewModel @Inject constructor(
     private val useCases: CameraUseCases
 ) : ViewModel() {
 
-    private val _recognitionResults = MutableStateFlow<ResultOverlayView?>(null)
-    val recognitionResults: StateFlow<ResultOverlayView?> = _recognitionResults
+    private val _recognitionHandsResults = MutableStateFlow<DetectionHand?>(null)
+    val recognitionHandsResults: StateFlow<DetectionHand?> = _recognitionHandsResults
+
+
+    private val _recognitionFaceResults = MutableStateFlow<DetectionFace?>(null)
+    val recognitionFaceResults: StateFlow<DetectionFace?> = _recognitionFaceResults
+
+
+    private val _recognitionPoseResults = MutableStateFlow<DetectionPose?>(null)
+    val recognitionPoseResults: StateFlow<DetectionPose?> = _recognitionPoseResults
 
     /**
      * Muestra la vista previa de la cámara en la vista previa proporcionada.
@@ -50,14 +60,37 @@ class CameraViewModel @Inject constructor(
      *
      * Los resultados se colectan en un flujo que actualiza un LiveData en el ViewModel.
      */
-    fun startObjectDetection() {
+    fun startDetection() {
         viewModelScope.launch {
-            val resultsFlow = useCases.startObjectDetection()
-            resultsFlow.collect { results ->
-                _recognitionResults.value = results
+            useCases.startDetection()
+        }
+    }
+
+    fun resultHands(){
+       viewModelScope.launch {
+           useCases.resultHands().collect {
+               _recognitionHandsResults.value = it
+           }
+       }
+    }
+
+    fun resultFace(){
+        viewModelScope.launch {
+            useCases.resultFace().collect {
+                _recognitionFaceResults.value = it
             }
         }
     }
+
+
+    fun resultPose(){
+        viewModelScope.launch {
+            useCases.resultPose().collect {
+                _recognitionPoseResults.value = it
+            }
+        }
+    }
+
 
     /**
      * Detiene la vista  de la cámara.

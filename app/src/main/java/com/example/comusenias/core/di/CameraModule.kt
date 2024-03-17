@@ -9,6 +9,7 @@ import androidx.camera.core.ImageCapture
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import com.example.comusenias.data.repositories.firebase.GestureRecognizerHelper
+import com.example.comusenias.data.repositories.firebase.MLHelper
 import com.example.comusenias.domain.repositories.CameraRepository
 import dagger.Module
 import dagger.Provides
@@ -52,6 +53,13 @@ object CameraModule {
     ): GestureRecognizerHelper =
         GestureRecognizerHelper(context = context)
 
+
+    @Provides
+    fun provideMLHelper(
+        context: Context
+    ): MLHelper =
+        MLHelper(context = context)
+
     @Provides
     fun provideCameraRepository(
         cameraProvider: ProcessCameraProvider,
@@ -59,7 +67,7 @@ object CameraModule {
         preview: Preview,
         imageCapture: ImageCapture,
         context: Context,
-        gestureRecognizerHelper: GestureRecognizerHelper
+        mlHelper: MLHelper
     ): CameraRepository =
         CameraRepositoryImpl(
             cameraProvider,
@@ -67,6 +75,6 @@ object CameraModule {
             preview,
             imageCapture,
             context,
-            gestureRecognizerHelper
+            mlHelper
         )
 }

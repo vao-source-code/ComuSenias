@@ -1,5 +1,6 @@
 package com.example.comusenias.presentation.screen.gameAction
 
+import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,10 +9,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.comusenias.constants.TestTag
+import com.example.comusenias.presentation.activities.MainActivity
 import com.example.comusenias.presentation.activities.MainActivity.Companion.getChildrenProfileViewModel
 import com.example.comusenias.presentation.activities.MainActivity.Companion.getLevelViewModel
 import com.example.comusenias.presentation.component.defaults.app.ButtonApp
@@ -19,7 +22,6 @@ import com.example.comusenias.presentation.component.gameAction.CongratsContent
 import com.example.comusenias.presentation.component.home.StatusGame
 import com.example.comusenias.presentation.component.home.getAllSubLevels
 import com.example.comusenias.presentation.extensions.validation.getChoicesSelected
-import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.CONTINUE
 import com.example.comusenias.presentation.ui.theme.SIZE30
 
@@ -30,6 +32,7 @@ fun CongratsPlayScreen(navController: NavHostController, modifier: Modifier) {
 
 @Composable
 fun CongratsPlayView(navController: NavHostController, modifier: Modifier) {
+    val context = LocalContext.current
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -42,9 +45,16 @@ fun CongratsPlayView(navController: NavHostController, modifier: Modifier) {
         ButtonApp(
             titleButton = CONTINUE,
             onClickButton = {
-                navController.navigate(AppScreen.HomeScreen.route)
+
+                // Limpia el estado y recrea la actividad después de navegar
+                val intent = Intent(context, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                context.startActivity(intent)
+
                 setStatusBySubLevel()
                 getChildrenProfileViewModel.updateLevel()
+
+
             }
         )
     }
