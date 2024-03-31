@@ -120,11 +120,14 @@ fun getStatusSubLevel(
         getAllSubLevels().getOrNull(0)?.isCompleted = StatusGame.IN_PROGRESS
     }
 
+
     return when {
         lastCompletedIndex != -1 && currentIndex == lastCompletedIndex + 1 -> StatusGame.IN_PROGRESS
         lastCompletedIndex != -1 && currentIndex > lastCompletedIndex + 1 -> StatusGame.BLOCKED
         else -> getAllSubLevels().getOrNull(currentIndex)?.isCompleted ?: StatusGame.BLOCKED
     }
+
+
 }
 
 fun getAllLevels(): List<LevelModel> {

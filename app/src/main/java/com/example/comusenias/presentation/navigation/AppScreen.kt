@@ -86,7 +86,6 @@ sealed class AppScreen(val route: String) {
 
     object SpecialistScreen : AppScreen("specialist_screen")
 
-
-
+    object SupportScreen : AppScreen("support_screen")
 
 }

@@ -30,7 +30,10 @@ fun HomeScreen(
                 TopBarHome(
                     name = childrenModel.userData.name,
                     image = childrenModel.userData.image,
-                    onClickNotification = { navController.navigate(AppScreen.NotificationScreen.route) })
+                    onClickNotification = { navController.navigate(AppScreen.NotificationScreen.route) },
+                    onclickSupport = { navController.navigate(AppScreen.SupportScreen.route) },
+                    onclickProfile = { navController.navigate(AppScreen.ChildrenProfileScreen.route) }
+                )
             }
         },
         bottomBar = {

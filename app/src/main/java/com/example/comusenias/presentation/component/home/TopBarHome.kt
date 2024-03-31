@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
@@ -20,19 +22,22 @@ import androidx.compose.ui.text.font.FontWeight.Companion.SemiBold
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.example.comusenias.R
 import com.example.comusenias.R.drawable.profile_avatar
 import com.example.comusenias.presentation.ui.theme.PROFILE_USER
 import com.example.comusenias.presentation.ui.theme.SIZE10
 import com.example.comusenias.presentation.ui.theme.SIZE16
 import com.example.comusenias.presentation.ui.theme.SIZE36
 import com.example.comusenias.presentation.ui.theme.blackColorApp
+import com.example.comusenias.presentation.ui.theme.iconColorProgress
 
 @Composable
 fun TopBarHome(
     name: String = "",
     image: String? = "",
     onClickNotification: () -> Unit = {},
-    onclickProfile: () -> Unit = {}
+    onclickProfile: () -> Unit = {},
+    onclickSupport : () -> Unit = {}
 ) {
     TopAppBar(
         //modifier = Modifier.clickable { onclickProfile()  },
@@ -42,6 +47,17 @@ fun TopBarHome(
                 image = image,
                 onclickProfile = { onclickProfile() }
             )
+        },
+        actions = {
+            IconButton(
+                onClick = { onclickSupport() }
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.icon_support),
+                    contentDescription = "Support",
+                    tint = blackColorApp
+                )
+            }
         },
         backgroundColor = White,
         contentColor = White

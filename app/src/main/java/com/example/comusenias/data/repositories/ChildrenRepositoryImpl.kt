@@ -1,5 +1,7 @@
 package com.example.comusenias.data.repositories
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import com.example.comusenias.constants.FirebaseConstants
 import com.example.comusenias.domain.models.response.Response
@@ -12,6 +14,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -61,15 +65,43 @@ class ChildrenRepositoryImpl @Inject constructor(
 
     override suspend fun saveImageUserChildren(file: File): Response<String> {
         return try {
-            val fromFile = Uri.fromFile(file)
-            val ref = storageChildrenRef.child(file.name)
+            // Comprimir el archivo de imagen antes de cargarlo
+            val compressedFile = compressImage(file)
+
+            // Obtener URI del archivo comprimido
+            val fromFile = Uri.fromFile(compressedFile)
+
+            // Subir el archivo comprimido
+            val ref = storageChildrenRef.child(compressedFile.name)
             val uploadTask = ref.putFile(fromFile).await()
+
+            // Obtener URL de descarga
             val url = ref.downloadUrl.await()
-            return Response.Success(url.toString())
+            Response.Success(url.toString())
         } catch (e: Exception) {
             e.printStackTrace()
             Response.Error(e)
         }
+    }
+
+
+    suspend fun compressImage(inputFile: File): File {
+        val outputFile = File(inputFile.parent, "${inputFile.nameWithoutExtension}_compressed.jpg")
+        try {
+            val options = BitmapFactory.Options().apply {
+                inJustDecodeBounds = false
+            }
+            val bitmap = BitmapFactory.decodeFile(inputFile.path, options)
+
+            val outputStream = FileOutputStream(outputFile)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 15, outputStream) // Comprimimos al 15% de calidad
+            outputStream.close()
+
+            bitmap.recycle()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return outputFile
     }
 
     override suspend fun integrateChildrenWithSpecialist(user: ChildrenModel): Response<Boolean> {

@@ -21,15 +21,19 @@ fun getBottomBarItems(): List<BottomBarItem> {
             selectedIcon = R.drawable.book_fechado,
             unselectedIcon = R.drawable.book_open,
         ), BottomBarItem(
-            route = AppScreen.PremiumScreen.route,
-            title = PREMIUM_TEXT,
-            selectedIcon = R.drawable.workspace_premium,
-            unselectedIcon = R.drawable.workspace_premium,
-        ), BottomBarItem(
             route = AppScreen.ChildrenProfileScreen.route,
             title = PROFILE_TEXT,
             selectedIcon = R.drawable.girl,
             unselectedIcon = R.drawable.children,
         )
     )
+
+    /*
+    BottomBarItem(
+            route = AppScreen.PremiumScreen.route,
+            title = PREMIUM_TEXT,
+            selectedIcon = R.drawable.workspace_premium,
+            unselectedIcon = R.drawable.workspace_premium,
+        )
+     */
 }

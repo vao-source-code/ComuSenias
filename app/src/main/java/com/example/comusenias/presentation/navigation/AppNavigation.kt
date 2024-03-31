@@ -33,6 +33,7 @@ import com.example.comusenias.presentation.screen.gameAction.InterpretationStatu
 import com.example.comusenias.presentation.screen.gameAction.LearnSignScreen
 import com.example.comusenias.presentation.screen.gameAction.MakeSignPlayScreen
 import com.example.comusenias.presentation.screen.home.HomeScreen
+import com.example.comusenias.presentation.screen.home.SupportScreen
 import com.example.comusenias.presentation.screen.notification.NotificationScreen
 import com.example.comusenias.presentation.screen.premiun.PremiunScreen
 import com.example.comusenias.presentation.screen.profile.ChangeSpecialistProfileScreen
@@ -81,7 +82,7 @@ private fun GetNavHost(
 
     NavHost(
         navController = navController,
-        startDestination = AppScreen.HomeScreen.route
+        startDestination = AppScreen.SplashScreen.route
     ) {
 
         authNavGraph(navController = navController, modifier = modifier)
@@ -97,6 +98,13 @@ private fun GetNavHost(
             HomeScreen(
                 navController = navController,
                 levelViewModel = levelViewModel
+            )
+        }
+
+        composable(AppScreen.SupportScreen.route){
+            SupportScreen(
+                navController = navController,
+                modifier = modifier
             )
         }
 

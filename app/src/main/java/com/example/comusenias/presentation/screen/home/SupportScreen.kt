@@ -1,0 +1,137 @@
+package com.example.comusenias.presentation.screen.home
+
+import android.content.Intent
+import android.net.Uri
+import android.os.Bundle
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import com.example.comusenias.R
+import com.example.comusenias.presentation.activities.MainActivity
+import com.example.comusenias.presentation.component.bottomBar.ShowBottomBar
+import com.example.comusenias.presentation.component.defaults.ButtonDefault
+import com.example.comusenias.presentation.component.defaults.GetImage
+import com.example.comusenias.presentation.component.defaults.app.ButtonApp
+import com.example.comusenias.presentation.component.home.ContentHome
+import com.example.comusenias.presentation.component.home.TopBarHome
+import com.example.comusenias.presentation.navigation.AppScreen
+import com.example.comusenias.presentation.ui.theme.ComuSeniasTheme
+import com.example.comusenias.presentation.ui.theme.SIZE16
+import com.example.comusenias.presentation.ui.theme.SIZE3
+import com.example.comusenias.presentation.ui.theme.backgroundColorApp
+import com.example.comusenias.presentation.ui.theme.logoApp
+import com.example.comusenias.presentation.ui.theme.size150
+import com.example.comusenias.presentation.view_model.ChildrenProfileViewModel
+import com.example.comusenias.presentation.view_model.LevelViewModel
+
+@Composable
+fun SupportScreen(
+    navController: NavController,
+    modifier: Modifier
+) {
+
+    Scaffold(
+        topBar = {
+            Surface(shadowElevation = SIZE3.dp) {
+                TopBarHome(
+                    name = MainActivity.getChildrenProfileViewModel.userData.name,
+                    image = MainActivity.getChildrenProfileViewModel.userData.image,
+                    onClickNotification = { navController.navigate(AppScreen.NotificationScreen.route) },
+                    onclickProfile = { navController.navigate(AppScreen.ChildrenProfileScreen.route) })
+            }
+        },
+        bottomBar = {
+            ShowBottomBar(navController = navController)
+        }
+    ) { paddingValues ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(color = Color.White)
+                    .padding(SIZE16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.SpaceEvenly
+
+            ) {
+                val context = LocalContext.current
+                // Imagen del icono de la aplicación
+                GetImage(
+                    painter = R.drawable.comu_senias_with_text,
+                    contentDescription = logoApp,
+                    width = size150.dp,
+                    height = size150.dp
+                )
+
+                // Texto
+                Text(
+                    text = "Comunicate con nosotros",
+                    modifier = Modifier.padding(vertical = 16.dp)
+                )
+
+                // Botón para abrir Gmail
+                ButtonDefault(
+                    onClick = {
+                        val intent = Intent(Intent.ACTION_SENDTO).apply {
+                            data = Uri.parse("mailto:comusenias@gmail.com")
+                        }
+                        startActivity(context, intent, null)
+                    },
+                    text = "Gmail",
+                    icon = Icons.Default.Email
+                )
+
+                // Botón para abrir el navegador web
+                ButtonDefault(
+                    onClick = {
+                        val intent = Intent(Intent.ACTION_VIEW).apply {
+                            data = Uri.parse("http://www.comuseñas.com.ar")
+                            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        }
+                        val options = Bundle().apply {
+                            putInt("android.support.customtabs.extra.TOOLBAR_COLOR", ContextCompat.getColor(context, R.color.primaryColorApp))
+                        }
+                        startActivity(context, intent, options)
+                    }
+                    ,
+                    text = "Sitio web",
+                    icon = Icons.Default.Info
+                )
+            }
+        }
+    }
+
+
+}

@@ -42,7 +42,11 @@ fun CongratsPlayView(navController: NavHostController, modifier: Modifier) {
         ButtonApp(
             titleButton = CONTINUE,
             onClickButton = {
-                navController.navigate(AppScreen.HomeScreen.route)
+                navController.navigate(AppScreen.HomeScreen.route){
+                    popUpTo(AppScreen.CongratsPlayScreen.route) {
+                        inclusive = true
+                    }
+                }
                 setStatusBySubLevel()
                 getChildrenProfileViewModel.updateLevel()
             }
@@ -59,21 +63,28 @@ fun CongratsPlayView(navController: NavHostController, modifier: Modifier) {
  * En caso contrario, el estado se establece en IN_PROGRESS.
  */
 fun setStatusBySubLevel() {
-    getAllSubLevels().find { it.name == getLevelViewModel.subLevelSelected }?.let { subLevel ->
-        subLevel.isCompleted =
-            if (getChoicesSelected(getLevelViewModel)) StatusGame.COMPLETED else StatusGame.IN_PROGRESS
-    }
-    getChildrenProfileViewModel.userData.levels.forEach {
-        it.subLevel.forEach { subLevel ->
-            if (subLevel.name == getLevelViewModel.subLevelSelected) {
-                subLevel.isCompleted =
-                    if (getChoicesSelected(getLevelViewModel)) StatusGame.COMPLETED else StatusGame.IN_PROGRESS
-                if (getChoicesSelected(getLevelViewModel)) {
-                    subLevel.successes += 1
-                } else {
-                    subLevel.failures += 1
-                }
+    val allSubLevels = getAllSubLevels()
+    val subLevelSelected = getLevelViewModel.subLevelSelected
+    val currentIndex = allSubLevels.indexOfFirst { it.name == subLevelSelected }
+
+    if (currentIndex != -1) {
+        val subLevel = allSubLevels[currentIndex]
+        val nextSubLevelIndex = currentIndex + 1
+
+        subLevel.isCompleted = if (getChoicesSelected(getLevelViewModel)) StatusGame.COMPLETED else StatusGame.IN_PROGRESS
+
+        if (subLevel.isCompleted == StatusGame.COMPLETED) {
+            subLevel.successes += 1
+        } else {
+            subLevel.failures += 1
+        }
+
+        if (nextSubLevelIndex < allSubLevels.size) {
+            val nextSubLevel = allSubLevels[nextSubLevelIndex]
+            if (nextSubLevel.isCompleted != StatusGame.COMPLETED) {
+                nextSubLevel.isCompleted = StatusGame.IN_PROGRESS
             }
         }
     }
 }
+
