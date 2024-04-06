@@ -1,0 +1,65 @@
+package com.ars.comusenias.presentation.screen.gameAction
+
+import androidx.compose.runtime.Composable
+import androidx.navigation.NavHostController
+import com.ars.comusenias.domain.models.response.Response
+import com.ars.comusenias.presentation.activities.MainActivity.Companion.getLevelViewModel
+import com.ars.comusenias.presentation.component.defaults.app.CircularProgressBar
+import com.ars.comusenias.presentation.component.defaults.app.ShowRetrySnackBar
+import com.ars.comusenias.presentation.component.gameAction.ContentLetterType
+import com.ars.comusenias.presentation.component.gameAction.GameAction
+import com.ars.comusenias.presentation.navigation.AppScreen
+import com.ars.comusenias.presentation.ui.theme.CONTINUE
+import com.ars.comusenias.presentation.ui.theme.ERROR_RETRY_LEVEL
+import com.ars.comusenias.presentation.ui.theme.LETS_GO
+import com.ars.comusenias.presentation.ui.theme.STEP_ONE
+import com.ars.comusenias.presentation.view_model.LevelViewModel
+
+@Composable
+fun LearnSignScreen(
+    navController: NavHostController,
+    level: String,
+    subLevel: String,
+    levelViewModel: LevelViewModel
+) {
+
+    val subLevelViewModel = levelViewModel.getSubLevelById(level, subLevel)
+    getLevelViewModel.choiceOfOption.clear()
+
+    when (levelViewModel.levelsResponse) {
+        is Response.Loading -> {
+            CircularProgressBar()
+        }
+
+        is Response.Error -> {
+            ShowRetrySnackBar(text = ERROR_RETRY_LEVEL, true, onActionClick = {
+                levelViewModel.getLevels()
+            })
+        }
+
+        is Response.Success -> {
+            subLevelViewModel.let {
+                GameAction(
+                    if (!it.esVideo) it.image else it.imageOnly,
+                    title = LETS_GO,
+                    titleButton = CONTINUE,
+                    currentSteps = STEP_ONE,
+                    navController = navController,
+                    clickButton = {
+                        navController.navigate(
+                            AppScreen
+                                .ChoseTheLetterPlayScreen
+                                .createRoute(level, it.name)
+                        )
+                    },
+                ) {
+                    ContentLetterType(letter = it.name)
+                }
+            }
+        }
+
+        else -> {
+            CircularProgressBar()
+        }
+    }
+}
