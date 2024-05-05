@@ -40,10 +40,8 @@ fun TextFieldApp(
     keyboardType: KeyboardType = KeyboardType.Text,
     hideText: Boolean = false,
     errorMsg: String = "",
-    readOnly: Boolean = false,
+    readOnly: Boolean = false
 ) {
-    val maxChar = 32
-
     Column {
         OutlinedTextField(
             modifier = modifier
@@ -51,10 +49,8 @@ fun TextFieldApp(
                 .fillMaxWidth()
                 .background(backgroundColorTextField, shape = RoundedCornerShape(10.dp)),
             onValueChange = {
-                if (it.length <= maxChar) {
-                    onValueChange(it)
-                    validateField()
-                }
+                onValueChange(it)
+                validateField()
             },
 
             value = value,
