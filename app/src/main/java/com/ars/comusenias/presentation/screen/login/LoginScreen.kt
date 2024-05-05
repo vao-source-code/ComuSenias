@@ -12,7 +12,6 @@ import com.ars.comusenias.presentation.component.defaults.app.AuthenticationCont
 import com.ars.comusenias.presentation.component.defaults.app.AuthenticationFooterContent
 import com.ars.comusenias.presentation.component.login.LoginForm
 import com.ars.comusenias.presentation.component.login.ResponseStatusLogin
-import com.ars.comusenias.presentation.component.login.ResponseStatusRol
 import com.ars.comusenias.presentation.navigation.AppScreen
 import com.ars.comusenias.presentation.ui.theme.DONT_HAVE_ACCOUNT
 import com.ars.comusenias.presentation.ui.theme.REGISTER
@@ -50,10 +49,10 @@ fun LoginScreen(
             viewModel = viewModel
         )
 
-        ResponseStatusRol(
-            navController = navController,
-            viewModel = viewModel
-        )
+//        ResponseStatusRol(
+//            navController = navController,
+//            viewModel = viewModel
+//        )
 
     }
 }

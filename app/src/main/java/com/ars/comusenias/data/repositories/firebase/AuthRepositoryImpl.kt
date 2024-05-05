@@ -4,6 +4,7 @@ import com.ars.comusenias.domain.models.response.Response
 import com.ars.comusenias.domain.models.users.UserModel
 import com.ars.comusenias.domain.repositories.AuthRepository
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -18,9 +19,9 @@ class AuthRepositoryImpl @Inject constructor(private val firebaseAuth: FirebaseA
         return try {
             val user = firebaseAuth.signInWithEmailAndPassword(email, password).await()
             Response.Success(user.user!!)
-        } catch (e: Exception) {
+        } catch (e: FirebaseAuthException) {
             e.printStackTrace()
-            Response.Error(e)
+            Response.ErrorFirebase(e.errorCode)
         }
     }
 
@@ -29,9 +30,9 @@ class AuthRepositoryImpl @Inject constructor(private val firebaseAuth: FirebaseA
             val user = firebaseAuth.createUserWithEmailAndPassword(user.email, user.password)
                 .await()
             Response.Success(user.user!!)
-        } catch (e: Exception) {
+        } catch (e: FirebaseAuthException) {
             e.printStackTrace()
-            Response.Error(e)
+            Response.ErrorFirebase(e.errorCode)
         }
     }
 
@@ -39,9 +40,9 @@ class AuthRepositoryImpl @Inject constructor(private val firebaseAuth: FirebaseA
         return try {
             firebaseAuth.sendPasswordResetEmail(email).await()
             Response.Success(true)
-        } catch (e: Exception) {
+        } catch (e: FirebaseAuthException) {
             e.printStackTrace()
-            Response.Error(e)
+            Response.ErrorFirebase(e.errorCode)
         }
     }
 
