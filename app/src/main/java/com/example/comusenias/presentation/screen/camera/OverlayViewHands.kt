@@ -6,26 +6,27 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.dp
 import com.example.comusenias.R
-import com.example.comusenias.presentation.screen.camera.isAnyGestureOnFace
 import com.example.comusenias.presentation.ui.theme.NONE
 import com.example.comusenias.presentation.view_model.LevelViewModel
 import com.google.mediapipe.tasks.vision.core.RunningMode
 import com.google.mediapipe.tasks.vision.facelandmarker.FaceLandmarkerResult
 import com.google.mediapipe.tasks.vision.gesturerecognizer.GestureRecognizerResult
 import com.google.mediapipe.tasks.vision.handlandmarker.HandLandmarker
+import com.google.mediapipe.tasks.vision.poselandmarker.PoseLandmarkerResult
 import kotlin.math.max
 import kotlin.math.min
 
 private val listCategory = mutableListOf<String>()
+
 @SuppressLint("SuspiciousIndentation")
 @Composable
 fun OverlayViewHands(
     levelViewModel: LevelViewModel,
-    results: List<GestureRecognizerResult>,
+    gestureResults: List<GestureRecognizerResult>,
     imageWidth: Int,
     imageHeight: Int,
     runningMode: RunningMode = RunningMode.LIVE_STREAM
@@ -35,112 +36,72 @@ fun OverlayViewHands(
     val context = LocalContext.current
 
 
-        results.forEach { gestureRecognizerResult ->
+    gestureResults.forEach { gestureRecognizerResult ->
 
-            val gestures = gestureRecognizerResult.gestures()
-            val firstGesture = gestures.getOrNull(0)
-            val category = firstGesture?.get(0)?.categoryName() ?: context.getString(R.string.noneResultGesture)
+        val gestures = gestureRecognizerResult.gestures()
+        val firstGesture = gestures.getOrNull(0)
+        val category =
+            firstGesture?.get(0)?.categoryName() ?: context.getString(R.string.noneResultGesture)
 
+        /*if(faceResult!=null) {
+            val isAnyGestureOnFace = isAnyGestureOnFace(gestureRecognizerResult, faceResult)
 
-            listCategory.add(category)
+            val textColor = if (isAnyGestureOnFace) Color.Green else Color.Red
 
-            val isCorrect = verifyOptionSelected(category, levelViewModel)
+            Log.d(
+                "GestureInsideFace",
+                "¿Hay algún gesto dentro de la cara? $isAnyGestureOnFace"
+            )
+        }*/
+        listCategory.add(category)
 
-            if (listCategory.contains(levelViewModel.subLevelSelected)) {
-                levelViewModel.onOptionSelected = levelViewModel.subLevelSelected
+        val isCorrect = verifyOptionSelected(category, levelViewModel)
+
+        if (listCategory.contains(levelViewModel.subLevelSelected)) {
+            levelViewModel.onOptionSelected = levelViewModel.subLevelSelected
+        }
+
+        Canvas(modifier = Modifier.fillMaxSize()) {
+            val scaleFactor = max(
+                size.width / imageWidth.toFloat(),
+                size.height / imageHeight.toFloat()
+            )
+
+            val xOffset = (size.width - imageWidth * scaleFactor) / 2
+            val yOffset = (size.height - imageHeight * scaleFactor) / 2
+
+            val lineColor = if (!isCorrect) Color.Red else Color.Green
+
+            for (landmark in gestureRecognizerResult.landmarks()) {
+                for (normalizedLandmark in landmark) {
+                    val x = normalizedLandmark.x() * imageWidth * scaleFactor + xOffset
+                    val y = normalizedLandmark.y() * imageHeight * scaleFactor + yOffset
+                }
+
+                HandLandmarker.HAND_CONNECTIONS?.forEach {
+                    val startX =
+                        landmark[it?.start()!!].x() * imageWidth * scaleFactor + xOffset
+                    val startY =
+                        landmark[it.start()].y() * imageHeight * scaleFactor + yOffset
+                    val endX =
+                        landmark[it.end()].x() * imageWidth * scaleFactor + xOffset
+                    val endY =
+                        landmark[it.end()].y() * imageHeight * scaleFactor + yOffset
+
+                    drawLine(
+                        color = lineColor,
+                        start = Offset(startX, startY),
+                        end = Offset(endX, endY),
+                        strokeWidth = 2f * density
+                    )
+                }
             }
-            Canvas(modifier = Modifier.fillMaxSize()) {
+        }
 
-                    val scaleFactor = when (runningMode) {
-                        RunningMode.IMAGE,
-                        RunningMode.VIDEO -> {
-                            min(
-                                size.width / imageWidth.toFloat(),
-                                size.height / imageHeight.toFloat()
-                            )
-                        }
-
-                        RunningMode.LIVE_STREAM -> {
-                            max(
-                                size.width / imageWidth.toFloat(),
-                                size.height / imageHeight.toFloat()
-                            )
-                        }
-                    }
+    }
 
 
-                    val xOffset = (size.width - imageWidth * scaleFactor) / 2
-                    val yOffset = (size.height - imageHeight * scaleFactor) / 2
-
-                    val lineColor = if (!isCorrect) Color.Red else Color.Green
-
-                    for (landmark in gestureRecognizerResult.landmarks()) {
-                        for (normalizedLandmark in landmark) {
-                            val x = normalizedLandmark.x() * imageWidth * scaleFactor + xOffset
-                            val y = normalizedLandmark.y() * imageHeight * scaleFactor + yOffset
-
-                            drawCircle(
-                                color = Color.Yellow,
-                                radius = 2f * density,
-                                center = Offset(x, y)
-                            )
-
-
-                            HandLandmarker.HAND_CONNECTIONS.forEach {
-
-
-                                    /*-------------------------------Mano izquierda------------------------------------------------- */
-
-                                        val startXRight =
-                                            gestureRecognizerResult.landmarks()[0][it!!.start()].x() * imageWidth * scaleFactor + xOffset
-                                        val startYRight =
-                                            gestureRecognizerResult.landmarks()[0][it.start()].y() * imageHeight * scaleFactor + yOffset
-                                        val endXRight =
-                                            gestureRecognizerResult.landmarks()[0][it.end()].x() * imageWidth * scaleFactor + xOffset
-                                        val endYRight =
-                                            gestureRecognizerResult.landmarks()[0][it.end()].y() * imageHeight * scaleFactor + yOffset
-
-                                        drawLine(
-                                            color = lineColor,
-                                            start = Offset(startXRight, startYRight),
-                                            end = Offset(endXRight, endYRight),
-                                            strokeWidth = 5f * density
-                                        )
-
-
-
-                                        //  -----------------------------------Mano derecha-------------------------------------------------
-
-                                       /* val startXLeft =
-                                            gestureLandmarks[1][it.start()].x() * imageWidth * scaleFactor + xOffset
-                                        val startYLeft =
-                                            gestureLandmarks[1][it.start()].y() * imageHeight * scaleFactor + yOffset
-                                        val endXLeft =
-                                            gestureLandmarks[1][it.end()].x() * imageWidth * scaleFactor + xOffset
-                                        val endYLeft =
-                                            gestureLandmarks[1][it.end()].y() * imageHeight * scaleFactor + yOffset
-
-
-
-                                        drawLine(
-                                            color = Color.Green,
-                                            start = Offset(startXLeft, startYLeft),
-                                            end = Offset(endXLeft, endYLeft),
-                                            strokeWidth = LANDMARK_STROKE_WIDTH * density
-                                        )*/
-
-
-                                    }
-                                    // --------------------------------------------------------------------------------------------//
-
-                                }
-                            }
-                        }
-
-                    }
-
-
-            }
+}
 
 @Composable
 private fun verifyOptionSelected(
@@ -152,3 +113,40 @@ private fun verifyOptionSelected(
         ignoreCase = true
     )
 }
+
+fun isAnyGestureOnFace(
+    gestureResult: GestureRecognizerResult,
+    faceResult: FaceLandmarkerResult
+): Boolean {
+    // Verificar si la cara no fue detectada
+    if (faceResult.faceLandmarks().isEmpty()) {
+        return false
+    }
+
+    // Obtener las landmarks de la cara
+    val faceLandmarks = faceResult.faceLandmarks()[0]
+
+    // Definir las regiones de interés en la cara
+    val faceLeft = faceLandmarks.minByOrNull { it.x() }?.x() ?: return false
+    val faceRight = faceLandmarks.maxByOrNull { it.x() }?.x() ?: return false
+    val faceTop = faceLandmarks.minByOrNull { it.y() }?.y() ?: return false
+    val faceBottom = faceLandmarks.maxByOrNull { it.y() }?.y() ?: return false
+
+    // Verificar si alguna parte del gesto está dentro del rectángulo delimitador del rostro
+    for (handLandmarks in gestureResult.landmarks()) {
+        for (landmark in handLandmarks) {
+            val handX = landmark.x()
+            val handY = landmark.y()
+
+            // Verificar si la parte del gesto está dentro del rostro
+            if (handX >= faceLeft && handX <= faceRight && handY >= faceTop && handY <= faceBottom) {
+                return true
+            }
+        }
+    }
+
+    // Si ninguna parte del gesto está dentro del rostro
+    return false
+}
+
+

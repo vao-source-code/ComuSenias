@@ -8,8 +8,9 @@ import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
+import com.example.comusenias.data.repositories.firebase.FaceLandmarkerHelper
 import com.example.comusenias.data.repositories.firebase.GestureRecognizerHelper
-import com.example.comusenias.data.repositories.firebase.MLHelper
+import com.example.comusenias.data.repositories.firebase.PoseLandmarkerHelper
 import com.example.comusenias.domain.repositories.CameraRepository
 import dagger.Module
 import dagger.Provides
@@ -53,12 +54,20 @@ object CameraModule {
     ): GestureRecognizerHelper =
         GestureRecognizerHelper(context = context)
 
+    @Provides
+    fun providePoseLandmarkerHelper(
+        context: Context
+    ): PoseLandmarkerHelper =
+        PoseLandmarkerHelper(context = context)
+
 
     @Provides
-    fun provideMLHelper(
+    fun provideFaceLandmarkerHelper(
         context: Context
-    ): MLHelper =
-        MLHelper(context = context)
+    ): FaceLandmarkerHelper =
+        FaceLandmarkerHelper(context = context)
+
+
 
     @Provides
     fun provideCameraRepository(
@@ -67,7 +76,9 @@ object CameraModule {
         preview: Preview,
         imageCapture: ImageCapture,
         context: Context,
-        mlHelper: MLHelper
+        gestureRecognizerHelper: GestureRecognizerHelper,
+        poseLandmarkerHelper: PoseLandmarkerHelper,
+        faceLandmarkerHelper: FaceLandmarkerHelper
     ): CameraRepository =
         CameraRepositoryImpl(
             cameraProvider,
@@ -75,6 +86,8 @@ object CameraModule {
             preview,
             imageCapture,
             context,
-            mlHelper
+            gestureRecognizerHelper,
+            poseLandmarkerHelper,
+            faceLandmarkerHelper
         )
 }

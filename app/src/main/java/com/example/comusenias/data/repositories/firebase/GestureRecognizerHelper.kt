@@ -180,7 +180,7 @@ class GestureRecognizerHelper(
      * @return Un objeto ResultBundle que contiene los resultados del reconocimiento de gestos,
      *         o null si ocurrió un error durante el reconocimiento.
      */
-    fun recognizeVideoFile(videoUri: Uri, inferenceIntervalMs: Long): ResultBundle? {
+    fun recognizeVideoFile(videoUri: Uri, inferenceIntervalMs: Long): DetectionHand? {
         val startTime = SystemClock.uptimeMillis()
         val retriever = MediaMetadataRetriever().apply { setDataSource(context, videoUri) }
         val videoLengthMs =
@@ -202,9 +202,8 @@ class GestureRecognizerHelper(
 
         val inferenceTimePerFrameMs = (SystemClock.uptimeMillis() - startTime) / numberOfFrameToRead
 
-        return ResultBundle(
+        return DetectionHand(
             resultList,
-            inferenceTimePerFrameMs,
             height,
             width,
         )
@@ -266,7 +265,7 @@ class GestureRecognizerHelper(
      * Antes de realizar el reconocimiento, verifica si el modo de ejecución actual es RunningMode.IMAGE.
      * Si no es así, lanza una excepción IllegalArgumentException.
      */
-    fun recognizeImage(image: Bitmap): ResultBundle? {
+    fun recognizeImage(image: Bitmap): DetectionHand? {
         if (runningMode != RunningMode.IMAGE) {
             Response.CustomError(ERROR_NOT_USING_RUNNING_MODE_IMAGE)
         }
@@ -276,9 +275,8 @@ class GestureRecognizerHelper(
 
         gestureRecognizer?.recognize(mpImage)?.also { recognizerResult ->
             val inferenceTimeMs = SystemClock.uptimeMillis() - startTime
-            return ResultBundle(
+            return DetectionHand(
                 listOf(recognizerResult),
-                inferenceTimeMs,
                 image.height,
                 image.width,
             )
@@ -324,14 +322,5 @@ class GestureRecognizerHelper(
         gestureRecognizerListener = listener
     }
 
-    fun setDelegateToGPU() {
-        currentDelegate = DELEGATE_GPU
-        setupGestureRecognizer() // Reinicializa el GestureRecognizer con el nuevo delegado
-    }
-
-    fun setDelegateToCPU(){
-        currentDelegate = DELEGATE_CPU
-        setupGestureRecognizer() // Reinicializa el GestureRecognizer con el nuevo delegado
-    }
 
 }

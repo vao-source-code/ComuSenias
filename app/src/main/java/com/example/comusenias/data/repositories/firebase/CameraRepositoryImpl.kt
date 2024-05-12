@@ -34,7 +34,7 @@ import com.example.comusenias.R
 import com.example.comusenias.domain.library.toast
 import com.example.comusenias.domain.models.mediapipe.DetectionFace
 import com.example.comusenias.domain.models.mediapipe.DetectionHand
-import com.example.comusenias.domain.models.recognizerSign.DetectionPose
+import com.example.comusenias.domain.models.mediapipe.DetectionPose
 import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.repositories.CameraRepository
 import com.example.comusenias.presentation.activities.MainActivity.Companion.getLevelViewModel
@@ -65,8 +65,10 @@ class CameraRepositoryImpl @Inject constructor(
     private val preview: Preview,
     private val imageCapture: ImageCapture,
     private val context: Context,
-    private val mlHelper: MLHelper
-) : CameraRepository, MLHelper.GestureRecognizerListener, MLHelper.FaceLandmarkerListener ,MLHelper.PoseLandmarkerListener{
+    private val gestureRecognizerHelper: GestureRecognizerHelper,
+    private val poseLandmarkerHelper: PoseLandmarkerHelper,
+    private val faceLandmarkerHelper: FaceLandmarkerHelper
+) : CameraRepository, GestureRecognizerHelper.GestureRecognizerListener , FaceLandmarkerHelper.FaceLandmarkerListener , PoseLandmarkerHelper.LandmarkerListener{
     private lateinit var lifecycleOwner: LifecycleOwner
 
     private var recording: Recording? = null
@@ -92,9 +94,10 @@ class CameraRepositoryImpl @Inject constructor(
 
     init {
         setupImageAnalysis()
-        mlHelper.setGestureRecognizerListener(this)
-        mlHelper.setFaceLandmarkerListener(this)
-        mlHelper.setPoseLandmarkerListener(this)
+
+        gestureRecognizerHelper.setListener(this)
+        poseLandmarkerHelper.setListener(this)
+        faceLandmarkerHelper.setListener(this)
     }
 
 
@@ -275,7 +278,10 @@ class CameraRepositoryImpl @Inject constructor(
         imageAnalysis?.setAnalyzer(
             Executors.newSingleThreadExecutor()
         ) { imageProxy ->
-            mlHelper.detect(imageProxy)
+
+            gestureRecognizerHelper.recognizeLiveStream(imageProxy)
+            poseLandmarkerHelper.detectLiveStream(imageProxy,true)
+            faceLandmarkerHelper.detectLiveStream(imageProxy,true)
 
             imageProxy.close()
         }
@@ -337,6 +343,7 @@ class CameraRepositoryImpl @Inject constructor(
 
                         val videoUri = event.outputResults.outputUri
                         getLevelViewModel.pathVideo = videoUri.toString()
+
                         navController.navigate(AppScreen.InterpretationStatusScreen.route)
 
                         context.toast(context.getString(R.string.recordSuccessCamera))
@@ -373,35 +380,26 @@ class CameraRepositoryImpl @Inject constructor(
 
     //Resultado Hands
 
-    override fun onGestureRecognized(detectionHand: DetectionHand) {
 
-        val results = detectionHand.results
-        val inputImageHeight = detectionHand.inputImageHeight
-        val inputImageWidth = detectionHand.inputImageWidth
+
+    override fun onErrorHand(error: String, errorCode: Int) {
+        Response.Error(Exception(error))
+    }
+
+    override fun onResultsHand(resultBundle: DetectionHand) {
+        val results = resultBundle.results
+        val inputImageHeight = resultBundle.inputImageHeight
+        val inputImageWidth = resultBundle.inputImageWidth
+
 
         recognitionHandsResults.value = DetectionHand(results,inputImageHeight,inputImageWidth)
     }
 
-    override fun onGestureRecognitionError(error: String) {
+    override fun onErrorPose(error: String, errorCode: Int) {
         Response.Error(Exception(error))
     }
 
-
-    override fun onFaceLandmarkDetected(detectionFace: DetectionFace) {
-
-        val results = detectionFace.result
-        val inputImageHeight = detectionFace.inputImageHeight
-        val inputImageWidth = detectionFace.inputImageWidth
-
-        recognitionFaceResults.value = DetectionFace(results,inputImageHeight,inputImageWidth)
-
-    }
-
-    override fun onFaceLandmarkError(error: String) {
-        Response.Error(Exception(error))
-    }
-
-    override fun onPoseLandmarkDetected(detectionPose: DetectionPose) {
+    override fun onResultsPose(detectionPose: DetectionPose) {
         val results = detectionPose.results
         val inputImageHeight = detectionPose.inputImageHeight
         val inputImageWidth = detectionPose.inputImageWidth
@@ -409,8 +407,16 @@ class CameraRepositoryImpl @Inject constructor(
         recognitionPoseResults.value = DetectionPose(results,inputImageHeight,inputImageWidth)
     }
 
-    override fun onPoseLandmarkError(error: String) {
+    override fun onErrorFace(error: String, errorCode: Int) {
         Response.Error(Exception(error))
+    }
+
+    override fun onResultsFace(detectionFace: DetectionFace) {
+        val results = detectionFace.result
+        val inputImageHeight = detectionFace.inputImageHeight
+        val inputImageWidth = detectionFace.inputImageWidth
+
+        recognitionFaceResults.value = DetectionFace(results,inputImageHeight,inputImageWidth)
     }
 
 

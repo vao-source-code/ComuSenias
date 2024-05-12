@@ -5,7 +5,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavController
 import com.example.comusenias.domain.models.mediapipe.DetectionFace
 import com.example.comusenias.domain.models.mediapipe.DetectionHand
-import com.example.comusenias.domain.models.recognizerSign.DetectionPose
+import com.example.comusenias.domain.models.mediapipe.DetectionPose
 import kotlinx.coroutines.flow.Flow
 
 interface CameraRepository {

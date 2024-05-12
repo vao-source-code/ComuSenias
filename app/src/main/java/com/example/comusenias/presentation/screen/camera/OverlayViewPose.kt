@@ -14,7 +14,7 @@ import com.google.mediapipe.tasks.vision.poselandmarker.PoseLandmarkerResult
 
 @Composable
 fun OverlayViewPose(
-    poseLandmarkerResults: PoseLandmarkerResult?,
+    poseLandmarkerResults: List<PoseLandmarkerResult?>,
     imageHeight: Int,
     imageWidth: Int,
     runningMode: RunningMode = RunningMode.LIVE_STREAM
@@ -22,7 +22,7 @@ fun OverlayViewPose(
     Canvas(
         modifier = Modifier.fillMaxSize()
     ) {
-        poseLandmarkerResults?.let { result ->
+        poseLandmarkerResults.forEach { result ->
             val scaleFactor = when (runningMode) {
                 RunningMode.IMAGE,
                 RunningMode.VIDEO -> {
@@ -48,13 +48,13 @@ fun OverlayViewPose(
             val yOffset = (size.height - imageHeight * scaleFactor) / 2
 
             drawIntoCanvas { canvas ->
-                result.landmarks().forEach { landmark ->
+                result!!.landmarks().forEach { landmark ->
                     landmark.forEach { normalizedLandmark ->
 
-                        val x = normalizedLandmark.x() * imageWidth * scaleFactor + xOffset
-                        val y = normalizedLandmark.y() * imageHeight * scaleFactor + yOffset
+                        //val x = normalizedLandmark.x() * imageWidth * scaleFactor + xOffset
+                        //val y = normalizedLandmark.y() * imageHeight * scaleFactor + yOffset
 
-                        canvas.drawCircle(Offset(x,y) , LANDMARK_RADIUS * density, pointPaint)
+                      //  canvas.drawCircle(Offset(x,y) , LANDMARK_RADIUS * density, pointPaint)
                     }
 
 

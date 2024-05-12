@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.comusenias.domain.models.mediapipe.DetectionFace
 import com.example.comusenias.domain.models.mediapipe.DetectionHand
-import com.example.comusenias.domain.models.recognizerSign.DetectionPose
+import com.example.comusenias.domain.models.mediapipe.DetectionPose
 import com.example.comusenias.domain.use_cases.camera.CameraUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.Main

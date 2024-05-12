@@ -1,8 +1,10 @@
 package com.example.comusenias.presentation.screen.camera
 
 
+import OverlayViewFace
 import OverlayViewHands
 import android.app.Activity
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.layout.Box
@@ -33,8 +35,16 @@ fun RecordCameraScreen(
     val context = LocalContext.current
     val activity = (context as? Activity)
     val lifecycleOwner = LocalLifecycleOwner.current
+
     val recognitionHandsResultsState = viewModel.recognitionHandsResults.collectAsState()
     val recognitionHandsResults = recognitionHandsResultsState.value
+
+    val recognitionPoseResultsState = viewModel.recognitionPoseResults.collectAsState()
+    val recognitionPoseResults = recognitionPoseResultsState.value
+
+    val recognitionFaceResultsState = viewModel.recognitionFaceResults.collectAsState()
+    val recognitionFaceResults = recognitionFaceResultsState.value
+
 
     val showCameraPreview = remember { mutableStateOf(true) }
 
@@ -52,23 +62,53 @@ fun RecordCameraScreen(
             )
         }
 
+        val gestureResults = recognitionHandsResults?.results
+        val poseLandmarkResult = recognitionPoseResults?.results
 
-        if(recognitionHandsResults?.results!=null) {
-            OverlayViewHands(
-                levelViewModel = levelViewModel,
-                results = recognitionHandsResults.results,
-                imageWidth = recognitionHandsResults.inputImageWidth,
-                imageHeight = recognitionHandsResults.inputImageHeight
-            )
-        }
+        /*if (gestureResults != null && poseLandmarkResult != null) {
+            val isAnyGestureOnFace = gestureResults.any { gestureResult ->
+                isAnyGestureOnFace(gestureResult, poseLandmarkResult)
+            }
+
+
+            Log.d("GestureInsideFace", "¿Hay algún gesto dentro de la cara? $isAnyGestureOnFace")
+        }*/
+
 
         BackHandler {activity?.finish() }
 
         CounterAction()
 
+        if(recognitionFaceResults?.result!=null){
+            OverlayViewFace(landmarks =recognitionFaceResults.result ,
+                imageWidth = recognitionFaceResults.inputImageWidth,
+                imageHeight = recognitionFaceResults.inputImageHeight)
+        }
+
+
+        if(recognitionHandsResults?.results!=null) {
+            OverlayViewHands(
+                levelViewModel = levelViewModel,
+                gestureResults = gestureResults!!,
+                imageWidth = recognitionHandsResults.inputImageWidth,
+                imageHeight = recognitionHandsResults.inputImageHeight
+            )
+        }
+
+        if(recognitionPoseResults?.results!=null){
+            OverlayViewPose(
+                poseLandmarkerResults = recognitionPoseResults.results,
+                imageWidth = recognitionPoseResults.inputImageWidth,
+                imageHeight = recognitionPoseResults.inputImageHeight
+            )
+        }
+
         DisposableEffect(Unit) {
             viewModel.startDetection()
+
+            viewModel.resultFace()
             viewModel.resultHands()
+            viewModel.resultPose()
 
             val cameraCapturingJob =   lifecycleOwner.lifecycleScope.launch {
                 viewModel.recordVideo(navController = navController!!)
