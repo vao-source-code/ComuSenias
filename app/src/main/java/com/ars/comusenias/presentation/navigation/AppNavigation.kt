@@ -1,7 +1,6 @@
 package com.ars.comusenias.presentation.navigation
 
-import PermissionCameraScreen
-import PermissionRecordCameraScreen
+
 import VideoPlayer
 import android.annotation.SuppressLint
 import android.os.Build
@@ -22,14 +21,12 @@ import com.ars.comusenias.presentation.activities.MainActivity.Companion.getChil
 import com.ars.comusenias.presentation.activities.MainActivity.Companion.getLevelViewModel
 import com.ars.comusenias.presentation.screen.camera.CameraScreen
 import com.ars.comusenias.presentation.screen.camera.RecordCameraScreen
-import com.ars.comusenias.presentation.screen.gallery.GalleryScreen
 import com.ars.comusenias.presentation.screen.gameAction.ChoseTheLetterPlayScreen
 import com.ars.comusenias.presentation.screen.gameAction.ChoseTheSignPlayScreen
 import com.ars.comusenias.presentation.screen.gameAction.CongratsPlayScreen
 import com.ars.comusenias.presentation.screen.gameAction.InfoMakeSignScreen
 import com.ars.comusenias.presentation.screen.gameAction.InterpretationStatusScreen
 import com.ars.comusenias.presentation.screen.gameAction.LearnSignScreen
-import com.ars.comusenias.presentation.screen.gameAction.MakeSignPlayScreen
 import com.ars.comusenias.presentation.screen.home.HomeScreen
 import com.ars.comusenias.presentation.screen.home.SupportScreen
 import com.ars.comusenias.presentation.screen.notification.NotificationScreen
@@ -121,14 +118,7 @@ private fun GetNavHost(
 
         composableChoseTheSignPlay(navController, levelViewModel)
 
-        composable(AppScreen.MakeSignPlayScreen.route) {
-            MakeSignPlayScreen(
-                navController = navController,
-                modifier = modifier,
-                levelViewModel = levelViewModel
-            )
 
-        }
         composable(AppScreen.InterpretationStatusScreen.route, arguments = listOf(
             navArgument("path") {
                 type = NavType.StringType
@@ -163,15 +153,7 @@ private fun GetNavHost(
             )
         }
 
-        //Permission Camera
-        composable(AppScreen.CameraScreenPermission.route) {
-            PermissionCameraScreen(navController = navController)
-        }
 
-        //Permission Record Camera
-        composable(AppScreen.PermissioRecordCameraScreen.route) {
-            PermissionRecordCameraScreen(navController = navController)
-        }
 
         composable(
             AppScreen.ShowVideoOrImageScreen.route + "/{path}",
@@ -181,25 +163,6 @@ private fun GetNavHost(
             VideoPlayer(path)
         }
 
-        composable(AppScreen.GaleryScreenPermission.route) {
-            PermissionCameraScreen(navController = navController)
-        }
-
-        composable(
-            AppScreen.GalleryScreen.route, arguments = listOf(
-                navArgument("path") {
-                    type = NavType.StringType
-                }
-            )
-        ) {
-            val path = it.arguments?.getString("path") ?: EMPTY_STRING
-            GalleryScreen(
-                navController = navController,
-                path = path,
-                levelViewModel = levelViewModel
-            )
-        }
-        composableSpecialist(navController, modifier)
     }
 }
 

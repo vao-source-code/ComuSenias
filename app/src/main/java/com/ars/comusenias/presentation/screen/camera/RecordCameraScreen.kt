@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -38,7 +39,7 @@ fun RecordCameraScreen(
         AndroidView(
             factory = {
                 val previewView = PreviewView(it)
-                viewModel.showCameraPreview(previewView, lifecycleOwner)
+                viewModel.showCameraPreview(previewView,lifecycleOwner)
                 previewView
             },
             modifier = Modifier.fillMaxSize()
@@ -48,17 +49,14 @@ fun RecordCameraScreen(
             levelViewModel = levelViewModel
         )
         CounterAction()
+
         BackHandler {
             activity?.finish()
         }
-        DisposableEffect(Unit) {
-            viewModel.startObjectDetection()
-            val cameraCapturingJob =   lifecycleOwner.lifecycleScope.launch {
-                viewModel.recordVideo(navController = navController!!)
-                delay(6000)
-                viewModel.stopVideo()
-            }
-            onDispose { cameraCapturingJob.cancel()}
+        LaunchedEffect(Unit) {
+            viewModel.startDetection()
+            viewModel.recordVideo(navController = navController!!)
+            viewModel.stopVideo()
         }
     }
 }

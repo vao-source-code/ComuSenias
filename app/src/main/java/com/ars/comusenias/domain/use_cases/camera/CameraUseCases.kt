@@ -23,7 +23,7 @@ class CameraUseCases @Inject constructor(private val customCameraRepository: Cam
      */
     suspend fun showCameraPreview(
         previewView: PreviewView,
-        lifecycleOwner: LifecycleOwner
+        lifecycleOwner:LifecycleOwner
     ) =
         customCameraRepository.showCameraPreview(previewView, lifecycleOwner)
 
@@ -32,18 +32,14 @@ class CameraUseCases @Inject constructor(private val customCameraRepository: Cam
      *
      * @param navController El controlador de navegación.
      */
-    suspend fun captureAndSave(navController: NavController) =
+    suspend fun captureAndSave(navController: NavController ,lifecycleOwner: LifecycleOwner) =
         customCameraRepository.captureAndSaveImage(navController)
 
     /**
      * Inicia la detección de objetos.
      */
-    fun startObjectDetection() = customCameraRepository.startObjectDetection()
+    suspend fun startObjectDetection() = customCameraRepository.startDetection()
 
-    /**
-     * Detiene la vista previa de la cámara.
-     */
-    suspend fun stopCameraPreview() = customCameraRepository.stopCameraPreview()
 
     /**
      * Graba la cámara.

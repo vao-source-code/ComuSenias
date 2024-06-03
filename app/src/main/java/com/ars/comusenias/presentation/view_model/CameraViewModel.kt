@@ -8,6 +8,7 @@ import androidx.navigation.NavController
 import com.ars.comusenias.domain.models.overlayView.ResultOverlayView
 import com.ars.comusenias.domain.use_cases.camera.CameraUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -28,7 +29,7 @@ class CameraViewModel @Inject constructor(
      * @param preview La vista previa donde se mostrará la cámara.
      * @param lifecycleOwner El propietario del ciclo de vida de la vista previa.
      */
-    fun showCameraPreview(preview: PreviewView, lifecycleOwner: LifecycleOwner) {
+    fun showCameraPreview(preview: PreviewView,lifecycleOwner: LifecycleOwner) {
         viewModelScope.launch {
             useCases.showCameraPreview(preview,lifecycleOwner)
         }
@@ -39,18 +40,18 @@ class CameraViewModel @Inject constructor(
      *
      * @param navController El controlador de navegación utilizado para navegar después de guardar la imagen.
      */
-    fun captureAndSave(navController: NavController) {
+    fun captureAndSave(navController: NavController,lifecycleOwner: LifecycleOwner) {
         viewModelScope.launch {
-            useCases.captureAndSave(navController)
+            useCases.captureAndSave(navController,lifecycleOwner)
         }
     }
 
     /**
-     * Inicia la detección de objetos en el flujo de la cámara.
+     * Inicia la detección  en el flujo de la cámara.
      *
      * Los resultados se colectan en un flujo que actualiza un LiveData en el ViewModel.
      */
-    fun startObjectDetection() {
+    fun startDetection() {
         viewModelScope.launch {
             val resultsFlow = useCases.startObjectDetection()
             resultsFlow.collect { results ->
@@ -59,23 +60,15 @@ class CameraViewModel @Inject constructor(
         }
     }
 
-    /**
-     * Detiene la vista  de la cámara.
-     */
-    fun stopCameraPreview() {
-        viewModelScope.launch {
-            useCases.stopCameraPreview()
-        }
-    }
 
     fun recordVideo(navController: NavController){
-        viewModelScope.launch(Main){
+        viewModelScope.launch(Dispatchers.IO) {
             useCases.recordVideo(navController)
         }
     }
 
     fun stopVideo(){
-        viewModelScope.launch(Main){
+        viewModelScope.launch(Dispatchers.IO){
             useCases.stopRecording()
         }
     }

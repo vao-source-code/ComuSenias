@@ -16,6 +16,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import com.ars.comusenias.constants.PreferencesConstant
 import com.ars.comusenias.core.PreferenceManager
@@ -23,6 +24,7 @@ import com.ars.comusenias.presentation.component.gameAction.CounterAction
 import com.ars.comusenias.presentation.view_model.CameraViewModel
 import com.ars.comusenias.presentation.view_model.LevelViewModel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun CameraScreen(
@@ -57,10 +59,6 @@ fun CameraScreen(
             levelViewModel = levelViewModel
         )
 
-        LaunchedEffect(key1 = Unit) {
-            delay(5000)
-            viewModel.captureAndSave(navController!!)
-        }
     }
 
     CounterAction()
@@ -68,9 +66,12 @@ fun CameraScreen(
     BackHandler {
         activity?.finish()
     }
-
     DisposableEffect(Unit) {
-        viewModel.startObjectDetection()
-        onDispose { }
+        viewModel.startDetection()
+        val cameraCapturingJob =  lifecycleOwner.lifecycleScope.launch {
+            delay(6000)
+            viewModel.captureAndSave(navController = navController!!,lifecycleOwner)
+        }
+        onDispose { cameraCapturingJob.cancel()}
     }
 }

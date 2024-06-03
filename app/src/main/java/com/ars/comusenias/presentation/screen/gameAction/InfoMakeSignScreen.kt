@@ -37,8 +37,7 @@ fun InfoMakeSignScreen(navController: NavController) {
     LaunchedEffect(Unit) {
         delay(6000)
         if (getLevelViewModel.isVideo) {
-           // navController.navigate(AppScreen.RecordCameraScreen.route)
-            navController.navigate(AppScreen.PermissioRecordCameraScreen.route)
+            navController.navigate(AppScreen.RecordCameraScreen.route)
 
         } else {
             navController.navigate(AppScreen.CameraScreen.route)

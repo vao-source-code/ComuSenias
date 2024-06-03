@@ -1,6 +1,12 @@
 package com.ars.comusenias.presentation.screen.gameAction
 
+import android.Manifest
 import android.Manifest.permission.CAMERA
+import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.Manifest.permission.READ_MEDIA_AUDIO
+import android.Manifest.permission.READ_MEDIA_IMAGES
+import android.Manifest.permission.READ_MEDIA_VIDEO
+import android.Manifest.permission.RECORD_AUDIO
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.TIRAMISU
@@ -77,9 +83,19 @@ private fun ShowChoseTheSign(
     var showSetting by remember { mutableStateOf(false) }
     var permissionDenied by remember { mutableStateOf(false) }
     val permissionCamera = if (SDK_INT >= TIRAMISU) {
-        listOf(CAMERA)
+        listOf(
+            CAMERA,
+            READ_MEDIA_IMAGES,
+            READ_MEDIA_VIDEO,
+            READ_MEDIA_AUDIO,
+            RECORD_AUDIO
+        )
     } else {
-        listOf(CAMERA, WRITE_EXTERNAL_STORAGE)
+        listOf(
+            CAMERA,
+            READ_EXTERNAL_STORAGE,
+            WRITE_EXTERNAL_STORAGE,
+            )
     }
     var subLevelImageOnly by remember { mutableStateOf("") }
 
@@ -92,12 +108,7 @@ private fun ShowChoseTheSign(
                 permissionDenied = true
             }
         }
-    LaunchedEffect(showSetting) {
-        if (showSetting) {
-            permissionDenied = false
-            showSetting = false
-        }
-    }
+
 
     subLevel?.let {
         //TODO en caso de ser video se podria usar las imagenes mejor y que decida

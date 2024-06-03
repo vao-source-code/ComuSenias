@@ -11,14 +11,18 @@
 
     <uses-permission
         android:name="android.permission.CAMERA" />
+
+    <!-- Permisos para versiones hasta API 32 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO"
-        android:maxSdkVersion="32"
-        tools:ignore="ScopedStorage"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="32"
-        tools:ignore="ScopedStorage" />
+        android:maxSdkVersion="32" tools:ignore="ScopedStorage" />
+
+    <!-- Permisos para versiones desde API 33 -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
 
 
     <application
