@@ -5,7 +5,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.os.Build
 import android.provider.MediaStore
-import android.view.Surface
 import androidx.camera.core.AspectRatio
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
@@ -17,7 +16,6 @@ import androidx.camera.video.MediaStoreOutputOptions
 import androidx.camera.video.Quality
 import androidx.camera.video.QualitySelector
 import androidx.camera.video.Recorder
-import androidx.camera.video.Recording
 import androidx.camera.video.VideoCapture
 import com.ars.comusenias.data.repositories.firebase.CameraRepositoryImpl
 import com.ars.comusenias.data.repositories.firebase.GestureRecognizerHelper
@@ -108,10 +106,6 @@ object CameraModule {
             .build()
     }
 
-    // Genera una cadena de texto con la fecha y hora actual formateada
-    private fun getFormatDate(): String = SimpleDateFormat(DATE_CAPTURE_FORMAT, Locale.ENGLISH)
-        .format(System.currentTimeMillis())
-
     // Proporciona una instancia de Recorder configurada para la calidad de video
     @Singleton
     @Provides
@@ -139,15 +133,11 @@ object CameraModule {
     fun provideImageAnalysis(): ImageAnalysis {
         return ImageAnalysis.Builder()
             .setTargetAspectRatio(AspectRatio.RATIO_4_3)
-            .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+             .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
             .setOutputImageFormat(ImageAnalysis.OUTPUT_IMAGE_FORMAT_RGBA_8888)
             .build()
     }
 
-    @Singleton
-    @Provides
-    fun provideCameraProviderFuture(application: Application): ListenableFuture<ProcessCameraProvider> =
-        ProcessCameraProvider.getInstance(application)
 
 
 
@@ -158,19 +148,20 @@ object CameraModule {
     ): GestureRecognizerHelper =
         GestureRecognizerHelper(context = context)
 
+
     // Proporciona una instancia de CameraRepository configurada con todos los componentes necesarios
     @Provides
     fun provideCameraRepository(
+        context: Context,
         processCameraProvider: ProcessCameraProvider,
         preview: Preview,
         cameraSelector: CameraSelector,
         imageCapture: ImageCapture,
         videoCapture:VideoCapture<Recorder>,
-        context: Context,
         gestureRecognizerHelper: GestureRecognizerHelper,
         mediaStoreOutputOptionsForImage: ImageCapture.OutputFileOptions,
         mediaStoreOutputOptionsForVideo: MediaStoreOutputOptions,
-        imageAnalysis: ImageAnalysis
+        imageAnalysis: ImageAnalysis,
     ): CameraRepository =
         CameraRepositoryImpl(
             processCameraProvider,
@@ -182,9 +173,7 @@ object CameraModule {
             gestureRecognizerHelper,
             mediaStoreOutputOptionsForImage,
             mediaStoreOutputOptionsForVideo,
-            imageAnalysis
+            imageAnalysis,
         )
 
 }
-
-

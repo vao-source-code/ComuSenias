@@ -134,6 +134,12 @@ const val UTF_8 = "UTF-8"
 const val ERROR_TAKE_PICTURE = "Ocurrió un error al sacar la imagen."
 const val ERROR_BINDING_CAMERA = "Error binding camera preview"
 const val SHOW_CAMERA_PREVIEW = "showCameraPreview"
+
+
+const val START_RECORD_VIDEO="Video capture Start"
+const val SUCCESS_RECORD_VIDEO="Video Success"
+const val FAILED_RECORD_VIDEO="Video capture Failed"
+
 const val IMAGE_SIGN: String = "imagen de seña"
 const val ERROR_STOPPING_CAMERA = "Error stopping camera preview"
 const val TLS = "TLS"

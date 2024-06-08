@@ -9,9 +9,6 @@
     <string name ="loadingResults">Cargando resultados…</string>
     <string name="noneResultGesture">none</string>
     <string name="emptyResultGesture"></string>
-    <string name="recordStartCamera">Video capture Start</string>
-    <string name="recordFailedCamera">Video capture Failed</string>
-    <string name="recordSuccessCamera">Video Success</string>
     <string name="MIME_TYPE_MP4">video/mp4</string>
     <string name="FilesDirRecordCamera">CameraXVideos</string>
 </resources>

@@ -29,9 +29,9 @@ class CameraViewModel @Inject constructor(
      * @param preview La vista previa donde se mostrará la cámara.
      * @param lifecycleOwner El propietario del ciclo de vida de la vista previa.
      */
-    fun showCameraPreview(preview: PreviewView,lifecycleOwner: LifecycleOwner) {
+    fun showCameraPreview(preview: PreviewView,lifecycleOwner: LifecycleOwner,isSelectedCameraCapture:Boolean) {
         viewModelScope.launch {
-            useCases.showCameraPreview(preview,lifecycleOwner)
+            useCases.showCameraPreview(preview,lifecycleOwner,isSelectedCameraCapture)
         }
     }
 
@@ -40,9 +40,9 @@ class CameraViewModel @Inject constructor(
      *
      * @param navController El controlador de navegación utilizado para navegar después de guardar la imagen.
      */
-    fun captureAndSave(navController: NavController,lifecycleOwner: LifecycleOwner) {
+    fun captureAndSave(navController: NavController) {
         viewModelScope.launch {
-            useCases.captureAndSave(navController,lifecycleOwner)
+            useCases.captureAndSave(navController)
         }
     }
 
@@ -68,7 +68,7 @@ class CameraViewModel @Inject constructor(
     }
 
     fun stopVideo(){
-        viewModelScope.launch(Dispatchers.IO){
+        viewModelScope.launch(Dispatchers.IO) {
             useCases.stopRecording()
         }
     }

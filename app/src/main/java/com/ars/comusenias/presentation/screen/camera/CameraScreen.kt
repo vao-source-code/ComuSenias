@@ -48,7 +48,7 @@ fun CameraScreen(
         AndroidView(
             factory = {
                 val previewView = PreviewView(it)
-                viewModel.showCameraPreview(previewView,lifecycleOwner)
+                viewModel.showCameraPreview(previewView,lifecycleOwner,true)
                 previewView
             },
             modifier = Modifier.fillMaxSize()
@@ -66,12 +66,14 @@ fun CameraScreen(
     BackHandler {
         activity?.finish()
     }
+
     DisposableEffect(Unit) {
         viewModel.startDetection()
         val cameraCapturingJob =  lifecycleOwner.lifecycleScope.launch {
             delay(6000)
-            viewModel.captureAndSave(navController = navController!!,lifecycleOwner)
+            viewModel.captureAndSave(navController = navController!!)
         }
+
         onDispose { cameraCapturingJob.cancel()}
     }
 }

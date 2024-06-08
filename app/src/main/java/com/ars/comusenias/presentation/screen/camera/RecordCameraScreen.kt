@@ -39,7 +39,7 @@ fun RecordCameraScreen(
         AndroidView(
             factory = {
                 val previewView = PreviewView(it)
-                viewModel.showCameraPreview(previewView,lifecycleOwner)
+                viewModel.showCameraPreview(previewView,lifecycleOwner,false)
                 previewView
             },
             modifier = Modifier.fillMaxSize()
@@ -53,10 +53,25 @@ fun RecordCameraScreen(
         BackHandler {
             activity?.finish()
         }
-        LaunchedEffect(Unit) {
+
+        DisposableEffect(Unit) {
+            val cameraCapturingJob = lifecycleOwner.lifecycleScope.launch {
+                viewModel.recordVideo(navController = navController!!)
+                delay(6000)
+                viewModel.stopVideo()
+            }
+
+            onDispose { cameraCapturingJob.cancel() }
+        }
+
+        /*LaunchedEffect(Unit) {
             viewModel.startDetection()
             viewModel.recordVideo(navController = navController!!)
+            delay(6000)
             viewModel.stopVideo()
-        }
+        }*/
+
+
+
     }
 }

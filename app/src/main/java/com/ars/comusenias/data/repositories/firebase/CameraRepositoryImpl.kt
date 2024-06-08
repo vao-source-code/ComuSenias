@@ -25,7 +25,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.util.Consumer
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavController
-import com.ars.comusenias.R
 import com.ars.comusenias.domain.models.response.Response
 import com.ars.comusenias.domain.models.overlayView.ResultOverlayView
 import com.ars.comusenias.domain.models.recognizerSign.ResultBundle
@@ -34,13 +33,14 @@ import com.ars.comusenias.presentation.activities.MainActivity.Companion.getLeve
 import com.ars.comusenias.presentation.navigation.AppScreen
 import com.ars.comusenias.presentation.ui.theme.ERROR_BINDING_CAMERA
 import com.ars.comusenias.presentation.ui.theme.ERROR_TAKE_PICTURE
+import com.ars.comusenias.presentation.ui.theme.FAILED_RECORD_VIDEO
 import com.ars.comusenias.presentation.ui.theme.SHOW_CAMERA_PREVIEW
+import com.ars.comusenias.presentation.ui.theme.START_RECORD_VIDEO
 import com.ars.comusenias.presentation.ui.theme.UTF_8
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import java.net.URLEncoder
-import java.util.concurrent.Executors
 import javax.inject.Inject
 
 class CameraRepositoryImpl @Inject constructor(
@@ -48,16 +48,15 @@ class CameraRepositoryImpl @Inject constructor(
     private val preview: Preview,
     private val cameraSelector: CameraSelector,
     private var imageCapture: ImageCapture,
-    private val videoCapture: VideoCapture<Recorder>,
+    private var videoCapture: VideoCapture<Recorder>,
     private val context: Context,
     private val gestureRecognizerHelper: GestureRecognizerHelper,
     private val mediaStoreOutputOptionsForImage:OutputFileOptions,
     private val mediaStoreOutputOptionsForVideo:MediaStoreOutputOptions,
-    private val imageAnalysis:ImageAnalysis
+    private var imageAnalysis:ImageAnalysis,
 ) : CameraRepository, GestureRecognizerHelper.GestureRecognizerListener {
 
-    private  var recording: Recording? = null
-
+    private  lateinit var recording: Recording
     private lateinit var lifecycleOwner: LifecycleOwner
 
     private val recognitionResultsMutableFlow = MutableStateFlow<ResultOverlayView?>(null)
@@ -73,22 +72,24 @@ class CameraRepositoryImpl @Inject constructor(
      * @param outputOptions Las opciones de salida del archivo de imagen que se capturará.
      * @param navController Controlador de navegación para manejar la navegación entre las pantallas de la aplicación.
      */
+    @SuppressLint("RestrictedApi")
     override suspend fun captureAndSaveImage(navController: NavController) {
-           try {
+        try {
             imageCapture.takePicture(
                 mediaStoreOutputOptionsForImage,
                 ContextCompat.getMainExecutor(context),
                 object : ImageCapture.OnImageSavedCallback {
                     override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                        takePhotoAndSave(navController,outputFileResults)
+                        takePhotoAndSave(navController, outputFileResults)
                     }
 
                     override fun onError(exception: ImageCaptureException) {
-                        Toast.makeText(context, ERROR_TAKE_PICTURE,Toast.LENGTH_SHORT).show()
+                        context.showMessage(ERROR_TAKE_PICTURE)
                         Log.e(TAG, "ImageCapture Error: ${exception.message}", exception)
                     }
                 }
             )
+
         } catch (e: Exception) {
             Log.e(TAG, "Exception in captureAndSaveImage: ${e.message}", e)
         }
@@ -110,32 +111,18 @@ class CameraRepositoryImpl @Inject constructor(
      */
     override suspend fun showCameraPreview(
         previewView: PreviewView,
-        lifecycleOwner: LifecycleOwner
+        lifecycleOwner: LifecycleOwner,
+        isSelectedCameraCapture:Boolean
     ) {
         this.lifecycleOwner = lifecycleOwner
         preview.setSurfaceProvider(previewView.surfaceProvider)
-        bindCameraToLifecycle(lifecycleOwner)
+        bindCameraToLifecycle(lifecycleOwner,isSelectedCameraCapture)
 
     }
 
-    @SuppressLint("RestrictedApi")
-    private fun bindCameraToLifecycle(lifecycleOwner: LifecycleOwner) {
+    private fun bindCameraToLifecycle(lifecycleOwner: LifecycleOwner,isSelectedCameraCapture: Boolean) {
         try {
-            // Desenlaza todos los casos de uso anteriores
-            processCameraProvider.unbindAll()
-
-
-            processCameraProvider.bindToLifecycle(
-                lifecycleOwner,
-                cameraSelector,
-                imageAnalysis,
-                preview,
-                imageCapture
-            )
-
-
-            //Falta el VideoCapture
-
+            bindUseCases(isSelectedCameraCapture,lifecycleOwner)
         } catch (e: Exception) {
             Log.e(SHOW_CAMERA_PREVIEW, ERROR_BINDING_CAMERA, e)
             Response.Error(e)
@@ -143,6 +130,23 @@ class CameraRepositoryImpl @Inject constructor(
     }
 
 
+    private fun bindUseCases(imageCaptureSelected: Boolean, lifecycleOwner: LifecycleOwner) {
+
+        val useCases = if (imageCaptureSelected) {
+            listOf(preview, imageAnalysis, imageCapture)
+        } else {
+            listOf(preview,videoCapture) // aca falta el imageAnalysis y falla.
+        }
+
+        processCameraProvider.unbindAll()
+
+        processCameraProvider.bindToLifecycle(
+            lifecycleOwner,
+            cameraSelector,
+            *useCases.toTypedArray()
+        )
+
+    }
 
 
     /**
@@ -152,9 +156,8 @@ class CameraRepositoryImpl @Inject constructor(
      */
     @OptIn(ExperimentalGetImage::class)
     override suspend fun startDetection(): Flow<ResultOverlayView> {
-
         imageAnalysis.setAnalyzer(
-           Executors.newSingleThreadExecutor()
+           ContextCompat.getMainExecutor(context)
         ) { imageProxy ->
             gestureRecognizerHelper.recognizeLiveStream(imageProxy)
             imageProxy.close()
@@ -164,45 +167,30 @@ class CameraRepositoryImpl @Inject constructor(
 
 
 
-
     @SuppressLint("MissingPermission")
     override suspend fun recordVideo(navController: NavController) {
-            if (recording != null) {
-                recording?.stop()
-                recording?.close()
-                recording = null
-            }
 
-            val recordingListener = Consumer<VideoRecordEvent> { event ->
+        val recordingListener = Consumer<VideoRecordEvent> { event ->
                 when (event) {
                     is VideoRecordEvent.Start -> {
-                        Toast.makeText(
-                            context,
-                            context.getText(R.string.recordStartCamera),
-                            Toast.LENGTH_LONG
-                        ).show()
+                        context.showMessage(START_RECORD_VIDEO)
                     }
 
                     is VideoRecordEvent.Finalize -> {
                         if (event.hasError()) {
-                            Toast.makeText(
-                                context,
-                                context.getText(R.string.recordFailedCamera),
-                                Toast.LENGTH_LONG
-                            ).show()
+
+                            context.showMessage(FAILED_RECORD_VIDEO)
 
                             Log.e(TAG, "Video capture ends with error: ${event.error}")
-                            recording?.close()
-                            recording = null
+
+                           recording.close()
+
                         } else {
+
                             val videoUri = event.outputResults.outputUri
                             getLevelViewModel.pathVideo = videoUri.toString()
                             navController.navigate(AppScreen.InterpretationStatusScreen.route)
-                            Toast.makeText(
-                                context,
-                                context.getText(R.string.recordSuccessCamera),
-                                Toast.LENGTH_LONG
-                            ).show()
+
                         }
                     }
                 }
@@ -213,14 +201,12 @@ class CameraRepositoryImpl @Inject constructor(
                 videoCapture.output.prepareRecording(context, mediaStoreOutputOptionsForVideo)
                     .withAudioEnabled()
                     .start(ContextCompat.getMainExecutor(context), recordingListener)
-
-
     }
 
     override suspend fun stopRecording() {
-        recording.let {
-            it?.stop()
-            it?.close()
+        recording.apply {
+            this.stop()
+            this.close()
         }
     }
 
@@ -243,4 +229,9 @@ class CameraRepositoryImpl @Inject constructor(
         recognitionResultsMutableFlow.value =
             ResultOverlayView(results, inputImageHeight, inputImageWidth)
     }
+
+    private fun Context.showMessage(text:String) {
+        return Toast.makeText(this,text,Toast.LENGTH_SHORT).show()
+    }
+
 }
