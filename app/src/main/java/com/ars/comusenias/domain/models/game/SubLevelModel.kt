@@ -34,6 +34,8 @@ data class SubLevelModel(
         )
     )
 
+
+
     companion object {
         /*-----------------------FIELDS ---------------------------------------------------------*/
         fun fromJson(data: String): SubLevelModel = Gson().fromJson(data, SubLevelModel::class.java)

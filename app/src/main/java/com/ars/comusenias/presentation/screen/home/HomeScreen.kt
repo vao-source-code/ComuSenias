@@ -32,7 +32,7 @@ fun HomeScreen(
                     image = childrenModel.userData.image,
                     onClickNotification = { navController.navigate(AppScreen.NotificationScreen.route) },
                     onclickSupport = { navController.navigate(AppScreen.SupportScreen.route) },
-                    onclickProfile = { navController.navigate(AppScreen.ChildrenProfileScreen.route) }
+                    onclickProfile = {  }
                 )
             }
         },

@@ -9,12 +9,16 @@ import androidx.lifecycle.viewModelScope
 import com.ars.comusenias.constants.PreferencesConstant
 import com.ars.comusenias.domain.library.ComposeFileProvider
 import com.ars.comusenias.domain.library.ResultingActivityHandler
+import com.ars.comusenias.domain.models.game.LevelModel
+import com.ars.comusenias.domain.models.game.SubLevelModel
 import com.ars.comusenias.domain.models.response.Response
 import com.ars.comusenias.domain.models.state.ChangeProfileState
 import com.ars.comusenias.domain.models.users.ChildrenModel
 import com.ars.comusenias.domain.use_cases.auth.AuthFactoryUseCases
 import com.ars.comusenias.domain.use_cases.children.ChildrenFactory
 import com.ars.comusenias.domain.use_cases.shared_preferences.DataRolStorageFactory
+import com.ars.comusenias.presentation.activities.MainActivity
+import com.ars.comusenias.presentation.component.home.getAllLevels
 import com.ars.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.ars.comusenias.presentation.ui.theme.PATH_IMAGE
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -51,6 +55,28 @@ class ChildrenProfileViewModel @Inject constructor(
         getUserData()
     }
 
+    // Función para actualizar la lista de niveles sin sobrescribir ciertos campos
+    fun updateLevels(newLevels: List<LevelModel>) {
+        val updatedLevels = userData.levels.map { existingLevel ->
+            newLevels.find { it.id == existingLevel.id }?.let { newLevel ->
+                existingLevel.copy(
+                    name = existingLevel.name,
+                    subLevelId = existingLevel.subLevelId,
+                    subLevel = existingLevel.subLevel
+                )
+            } ?: existingLevel
+        }.toMutableList()
+
+        // Añadir los nuevos niveles que no existían en la lista original
+        val newLevelIds = updatedLevels.map { it.id }
+        newLevels.filterNot { it.id in newLevelIds }.forEach { newLevel ->
+            updatedLevels.add(newLevel)
+        }
+
+        this.userData.levels = updatedLevels
+    }
+
+
     fun getUserData() = viewModelScope.launch {
         currentUser?.let {
             childrenUser.getChildrenById(it.uid).collect { user ->
@@ -59,7 +85,7 @@ class ChildrenProfileViewModel @Inject constructor(
         }
     }
 
-     fun update(user: ChildrenModel) = viewModelScope.launch(IO) {
+    fun update(user: ChildrenModel) = viewModelScope.launch(IO) {
         updateResponse = Response.Loading
         val result = childrenUser.updateChildren(user)
         updateResponse = result
@@ -107,7 +133,10 @@ class ChildrenProfileViewModel @Inject constructor(
 
     fun logout() = viewModelScope.launch(IO) {
         authUsesCases.logoutUseCase()
-        dataRolStorageFactory.putRolValue(PreferencesConstant.PREFERENCE_ROL_CURRENT, EMPTY_STRING)
+        dataRolStorageFactory.putRolValue(
+            PreferencesConstant.PREFERENCE_ROL_CURRENT,
+            EMPTY_STRING
+        )
     }
 
     fun updateLevel() = viewModelScope.launch(IO) {

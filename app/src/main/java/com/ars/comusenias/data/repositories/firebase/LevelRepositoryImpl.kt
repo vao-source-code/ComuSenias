@@ -1,5 +1,6 @@
 package com.ars.comusenias.data.repositories.firebase
 
+import android.util.Log
 import com.ars.comusenias.constants.FirebaseConstants
 import com.ars.comusenias.domain.models.response.Response
 import com.ars.comusenias.domain.models.game.LevelModel
