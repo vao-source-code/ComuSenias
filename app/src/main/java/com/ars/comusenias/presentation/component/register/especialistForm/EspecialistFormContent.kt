@@ -1,17 +1,21 @@
 package com.ars.comusenias.presentation.component.register.especialistForm
 
 import android.os.Build
+import android.widget.Space
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Phone
@@ -56,9 +60,13 @@ fun EspecialistFormContent(
             .padding(top = SIZE20.dp),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
+
+        val scrollState = rememberScrollState()
+
         Column(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .verticalScroll(scrollState), // Agregar scroll
             verticalArrangement = Arrangement.spacedBy(SIZE2.dp)
         ) {
             TextFieldApp(
@@ -68,7 +76,6 @@ fun EspecialistFormContent(
                 label = COMPLETE_NAME,
                 icon = Icons.Default.Person,
                 errorMsg = viewModel.errorName
-
             )
             TextFieldApp(
                 value = state.tel,
@@ -83,7 +90,7 @@ fun EspecialistFormContent(
                 onValueChange = { birthday ->
                     viewModel.onDateInputChanged(birthday)
                 },
-                validateField = { viewModel.validateDate() },
+                validateField = { viewModel.validateDate() }
             )
             Row(
                 modifier = Modifier
@@ -131,14 +138,21 @@ fun EspecialistFormContent(
                 onClickConditions = { viewModel.onClickConditions(openLink) },
                 onCheckChange = {
                     viewModel.onCheckTermsAndConditions(it)
-                })
+                }
+            )
+
+            Spacer(modifier = Modifier.height(SIZE20.dp))
+
+            ButtonApp(
+                titleButton = CONTINUE,
+                enabledButton = viewModel.isRegisterEnabled,
+                onClickButton = { viewModel.onRegister() }
+            )
         }
-        ButtonApp(
-            titleButton = CONTINUE,
-            enabledButton = viewModel.isRegisterEnabled,
-            onClickButton = { viewModel.onRegister() },
-        )
+
+
     }
-    ResponseStatusChildrenRegister(navController = navController, viewModel = viewModel)
+
+        ResponseStatusChildrenRegister(navController = navController, viewModel = viewModel)
 
 }

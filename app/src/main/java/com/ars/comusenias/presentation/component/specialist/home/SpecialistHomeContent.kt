@@ -26,7 +26,7 @@ import com.ars.comusenias.presentation.ui.theme.SIZE3
 
 @Composable
 fun SpecialistHomeContent(
-    navController: NavHostController, specialist: SpecialistModel
+    navController: NavHostController, specialist:   SpecialistModel
 ) {
     Log.d("SpecialistHomeContent", "Usuario: $specialist")
     Scaffold(topBar = {
@@ -82,6 +82,11 @@ fun PatientContainer(
                 item {
                     DontYouHavePatients()
                 }
+            }
+        }
+        if(getPatients?.size == 0){
+            item {
+                DontYouHavePatients()
             }
         }
     }

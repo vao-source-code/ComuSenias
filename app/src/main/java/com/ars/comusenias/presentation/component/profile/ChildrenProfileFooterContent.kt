@@ -25,7 +25,6 @@ fun ProfileFooterContent(onClickChangeProfile: () -> Unit?, onclickLogout: () ->
     var showDialog by remember { mutableStateOf(false) }
 
 
-
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -39,7 +38,7 @@ fun ProfileFooterContent(onClickChangeProfile: () -> Unit?, onclickLogout: () ->
 
             }
         )
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(SIZE20.dp))
 
         ButtonApp(
             titleButton = LOGOUT,

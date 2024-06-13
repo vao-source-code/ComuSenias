@@ -18,6 +18,11 @@ import com.ars.comusenias.presentation.ui.theme.SIZE3
 import com.ars.comusenias.presentation.view_model.ChildrenProfileViewModel
 import com.ars.comusenias.presentation.view_model.LevelViewModel
 
+/**
+ * Pantalla principal del usuario que va a jugar el juego
+ */
+
+
 @Composable
 fun HomeScreen(
     navController: NavController,
@@ -32,7 +37,7 @@ fun HomeScreen(
                     image = childrenModel.userData.image,
                     onClickNotification = { navController.navigate(AppScreen.NotificationScreen.route) },
                     onclickSupport = { navController.navigate(AppScreen.SupportScreen.route) },
-                    onclickProfile = {  }
+                    onclickProfile = { navController.navigate(AppScreen.ChildrenProfileScreen.route) }
                 )
             }
         },
