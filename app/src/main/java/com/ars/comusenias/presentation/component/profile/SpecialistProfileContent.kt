@@ -45,6 +45,8 @@ import com.ars.comusenias.presentation.ui.theme.SELECTED_IMAGE
 import com.ars.comusenias.presentation.ui.theme.SIZE10
 import com.ars.comusenias.presentation.ui.theme.SIZE140
 import com.ars.comusenias.presentation.ui.theme.SIZE20
+import com.ars.comusenias.presentation.ui.theme.SIZE30
+import com.ars.comusenias.presentation.ui.theme.SIZE40
 import com.ars.comusenias.presentation.ui.theme.SIZE55
 import com.ars.comusenias.presentation.view_model.specialist.SpecialistProfileViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -134,7 +136,7 @@ fun SpecialistProfileContent(
                 }
             }
 
-            Spacer(modifier = Modifier.height(SIZE55.dp))
+            Spacer(modifier = Modifier.height(SIZE30.dp))
 
             Spacer(modifier = Modifier.height(SIZE20.dp))
             TextFieldApp(
@@ -158,17 +160,7 @@ fun SpecialistProfileContent(
                 hideText = false,
                 readOnly = true
             )
-            Spacer(modifier = Modifier.height(10.dp))
-            TextFieldApp(
-                icon = Icons.Default.MedicalServices,
-                value = viewModel.stateSpecialist.speciality,
-                onValueChange = {},
-                validateField = {},
-                label = CHANGE_TITLE_MEDICY,
-                keyboardType = KeyboardType.Text,
-                hideText = false,
-                readOnly = true
-            )
+
             Spacer(modifier = Modifier.height(10.dp))
             TextFieldApp(
                 icon = Icons.Default.MedicalServices,
@@ -176,6 +168,18 @@ fun SpecialistProfileContent(
                 onValueChange = {},
                 validateField = {},
                 label = CHANGE_SPECIALIST_MEDICY,
+                keyboardType = KeyboardType.Text,
+                hideText = false,
+                readOnly = true
+            )
+
+            Spacer(modifier = Modifier.height(10.dp))
+            TextFieldApp(
+                icon = Icons.Default.MedicalServices,
+                value = viewModel.stateSpecialist.speciality,
+                onValueChange = {},
+                validateField = {},
+                label = CHANGE_TITLE_MEDICY,
                 keyboardType = KeyboardType.Text,
                 hideText = false,
                 readOnly = true

@@ -30,10 +30,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.ars.comusenias.R
 import com.ars.comusenias.presentation.component.defaults.DialogCapturePicture
+import com.ars.comusenias.presentation.component.defaults.app.ButtonApp
 import com.ars.comusenias.presentation.component.defaults.app.TextFieldApp
+import com.ars.comusenias.presentation.navigation.AppScreen
 import com.ars.comusenias.presentation.ui.theme.IMAGE_AVATAR
 import com.ars.comusenias.presentation.ui.theme.IMAGE_EDIT_BUTTON
 import com.ars.comusenias.presentation.ui.theme.PROFILE_BIRTHDATE
@@ -43,6 +46,7 @@ import com.ars.comusenias.presentation.ui.theme.SELECTED_IMAGE
 import com.ars.comusenias.presentation.ui.theme.SIZE10
 import com.ars.comusenias.presentation.ui.theme.SIZE140
 import com.ars.comusenias.presentation.ui.theme.SIZE20
+import com.ars.comusenias.presentation.ui.theme.SIZE5
 import com.ars.comusenias.presentation.ui.theme.SIZE55
 import com.ars.comusenias.presentation.view_model.ChildrenProfileViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -52,7 +56,8 @@ import com.google.accompanist.permissions.rememberPermissionState
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun ChildrenProfileContent(
-    viewModel: ChildrenProfileViewModel = hiltViewModel()
+    viewModel: ChildrenProfileViewModel = hiltViewModel(),
+    navController: NavHostController
 ) {
 
     // Camera permission state
@@ -75,7 +80,7 @@ fun ChildrenProfileContent(
     )
     viewModel.resultingActivityHandler.handle()
 
-    Box(modifier = Modifier.padding(SIZE20.dp)) {
+    Box(modifier = Modifier.padding(horizontal = SIZE20.dp, vertical = SIZE5.dp)) {
 
         Column(
             modifier = Modifier.fillMaxWidth(),
@@ -164,6 +169,13 @@ fun ChildrenProfileContent(
                 hideText = false,
                 readOnly = true
             )
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+
+            ButtonApp(titleButton = "Enlazar con especialista") {
+                navController.navigate(AppScreen.GenerateQRScreen.route)
+            }
         }
 
     }

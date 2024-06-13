@@ -49,6 +49,7 @@ fun CongratsPlayView(navController: NavHostController, modifier: Modifier) {
                 }
                 setStatusBySubLevel()
                 getChildrenProfileViewModel.updateLevel()
+                getLevelViewModel.onClear()
             }
         )
     }

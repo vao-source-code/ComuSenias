@@ -7,16 +7,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ars.comusenias.domain.library.LibraryDate.getCurrentDateTimeAsString
 import com.ars.comusenias.domain.models.response.Response
 import com.ars.comusenias.domain.models.game.LevelModel
 import com.ars.comusenias.domain.models.game.SubLevelModel
 import com.ars.comusenias.domain.use_cases.level.LevelFactory
+import com.ars.comusenias.presentation.activities.MainActivity
 import com.ars.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.ars.comusenias.presentation.ui.theme.NOT_RESPONSE_SUB_LEVEL
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.sql.Date
 import javax.inject.Inject
 
 @SuppressLint("MutableCollectionMutableState")
@@ -33,14 +34,13 @@ class LevelViewModel @Inject constructor(
     var levelSelected by mutableStateOf(EMPTY_STRING)
     var subLevelSelected by mutableStateOf(EMPTY_STRING)
     var pathVideo by mutableStateOf(EMPTY_STRING)
-
     var subLevelModel by mutableStateOf(SubLevelModel())
 
     init {
-        //todo SE DEBERIA CORREGIR PARA QUE SE LLAME UNA VEZ
-        Log.i("LevelViewModel", "init: " + Date(System.currentTimeMillis()))
-        getLevels()
-        Log.i("LevelViewModel", "fin: " + Date(System.currentTimeMillis()))
+        Log.i("LevelViewModel", "init: " + getCurrentDateTimeAsString())
+        if(levels.isEmpty())
+            getLevels()
+        Log.i("LevelViewModel", "fin: " + getCurrentDateTimeAsString())
     }
 
     /**
@@ -51,11 +51,11 @@ class LevelViewModel @Inject constructor(
      * Los resultados se recogen en un flujo y se almacenan en [levelsResponse]. Si la respuesta es un éxito, la lista de niveles se almacena en [levels].
      */
     fun getLevels() = viewModelScope.launch(Dispatchers.IO) {
-        Log.i("LevelViewModel", "getLevels:")
         levelUsesCases.getLevels().collect { response ->
             levelsResponse = response
             if (response is Response.Success) {
                 levels = response.data
+                MainActivity.getChildrenProfileViewModel.updateLevels(levels)
             }
         }
     }
@@ -107,5 +107,9 @@ class LevelViewModel @Inject constructor(
 
     fun validateLetterCamera(): Boolean {
         return onOptionSelected.equals(subLevelSelected, ignoreCase = true)
+    }
+
+    fun onClear(){
+        onCleared()
     }
 }

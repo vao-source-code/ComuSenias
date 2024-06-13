@@ -7,8 +7,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
@@ -30,6 +32,7 @@ import com.ars.comusenias.presentation.activities.MainActivity
 import com.ars.comusenias.presentation.component.bottomBar.ShowBottomBar
 import com.ars.comusenias.presentation.component.defaults.ButtonDefault
 import com.ars.comusenias.presentation.component.defaults.GetImage
+import com.ars.comusenias.presentation.component.defaults.app.ButtonAppIcon
 import com.ars.comusenias.presentation.component.home.TopBarHome
 import com.ars.comusenias.presentation.navigation.AppScreen
 import com.ars.comusenias.presentation.ui.theme.SIZE16
@@ -87,20 +90,22 @@ fun SupportScreen(
                 )
 
                 // Botón para abrir Gmail
-                ButtonDefault(
-                    onClick = {
+                ButtonAppIcon(
+                    onClickButton = {
                         val intent = Intent(Intent.ACTION_SENDTO).apply {
                             data = Uri.parse("mailto:comusenias@gmail.com")
                         }
                         startActivity(context, intent, null)
                     },
-                    text = "Gmail",
+                    titleButton = "Gmail",
                     icon = Icons.Default.Email
                 )
 
+                Spacer(modifier = Modifier.height(10.dp))
+
                 // Botón para abrir el navegador web
-                ButtonDefault(
-                    onClick = {
+                ButtonAppIcon(
+                    onClickButton = {
                         val intent = Intent(Intent.ACTION_VIEW).apply {
                             data = Uri.parse("http://www.comuseñas.com.ar")
                             flags = Intent.FLAG_ACTIVITY_NEW_TASK
@@ -111,7 +116,7 @@ fun SupportScreen(
                         startActivity(context, intent, options)
                     }
                     ,
-                    text = "Sitio web",
+                    titleButton = "Sitio web",
                     icon = Icons.Default.Info
                 )
             }
