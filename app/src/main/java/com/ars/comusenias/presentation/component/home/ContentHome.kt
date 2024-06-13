@@ -116,6 +116,7 @@ fun getStatusSubLevel(
     val lastCompletedIndex = statusList.indexOfLast { it == StatusGame.COMPLETED }
     val currentIndex = getAllSubLevels().indexOfFirst { it.name == subLevel.name }
 
+
     if (statusList.all { it == StatusGame.BLOCKED }) {
         getAllSubLevels().getOrNull(0)?.isCompleted = StatusGame.IN_PROGRESS
     }
@@ -123,8 +124,8 @@ fun getStatusSubLevel(
 
     return when {
         lastCompletedIndex != -1 && currentIndex == lastCompletedIndex + 1 -> StatusGame.IN_PROGRESS
-        lastCompletedIndex != -1 && currentIndex > lastCompletedIndex + 1 -> StatusGame.BLOCKED
-        else -> getAllSubLevels().getOrNull(currentIndex)?.isCompleted ?: StatusGame.BLOCKED
+        subLevel.isFirst  && subLevel.isCompleted != StatusGame.COMPLETED -> StatusGame.IN_PROGRESS
+        else -> subLevel.isCompleted
     }
 
 

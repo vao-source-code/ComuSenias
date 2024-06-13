@@ -17,6 +17,7 @@ data class SubLevelModel(
     var esVideo: Boolean = false,
     var failures: Int = 0,
     var successes: Int = 0,
+    var isFirst: Boolean = false,
 ) {
     fun toJson(): String = Gson().toJson(
         SubLevelModel(
@@ -30,7 +31,8 @@ data class SubLevelModel(
             isCompleted,
             esVideo,
             failures,
-            successes
+            successes,
+            isFirst
         )
     )
 
