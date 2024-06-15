@@ -1,9 +1,11 @@
 package com.example.comusenias.presentation.screen.gameAction
 
+import android.Manifest
 import android.Manifest.permission.CAMERA
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.TIRAMISU
+import android.widget.Toast
 import androidx.compose.material.Snackbar
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -13,6 +15,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import com.example.comusenias.domain.models.game.SubLevelModel
 import com.example.comusenias.domain.models.response.Response
@@ -20,7 +23,6 @@ import com.example.comusenias.presentation.activities.MainActivity.Companion.get
 import com.example.comusenias.presentation.component.defaults.app.CircularProgressBar
 import com.example.comusenias.presentation.component.gameAction.GameAction
 import com.example.comusenias.presentation.component.gameAction.MatchSign
-import com.example.comusenias.presentation.component.permission.AlertDialogPermission
 import com.example.comusenias.presentation.extensions.validation.selectedOption
 import com.example.comusenias.presentation.navigation.AppScreen
 import com.example.comusenias.presentation.ui.theme.CONTINUE
@@ -74,12 +76,23 @@ private fun ShowChoseTheSign(
     navController: NavHostController,
     onMatchResult: (Boolean) -> Unit
 ) {
+    val context = LocalContext.current
     var showSetting by remember { mutableStateOf(false) }
     var permissionDenied by remember { mutableStateOf(false) }
     val permissionCamera = if (SDK_INT >= TIRAMISU) {
-        listOf(CAMERA)
+        listOf(
+            CAMERA,
+            Manifest.permission.READ_MEDIA_IMAGES,
+            Manifest.permission.READ_MEDIA_VIDEO,
+            Manifest.permission.READ_MEDIA_AUDIO,
+            Manifest.permission.RECORD_AUDIO
+        )
     } else {
-        listOf(CAMERA, WRITE_EXTERNAL_STORAGE)
+        listOf(
+            CAMERA,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            WRITE_EXTERNAL_STORAGE,
+        )
     }
     var subLevelImageOnly by remember { mutableStateOf("") }
 
@@ -117,9 +130,7 @@ private fun ShowChoseTheSign(
             },
         ) {
             if (permissionDenied) {
-                AlertDialogPermission(permissionDenied) { statusPermission ->
-                    showSetting = statusPermission
-                }
+                Toast.makeText(context,"Permiso Denegado",Toast.LENGTH_SHORT).show()
             } else {
                 MatchSign(
                     sign = sign,

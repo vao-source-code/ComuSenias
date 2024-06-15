@@ -1,9 +1,9 @@
 package com.example.comusenias.presentation.screen.camera
 
 
+import OverlayViewFace
 import OverlayViewHands
 import android.app.Activity
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.layout.Box
@@ -24,9 +24,6 @@ import com.example.comusenias.core.PreferenceManager
 import com.example.comusenias.presentation.component.gameAction.CounterAction
 import com.example.comusenias.presentation.view_model.CameraViewModel
 import com.example.comusenias.presentation.view_model.LevelViewModel
-import com.google.mediapipe.tasks.vision.facelandmarker.FaceLandmarkerResult
-import com.google.mediapipe.tasks.vision.gesturerecognizer.GestureRecognizerResult
-import com.google.mediapipe.tasks.vision.poselandmarker.PoseLandmarkerResult
 import kotlinx.coroutines.delay
 
 @Composable
@@ -83,30 +80,22 @@ fun CameraScreen(
 
 
 
-        /* if (gestureResults != null && poseLandmarkResult != null) {
-             val isAnyGestureOnFace = gestureResults.any { gestureResult ->
-                 isAnyGestureOnFace(gestureResult, poseLandmarkResult)
-             }
 
-
-             Log.d("GestureInsideFace", "¿Hay algún gesto dentro de la cara? $isAnyGestureOnFace")
-         }*/
-
-       /* if(recognitionFaceResults?.result!=null){
+        if(recognitionFaceResults?.result!=null){
             OverlayViewFace(
                 landmarks = recognitionFaceResults.result,
                 imageWidth = recognitionFaceResults.inputImageWidth,
                 imageHeight = recognitionFaceResults.inputImageHeight)
-        }*/
+        }
 
 
-       /* if(recognitionPoseResults?.results!=null){
+        if(recognitionPoseResults?.results!=null){
             OverlayViewPose(
                 poseLandmarkerResults = recognitionPoseResults.results,
                 imageWidth = recognitionPoseResults.inputImageWidth,
                 imageHeight = recognitionPoseResults.inputImageHeight
             )
-        }*/
+        }
 
 
         LaunchedEffect(key1 = Unit) {
@@ -124,46 +113,13 @@ fun CameraScreen(
     DisposableEffect(Unit) {
         viewModel.startDetection()
         viewModel.resultHands()
-        //viewModel.resultFace()
-       // viewModel.resultPose()
+        viewModel.resultFace()
+        viewModel.resultPose()
         onDispose { }
     }
 
 }
 
-fun isAnyGestureOnFace(
-    gestureResult: GestureRecognizerResult,
-    poseLandmarkerResult: PoseLandmarkerResult
-): Boolean {
-    // Verificar si la pose no fue detectada
-    if (poseLandmarkerResult.landmarks().isEmpty()) {
-        return false
-    }
 
-    // Obtener las landmarks de la pose
-    val poseLandmarks = poseLandmarkerResult.landmarks()[0]
-
-    // Definir las regiones de interés en la cara
-    val faceLeft = poseLandmarks.minByOrNull { it.x() }?.x() ?: return false
-    val faceRight = poseLandmarks.maxByOrNull { it.x() }?.x() ?: return false
-    val faceTop = poseLandmarks.minByOrNull { it.y() }?.y() ?: return false
-    val faceBottom = poseLandmarks.maxByOrNull { it.y() }?.y() ?: return false
-
-    // Verificar si alguna parte del gesto está dentro del rectángulo delimitador del rostro
-    for (handLandmarks in gestureResult.landmarks()) {
-        for (landmark in handLandmarks) {
-            val handX = landmark.x()
-            val handY = landmark.y()
-
-            // Verificar si la parte del gesto está dentro del rostro
-            if (handX >= faceLeft && handX <= faceRight && handY >= faceTop && handY <= faceBottom) {
-                return true
-            }
-        }
-    }
-
-    // Si ninguna parte del gesto está dentro del rostro
-    return false
-}
 
 

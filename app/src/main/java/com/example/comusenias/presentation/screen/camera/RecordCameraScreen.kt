@@ -4,7 +4,6 @@ package com.example.comusenias.presentation.screen.camera
 import OverlayViewFace
 import OverlayViewHands
 import android.app.Activity
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.layout.Box
@@ -63,17 +62,6 @@ fun RecordCameraScreen(
         }
 
         val gestureResults = recognitionHandsResults?.results
-        val poseLandmarkResult = recognitionPoseResults?.results
-
-        /*if (gestureResults != null && poseLandmarkResult != null) {
-            val isAnyGestureOnFace = gestureResults.any { gestureResult ->
-                isAnyGestureOnFace(gestureResult, poseLandmarkResult)
-            }
-
-
-            Log.d("GestureInsideFace", "¿Hay algún gesto dentro de la cara? $isAnyGestureOnFace")
-        }*/
-
 
         BackHandler {activity?.finish() }
 

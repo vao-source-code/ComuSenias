@@ -1,5 +1,4 @@
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -8,7 +7,6 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.unit.dp
 import com.example.comusenias.R
 import com.example.comusenias.presentation.ui.theme.NONE
 import com.example.comusenias.presentation.view_model.LevelViewModel
@@ -16,9 +14,7 @@ import com.google.mediapipe.tasks.vision.core.RunningMode
 import com.google.mediapipe.tasks.vision.facelandmarker.FaceLandmarkerResult
 import com.google.mediapipe.tasks.vision.gesturerecognizer.GestureRecognizerResult
 import com.google.mediapipe.tasks.vision.handlandmarker.HandLandmarker
-import com.google.mediapipe.tasks.vision.poselandmarker.PoseLandmarkerResult
 import kotlin.math.max
-import kotlin.math.min
 
 private val listCategory = mutableListOf<String>()
 
@@ -43,16 +39,6 @@ fun OverlayViewHands(
         val category =
             firstGesture?.get(0)?.categoryName() ?: context.getString(R.string.noneResultGesture)
 
-        /*if(faceResult!=null) {
-            val isAnyGestureOnFace = isAnyGestureOnFace(gestureRecognizerResult, faceResult)
-
-            val textColor = if (isAnyGestureOnFace) Color.Green else Color.Red
-
-            Log.d(
-                "GestureInsideFace",
-                "¿Hay algún gesto dentro de la cara? $isAnyGestureOnFace"
-            )
-        }*/
         listCategory.add(category)
 
         val isCorrect = verifyOptionSelected(category, levelViewModel)

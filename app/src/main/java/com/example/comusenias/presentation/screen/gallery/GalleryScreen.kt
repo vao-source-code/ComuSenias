@@ -113,7 +113,7 @@ fun GalleryScreen(
         Button(
             onClick = {
                 preferenceManager.saveBoolean(KEY_BOOLEAN, true)
-                navController.navigate(AppScreen.CameraScreenPermission.route)
+                navController.navigate(AppScreen.CameraScreen.route)
             },
             modifier = Modifier
                 .padding(SIZE16.dp)

@@ -21,7 +21,6 @@ sealed class AppScreen(val route: String) {
             "chose_the_sign_play/${level}/${subLevel}"
     }
 
-    object MakeSignPlayScreen : AppScreen("make_sign_play")
     object InfoMakeSignScreen : AppScreen("info_make_sign_screen")
 
     object CongratsPlayScreen : AppScreen("congrats_play")
@@ -36,21 +35,11 @@ sealed class AppScreen(val route: String) {
             "chose_the_letter_play/${level}/${subLevel}"
     }
 
-    object CameraScreenPermission : AppScreen("camera_screen_permission")
 
-    object PermissioRecordCameraScreen :AppScreen("record_camera_screen_permission")
 
-    object VideoPlayerScreen:AppScreen("video_player_screen/{path}"){
-        fun createRoute(path: String) = "video_player_screen/${path}"
-    }
 
 
     object RecordCameraScreen : AppScreen("record_camera_screen/{path}")
-
-    object ShowVideoOrImageScreen:AppScreen("show_video_or_image_screen/{path}"){
-        fun createRoute(path: String) = "show_video_or_image_screen/${path}"
-
-    }
 
     object CameraScreen : AppScreen("camera_screen")
 

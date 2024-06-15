@@ -1,7 +1,6 @@
 package com.example.comusenias.presentation.navigation
 
-import PermissionCameraScreen
-import PermissionRecordCameraScreen
+
 import VideoPlayer
 import android.annotation.SuppressLint
 import android.os.Build
@@ -28,7 +27,6 @@ import com.example.comusenias.presentation.screen.gameAction.CongratsPlayScreen
 import com.example.comusenias.presentation.screen.gameAction.InfoMakeSignScreen
 import com.example.comusenias.presentation.screen.gameAction.InterpretationStatusScreen
 import com.example.comusenias.presentation.screen.gameAction.LearnSignScreen
-import com.example.comusenias.presentation.screen.gameAction.MakeSignPlayScreen
 import com.example.comusenias.presentation.screen.home.HomeScreen
 import com.example.comusenias.presentation.screen.notification.NotificationScreen
 import com.example.comusenias.presentation.screen.premiun.PremiunScreen
@@ -113,14 +111,7 @@ private fun GetNavHost(
 
         composableChoseTheSignPlay(navController, levelViewModel)
 
-        composable(AppScreen.MakeSignPlayScreen.route) {
-            MakeSignPlayScreen(
-                navController = navController,
-                modifier = modifier,
-                levelViewModel = levelViewModel
-            )
 
-        }
         composable(AppScreen.InterpretationStatusScreen.route, arguments = listOf(
             navArgument("path") {
                 type = NavType.StringType
@@ -144,18 +135,9 @@ private fun GetNavHost(
         }
 
 
-        //Permission Camera
-        composable(AppScreen.CameraScreenPermission.route) {
-            PermissionCameraScreen(navController = navController)
-        }
-        // Camera
-        composable(AppScreen.CameraScreen.route) {
-            CameraScreen(navController = navController, levelViewModel = levelViewModel)
-        }
-
-        //Permission Record Camera
-        composable(AppScreen.PermissioRecordCameraScreen.route) {
-            PermissionRecordCameraScreen(navController = navController)
+        //Camera Screen
+        composable(AppScreen.CameraScreen.route){
+            CameraScreen(levelViewModel = levelViewModel, viewModel = cameraViewModel,navController=navController)
         }
 
         //Record Camera
@@ -163,14 +145,6 @@ private fun GetNavHost(
             RecordCameraScreen(levelViewModel = levelViewModel, viewModel = cameraViewModel ,navController = navController)
         }
 
-
-        //ShowVideoOrImageScree  aca se rompe la uri
-       /* composable(AppScreen.ShowVideoOrImageScreen.route + "/{path}",
-            arguments = listOf(navArgument("path") { type = NavType.StringType })
-        ) { navBackStackEntry ->
-            val path = navBackStackEntry.arguments?.getString("path") ?: ""
-            VideoPlayer(path)
-        }*/
 
         /*------------Specialist-----------------------*/
         composableSpecialist(navController, modifier)

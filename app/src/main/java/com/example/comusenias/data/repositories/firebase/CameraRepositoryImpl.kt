@@ -1,15 +1,10 @@
 package com.example.comusenias.data.repositories.firebase
 
 import android.annotation.SuppressLint
-import android.content.ContentValues
 import android.content.Context
 import android.net.Uri
-import android.os.Build
-import android.provider.MediaStore
 import android.util.Log
-import android.view.Surface
 import androidx.annotation.OptIn
-import androidx.camera.core.AspectRatio
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ExperimentalGetImage
 import androidx.camera.core.ImageAnalysis
@@ -17,10 +12,7 @@ import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.camera.video.FallbackStrategy
 import androidx.camera.video.MediaStoreOutputOptions
-import androidx.camera.video.Quality
-import androidx.camera.video.QualitySelector
 import androidx.camera.video.Recorder
 import androidx.camera.video.Recording
 import androidx.camera.video.VideoCapture
@@ -30,7 +22,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.util.Consumer
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavController
-import com.example.comusenias.R
 import com.example.comusenias.domain.library.toast
 import com.example.comusenias.domain.models.mediapipe.DetectionFace
 import com.example.comusenias.domain.models.mediapipe.DetectionHand
@@ -39,12 +30,9 @@ import com.example.comusenias.domain.models.response.Response
 import com.example.comusenias.domain.repositories.CameraRepository
 import com.example.comusenias.presentation.activities.MainActivity.Companion.getLevelViewModel
 import com.example.comusenias.presentation.navigation.AppScreen
-import com.example.comusenias.presentation.ui.theme.DATE_CAPTURE_FORMAT
 import com.example.comusenias.presentation.ui.theme.ERROR_BINDING_CAMERA
 import com.example.comusenias.presentation.ui.theme.ERROR_STOPPING_CAMERA
 import com.example.comusenias.presentation.ui.theme.ERROR_TAKE_PICTURE
-import com.example.comusenias.presentation.ui.theme.IMAGE_JPEG
-import com.example.comusenias.presentation.ui.theme.PICTURE_CAMERA_IMAGES
 import com.example.comusenias.presentation.ui.theme.SHOW_CAMERA_PREVIEW
 import com.example.comusenias.presentation.ui.theme.UTF_8
 import kotlinx.coroutines.Dispatchers
@@ -54,47 +42,34 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.net.URLEncoder
-import java.text.SimpleDateFormat
-import java.util.Locale
 import java.util.concurrent.Executors
 import javax.inject.Inject
 
 class CameraRepositoryImpl @Inject constructor(
     private val cameraProvider: ProcessCameraProvider,
-    private val cameraSelector: CameraSelector,
-    private val preview: Preview,
-    private val imageCapture: ImageCapture,
-    private val context: Context,
-    private val gestureRecognizerHelper: GestureRecognizerHelper,
+    private val preview:Preview,
+    private val cameraSelector:CameraSelector,
+    private val imageCapture:ImageCapture,
+    private var videoCapture:VideoCapture<Recorder>,
+    private val recorder: Recorder,
+    private val context:Context,
+    private val gestureRecognizerHelper:GestureRecognizerHelper,
+    private val faceLandmarkerHelper: FaceLandmarkerHelper,
     private val poseLandmarkerHelper: PoseLandmarkerHelper,
-    private val faceLandmarkerHelper: FaceLandmarkerHelper
+    private val mediaStoreOutputOptionsForImage:ImageCapture.OutputFileOptions,
+    private val mediaStoreOutputOptionsForVideo:MediaStoreOutputOptions,
+    private val imageAnalysis:ImageAnalysis,
 ) : CameraRepository, GestureRecognizerHelper.GestureRecognizerListener , FaceLandmarkerHelper.FaceLandmarkerListener , PoseLandmarkerHelper.LandmarkerListener{
     private lateinit var lifecycleOwner: LifecycleOwner
 
     private var recording: Recording? = null
-    private var imageAnalysis: ImageAnalysis? = null
+
 
     private val recognitionHandsResults = MutableStateFlow<DetectionHand?>(null)
     private val recognitionFaceResults = MutableStateFlow<DetectionFace?>(null)
     private val recognitionPoseResults = MutableStateFlow<DetectionPose?>(null)
 
-
-    private val selector = QualitySelector
-        .from(
-            Quality.UHD,
-            FallbackStrategy.higherQualityOrLowerThan(Quality.SD)
-        )
-
-    private val recorder = Recorder.Builder()
-        .setQualitySelector(selector)
-        .build()
-
-    private var videoCapture:VideoCapture<Recorder>? = null
-
-
     init {
-        setupImageAnalysis()
-
         gestureRecognizerHelper.setListener(this)
         poseLandmarkerHelper.setListener(this)
         faceLandmarkerHelper.setListener(this)
@@ -113,11 +88,7 @@ class CameraRepositoryImpl @Inject constructor(
      * Si ocurre un error durante la captura de la imagen, la función muestra un mensaje de error.
      */
     override suspend fun captureAndSaveImage(navController: NavController) {
-        val contentValues = getContentValues(getFormatDate())
-        val outputOptions = saveImage(contentValues)
-
-        imageCapture.targetRotation = Surface.ROTATION_0
-        takeAPicture(outputOptions, navController)
+        takeAPicture(mediaStoreOutputOptionsForImage, navController)
     }
 
     /**
@@ -131,72 +102,25 @@ class CameraRepositoryImpl @Inject constructor(
         navController: NavController
     ) {
         imageCapture.takePicture(
-            outputOptions,
-            ContextCompat.getMainExecutor(context),
-            object : ImageCapture.OnImageSavedCallback {
-                override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                    onImageSaved(outputFileResults, navController)
-                }
+                outputOptions,
+                ContextCompat.getMainExecutor(context),
+                object : ImageCapture.OnImageSavedCallback {
+                    override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
 
-                override fun onError(exception: ImageCaptureException) {
-                    onError()
+                        val savedUri = outputFileResults.savedUri ?: Uri.EMPTY
+                        val encodedUrl = URLEncoder.encode(savedUri.toString(), UTF_8)
+                        val route = AppScreen.InterpretationStatusScreen.createRoute(encodedUrl)
+
+                        navController.navigate(route)
+                    }
+
+                    override fun onError(exception: ImageCaptureException) {
+                        context.toast(ERROR_TAKE_PICTURE)
+                    }
                 }
-            }
         )
+
     }
-
-    private fun onError() { context.toast(ERROR_TAKE_PICTURE) }
-    private fun onImageSaved(
-        outputFileResults: ImageCapture.OutputFileResults,
-        navController: NavController
-    ) {
-        val savedUri = outputFileResults.savedUri ?: Uri.EMPTY
-        val encodedUrl = URLEncoder.encode(savedUri.toString(), UTF_8)
-        val route = AppScreen.InterpretationStatusScreen.createRoute(encodedUrl)
-
-        navController.navigate(route)
-    }
-
-    /**
-     * Función para guardar una imagen capturada.
-     *
-     * Esta función crea un objeto ImageCapture.OutputFileOptions, que se utiliza para configurar
-     * dónde se almacenará la imagen capturada. En este caso, la imagen se almacenará en el
-     * almacenamiento externo del dispositivo.
-     *
-     * @param contentValues Conjunto de pares clave-valor que se utilizarán para crear la imagen.
-     *                     Estos valores se aplicarán al archivo de imagen a través del ContentResolver.
-     * @return ImageCapture.OutputFileOptions Un objeto que contiene las opciones de salida del archivo
-     *                                        de imagen, configurado para almacenar la imagen en el
-     *                                        almacenamiento externo con los valores proporcionados.
-     */
-    private fun saveImage(contentValues: ContentValues) =
-        ImageCapture.OutputFileOptions.Builder(
-            context.contentResolver, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues
-        ).build()
-
-    /**
-     * Crea un objeto ContentValues con los valores que se utilizarán para crear una imagen.
-     *
-     * @param name El nombre que se le dará a la imagen capturada.
-     * @return ContentValues objeto con los valores de la imagen.
-     */
-    private fun getContentValues(name: String?) = ContentValues().apply {
-        put(MediaStore.MediaColumns.DISPLAY_NAME, name)
-        put(MediaStore.MediaColumns.MIME_TYPE, IMAGE_JPEG)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            put(MediaStore.MediaColumns.RELATIVE_PATH, PICTURE_CAMERA_IMAGES)
-        }
-    }
-
-    /**
-     * Devuelve la fecha y hora actual formateada según el formato DATE_CAPTURE_FORMAT.
-     *
-     * @return String La fecha y hora actuales en formato DATE_CAPTURE_FORMAT.
-     */
-    private fun getFormatDate() = SimpleDateFormat(DATE_CAPTURE_FORMAT, Locale.ENGLISH)
-        .format(System.currentTimeMillis())
-
 
     /**
      * Muestra una vista previa de la cámara en la interfaz de usuario y vincula los casos de uso de la cámara al ciclo de vida del propietario del ciclo de vida.
@@ -252,19 +176,7 @@ class CameraRepositoryImpl @Inject constructor(
         }
     }
 
-    /**
-     * Configura el análisis de imágenes para la captura de imágenes.
-     *
-     * Establece el objetivo de la relación de aspecto a 4:3, la estrategia de contrapresión para mantener solo la última imagen
-     * y el formato de salida de la imagen a RGBA_8888.
-     */
-    private fun setupImageAnalysis() {
-        imageAnalysis = ImageAnalysis.Builder()
-            .setTargetAspectRatio(AspectRatio.RATIO_4_3)
-            .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
-            .setOutputImageFormat(ImageAnalysis.OUTPUT_IMAGE_FORMAT_RGBA_8888)
-            .build()
-    }
+
 
 
     /**
@@ -275,7 +187,7 @@ class CameraRepositoryImpl @Inject constructor(
     @OptIn(ExperimentalGetImage::class)
     override suspend fun startDetection() {
 
-        imageAnalysis?.setAnalyzer(
+        imageAnalysis.setAnalyzer(
             Executors.newSingleThreadExecutor()
         ) { imageProxy ->
 
@@ -288,7 +200,6 @@ class CameraRepositoryImpl @Inject constructor(
     }
 
     override suspend fun resultHands(): Flow<DetectionHand>  = recognitionHandsResults.filterNotNull()
-
     override suspend fun resultFace(): Flow<DetectionFace>  = recognitionFaceResults.filterNotNull()
     override suspend fun resultPose(): Flow<DetectionPose> = recognitionPoseResults.filterNotNull()
 
@@ -296,48 +207,24 @@ class CameraRepositoryImpl @Inject constructor(
     @SuppressLint("MissingPermission")
     override suspend fun recordVideo(navController: NavController) {
 
-        if(recording != null) {
-            recording?.stop()
-            recording?.close()
-            recording = null
-            return
-        }
-
-        val videoFolder = File(context.filesDir, context.getString(R.string.FilesDirRecordCamera))
+        val videoFolder = File(context.filesDir, "CameraXVideos")
 
         if (!videoFolder.exists()) {
             videoFolder.mkdirs()
         }
 
-        val contentValues = ContentValues().apply {
-            // Nombre del archivo de video
-            put(MediaStore.MediaColumns.DISPLAY_NAME, "video_${System.currentTimeMillis()}.mp4")
-
-            // Tipo MIME del archivo de video
-            put(MediaStore.MediaColumns.MIME_TYPE, context.getString(R.string.MIME_TYPE_MP4))
-        }
-
-        // Configura las opciones de salida para el nuevo video utilizando MediaStore
-        val mediaStoreOutputOptions = MediaStoreOutputOptions
-            .Builder(context.contentResolver, MediaStore.Video.Media.EXTERNAL_CONTENT_URI)
-            .setContentValues(contentValues)
-            .build()
-
         val recordingListener = Consumer<VideoRecordEvent> { event ->
             when (event) {
                 is VideoRecordEvent.Start -> {
-                    context.toast(context.getString(R.string.recordStartCamera))
+                    context.toast("Start Camera")
                 }
 
                 is VideoRecordEvent.Finalize -> {
                     if (event.hasError()) {
 
-                        context.toast(context.getString(R.string.recordFailedCamera))
+                        context.toast("Failed Camera")
 
                         "Video capture ends with error: ${event.error}"
-
-                        recording?.close()
-                        recording = null
 
                     } else {
 
@@ -346,15 +233,14 @@ class CameraRepositoryImpl @Inject constructor(
 
                         navController.navigate(AppScreen.InterpretationStatusScreen.route)
 
-                        context.toast(context.getString(R.string.recordSuccessCamera))
 
                     }
                 }
             }
         }
 
-        recording = videoCapture!!.output
-            .prepareRecording(context, mediaStoreOutputOptions)
+        recording = videoCapture.output
+            .prepareRecording(context, mediaStoreOutputOptionsForVideo)
             .start(ContextCompat.getMainExecutor(context), recordingListener)
 
     }
@@ -376,11 +262,6 @@ class CameraRepositoryImpl @Inject constructor(
      * @param resultBundle El paquete de resultados que contiene los resultados de la identificación,
      * la altura y la anchura de la imagen de entrada.
      */
-
-
-    //Resultado Hands
-
-
 
     override fun onErrorHand(error: String, errorCode: Int) {
         Response.Error(Exception(error))
