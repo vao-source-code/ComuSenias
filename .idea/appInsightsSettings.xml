@@ -22,10 +22,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.ars.comusenias" />
+                  <option name="mobileSdkAppId" value="1:220008974660:android:4e2d378debdc4755272f11" />
+                  <option name="projectId" value="comusenias" />
+                  <option name="projectNumber" value="220008974660" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

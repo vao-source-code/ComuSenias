@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -23,23 +25,23 @@ fun ChildrenProfileScreen(
     modifier: Modifier,
     viewModel: ChildrenProfileViewModel = hiltViewModel()
 ) {
+
+    val scrollState = rememberScrollState()
     Scaffold(
         bottomBar = {
             ShowBottomBar(navController = navController)
-        }, floatingActionButton = {
-            FloatingButtonDefault(icon = R.drawable.qr_code_scanner) {
-                navController.navigate(AppScreen.GenerateQRScreen.route)
-            }
         }
     ) { paddingValues ->
         Box(
             modifier = modifier
                 .fillMaxSize()
                 .padding(paddingValues)
+                .verticalScroll(scrollState)
         ) {
             Column(modifier = Modifier.fillMaxSize()) {
                 ChildrenProfileContent(
-                    viewModel = viewModel
+                    viewModel = viewModel,
+                    navController = navController
                 )
                 val onClick: () -> Unit =
                     {

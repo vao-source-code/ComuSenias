@@ -17,13 +17,7 @@ import com.ars.comusenias.presentation.navigation.AppScreen
 import com.ars.comusenias.presentation.ui.theme.SIZE3
 import com.ars.comusenias.presentation.view_model.ChildrenProfileViewModel
 import com.ars.comusenias.presentation.view_model.LevelViewModel
-import com.ars.comusenias.presentation.component.bottomBar.ShowBottomBar
-import com.ars.comusenias.presentation.component.home.ContentHome
-import com.ars.comusenias.presentation.component.home.TopBarHome
-import com.ars.comusenias.presentation.navigation.AppScreen
-import com.ars.comusenias.presentation.ui.theme.SIZE3
-import com.ars.comusenias.presentation.view_model.ChildrenProfileViewModel
-import com.ars.comusenias.presentation.view_model.LevelViewModel
+
 
 /**
  * Pantalla principal del usuario que va a jugar el juego

@@ -45,25 +45,10 @@ import com.ars.comusenias.presentation.ui.theme.SELECTED_IMAGE
 import com.ars.comusenias.presentation.ui.theme.SIZE10
 import com.ars.comusenias.presentation.ui.theme.SIZE140
 import com.ars.comusenias.presentation.ui.theme.SIZE20
-import com.ars.comusenias.presentation.ui.theme.SIZE55
-import com.ars.comusenias.presentation.view_model.specialist.SpecialistProfileViewModel
-import com.ars.comusenias.R
-import com.ars.comusenias.presentation.component.defaults.DialogCapturePicture
-import com.ars.comusenias.presentation.component.defaults.app.TextFieldApp
-import com.ars.comusenias.presentation.ui.theme.CHANGE_SPECIALIST_MEDICY
-import com.ars.comusenias.presentation.ui.theme.CHANGE_TITLE_MEDICY
-import com.ars.comusenias.presentation.ui.theme.IMAGE_AVATAR
-import com.ars.comusenias.presentation.ui.theme.IMAGE_EDIT_BUTTON
-import com.ars.comusenias.presentation.ui.theme.PROFILE_EMAIL
-import com.ars.comusenias.presentation.ui.theme.PROFILE_NAME_SURNAME
-import com.ars.comusenias.presentation.ui.theme.SELECTED_IMAGE
-import com.ars.comusenias.presentation.ui.theme.SIZE10
-import com.ars.comusenias.presentation.ui.theme.SIZE140
-import com.ars.comusenias.presentation.ui.theme.SIZE20
 import com.ars.comusenias.presentation.ui.theme.SIZE30
-import com.ars.comusenias.presentation.ui.theme.SIZE40
 import com.ars.comusenias.presentation.ui.theme.SIZE55
 import com.ars.comusenias.presentation.view_model.specialist.SpecialistProfileViewModel
+
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState

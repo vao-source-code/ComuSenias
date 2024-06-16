@@ -1,4 +1,4 @@
-package com.example.comusenias.presentation.view_model
+package com.ars.comusenias.presentation.view_model
 
 import android.content.Context
 import androidx.compose.runtime.getValue
@@ -10,15 +10,12 @@ import com.ars.comusenias.constants.PreferencesConstant
 import com.ars.comusenias.domain.library.ComposeFileProvider
 import com.ars.comusenias.domain.library.ResultingActivityHandler
 import com.ars.comusenias.domain.models.game.LevelModel
-import com.ars.comusenias.domain.models.game.SubLevelModel
 import com.ars.comusenias.domain.models.response.Response
 import com.ars.comusenias.domain.models.state.ChangeProfileState
 import com.ars.comusenias.domain.models.users.ChildrenModel
 import com.ars.comusenias.domain.use_cases.auth.AuthFactoryUseCases
 import com.ars.comusenias.domain.use_cases.children.ChildrenFactory
 import com.ars.comusenias.domain.use_cases.shared_preferences.DataRolStorageFactory
-import com.ars.comusenias.presentation.activities.MainActivity
-import com.ars.comusenias.presentation.component.home.getAllLevels
 import com.ars.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.ars.comusenias.presentation.ui.theme.PATH_IMAGE
 import dagger.hilt.android.lifecycle.HiltViewModel

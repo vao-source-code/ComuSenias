@@ -9,6 +9,8 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Help
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Alignment.Companion.End
@@ -35,6 +37,7 @@ import com.ars.comusenias.presentation.ui.theme.SIZE10
 import com.ars.comusenias.presentation.ui.theme.SIZE16
 import com.ars.comusenias.presentation.ui.theme.SIZE36
 import com.ars.comusenias.presentation.ui.theme.blackColorApp
+import com.ars.comusenias.presentation.ui.theme.primaryColorApp
 
 @Composable
 fun TopBarHome(
@@ -58,9 +61,9 @@ fun TopBarHome(
                 onClick = { onclickSupport() }
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.icon_support),
+                    imageVector = Icons.Default.Help,
                     contentDescription = "Support",
-                    tint = blackColorApp
+                    tint = primaryColorApp
                 )
             }
         },

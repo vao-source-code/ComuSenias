@@ -31,11 +31,14 @@ fun SpecialistHomeContent(
     Log.d("SpecialistHomeContent", "Usuario: $specialist")
     Scaffold(topBar = {
         Surface(shadowElevation = SIZE3.dp) {
+
             TopBarHome(
                 name = specialist.name, image = specialist.image,
                 onClickNotification = { navController.navigate(AppScreen.NotificationScreen.route) },
-                onclickProfile = { navController.navigate(AppScreen.SpecialistProfileScreen.route) }
-            )
+                onclickProfile = { navController.navigate(AppScreen.SpecialistProfileScreen.route) },
+                onclickSupport = { navController.navigate(AppScreen.SupportScreen.route) },
+
+                )
         }
     }, floatingActionButton = {
         FloatingButtonDefault {

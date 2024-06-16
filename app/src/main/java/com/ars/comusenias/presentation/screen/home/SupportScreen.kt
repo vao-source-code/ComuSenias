@@ -36,6 +36,7 @@ import com.ars.comusenias.presentation.component.defaults.app.ButtonAppIcon
 import com.ars.comusenias.presentation.component.home.TopBarHome
 import com.ars.comusenias.presentation.navigation.AppScreen
 import com.ars.comusenias.presentation.ui.theme.SIZE16
+import com.ars.comusenias.presentation.ui.theme.SIZE20
 import com.ars.comusenias.presentation.ui.theme.SIZE3
 import com.ars.comusenias.presentation.ui.theme.logoApp
 import com.ars.comusenias.presentation.ui.theme.size150
@@ -55,9 +56,6 @@ fun SupportScreen(
                     onClickNotification = { navController.navigate(AppScreen.NotificationScreen.route) },
                     onclickProfile = { navController.navigate(AppScreen.ChildrenProfileScreen.route) })
             }
-        },
-        bottomBar = {
-            ShowBottomBar(navController = navController)
         }
     ) { paddingValues ->
         Box(
@@ -101,7 +99,7 @@ fun SupportScreen(
                     icon = Icons.Default.Email
                 )
 
-                Spacer(modifier = Modifier.height(10.dp))
+                Spacer(modifier = Modifier.height(SIZE20.dp))
 
                 // Botón para abrir el navegador web
                 ButtonAppIcon(

@@ -1,4 +1,4 @@
-package com.example.comusenias.presentation.view_model
+package com.ars.comusenias.presentation.view_model
 
 import android.annotation.SuppressLint
 import android.util.Log
@@ -15,16 +15,9 @@ import com.ars.comusenias.domain.use_cases.level.LevelFactory
 import com.ars.comusenias.presentation.activities.MainActivity
 import com.ars.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.ars.comusenias.presentation.ui.theme.NOT_RESPONSE_SUB_LEVEL
-import com.ars.comusenias.domain.models.response.Response
-import com.ars.comusenias.domain.models.game.LevelModel
-import com.ars.comusenias.domain.models.game.SubLevelModel
-import com.ars.comusenias.domain.use_cases.level.LevelFactory
-import com.ars.comusenias.presentation.ui.theme.EMPTY_STRING
-import com.ars.comusenias.presentation.ui.theme.NOT_RESPONSE_SUB_LEVEL
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.sql.Date
 import javax.inject.Inject
 
 @SuppressLint("MutableCollectionMutableState")

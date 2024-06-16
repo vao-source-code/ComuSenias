@@ -28,7 +28,6 @@ import com.ars.comusenias.presentation.view_model.ChildrenProfileViewModel
 import com.ars.comusenias.presentation.view_model.LevelViewModel
 
 
-
 @Composable
 fun ContentHome(
     navController: NavController,

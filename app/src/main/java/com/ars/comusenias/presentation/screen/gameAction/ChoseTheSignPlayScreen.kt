@@ -37,21 +37,7 @@ import com.ars.comusenias.presentation.ui.theme.ERROR_RETRY_SUB_LEVEL
 import com.ars.comusenias.presentation.ui.theme.STEP_TREE
 import com.ars.comusenias.presentation.ui.theme.WHAT_SIGN_IS
 import com.ars.comusenias.presentation.view_model.LevelViewModel
-import androidx.navigation.compose.rememberNavController
-import com.ars.comusenias.domain.models.game.SubLevelModel
-import com.ars.comusenias.domain.models.response.Response
-import com.ars.comusenias.presentation.activities.MainActivity.Companion.getLevelViewModel
-import com.ars.comusenias.presentation.component.defaults.app.CircularProgressBar
-import com.ars.comusenias.presentation.component.gameAction.GameAction
-import com.ars.comusenias.presentation.component.gameAction.MatchSign
-import com.ars.comusenias.presentation.component.permission.AlertDialogPermission
-import com.ars.comusenias.presentation.extensions.validation.selectedOption
-import com.ars.comusenias.presentation.navigation.AppScreen
-import com.ars.comusenias.presentation.ui.theme.CONTINUE
-import com.ars.comusenias.presentation.ui.theme.ERROR_RETRY_SUB_LEVEL
-import com.ars.comusenias.presentation.ui.theme.STEP_TREE
-import com.ars.comusenias.presentation.ui.theme.WHAT_SIGN_IS
-import com.ars.comusenias.presentation.view_model.LevelViewModel
+
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 
