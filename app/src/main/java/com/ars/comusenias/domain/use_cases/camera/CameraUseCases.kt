@@ -23,23 +23,35 @@ class CameraUseCases @Inject constructor(private val customCameraRepository: Cam
      */
     suspend fun showCameraPreview(
         previewView: PreviewView,
-        lifecycleOwner:LifecycleOwner,
-        isSelectedCameraCapture:Boolean
+        lifecycleOwner: LifecycleOwner
     ) =
-        customCameraRepository.showCameraPreview(previewView, lifecycleOwner,isSelectedCameraCapture)
+        customCameraRepository.showCameraPreview(previewView, lifecycleOwner)
 
     /**
      * Captura y guarda una imagen.
      *
      * @param navController El controlador de navegación.
      */
-    suspend fun captureAndSave(navController: NavController ) = customCameraRepository.captureAndSaveImage(navController)
+    suspend fun captureAndSave(navController: NavController) =
+        customCameraRepository.captureAndSaveImage(navController)
 
     /**
-     * Inicia la detección de objetos.
+     * Inicia la detección.
      */
-    suspend fun startObjectDetection() = customCameraRepository.startDetection()
+    suspend fun startDetection() = customCameraRepository.startDetection()
 
+
+    suspend fun resultHands() =  customCameraRepository.resultHands()
+
+    suspend fun resultFace() = customCameraRepository.resultFace()
+
+    suspend fun resultPose() = customCameraRepository.resultPose()
+
+
+    /**
+     * Detiene la vista previa de la cámara.
+     */
+    suspend fun stopCameraPreview() = customCameraRepository.stopCameraPreview()
 
     /**
      * Graba la cámara.

@@ -10,6 +10,7 @@ import android.Manifest.permission.RECORD_AUDIO
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.TIRAMISU
+import android.widget.Toast
 import androidx.compose.material.Snackbar
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -19,9 +20,23 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.ars.comusenias.domain.models.game.SubLevelModel
+import com.ars.comusenias.domain.models.response.Response
+import com.ars.comusenias.presentation.activities.MainActivity.Companion.getLevelViewModel
+import com.ars.comusenias.presentation.component.defaults.app.CircularProgressBar
+import com.ars.comusenias.presentation.component.gameAction.GameAction
+import com.ars.comusenias.presentation.component.gameAction.MatchSign
+import com.ars.comusenias.presentation.extensions.validation.selectedOption
+import com.ars.comusenias.presentation.navigation.AppScreen
+import com.ars.comusenias.presentation.ui.theme.CONTINUE
+import com.ars.comusenias.presentation.ui.theme.ERROR_RETRY_SUB_LEVEL
+import com.ars.comusenias.presentation.ui.theme.STEP_TREE
+import com.ars.comusenias.presentation.ui.theme.WHAT_SIGN_IS
+import com.ars.comusenias.presentation.view_model.LevelViewModel
 import androidx.navigation.compose.rememberNavController
 import com.ars.comusenias.domain.models.game.SubLevelModel
 import com.ars.comusenias.domain.models.response.Response
@@ -83,22 +98,23 @@ private fun ShowChoseTheSign(
     navController: NavHostController,
     onMatchResult: (Boolean) -> Unit
 ) {
+    val context = LocalContext.current
     var showSetting by remember { mutableStateOf(false) }
     var permissionDenied by remember { mutableStateOf(false) }
     val permissionCamera = if (SDK_INT >= TIRAMISU) {
         listOf(
             CAMERA,
-            READ_MEDIA_IMAGES,
-            READ_MEDIA_VIDEO,
-            READ_MEDIA_AUDIO,
-            RECORD_AUDIO
+            Manifest.permission.READ_MEDIA_IMAGES,
+            Manifest.permission.READ_MEDIA_VIDEO,
+            Manifest.permission.READ_MEDIA_AUDIO,
+            Manifest.permission.RECORD_AUDIO
         )
     } else {
         listOf(
             CAMERA,
-            READ_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
             WRITE_EXTERNAL_STORAGE,
-            )
+        )
     }
     var subLevelImageOnly by remember { mutableStateOf("") }
 
@@ -111,7 +127,12 @@ private fun ShowChoseTheSign(
                 permissionDenied = true
             }
         }
-
+    LaunchedEffect(showSetting) {
+        if (showSetting) {
+            permissionDenied = false
+            showSetting = false
+        }
+    }
 
     subLevel?.let {
         //TODO en caso de ser video se podria usar las imagenes mejor y que decida
@@ -131,9 +152,7 @@ private fun ShowChoseTheSign(
             },
         ) {
             if (permissionDenied) {
-                AlertDialogPermission(permissionDenied) { statusPermission ->
-                    showSetting = statusPermission
-                }
+                Toast.makeText(context,"Permiso Denegado",Toast.LENGTH_SHORT).show()
             } else {
                 MatchSign(
                     sign = sign,

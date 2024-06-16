@@ -126,7 +126,9 @@ const val ERROR_NOT_RECOGNIZE_VIDEO_FILE: String = "ResultBundle could not be re
 const val ERROR_NOT_RESPONSE_VIDEO: String = "Frame at specified time could not be retrieved when recognition in video."
 const val ERROR_NOT_USING_RUNNING_MODE_IMAGE: String = "Attempting to call detectImage while not using RunningMode.IMAGE"
 const val UNKNOWN_ERROR: String = "An unknown error has occurred"
-const val MP_RECOGNIZER_TASK = "gesture_recognizer_ultimo.task"
+const val MP_RECOGNIZER_HAND = "vowels_alpabet_words.task"
+const val MP_RECOGNIZER_FACE="face_landmarker.task"
+const val MP_RECOGNIZER_POSE="pose_landmarker_heavy.task"
 const val MP_RECOGNIZER_WORDS_TASK = "gesture_recognizer_three.task"
 const val DATE_CAPTURE_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
 const val PICTURE_CAMERA_IMAGES = "Pictures/My-Camera-App-Images"
@@ -218,5 +220,5 @@ const val QR_ADD = "Agregar"
 
 /*-----------------Pasaje datos -----------------*/
 const val PACIENT = "pacient"
-const val CHILDREN_OBSERVATION = "observation"
+const val CHILDREN_OBSERVATION  = "observation"
 const val SPECIALIST_PROFILE = "specialist_profile"

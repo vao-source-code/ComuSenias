@@ -1,6 +1,8 @@
 package com.ars.comusenias.presentation.screen.camera
 
-import OverlayView
+
+import OverlayViewFace
+import OverlayViewHands
 import android.app.Activity
 import androidx.activity.compose.BackHandler
 import androidx.camera.view.PreviewView
@@ -8,8 +10,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -31,31 +34,71 @@ fun RecordCameraScreen(
     val context = LocalContext.current
     val activity = (context as? Activity)
     val lifecycleOwner = LocalLifecycleOwner.current
-    val recognitionResultsState = viewModel.recognitionResults.collectAsState()
-    val recognitionResults = recognitionResultsState.value
+
+    val recognitionHandsResultsState = viewModel.recognitionHandsResults.collectAsState()
+    val recognitionHandsResults = recognitionHandsResultsState.value
+
+    val recognitionPoseResultsState = viewModel.recognitionPoseResults.collectAsState()
+    val recognitionPoseResults = recognitionPoseResultsState.value
+
+    val recognitionFaceResultsState = viewModel.recognitionFaceResults.collectAsState()
+    val recognitionFaceResults = recognitionFaceResultsState.value
+
+
+    val showCameraPreview = remember { mutableStateOf(true) }
+
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        AndroidView(
-            factory = {
-                val previewView = PreviewView(it)
-                viewModel.showCameraPreview(previewView,lifecycleOwner,false)
-                previewView
-            },
-            modifier = Modifier.fillMaxSize()
-        )
-        OverlayView(
-            resultOverlayView = recognitionResults,
-            levelViewModel = levelViewModel
-        )
+        if (showCameraPreview.value) {
+            AndroidView(
+                factory = {
+                    val previewView = PreviewView(it)
+                    viewModel.showCameraPreview(previewView, lifecycleOwner)
+                    previewView
+                },
+                modifier = Modifier.fillMaxSize()
+            )
+        }
+
+        val gestureResults = recognitionHandsResults?.results
+
+        BackHandler {activity?.finish() }
+
         CounterAction()
 
-        BackHandler {
-            activity?.finish()
+        if(recognitionFaceResults?.result!=null){
+            OverlayViewFace(landmarks =recognitionFaceResults.result ,
+                imageWidth = recognitionFaceResults.inputImageWidth,
+                imageHeight = recognitionFaceResults.inputImageHeight)
+        }
+
+
+        if(recognitionHandsResults?.results!=null) {
+            OverlayViewHands(
+                levelViewModel = levelViewModel,
+                gestureResults = gestureResults!!,
+                imageWidth = recognitionHandsResults.inputImageWidth,
+                imageHeight = recognitionHandsResults.inputImageHeight
+            )
+        }
+
+        if(recognitionPoseResults?.results!=null){
+            OverlayViewPose(
+                poseLandmarkerResults = recognitionPoseResults.results,
+                imageWidth = recognitionPoseResults.inputImageWidth,
+                imageHeight = recognitionPoseResults.inputImageHeight
+            )
         }
 
         DisposableEffect(Unit) {
-            val cameraCapturingJob = lifecycleOwner.lifecycleScope.launch {
+            viewModel.startDetection()
+
+            viewModel.resultFace()
+            viewModel.resultHands()
+            viewModel.resultPose()
+
+            val cameraCapturingJob =   lifecycleOwner.lifecycleScope.launch {
                 viewModel.recordVideo(navController = navController!!)
                 delay(6000)
                 viewModel.stopVideo()
@@ -63,15 +106,12 @@ fun RecordCameraScreen(
 
             onDispose { cameraCapturingJob.cancel() }
         }
-
-        /*LaunchedEffect(Unit) {
-            viewModel.startDetection()
-            viewModel.recordVideo(navController = navController!!)
-            delay(6000)
-            viewModel.stopVideo()
-        }*/
-
-
-
     }
 }
+
+
+
+
+
+
+

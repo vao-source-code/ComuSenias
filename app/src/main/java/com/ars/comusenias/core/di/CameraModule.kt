@@ -18,10 +18,10 @@ import androidx.camera.video.QualitySelector
 import androidx.camera.video.Recorder
 import androidx.camera.video.VideoCapture
 import com.ars.comusenias.data.repositories.firebase.CameraRepositoryImpl
+import com.ars.comusenias.data.repositories.firebase.FaceLandmarkerHelper
 import com.ars.comusenias.data.repositories.firebase.GestureRecognizerHelper
+import com.ars.comusenias.data.repositories.firebase.PoseLandmarkerHelper
 import com.ars.comusenias.domain.repositories.CameraRepository
-import com.ars.comusenias.presentation.ui.theme.DATE_CAPTURE_FORMAT
-import com.google.common.util.concurrent.ListenableFuture
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -133,7 +133,7 @@ object CameraModule {
     fun provideImageAnalysis(): ImageAnalysis {
         return ImageAnalysis.Builder()
             .setTargetAspectRatio(AspectRatio.RATIO_4_3)
-             .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+            .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
             .setOutputImageFormat(ImageAnalysis.OUTPUT_IMAGE_FORMAT_RGBA_8888)
             .build()
     }
@@ -148,17 +148,36 @@ object CameraModule {
     ): GestureRecognizerHelper =
         GestureRecognizerHelper(context = context)
 
+    // Proporciona una instancia de PoseLandmark para reconocer la Posicion del Cuerpo
+
+    @Provides
+    fun providePoseLandmarkerHelper(
+        context: Context
+    ): PoseLandmarkerHelper =
+        PoseLandmarkerHelper(context = context)
+
+    // Proporciona una instancia de FaceLandmark para reconocer la cara
+
+    @Provides
+    fun provideFaceLandmarkerHelper(
+        context: Context
+    ): FaceLandmarkerHelper =
+        FaceLandmarkerHelper(context = context)
+
 
     // Proporciona una instancia de CameraRepository configurada con todos los componentes necesarios
     @Provides
     fun provideCameraRepository(
-        context: Context,
         processCameraProvider: ProcessCameraProvider,
         preview: Preview,
         cameraSelector: CameraSelector,
         imageCapture: ImageCapture,
         videoCapture:VideoCapture<Recorder>,
+        recorder:Recorder,
+        context: Context,
         gestureRecognizerHelper: GestureRecognizerHelper,
+        faceLandmarkerHelper: FaceLandmarkerHelper,
+        poseLandmarkerHelper: PoseLandmarkerHelper,
         mediaStoreOutputOptionsForImage: ImageCapture.OutputFileOptions,
         mediaStoreOutputOptionsForVideo: MediaStoreOutputOptions,
         imageAnalysis: ImageAnalysis,
@@ -169,8 +188,11 @@ object CameraModule {
             cameraSelector,
             imageCapture,
             videoCapture,
+            recorder,
             context,
             gestureRecognizerHelper,
+            faceLandmarkerHelper,
+            poseLandmarkerHelper,
             mediaStoreOutputOptionsForImage,
             mediaStoreOutputOptionsForVideo,
             imageAnalysis,

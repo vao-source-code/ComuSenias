@@ -1,4 +1,4 @@
-package com.ars.comusenias.presentation.view_model
+package com.example.comusenias.presentation.view_model
 
 import android.content.Context
 import androidx.compose.runtime.getValue

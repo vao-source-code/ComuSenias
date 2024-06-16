@@ -1,4 +1,4 @@
-package com.ars.comusenias.presentation.view_model
+package com.example.comusenias.presentation.view_model
 
 import android.annotation.SuppressLint
 import android.util.Log
@@ -15,9 +15,16 @@ import com.ars.comusenias.domain.use_cases.level.LevelFactory
 import com.ars.comusenias.presentation.activities.MainActivity
 import com.ars.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.ars.comusenias.presentation.ui.theme.NOT_RESPONSE_SUB_LEVEL
+import com.ars.comusenias.domain.models.response.Response
+import com.ars.comusenias.domain.models.game.LevelModel
+import com.ars.comusenias.domain.models.game.SubLevelModel
+import com.ars.comusenias.domain.use_cases.level.LevelFactory
+import com.ars.comusenias.presentation.ui.theme.EMPTY_STRING
+import com.ars.comusenias.presentation.ui.theme.NOT_RESPONSE_SUB_LEVEL
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.sql.Date
 import javax.inject.Inject
 
 @SuppressLint("MutableCollectionMutableState")
@@ -34,6 +41,7 @@ class LevelViewModel @Inject constructor(
     var levelSelected by mutableStateOf(EMPTY_STRING)
     var subLevelSelected by mutableStateOf(EMPTY_STRING)
     var pathVideo by mutableStateOf(EMPTY_STRING)
+
     var subLevelModel by mutableStateOf(SubLevelModel())
 
     init {
@@ -51,6 +59,7 @@ class LevelViewModel @Inject constructor(
      * Los resultados se recogen en un flujo y se almacenan en [levelsResponse]. Si la respuesta es un éxito, la lista de niveles se almacena en [levels].
      */
     fun getLevels() = viewModelScope.launch(Dispatchers.IO) {
+        Log.i("LevelViewModel", "getLevels:")
         levelUsesCases.getLevels().collect { response ->
             levelsResponse = response
             if (response is Response.Success) {

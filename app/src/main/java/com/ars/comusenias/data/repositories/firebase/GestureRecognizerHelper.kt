@@ -8,10 +8,8 @@ import android.net.Uri
 import android.os.SystemClock
 import androidx.annotation.VisibleForTesting
 import androidx.camera.core.ImageProxy
-import com.ars.comusenias.constants.PreferencesConstant.PREFERENCE_LEVEL
-import com.ars.comusenias.core.PreferenceManager
+import com.ars.comusenias.domain.models.mediapipe.DetectionHand
 import com.ars.comusenias.domain.models.response.Response
-import com.ars.comusenias.domain.models.recognizerSign.ResultBundle
 import com.ars.comusenias.presentation.ui.theme.DEFAULT_HAND_DETECTION_CONFIDENCE
 import com.ars.comusenias.presentation.ui.theme.DEFAULT_HAND_PRESENCE_CONFIDENCE
 import com.ars.comusenias.presentation.ui.theme.DEFAULT_HAND_TRACKING_CONFIDENCE
@@ -20,8 +18,7 @@ import com.ars.comusenias.presentation.ui.theme.DELEGATE_GPU
 import com.ars.comusenias.presentation.ui.theme.ERROR_NOT_RECOGNIZE_VIDEO_FILE
 import com.ars.comusenias.presentation.ui.theme.ERROR_NOT_RESPONSE_VIDEO
 import com.ars.comusenias.presentation.ui.theme.ERROR_NOT_USING_RUNNING_MODE_IMAGE
-import com.ars.comusenias.presentation.ui.theme.MP_RECOGNIZER_TASK
-import com.ars.comusenias.presentation.ui.theme.MP_RECOGNIZER_WORDS_TASK
+import com.ars.comusenias.presentation.ui.theme.MP_RECOGNIZER_HAND
 import com.ars.comusenias.presentation.ui.theme.OTHER_ERROR
 import com.ars.comusenias.presentation.ui.theme.UNKNOWN_ERROR
 import com.ars.comusenias.presentation.ui.theme.UNRECOGNIZED_DELEGATE
@@ -73,18 +70,7 @@ class GestureRecognizerHelper(
      * @throws IllegalStateException si hay un problema al crear el GestureRecognizer o si currentDelegate no es ni DELEGATE_CPU ni DELEGATE_GPU.
      */
     fun setupGestureRecognizer() {
-
         try {
-            val recognizerTask = if(PreferenceManager(context).getInt(PREFERENCE_LEVEL,1) == 1 ) {
-                MP_RECOGNIZER_TASK
-            }
-            else{
-               MP_RECOGNIZER_WORDS_TASK
-            }
-
-
-
-
             val baseOptions = BaseOptions.builder()
                 .setDelegate(
                     when (currentDelegate) {
@@ -93,7 +79,7 @@ class GestureRecognizerHelper(
                         else -> throw IllegalStateException(UNRECOGNIZED_DELEGATE + currentDelegate)
                     }
                 )
-                .setModelAssetPath(MP_RECOGNIZER_TASK)
+                .setModelAssetPath(MP_RECOGNIZER_HAND)
                 .build()
 
             val optionsBuilder = GestureRecognizer.GestureRecognizerOptions.builder()
@@ -101,6 +87,7 @@ class GestureRecognizerHelper(
                 .setMinHandDetectionConfidence(minHandDetectionConfidence)
                 .setMinTrackingConfidence(minHandTrackingConfidence)
                 .setMinHandPresenceConfidence(minHandPresenceConfidence)
+                .setNumHands(2)
                 .setRunningMode(runningMode)
 
             if (runningMode == RunningMode.LIVE_STREAM) {
@@ -142,7 +129,6 @@ class GestureRecognizerHelper(
         val buffer = imageProxy.planes[0].buffer
         bitmapBuffer.copyPixelsFromBuffer(buffer)
 
-        imageProxy.close()
 
         val matrix = Matrix().apply {
             postRotate(imageProxy.imageInfo.rotationDegrees.toFloat())
@@ -162,6 +148,8 @@ class GestureRecognizerHelper(
         val mpImage = BitmapImageBuilder(rotatedBitmap).build()
 
         recognizeAsync(mpImage, frameTime)
+
+
     }
 
     /**
@@ -191,7 +179,7 @@ class GestureRecognizerHelper(
      * @return Un objeto ResultBundle que contiene los resultados del reconocimiento de gestos,
      *         o null si ocurrió un error durante el reconocimiento.
      */
-    fun recognizeVideoFile(videoUri: Uri, inferenceIntervalMs: Long): ResultBundle? {
+    fun recognizeVideoFile(videoUri: Uri, inferenceIntervalMs: Long): DetectionHand? {
         val startTime = SystemClock.uptimeMillis()
         val retriever = MediaMetadataRetriever().apply { setDataSource(context, videoUri) }
         val videoLengthMs =
@@ -213,11 +201,10 @@ class GestureRecognizerHelper(
 
         val inferenceTimePerFrameMs = (SystemClock.uptimeMillis() - startTime) / numberOfFrameToRead
 
-        return ResultBundle(
+        return DetectionHand(
             resultList,
-            inferenceTimePerFrameMs,
             height,
-            width
+            width,
         )
     }
 
@@ -277,7 +264,7 @@ class GestureRecognizerHelper(
      * Antes de realizar el reconocimiento, verifica si el modo de ejecución actual es RunningMode.IMAGE.
      * Si no es así, lanza una excepción IllegalArgumentException.
      */
-    fun recognizeImage(image: Bitmap): ResultBundle? {
+    fun recognizeImage(image: Bitmap): DetectionHand? {
         if (runningMode != RunningMode.IMAGE) {
             Response.CustomError(ERROR_NOT_USING_RUNNING_MODE_IMAGE)
         }
@@ -287,11 +274,10 @@ class GestureRecognizerHelper(
 
         gestureRecognizer?.recognize(mpImage)?.also { recognizerResult ->
             val inferenceTimeMs = SystemClock.uptimeMillis() - startTime
-            return ResultBundle(
+            return DetectionHand(
                 listOf(recognizerResult),
-                inferenceTimeMs,
                 image.height,
-                image.width
+                image.width,
             )
         }
         return null
@@ -315,9 +301,9 @@ class GestureRecognizerHelper(
         val finishTimeMs = SystemClock.uptimeMillis()
         val inferenceTime = finishTimeMs - result.timestampMs()
 
-        gestureRecognizerListener?.onResults(
-            ResultBundle(
-                listOf(result), inferenceTime, input.height, input.width
+        gestureRecognizerListener?.onResultsHand(
+            DetectionHand(
+                listOf(result), input.height, input.width
             )
         )
     }
@@ -327,11 +313,13 @@ class GestureRecognizerHelper(
     }
 
     interface GestureRecognizerListener {
-        fun onError(error: String, errorCode: Int = OTHER_ERROR)
-        fun onResults(resultBundle: ResultBundle)
+        fun onErrorHand(error: String, errorCode: Int = OTHER_ERROR)
+        fun onResultsHand(resultBundle: DetectionHand)
     }
 
     fun setListener(listener: GestureRecognizerListener) {
         gestureRecognizerListener = listener
     }
+
+
 }

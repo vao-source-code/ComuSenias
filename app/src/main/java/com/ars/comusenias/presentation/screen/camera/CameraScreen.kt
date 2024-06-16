@@ -1,6 +1,8 @@
 package com.ars.comusenias.presentation.screen.camera
 
-import OverlayView
+
+import OverlayViewFace
+import OverlayViewHands
 import android.app.Activity
 import androidx.activity.compose.BackHandler
 import androidx.camera.view.PreviewView
@@ -16,7 +18,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import com.ars.comusenias.constants.PreferencesConstant
 import com.ars.comusenias.core.PreferenceManager
@@ -24,7 +25,6 @@ import com.ars.comusenias.presentation.component.gameAction.CounterAction
 import com.ars.comusenias.presentation.view_model.CameraViewModel
 import com.ars.comusenias.presentation.view_model.LevelViewModel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @Composable
 fun CameraScreen(
@@ -38,8 +38,17 @@ fun CameraScreen(
 
     val activity = (context as? Activity)
     val lifecycleOwner = LocalLifecycleOwner.current
-    val recognitionResultsState = viewModel.recognitionResults.collectAsState()
-    val recognitionResults = recognitionResultsState.value
+
+    val recognitionFaceResultsState = viewModel.recognitionFaceResults.collectAsState()
+    val recognitionFaceResults = recognitionFaceResultsState.value
+
+
+    val recognitionHandsResultsState = viewModel.recognitionHandsResults.collectAsState()
+    val recognitionHandsResults = recognitionHandsResultsState.value
+
+
+    val recognitionPoseResultsState = viewModel.recognitionPoseResults.collectAsState()
+    val recognitionPoseResults = recognitionPoseResultsState.value
 
 
     Box(
@@ -48,17 +57,51 @@ fun CameraScreen(
         AndroidView(
             factory = {
                 val previewView = PreviewView(it)
-                viewModel.showCameraPreview(previewView,lifecycleOwner,true)
+                viewModel.showCameraPreview(previewView,lifecycleOwner)
                 previewView
             },
             modifier = Modifier.fillMaxSize()
         )
 
-        OverlayView(
-            resultOverlayView = recognitionResults,
-            levelViewModel = levelViewModel
-        )
 
+        val gestureResults = recognitionHandsResults?.results
+        val poseLandmarkResult = recognitionPoseResults?.results
+
+
+
+        if(recognitionHandsResults?.results!=null) {
+            OverlayViewHands(
+                levelViewModel = levelViewModel,
+                gestureResults = gestureResults!!,
+                imageWidth = recognitionHandsResults.inputImageWidth,
+                imageHeight = recognitionHandsResults.inputImageHeight
+            )
+        }
+
+
+
+
+        if(recognitionFaceResults?.result!=null){
+            OverlayViewFace(
+                landmarks = recognitionFaceResults.result,
+                imageWidth = recognitionFaceResults.inputImageWidth,
+                imageHeight = recognitionFaceResults.inputImageHeight)
+        }
+
+
+        if(recognitionPoseResults?.results!=null){
+            OverlayViewPose(
+                poseLandmarkerResults = recognitionPoseResults.results,
+                imageWidth = recognitionPoseResults.inputImageWidth,
+                imageHeight = recognitionPoseResults.inputImageHeight
+            )
+        }
+
+
+        LaunchedEffect(key1 = Unit) {
+            delay(5000)
+            viewModel.captureAndSave(navController!!)
+        }
     }
 
     CounterAction()
@@ -69,11 +112,14 @@ fun CameraScreen(
 
     DisposableEffect(Unit) {
         viewModel.startDetection()
-        val cameraCapturingJob =  lifecycleOwner.lifecycleScope.launch {
-            delay(6000)
-            viewModel.captureAndSave(navController = navController!!)
-        }
-
-        onDispose { cameraCapturingJob.cancel()}
+        viewModel.resultHands()
+        viewModel.resultFace()
+        viewModel.resultPose()
+        onDispose { }
     }
+
 }
+
+
+
+

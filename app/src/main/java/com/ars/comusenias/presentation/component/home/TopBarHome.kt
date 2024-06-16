@@ -29,6 +29,12 @@ import com.ars.comusenias.presentation.ui.theme.SIZE10
 import com.ars.comusenias.presentation.ui.theme.SIZE16
 import com.ars.comusenias.presentation.ui.theme.SIZE36
 import com.ars.comusenias.presentation.ui.theme.blackColorApp
+import com.ars.comusenias.R.drawable.profile_avatar
+import com.ars.comusenias.presentation.ui.theme.PROFILE_USER
+import com.ars.comusenias.presentation.ui.theme.SIZE10
+import com.ars.comusenias.presentation.ui.theme.SIZE16
+import com.ars.comusenias.presentation.ui.theme.SIZE36
+import com.ars.comusenias.presentation.ui.theme.blackColorApp
 
 @Composable
 fun TopBarHome(
