@@ -8,11 +8,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.comusenias'
+    namespace 'com.ars.comusenias'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.example.comusenias"
+        applicationId "com.ars.comusenias"
         minSdk 24
         targetSdk 33
         versionCode 1
