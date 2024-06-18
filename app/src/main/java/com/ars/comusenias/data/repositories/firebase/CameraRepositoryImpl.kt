@@ -216,15 +216,15 @@ class CameraRepositoryImpl @Inject constructor(
         val recordingListener = Consumer<VideoRecordEvent> { event ->
             when (event) {
                 is VideoRecordEvent.Start -> {
-                    context.toast("Start Camera")
+                    Log.i(CameraRepositoryImpl::class.java.name , "Start Camera")
                 }
 
                 is VideoRecordEvent.Finalize -> {
                     if (event.hasError()) {
 
-                        context.toast("Failed Camera")
+                        Log.i(CameraRepositoryImpl::class.java.name ,
+                            "Video capture ends with error: ${event.error}")
 
-                        "Video capture ends with error: ${event.error}"
 
                     } else {
 
