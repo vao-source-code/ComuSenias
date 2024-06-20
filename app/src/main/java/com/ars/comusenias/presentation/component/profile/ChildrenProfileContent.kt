@@ -33,6 +33,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.ars.comusenias.R
+import com.ars.comusenias.domain.library.LibraryDebugger
 import com.ars.comusenias.presentation.component.defaults.DialogCapturePicture
 import com.ars.comusenias.presentation.component.defaults.app.ButtonApp
 import com.ars.comusenias.presentation.component.defaults.app.TextFieldApp
@@ -172,9 +173,10 @@ fun ChildrenProfileContent(
 
             Spacer(modifier = Modifier.height(10.dp))
 
-
-            ButtonApp(titleButton = "Enlazar con especialista") {
-                navController.navigate(AppScreen.GenerateQRScreen.route)
+            if(LibraryDebugger.appIsDebuggable()){
+                ButtonApp(titleButton = "Enlazar con especialista") {
+                    navController.navigate(AppScreen.GenerateQRScreen.route)
+                }
             }
         }
 

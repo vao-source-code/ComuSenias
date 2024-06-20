@@ -17,6 +17,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.ars.comusenias.domain.library.LibraryDebugger
 import com.ars.comusenias.presentation.component.defaults.app.ButtonApp
 import com.ars.comusenias.presentation.component.defaults.app.TextFieldApp
 import com.ars.comusenias.presentation.component.defaults.app.TextFieldAppPassword
@@ -68,10 +69,13 @@ fun RegisterForm(
             label = CONFIRM_PASS,
             errorMsg = viewModel.errorConfirmPassword
         )
-        SpecialistCheck { isCheckedValue ->
-            currentRoute.value = if (isCheckedValue) specilaistFormScreen else childFormScreen
-            viewModel.onSpecialistRoleInput(isCheckedValue)
+        if(LibraryDebugger.appIsDebuggable()) {
+            SpecialistCheck { isCheckedValue ->
+                currentRoute.value = if (isCheckedValue) specilaistFormScreen else childFormScreen
+                viewModel.onSpecialistRoleInput(isCheckedValue)
+            }
         }
+
         Spacer(modifier = Modifier.height(SIZE10.dp))
         ButtonApp(
             titleButton = REGISTER,

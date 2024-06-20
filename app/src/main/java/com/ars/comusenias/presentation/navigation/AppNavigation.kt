@@ -14,6 +14,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.ars.comusenias.domain.library.LibraryDebugger
 import com.ars.comusenias.presentation.activities.MainActivity
 import com.ars.comusenias.presentation.activities.MainActivity.Companion.getChildrenProfileViewModel
 import com.ars.comusenias.presentation.activities.MainActivity.Companion.getLevelViewModel
@@ -152,7 +153,9 @@ private fun GetNavHost(
 
 
         /*------------Specialist-----------------------*/
-        composableSpecialist(navController, modifier)
+        if(LibraryDebugger.appIsDebuggable()){
+            composableSpecialist(navController, modifier)
+        }
 
     }
 }
