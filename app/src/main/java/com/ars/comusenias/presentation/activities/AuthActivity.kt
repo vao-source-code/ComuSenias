@@ -11,7 +11,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.ars.comusenias.presentation.activities.AuthActivity.Companion
 import com.ars.comusenias.presentation.ui.theme.ComuSeniasTheme
 import com.ars.comusenias.presentation.navigation.*
 import com.ars.comusenias.presentation.view_model.ChildrenProfileViewModel
@@ -20,7 +19,7 @@ import com.ars.comusenias.presentation.view_model.LevelViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class AuthActivity : ComponentActivity() {
 
     private lateinit var navController: NavHostController
 
@@ -34,20 +33,18 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     navController = rememberNavController()
-                    AppNavigation(navController = navController)
+                    AuthNavigation(navController = navController)
                 }
             }
         }
     }
 
     companion object {
-        lateinit var getLevelViewModel: LevelViewModel
         lateinit var getChildrenProfileViewModel: ChildrenProfileViewModel
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        getLevelViewModel.onClear()
         getChildrenProfileViewModel.onClear()
     }
 }

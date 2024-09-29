@@ -1,5 +1,7 @@
 package com.ars.comusenias.presentation.screen.profile
 
+import android.app.Activity
+import android.content.Intent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,9 +11,11 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.ars.comusenias.R
+import com.ars.comusenias.presentation.activities.AuthActivity
 import com.ars.comusenias.presentation.component.bottomBar.ShowBottomBar
 import com.ars.comusenias.presentation.component.defaults.FloatingButtonDefault
 import com.ars.comusenias.presentation.component.profile.ChildrenProfileContent
@@ -27,6 +31,7 @@ fun ChildrenProfileScreen(
 ) {
 
     val scrollState = rememberScrollState()
+    val context  = LocalContext.current
     Scaffold(
         bottomBar = {
             ShowBottomBar(navController = navController)
@@ -51,11 +56,10 @@ fun ChildrenProfileScreen(
                     onClickChangeProfile = onClick
                 ) {
                     viewModel.logout()
-                    navController.navigate(AppScreen.LoginScreen.route) {
-                        popUpTo(AppScreen.HomeScreen.route) {
-                            inclusive = true
-                        }
-                    }
+                    val intent = Intent(context, AuthActivity::class.java)
+                    context.startActivity(intent)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    (context as? Activity)?.finish()
                 }
             }
         }

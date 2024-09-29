@@ -51,7 +51,6 @@ fun LoginScreen(
         )
 
         ResponseStatusRol(
-            navController = navController,
             viewModel = viewModel
         )
 

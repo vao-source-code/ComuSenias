@@ -1,5 +1,6 @@
 package com.ars.comusenias.presentation.screen.gameAction
 
+import android.app.Activity
 import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -51,7 +52,7 @@ fun CongratsPlayView(navController: NavHostController, modifier: Modifier) {
                 val intent = Intent(context, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 context.startActivity(intent)
-
+                (context as? Activity)?.finish()
                 setStatusBySubLevel()
                 getChildrenProfileViewModel.updateLevel()
                // getLevelViewModel.onClear()

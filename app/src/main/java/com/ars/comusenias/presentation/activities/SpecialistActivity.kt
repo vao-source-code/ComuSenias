@@ -20,7 +20,7 @@ import com.ars.comusenias.presentation.view_model.LevelViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class SpecialistActivity : ComponentActivity() {
 
     private lateinit var navController: NavHostController
 
@@ -34,20 +34,18 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     navController = rememberNavController()
-                    AppNavigation(navController = navController)
+                    SpecialistNavigation(navController = navController)
                 }
             }
         }
     }
 
     companion object {
-        lateinit var getLevelViewModel: LevelViewModel
         lateinit var getChildrenProfileViewModel: ChildrenProfileViewModel
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        getLevelViewModel.onClear()
         getChildrenProfileViewModel.onClear()
     }
 }

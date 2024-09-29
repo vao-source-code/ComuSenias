@@ -1,7 +1,6 @@
 package com.ars.comusenias.presentation.component.register.especialistForm
 
 import android.os.Build
-import android.widget.Space
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
@@ -153,6 +152,6 @@ fun EspecialistFormContent(
 
     }
 
-        ResponseStatusChildrenRegister(navController = navController, viewModel = viewModel)
+        ResponseStatusSpecialistRegister(navController = navController, viewModel = viewModel)
 
 }

@@ -68,6 +68,7 @@ class ScanQRViewModel @Inject constructor(
                 }
             }
         }
+
     }
 
     /*---------------------------------public function ---------------------------------*/

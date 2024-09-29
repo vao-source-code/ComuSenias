@@ -8,6 +8,8 @@ import com.ars.comusenias.presentation.ui.theme.ERROR_SCAN_QR
 import com.ars.comusenias.presentation.ui.theme.SIZE400
 import com.google.android.gms.common.moduleinstall.ModuleInstallClient
 import com.google.android.gms.common.moduleinstall.ModuleInstallRequest
+import com.google.android.gms.tasks.Task
+import com.google.android.gms.tasks.TaskCompletionSource
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.codescanner.GmsBarcodeScanner
 import com.google.zxing.BarcodeFormat
@@ -25,18 +27,28 @@ class QRRepositoryImpl @Inject constructor(
 ) : QRRepository {
 
     init {
+        // Instalamos el módulo en la inicialización
         installModule()
     }
 
     override fun startScanning(): Flow<String?> = callbackFlow {
-        installModule()
-        scanner.startScan().addOnSuccessListener { barcode ->
-            launch {
-                send(getDetails(barcode))
+        // Antes de empezar a escanear, verificamos que el módulo esté disponible
+        installModule().addOnSuccessListener {
+            // Si el módulo está instalado, comenzamos el escaneo
+            scanner.startScan().addOnSuccessListener { barcode ->
+                launch {
+                    send(getDetails(barcode))
+                }
+            }.addOnFailureListener { exception ->
+                exception.printStackTrace()
+                close(exception) // Cierra el flujo si hay un error
             }
         }.addOnFailureListener {
-            it.printStackTrace()
+            // Si falla la instalación del módulo, lo registramos en logs
+            Log.e("QRRepository", "Error installing QRCodeScanner Module", it)
+            close(it) // Cierra el flujo si no se puede instalar el módulo
         }
+
         awaitClose {}
     }
 
@@ -50,31 +62,29 @@ class QRRepositoryImpl @Inject constructor(
 
     private fun getDetails(barcode: Barcode): String {
         return when (barcode.valueType) {
-            Barcode.TYPE_TEXT -> {
-                barcode.displayValue.toString()
-            }
-
-            Barcode.FORMAT_QR_CODE -> {
-                barcode.displayValue.toString()
-            }
-
-            else -> {
-                barcode.rawValue ?: ERROR_SCAN_QR
-            }
+            Barcode.TYPE_TEXT, Barcode.FORMAT_QR_CODE -> barcode.displayValue ?: ERROR_SCAN_QR
+            else -> barcode.rawValue ?: ERROR_SCAN_QR
         }
     }
 
-    /** Checking does ScannerModule is installed on the device otherwise,
-    install using ModuleClientAPI, for more visit
-    https://developers.google.com/android/guides/module-install-apis **/
-    private fun installModule() {
-        playModule.areModulesAvailable(scanner).addOnSuccessListener {
-            if (!it.areModulesAvailable()) {
+    /**
+     * Comprueba si el módulo de escaneo de QR está instalado; si no, lo instala.
+     */
+    private fun installModule(): Task<Void> {
+        val taskCompletionSource = TaskCompletionSource<Void>()
+        playModule.areModulesAvailable(scanner).addOnSuccessListener { result ->
+            if (!result.areModulesAvailable()) {
                 val newRequest = ModuleInstallRequest.newBuilder().addApi(scanner).build()
                 playModule.installModules(newRequest)
+                    .addOnSuccessListener { taskCompletionSource.setResult(null) }
+                    .addOnFailureListener { taskCompletionSource.setException(it) }
+            } else {
+                taskCompletionSource.setResult(null) // El módulo ya está instalado
             }
         }.addOnFailureListener {
-            Log.d("QRRepository", "Failed to install QRCodeScanner Module")
+            taskCompletionSource.setException(it)
         }
+
+        return taskCompletionSource.task
     }
 }

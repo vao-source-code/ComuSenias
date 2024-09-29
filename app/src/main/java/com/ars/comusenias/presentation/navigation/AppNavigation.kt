@@ -75,10 +75,9 @@ private fun GetNavHost(
 
     NavHost(
         navController = navController,
-        startDestination = AppScreen.SplashScreen.route
+        startDestination = AppScreen.HomeScreen.route
     ) {
 
-        authNavGraph(navController = navController, modifier = modifier)
 
         composable(AppScreen.SplashScreen.route) {
             SplashScreen(navController)
@@ -99,6 +98,7 @@ private fun GetNavHost(
                 navController = navController,
                 modifier = modifier
             )
+
         }
 
         composable(AppScreen.InfoMakeSignScreen.route) {

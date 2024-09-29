@@ -42,7 +42,7 @@
         android:hardwareAccelerated="true"
         tools:targetApi="tiramisu">
         <activity
-            android:name=".presentation.activities.MainActivity"
+            android:name=".presentation.activities.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:label="@string/app_name">
@@ -52,6 +52,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".presentation.activities.AuthActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".presentation.activities.MainActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".presentation.activities.SpecialistActivity"
+            android:screenOrientation="portrait"/>
+
 
         <provider
             android:name=".domain.library.ComposeFileProvider"

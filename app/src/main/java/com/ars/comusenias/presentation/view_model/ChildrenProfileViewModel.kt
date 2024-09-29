@@ -143,4 +143,8 @@ class ChildrenProfileViewModel @Inject constructor(
         )
         childrenUser.updateLevelChildren(myUser)
     }
+
+    fun onClear(){
+        onCleared()
+    }
 }
