@@ -2,6 +2,7 @@ package com.ars.comusenias.presentation.ui.theme
 import androidx.compose.ui.graphics.Color
 
 val primaryColorApp = Color(0xFF7584F2)
+val primaryBlackColorApp = Color(0xC0536AB8)
 val secondaryColorApp = Color(0xFFB0B9F8)
 val greenColorApp =  Color(0xFF58C573)
 val cardColorCheckPoint = Color(0xB2F2D05C)
@@ -11,7 +12,10 @@ val cardGray = Color(0xFFD9D9D9)
 val iconColorProgress = Color(0xFF5C6EF2)
 val cardInProgress = Color(0xFFF3F8FE)
 val placeholderTextColor = Color(0x99000000)
-val backgroundColorTextField = Color(0x33C4C4C4)
+val backgroundColorTextField = Color(0xFFFAFCFF)
+val borderColorTextFieldUnfocused = Color(0xFFA5A3A3)
+val borderColorTextFieldFocused =  Color(0xFF7584F2)
+
 val iconColorTextField = Color(0x4D000000)
 val borderButtonLetter = Color(0xFF727272)
 val line_divisor = Color(0x5C727272)

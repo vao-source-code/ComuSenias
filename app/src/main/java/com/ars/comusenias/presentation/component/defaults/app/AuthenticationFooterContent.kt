@@ -32,7 +32,7 @@ fun AuthenticationFooterContent(
         Text(
             text = textOne,
             fontSize = SIZE14.sp,
-            fontWeight = FontWeight.Medium,
+            //fontWeight = FontWeight.Medium,
             color = blackColorApp
         )
         Spacer(modifier = Modifier.width(SIZE5.dp))
@@ -43,7 +43,7 @@ fun AuthenticationFooterContent(
             text = textTwo,
             color = primaryColorApp,
             fontSize = SIZE14.sp,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Medium
         )
     }
 }

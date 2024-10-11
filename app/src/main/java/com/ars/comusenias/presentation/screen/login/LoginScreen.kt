@@ -1,12 +1,16 @@
 package com.ars.comusenias.presentation.screen.login
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.painterResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.ars.comusenias.R
 import com.ars.comusenias.constants.TestTag
 import com.ars.comusenias.presentation.component.defaults.app.AuthenticationContent
 import com.ars.comusenias.presentation.component.defaults.app.AuthenticationFooterContent
@@ -29,6 +33,13 @@ fun LoginScreen(
             .fillMaxSize()
             .testTag(TestTag.TAG_LOGIN_SCREEN),
     ) {
+        Image(
+            painter = painterResource(id = R.drawable.background_login), // Reemplaza con tu VectorDrawable
+            contentDescription = null, // Descripción accesible opcional
+            modifier = Modifier.fillMaxSize(), // Ajusta el modificador según tu necesidad
+            contentScale = ContentScale.Crop // Ajusta el escalado para adaptarse al fondo
+        )
+
         AuthenticationContent(
             content = {
                 LoginForm(

@@ -9,11 +9,11 @@ const val URL_POLICY_PRIVACY: String =
     "https://vao-source-code.github.io/policy-privacy-comusenias/"
 
 /*-------------------LOGIN Y REGISTER-------------------*/
-const val EMAIL_TEXT: String = "Correo electrónico"
+const val EMAIL_TEXT: String = "Email"
 const val PASSWORD: String = "Contraseña"
 const val CONFIRM_PASS: String = "Confirmar contraseña"
-const val LOGIN: String = "Iniciar sesión"
-const val FORGOT_PASSWORD: String = "Olvide mi contraseña"
+const val LOGIN: String = "Ingresar"
+const val FORGOT_PASSWORD: String = "¿Olvidaste tu contraseña?"
 const val INVALID_EMAIL: String = "Email invalido"
 const val INVALID_PHONE: String = "Telefono invalido"
 const val INVALID_DATE: String = "Fecha invalida"

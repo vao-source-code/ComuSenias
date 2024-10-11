@@ -10,8 +10,11 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.ars.comusenias.presentation.component.defaults.app.ButtonApp
 import com.ars.comusenias.presentation.component.defaults.app.TextFieldApp
 import com.ars.comusenias.presentation.component.defaults.app.TextFieldAppPassword
@@ -42,7 +45,7 @@ fun LoginForm(
             label = EMAIL_TEXT,
             keyboardType = KeyboardType.Email,
             errorMsg = viewModel.errorEmail,
-            icon = Icons.Default.Email
+            icon = null
         )
         TextFieldAppPassword(
             value = state.password,
@@ -60,4 +63,20 @@ fun LoginForm(
         )
     }
 
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewLoginForm() {
+    // Simulación del NavHostController
+    val navController = rememberNavController()
+
+    // Simulación del ViewModel con datos de prueba
+    val mockViewModel : LoginViewModel = hiltViewModel()
+
+    // Llamada al Composable a probar
+    LoginForm(
+        viewModel = mockViewModel,
+        navController = navController
+    )
 }

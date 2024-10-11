@@ -26,6 +26,8 @@ import androidx.compose.ui.unit.sp
 import com.ars.comusenias.R
 import com.ars.comusenias.constants.TestTag
 import com.ars.comusenias.presentation.ui.theme.backgroundColorTextField
+import com.ars.comusenias.presentation.ui.theme.borderColorTextFieldFocused
+import com.ars.comusenias.presentation.ui.theme.borderColorTextFieldUnfocused
 import com.ars.comusenias.presentation.ui.theme.iconColorTextField
 import com.ars.comusenias.presentation.ui.theme.placeholderTextColor
 
@@ -45,8 +47,7 @@ fun TextFieldAppPassword(
         OutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(50.dp)
-                .background(backgroundColorTextField, shape = RoundedCornerShape(10.dp))
+                .background(backgroundColorTextField, shape = RoundedCornerShape(20.dp))
                 .testTag(TestTag.TAG_TEXT_FIELD_APP_PASS),
             onValueChange = {
                 if (it.length <= maxChar) {
@@ -54,10 +55,10 @@ fun TextFieldAppPassword(
                     validateField()
                 }},
             value = value,
-            shape = RoundedCornerShape(10.dp),
+            shape = RoundedCornerShape(20.dp),
             colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = backgroundColorTextField,
-                unfocusedBorderColor = backgroundColorTextField,
+                focusedBorderColor = borderColorTextFieldFocused,
+                unfocusedBorderColor = borderColorTextFieldUnfocused,
             ),
             singleLine = true,
             placeholder = {
