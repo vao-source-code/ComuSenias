@@ -25,8 +25,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.ars.comusenias.presentation.component.defaults.app.ButtonApp
-import com.ars.comusenias.presentation.component.defaults.app.TextFieldApp
-import com.ars.comusenias.presentation.component.defaults.app.TextFieldDate
+import com.ars.comusenias.presentation.component.defaults.app.InputTextField
+import com.ars.comusenias.presentation.component.defaults.app.InputTextFieldDate
 import com.ars.comusenias.presentation.component.register.TermsAndConditions
 import com.ars.comusenias.presentation.ui.theme.BIRTHDAY
 import com.ars.comusenias.presentation.ui.theme.CONTINUE
@@ -68,7 +68,7 @@ fun EspecialistFormContent(
                 .verticalScroll(scrollState), // Agregar scroll
             verticalArrangement = Arrangement.spacedBy(SIZE2.dp)
         ) {
-            TextFieldApp(
+            InputTextField(
                 value = state.name,
                 onValueChange = { viewModel.onNameInputChanged(it) },
                 validateField = { viewModel.validateName() },
@@ -76,7 +76,7 @@ fun EspecialistFormContent(
                 icon = Icons.Default.Person,
                 errorMsg = viewModel.errorName
             )
-            TextFieldApp(
+            InputTextField(
                 value = state.tel,
                 onValueChange = { viewModel.onTelInputChanged(it) },
                 validateField = { viewModel.validateTel() },
@@ -84,7 +84,7 @@ fun EspecialistFormContent(
                 icon = Icons.Default.Phone,
                 errorMsg = viewModel.errorTelephone
             )
-            TextFieldDate(
+            InputTextFieldDate(
                 label = BIRTHDAY,
                 onValueChange = { birthday ->
                     viewModel.onDateInputChanged(birthday)
@@ -98,7 +98,7 @@ fun EspecialistFormContent(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                TextFieldApp(
+                InputTextField(
                     modifier = Modifier.width(SIZE160.dp),
                     value = state.medicalLicense,
                     onValueChange = { viewModel.onMedicalLicenseInputChanged(it) },
@@ -107,7 +107,7 @@ fun EspecialistFormContent(
                     icon = null,
                     errorMsg = viewModel.errorMedicalLicense
                 )
-                TextFieldDate(
+                InputTextFieldDate(
                     modifier = Modifier.width(SIZE160.dp),
                     label = EXPIRY_OF_PROFESSIONAL_REGISTRATION,
                     onValueChange = { expiration ->
@@ -116,7 +116,7 @@ fun EspecialistFormContent(
                     validateField = { viewModel.validateMedicalLicenseExpirationValid() }
                 )
             }
-            TextFieldApp(
+            InputTextField(
                 value = state.titleMedical,
                 onValueChange = { viewModel.onTitleMedicalInputChanged(it) },
                 validateField = { viewModel.validateTitleMedical() },
@@ -124,7 +124,7 @@ fun EspecialistFormContent(
                 icon = null,
                 errorMsg = viewModel.errorTitleMedical
             )
-            TextFieldApp(
+            InputTextField(
                 value = state.speciality,
                 onValueChange = { viewModel.onSpecialityInputChanged(it) },
                 validateField = { viewModel.validateSpeciality() },

@@ -9,7 +9,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.unit.dp
 import com.ars.comusenias.constants.TestTag
-import com.ars.comusenias.presentation.component.defaults.app.TextFieldApp
+import com.ars.comusenias.presentation.component.defaults.app.InputTextField
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -25,7 +25,7 @@ class TextFieldInputAppTest {
     @Before
     fun setUp() {
         composeTestRule.setContent {
-            TextFieldApp(
+            InputTextField(
                 value = value.value,
                 onValueChange = { value.value = it },
                 label = label,

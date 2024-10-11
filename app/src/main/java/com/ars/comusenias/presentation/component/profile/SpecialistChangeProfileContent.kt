@@ -40,7 +40,7 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.ars.comusenias.R
 import com.ars.comusenias.presentation.component.defaults.DialogCapturePicture
-import com.ars.comusenias.presentation.component.defaults.app.TextFieldApp
+import com.ars.comusenias.presentation.component.defaults.app.InputTextField
 import com.ars.comusenias.presentation.component.defaults.app.TextFieldValueDate
 import com.ars.comusenias.presentation.ui.theme.EXPIRY_OF_PROFESSIONAL_REGISTRATION
 import com.ars.comusenias.presentation.ui.theme.IMAGE_AVATAR
@@ -162,7 +162,7 @@ fun SpecialistChangeProfileContent(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
 
-                    TextFieldApp(
+                    InputTextField(
                         modifier = Modifier.width(SIZE160.dp),
                         value = state.medicalLicense,
                         onValueChange = { viewModel.onMedicalLicenseInputChanged(it) },
@@ -184,7 +184,7 @@ fun SpecialistChangeProfileContent(
                 Spacer(modifier = Modifier.height(SIZE10.dp))
 
 
-                TextFieldApp(
+                InputTextField(
                     value = state.titleMedical,
                     onValueChange = { viewModel.onTitleMedicalInputChanged(it) },
                     validateField = { viewModel.validateTitleMedical() },
@@ -194,7 +194,7 @@ fun SpecialistChangeProfileContent(
                 )
                 Spacer(modifier = Modifier.height(SIZE5.dp))
 
-                TextFieldApp(
+                InputTextField(
                     value = state.speciality,
                     onValueChange = { viewModel.onSpecialityInputChanged(it) },
                     validateField = { viewModel.validateSpeciality() },

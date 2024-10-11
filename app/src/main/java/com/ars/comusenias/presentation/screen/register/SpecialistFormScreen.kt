@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
-import com.ars.comusenias.presentation.component.defaults.app.AuthenticationContent
+import com.ars.comusenias.presentation.component.login.AuthenticationContent
 import com.ars.comusenias.presentation.component.register.especialistForm.EspecialistFormContent
 
 @RequiresApi(Build.VERSION_CODES.O)

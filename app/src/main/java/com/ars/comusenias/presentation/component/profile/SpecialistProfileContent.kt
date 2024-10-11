@@ -34,7 +34,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.ars.comusenias.R
 import com.ars.comusenias.presentation.component.defaults.DialogCapturePicture
-import com.ars.comusenias.presentation.component.defaults.app.TextFieldApp
+import com.ars.comusenias.presentation.component.defaults.app.InputTextField
 import com.ars.comusenias.presentation.ui.theme.CHANGE_SPECIALIST_MEDICY
 import com.ars.comusenias.presentation.ui.theme.CHANGE_TITLE_MEDICY
 import com.ars.comusenias.presentation.ui.theme.IMAGE_AVATAR
@@ -139,7 +139,7 @@ fun SpecialistProfileContent(
             Spacer(modifier = Modifier.height(SIZE30.dp))
 
             Spacer(modifier = Modifier.height(SIZE20.dp))
-            TextFieldApp(
+            InputTextField(
                 icon = Icons.Default.Email,
                 value = viewModel.stateSpecialist.email,
                 onValueChange = {},
@@ -150,7 +150,7 @@ fun SpecialistProfileContent(
                 readOnly = true
             )
             Spacer(modifier = Modifier.height(10.dp))
-            TextFieldApp(
+            InputTextField(
                 icon = Icons.Default.Person,
                 value = viewModel.stateSpecialist.name,
                 onValueChange = {},
@@ -161,7 +161,7 @@ fun SpecialistProfileContent(
                 readOnly = true
             )
             Spacer(modifier = Modifier.height(10.dp))
-            TextFieldApp(
+            InputTextField(
                 icon = Icons.Default.MedicalServices,
                 value = viewModel.stateSpecialist.titleMedical,
                 onValueChange = {},
@@ -173,7 +173,7 @@ fun SpecialistProfileContent(
             )
 
             Spacer(modifier = Modifier.height(10.dp))
-            TextFieldApp(
+            InputTextField(
                 icon = Icons.Default.MedicalServices,
                 value = viewModel.stateSpecialist.speciality,
                 onValueChange = {},

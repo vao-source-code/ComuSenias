@@ -1,4 +1,4 @@
-package com.ars.comusenias.presentation.component.defaults.app
+package com.ars.comusenias.presentation.component.login
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement

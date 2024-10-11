@@ -7,6 +7,7 @@ class TestTag {
         const val TAG_CHECKBOX_APP = "checkboxApp"
         const val TAG_FORGET_MY_PASS = "ForgetMyPass"
         const val TAG_TEXT_FIELD_APP = "textFieldApp"
+        const val TAG_TEXT_APP = "textApp"
         const val TAG_TEXT_FIELD_APP_PASS = "textFieldAppPass"
         const val TAG_ICON_IS_HIDEN = "iconIsHiden"
         const val TAG_MESSAGE_ERROR = "messageError"

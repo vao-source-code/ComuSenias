@@ -1,4 +1,4 @@
-package com.ars.comusenias.presentation.component.defaults.app
+package com.ars.comusenias.presentation.component.login
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

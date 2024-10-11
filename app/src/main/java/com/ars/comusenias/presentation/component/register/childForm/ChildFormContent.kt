@@ -18,8 +18,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.ars.comusenias.presentation.component.defaults.app.ButtonApp
-import com.ars.comusenias.presentation.component.defaults.app.TextFieldApp
-import com.ars.comusenias.presentation.component.defaults.app.TextFieldDate
+import com.ars.comusenias.presentation.component.defaults.app.InputTextField
+import com.ars.comusenias.presentation.component.defaults.app.InputTextFieldDate
 import com.ars.comusenias.presentation.component.register.TermsAndConditions
 import com.ars.comusenias.presentation.ui.theme.BIRTHDAY
 import com.ars.comusenias.presentation.ui.theme.CONTINUE
@@ -51,19 +51,19 @@ fun ChildFormContent(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(SIZE2.dp)
         ) {
-            TextFieldApp(
+            InputTextField(
                 value = state.name,
                 onValueChange = { viewModel.onNameInputChanged(it) },
                 validateField = { viewModel.validateName() },
                 label = COMPLETE_NAME,
                 icon = Icons.Default.Person
             )
-            TextFieldDate(
+            InputTextFieldDate(
                 label = BIRTHDAY,
                 validateField = { viewModel.validateDate() },
                 onValueChange = { birthday -> viewModel.onDateInputChanged(birthday) }
             )
-            TextFieldApp(
+            InputTextField(
                 value = state.phone,
                 onValueChange = { viewModel.onTelInputChanged(it) },
                 validateField = { viewModel.validateTel() },

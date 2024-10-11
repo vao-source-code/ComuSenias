@@ -19,7 +19,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.ars.comusenias.domain.library.LibraryDebugger
 import com.ars.comusenias.presentation.component.defaults.app.ButtonApp
-import com.ars.comusenias.presentation.component.defaults.app.TextFieldApp
+import com.ars.comusenias.presentation.component.defaults.app.InputTextField
 import com.ars.comusenias.presentation.component.defaults.app.TextFieldAppPassword
 import com.ars.comusenias.presentation.navigation.AuthScreen
 import com.ars.comusenias.presentation.ui.theme.CONFIRM_PASS
@@ -46,7 +46,7 @@ fun RegisterForm(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(SIZE2.dp)
     ) {
-        TextFieldApp(
+        InputTextField(
             value = state.email,
             onValueChange = { viewModel.onEmailInput(it) },
             validateField = { viewModel.validateEmail() },

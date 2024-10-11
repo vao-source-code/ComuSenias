@@ -36,7 +36,7 @@ import com.ars.comusenias.R
 import com.ars.comusenias.domain.library.LibraryDebugger
 import com.ars.comusenias.presentation.component.defaults.DialogCapturePicture
 import com.ars.comusenias.presentation.component.defaults.app.ButtonApp
-import com.ars.comusenias.presentation.component.defaults.app.TextFieldApp
+import com.ars.comusenias.presentation.component.defaults.app.InputTextField
 import com.ars.comusenias.presentation.navigation.AppScreen
 import com.ars.comusenias.presentation.ui.theme.IMAGE_AVATAR
 import com.ars.comusenias.presentation.ui.theme.IMAGE_EDIT_BUTTON
@@ -138,7 +138,7 @@ fun ChildrenProfileContent(
             Spacer(modifier = Modifier.height(SIZE55.dp))
 
             Spacer(modifier = Modifier.height(SIZE20.dp))
-            TextFieldApp(
+            InputTextField(
                 icon = Icons.Default.Email,
                 value = viewModel.userData.email,
                 onValueChange = {},
@@ -149,7 +149,7 @@ fun ChildrenProfileContent(
                 readOnly = true
             )
             Spacer(modifier = Modifier.height(10.dp))
-            TextFieldApp(
+            InputTextField(
                 icon = Icons.Default.Person,
                 value = viewModel.userData.name,
                 onValueChange = {},
@@ -160,7 +160,7 @@ fun ChildrenProfileContent(
                 readOnly = true
             )
             Spacer(modifier = Modifier.height(10.dp))
-            TextFieldApp(
+            InputTextField(
                 icon = Icons.Default.DateRange,
                 value = viewModel.userData.date,
                 onValueChange = {},

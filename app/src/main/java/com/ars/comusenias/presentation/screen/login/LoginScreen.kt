@@ -12,8 +12,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.ars.comusenias.R
 import com.ars.comusenias.constants.TestTag
-import com.ars.comusenias.presentation.component.defaults.app.AuthenticationContent
-import com.ars.comusenias.presentation.component.defaults.app.AuthenticationFooterContent
+import com.ars.comusenias.presentation.component.login.AuthenticationContent
+import com.ars.comusenias.presentation.component.login.AuthenticationFooterContent
 import com.ars.comusenias.presentation.component.login.LoginForm
 import com.ars.comusenias.presentation.component.login.ResponseStatusLogin
 import com.ars.comusenias.presentation.component.login.ResponseStatusRol

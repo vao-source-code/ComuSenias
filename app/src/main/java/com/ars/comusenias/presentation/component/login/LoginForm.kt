@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
@@ -16,7 +14,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.ars.comusenias.presentation.component.defaults.app.ButtonApp
-import com.ars.comusenias.presentation.component.defaults.app.TextFieldApp
+import com.ars.comusenias.presentation.component.defaults.app.InputTextField
 import com.ars.comusenias.presentation.component.defaults.app.TextFieldAppPassword
 import com.ars.comusenias.presentation.ui.theme.EMAIL_TEXT
 import com.ars.comusenias.presentation.ui.theme.LOGIN
@@ -38,7 +36,7 @@ fun LoginForm(
             .fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(SIZE2.dp)
     ) {
-        TextFieldApp(
+        InputTextField(
             value = state.email,
             onValueChange = { viewModel.onEmailInput(it) },
             validateField = { viewModel.validateEmail() },

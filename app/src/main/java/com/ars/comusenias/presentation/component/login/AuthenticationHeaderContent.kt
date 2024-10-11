@@ -1,4 +1,4 @@
-package com.ars.comusenias.presentation.component.defaults.app
+package com.ars.comusenias.presentation.component.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -18,24 +18,24 @@ import com.ars.comusenias.presentation.ui.theme.SIZE250
 
 @Preview(showBackground = true)
 @Composable
-fun AuthenticationHeaderContent() {
+fun AuthenticationHeaderContent(widthImage: Int = SIZE250, heightImage: Int = SIZE250) {
     Column(
         modifier = Modifier
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        HeaderImage()
+        HeaderImage(widthImage = widthImage, heightImage = heightImage)
     }
 }
 
 @Composable
-fun HeaderImage() {
+fun HeaderImage(widthImage: Int, heightImage: Int) {
     Image(
         painter = painterResource(id = R.drawable.icon_login_screen),
         contentDescription = ICONAPP,
         contentScale = ContentScale.Fit,
         modifier = Modifier
-            .width(SIZE250.dp)
-            .height(SIZE250.dp)
+            .width(widthImage.dp)
+            .height(heightImage.dp)
     )
 }

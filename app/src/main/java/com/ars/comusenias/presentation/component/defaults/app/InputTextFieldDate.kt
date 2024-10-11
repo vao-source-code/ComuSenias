@@ -20,7 +20,7 @@ import java.util.Locale
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun TextFieldDate(
+fun InputTextFieldDate(
     modifier: Modifier = Modifier,
     label: String,
     onValueChange: (String) -> Unit = {},
@@ -47,7 +47,7 @@ fun TextFieldDate(
             date.dayOfMonth,
         )
 
-    TextFieldApp(
+    InputTextField(
         modifier = modifier,
         value = value,
         onValueChange = onValueChange,
