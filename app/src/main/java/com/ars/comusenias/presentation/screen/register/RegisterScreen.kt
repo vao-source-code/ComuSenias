@@ -24,9 +24,10 @@ fun RegisterScreen(modifier: Modifier, navController: NavHostController) {
                 AuthenticationFooterContent(
                     textOne = DO_YOU_ALREADY_HAVE_AN_ACCOUNT,
                     textTwo = ENTER,
-                    onClickText = { navController.navigate(route = AppScreen.LoginScreen.route) }
+                    onClickText = { navController.navigate(route = AppScreen.LoginScreen.route) },
                 )
-            }
+            },
+
         )
     }
 }

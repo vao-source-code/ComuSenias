@@ -1,15 +1,14 @@
 package com.ars.comusenias.presentation.component.login
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.TextField
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -23,10 +22,14 @@ import com.ars.comusenias.R
 import com.ars.comusenias.presentation.component.defaults.app.ButtonApp
 import com.ars.comusenias.presentation.component.defaults.app.InputTextField
 import com.ars.comusenias.presentation.component.defaults.app.TextViewField
+import com.ars.comusenias.presentation.component.register.RegisterForm
+import com.ars.comusenias.presentation.navigation.AppScreen
 import com.ars.comusenias.presentation.ui.theme.BUTTON_RESET_PASSWORD
+import com.ars.comusenias.presentation.ui.theme.DO_YOU_ALREADY_HAVE_AN_ACCOUNT
 import com.ars.comusenias.presentation.ui.theme.EMAIL_TEXT
+import com.ars.comusenias.presentation.ui.theme.ENTER
 import com.ars.comusenias.presentation.ui.theme.SIZE12
-import com.ars.comusenias.presentation.ui.theme.SIZE14
+import com.ars.comusenias.presentation.ui.theme.SIZE2
 import com.ars.comusenias.presentation.ui.theme.SIZE20
 import com.ars.comusenias.presentation.ui.theme.SIZE28
 import com.ars.comusenias.presentation.ui.theme.SIZE30
@@ -42,25 +45,43 @@ fun ResetPasswordScreen(
     modifier: Modifier,
     viewModel: LoginViewModel = hiltViewModel()
 ) {
-
-    ResponsePasswordReset(
-        response = viewModel.loginReset,
-    )
-    Image(
-        painter = painterResource(id = R.drawable.background_login), // Reemplaza con tu VectorDrawable
-        contentDescription = null, // Descripción accesible opcional
-        modifier = modifier.fillMaxSize(), // Ajusta el modificador según tu necesidad
-        contentScale = ContentScale.Crop // Ajusta el escalado para adaptarse al fondo
-    )
-
-    Column(
+    Box(
         modifier = modifier
             .fillMaxSize()
-            .padding(start = SIZE30.dp, end = SIZE30.dp, top = SIZE90.dp, bottom = SIZE20.dp),
     ) {
+        Image(
+            painter = painterResource(id = R.drawable.background_login), // Reemplaza con tu VectorDrawable
+            contentDescription = null, // Descripción accesible opcional
+            modifier = modifier.fillMaxSize(), // Ajusta el modificador según tu necesidad
+            contentScale = ContentScale.Crop // Ajusta el escalado para adaptarse al fondo
+        )
 
-        AuthenticationHeaderContent(SIZE90, SIZE90)
-        Spacer(modifier = Modifier.padding(10.dp))
+        AuthenticationContent(
+            content = { ResetPasswordForm(viewModel, modifier) },
+            footer = {
+                AuthenticationFooterContent(
+                    textOne = DO_YOU_ALREADY_HAVE_AN_ACCOUNT,
+                    textTwo = ENTER,
+                    onClickText = { navController.navigate(route = AppScreen.LoginScreen.route) }
+                )
+            },
+            sizeImage = SIZE90,
+
+        )
+    }
+
+}
+
+@Composable
+fun ResetPasswordForm(
+    viewModel: LoginViewModel,
+    modifier: Modifier
+) {
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth(),
+    ) {
 
         TextViewField(
             modifier = modifier,
@@ -70,8 +91,8 @@ fun ResetPasswordScreen(
             fontWeight = FontWeight.Bold,
             textAlignment = TextAlign.Center
         )
+        Spacer(modifier = Modifier.padding(5.dp))
 
-        Spacer(modifier = Modifier.padding(10.dp))
 
         TextViewField(
             modifier = modifier,
@@ -92,8 +113,16 @@ fun ResetPasswordScreen(
             errorMsg = viewModel.errorEmail,
             icon = null
         )
+
+        Spacer(modifier = Modifier.padding(20.dp))
+
         ButtonApp(
             titleButton = BUTTON_RESET_PASSWORD,
             onClickButton = { viewModel.resetPassword() })
+
+        ResponsePasswordReset(
+            response = viewModel.loginReset,
+        )
+
     }
 }

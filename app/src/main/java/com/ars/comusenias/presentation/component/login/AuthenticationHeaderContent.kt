@@ -18,13 +18,13 @@ import com.ars.comusenias.presentation.ui.theme.SIZE250
 
 @Preview(showBackground = true)
 @Composable
-fun AuthenticationHeaderContent(widthImage: Int = SIZE250, heightImage: Int = SIZE250) {
+fun AuthenticationHeaderContent( widthImage : Int = SIZE250,  heightImage : Int = SIZE250) {
     Column(
         modifier = Modifier
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        HeaderImage(widthImage = widthImage, heightImage = heightImage)
+        HeaderImage( widthImage = widthImage, heightImage = heightImage)
     }
 }
 

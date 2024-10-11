@@ -10,6 +10,7 @@ import androidx.compose.ui.unit.dp
 import com.ars.comusenias.presentation.ui.theme.SIZE20
 import com.ars.comusenias.presentation.ui.theme.SIZE250
 import com.ars.comusenias.presentation.ui.theme.SIZE30
+import com.ars.comusenias.presentation.ui.theme.SIZE60
 import com.ars.comusenias.presentation.ui.theme.SIZE90
 
 @Composable
@@ -18,14 +19,19 @@ fun AuthenticationContent(
     footer: @Composable () -> Unit = {},
     sizeImage : Int = SIZE250
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(start = SIZE30.dp, end = SIZE30.dp, top = SIZE90.dp, bottom = SIZE20.dp),
-        verticalArrangement = Arrangement.SpaceBetween
-    ) {
-        AuthenticationHeaderContent(sizeImage , sizeImage)
-        content()
-        footer()
+
+    Column ( modifier = Modifier.fillMaxSize().padding(top = SIZE60.dp)
+    ){
+        AuthenticationHeaderContent(sizeImage, sizeImage)
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(start = SIZE30.dp, end = SIZE30.dp, top = SIZE30.dp, bottom = SIZE20.dp),
+            verticalArrangement = Arrangement.SpaceBetween
+        ) {
+            content()
+            footer()
+        }
     }
+
 }
