@@ -100,6 +100,8 @@ open class LoginViewModel @Inject constructor(
             } else {
                 errorEmail = INVALID_EMAIL
             }
+        }else{
+            errorEmail = INVALID_EMAIL
         }
     }
 

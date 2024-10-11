@@ -8,13 +8,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.ars.comusenias.presentation.ui.theme.SIZE20
+import com.ars.comusenias.presentation.ui.theme.SIZE250
 import com.ars.comusenias.presentation.ui.theme.SIZE30
 import com.ars.comusenias.presentation.ui.theme.SIZE90
 
 @Composable
 fun AuthenticationContent(
     content: @Composable () -> Unit = {},
-    footer: @Composable () -> Unit = {}
+    footer: @Composable () -> Unit = {},
+    sizeImage : Int = SIZE250
 ) {
     Column(
         modifier = Modifier
@@ -22,7 +24,7 @@ fun AuthenticationContent(
             .padding(start = SIZE30.dp, end = SIZE30.dp, top = SIZE90.dp, bottom = SIZE20.dp),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        AuthenticationHeaderContent()
+        AuthenticationHeaderContent(sizeImage , sizeImage)
         content()
         footer()
     }

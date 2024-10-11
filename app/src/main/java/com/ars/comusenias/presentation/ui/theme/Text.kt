@@ -46,6 +46,10 @@ const val OBSERVATIONS_ERROR: String = "Error al cargar las observaciones"
 const val OBSERVATION_ERROR: String = "Error al cargar la observación"
 const val LOADING_ERROR: String = "Error de Carga"
 const val SUCCESS: String = "Generado con éxito"
+const val TEXT_TITLE_RESET_PASSWORD : String = "Reestablecer contraseña"
+const val TEXT_RESET_PASSWORD : String = "Introduce tu correo electrónico y te enviaremos instrucciones para restablecer tu contraseña "
+const val BUTTON_RESET_PASSWORD : String = "Enviar"
+
 
 /*-------------------HOMECHILDREN-------------------*/
 const val PROGRESS = "Tu Progreso"
