@@ -1,38 +1,56 @@
-package com.ars.comusenias.presentation.component.login
+package com.ars.comusenias.presentation.screen.login
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
+import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.ars.comusenias.R
+import com.ars.comusenias.presentation.component.defaults.DialogImageTextDefault
 import com.ars.comusenias.presentation.component.defaults.app.ButtonApp
 import com.ars.comusenias.presentation.component.defaults.app.InputTextField
 import com.ars.comusenias.presentation.component.defaults.app.TextViewField
-import com.ars.comusenias.presentation.component.register.RegisterForm
+import com.ars.comusenias.presentation.component.login.AuthenticationContent
+import com.ars.comusenias.presentation.component.login.AuthenticationFooterContent
+import com.ars.comusenias.presentation.component.login.ResponsePasswordReset
 import com.ars.comusenias.presentation.navigation.AppScreen
 import com.ars.comusenias.presentation.ui.theme.BUTTON_RESET_PASSWORD
 import com.ars.comusenias.presentation.ui.theme.DO_YOU_ALREADY_HAVE_AN_ACCOUNT
 import com.ars.comusenias.presentation.ui.theme.EMAIL_TEXT
 import com.ars.comusenias.presentation.ui.theme.ENTER
+import com.ars.comusenias.presentation.ui.theme.SIZE10
 import com.ars.comusenias.presentation.ui.theme.SIZE12
-import com.ars.comusenias.presentation.ui.theme.SIZE2
-import com.ars.comusenias.presentation.ui.theme.SIZE20
+import com.ars.comusenias.presentation.ui.theme.SIZE14
+import com.ars.comusenias.presentation.ui.theme.SIZE16
+import com.ars.comusenias.presentation.ui.theme.SIZE220
 import com.ars.comusenias.presentation.ui.theme.SIZE28
-import com.ars.comusenias.presentation.ui.theme.SIZE30
+import com.ars.comusenias.presentation.ui.theme.SIZE5
+import com.ars.comusenias.presentation.ui.theme.SIZE60
 import com.ars.comusenias.presentation.ui.theme.SIZE90
 import com.ars.comusenias.presentation.ui.theme.TEXT_RESET_PASSWORD
 import com.ars.comusenias.presentation.ui.theme.TEXT_TITLE_RESET_PASSWORD
@@ -57,7 +75,7 @@ fun ResetPasswordScreen(
         )
 
         AuthenticationContent(
-            content = { ResetPasswordForm(viewModel, modifier) },
+            content = { ResetPasswordForm(viewModel, modifier, navController) },
             footer = {
                 AuthenticationFooterContent(
                     textOne = DO_YOU_ALREADY_HAVE_AN_ACCOUNT,
@@ -67,7 +85,7 @@ fun ResetPasswordScreen(
             },
             sizeImage = SIZE90,
 
-        )
+            )
     }
 
 }
@@ -75,7 +93,8 @@ fun ResetPasswordScreen(
 @Composable
 fun ResetPasswordForm(
     viewModel: LoginViewModel,
-    modifier: Modifier
+    modifier: Modifier,
+    navController: NavHostController
 ) {
 
     Column(
@@ -122,7 +141,9 @@ fun ResetPasswordForm(
 
         ResponsePasswordReset(
             response = viewModel.loginReset,
+            navController
         )
 
     }
+
 }

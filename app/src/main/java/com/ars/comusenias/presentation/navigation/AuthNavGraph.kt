@@ -7,7 +7,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.ars.comusenias.presentation.component.login.ResetPasswordScreen
+import com.ars.comusenias.presentation.screen.login.ResetPasswordScreen
 import com.ars.comusenias.presentation.screen.login.LoadingLoginScreen
 import com.ars.comusenias.presentation.screen.login.LoginScreen
 import com.ars.comusenias.presentation.screen.onboarding.OnBoardingScreen
