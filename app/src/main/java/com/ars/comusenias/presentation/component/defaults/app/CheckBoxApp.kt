@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.ars.comusenias.constants.TestTag
+import com.ars.comusenias.presentation.ui.theme.SIZE10
 import com.ars.comusenias.presentation.ui.theme.iconColorTextField
 import com.ars.comusenias.presentation.ui.theme.primaryColorApp
 
@@ -21,8 +22,8 @@ fun CheckBoxApp(
     Checkbox(
         modifier = Modifier
             .testTag(TestTag.TAG_CHECKBOX_APP)
-            .height(12.dp)
-            .width(12.dp),
+            .height(SIZE10.dp)
+            .width(SIZE10.dp),
         checked = isChecked.value,
         onCheckedChange = {
             isChecked.value = it

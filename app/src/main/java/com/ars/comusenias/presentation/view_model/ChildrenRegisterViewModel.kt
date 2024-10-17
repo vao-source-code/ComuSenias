@@ -47,14 +47,7 @@ class ChildrenRegisterViewModel @Inject constructor(
         private set
     var stateChildren by mutableStateOf(ChildrenModel())
         private set
-    var isCheckedTermsPolicy: Boolean by mutableStateOf(false)
-    var isNameValid: Boolean by mutableStateOf(false)
-    var errorName: String by mutableStateOf("")
-    var isTelValid: Boolean by mutableStateOf(false)
-    var errorTel: String by mutableStateOf("")
-    var isDateValid: Boolean by mutableStateOf(false)
-    var errorDate: String by mutableStateOf("")
-    var isRegisterEnabled: Boolean by mutableStateOf(false)
+
     var user = UserModel()
     var childrenModel = ChildrenModel()
 
@@ -77,30 +70,6 @@ class ChildrenRegisterViewModel @Inject constructor(
         register(user)
     }
 
-    private fun enabledRegisterButton() {
-        isRegisterEnabled = isNameValid && isTelValid && isDateValid && isCheckedTermsPolicy
-    }
-
-    fun validateName() {
-        val isValid = LibraryString.validUserName(stateChildren.name)
-        isNameValid = isValid
-        errorName = if (isValid) EMPTY_STRING else RESTRICTION_NAME_USER_ACCOUNT
-        enabledRegisterButton()
-    }
-
-    fun validateTel() {
-        val isValid = LibraryString.validPhone(stateChildren.phone)
-        isTelValid = isValid
-        errorTel = if (isValid) EMPTY_STRING else INVALID_PHONE
-        enabledRegisterButton()
-    }
-
-    fun validateDate() {
-        val isValid = stateChildren.date.isNotEmpty()
-        isDateValid = isValid
-        errorDate = if (isValid) EMPTY_STRING else INVALID_DATE
-        enabledRegisterButton()
-    }
 
     fun createUser() = viewModelScope.launch {
         user.id = authUseCases.getCurrentUserUseCase()?.uid!!
@@ -108,45 +77,11 @@ class ChildrenRegisterViewModel @Inject constructor(
         usersUseCase.createUserUseCase(user)
         childrenModel = ChildrenModel(
             id = authUseCases.getCurrentUserUseCase()?.uid!!,
-            name = stateChildren.name,
-            phone = stateChildren.phone,
+            name = user.name,
             email = user.email,
-            date = stateChildren.date,
             levels = getLevelViewModel.levels,
         )
         childrenFactoryUsesCases.createChildren(childrenModel)
     }
 
-    fun onNameInputChanged(name: String) {
-        stateChildren = stateChildren.copy(name = name)
-    }
-
-    fun onTelInputChanged(tel: String) {
-        stateChildren = stateChildren.copy(phone = tel.trim())
-    }
-
-    fun onDateInputChanged(date: String) {
-        stateChildren = stateChildren.copy(date = date)
-    }
-
-    fun onClickTerms(openLink: ActivityResultLauncher<Intent>) {
-        val uri = Uri.parse(URL_TERMS_CONDITIONS)
-        val customTabsIntent = CustomTabsIntent.Builder().setShowTitle(false).build()
-        val intent = customTabsIntent.intent
-        intent.data = uri
-        openLink.launch(intent)
-    }
-
-    fun onClickConditions(openLink: ActivityResultLauncher<Intent>) {
-        val uri = Uri.parse(URL_POLICY_PRIVACY)
-        val customTabsIntent = CustomTabsIntent.Builder().setShowTitle(false).build()
-        val intent = customTabsIntent.intent
-        intent.data = uri
-        openLink.launch(intent)
-    }
-
-    fun onCheckTermsAndConditions(check: Boolean) {
-        this.isCheckedTermsPolicy = check
-        enabledRegisterButton()
-    }
 }

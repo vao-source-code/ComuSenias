@@ -5,6 +5,7 @@ import com.google.gson.Gson
 
 data class UserModel(
     var id: String = EMPTY_STRING,
+    var name : String = EMPTY_STRING,
     var email: String = EMPTY_STRING,
     var rol: String = Rol.CHILDREN.toString(),
     var password: String = EMPTY_STRING,
@@ -13,6 +14,7 @@ data class UserModel(
     fun toJson(): String = Gson().toJson(
         UserModel(
             id,
+            name,
             email,
             rol,
             password,

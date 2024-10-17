@@ -17,8 +17,6 @@ fun ChildFormScreen(modifier: Modifier, navController: NavHostController) {
         modifier = modifier
             .fillMaxSize()
     ) {
-        AuthenticationContent(
-            content = { ChildFormContent(navController = navController) }
-        )
+        ChildFormContent(navController = navController)
     }
 }

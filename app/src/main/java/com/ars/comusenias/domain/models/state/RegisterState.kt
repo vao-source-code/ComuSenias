@@ -4,7 +4,7 @@ import com.ars.comusenias.domain.models.users.Rol
 import com.ars.comusenias.presentation.ui.theme.EMPTY_STRING
 
 data class RegisterState(
-    val userName: String = EMPTY_STRING,
+    val name: String = EMPTY_STRING,
     val email: String = EMPTY_STRING,
     val password: String = EMPTY_STRING,
     val confirmPassword: String = EMPTY_STRING,

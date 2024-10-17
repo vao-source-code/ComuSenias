@@ -49,6 +49,14 @@ const val SUCCESS: String = "Generado con éxito"
 const val TEXT_TITLE_RESET_PASSWORD : String = "Reestablecer contraseña"
 const val TEXT_RESET_PASSWORD : String = "Introduce tu correo electrónico y te enviaremos instrucciones para restablecer tu contraseña "
 const val BUTTON_RESET_PASSWORD : String = "Enviar"
+const val CREATE_ACCOUNT: String = "Crear cuenta"
+const val BEGINNER = "Principiante"
+const val INTERMEDIATE = "Intermedio"
+const val ADVANCED = "Avanzado"
+
+const val  LEVEL_SELECTION_TITLE = "Para empezar"
+const val LEVEL_SELECTION_SUBTITLE = "Elige tu nivel"
+const val LEVEL_SELECTION_DESCRIPTION = "Podrás cambiar de nivel cuando gustes \no iniciar nuevamente con otro nivel"
 
 
 /*-------------------HOMECHILDREN-------------------*/

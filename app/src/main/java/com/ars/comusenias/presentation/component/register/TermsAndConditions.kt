@@ -37,6 +37,7 @@ fun TermsAndConditions(
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .clickable { onClickTerms() }
             .padding(horizontal = SIZE10.dp),
         horizontalArrangement = Arrangement.spacedBy(SIZE3.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -54,8 +55,7 @@ fun TermsAndConditions(
             color = blackColorApp
         )
         Text(
-            modifier = Modifier
-                .clickable { onClickTerms() },
+            modifier = Modifier,
             text = TERMS,
             color = primaryColorApp,
             fontSize = SIZE14.sp,
@@ -68,8 +68,7 @@ fun TermsAndConditions(
             color = blackColorApp
         )
         Text(
-            modifier = Modifier
-                .clickable { onClickConditions() },
+            modifier = Modifier,
             text = CONDITIONS,
             color = primaryColorApp,
             fontSize = SIZE14.sp,
