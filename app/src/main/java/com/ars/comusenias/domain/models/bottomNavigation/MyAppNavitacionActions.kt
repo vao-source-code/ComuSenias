@@ -4,6 +4,7 @@ import com.ars.comusenias.R
 import com.ars.comusenias.presentation.navigation.AppScreen
 import com.ars.comusenias.presentation.ui.theme.LEAR_TEXT
 import com.ars.comusenias.presentation.ui.theme.PROFILE_TEXT
+import com.ars.comusenias.presentation.ui.theme.SUPPORT_TEXT
 
 data class BottomBarItem(
     val route: String,
@@ -17,22 +18,20 @@ fun getBottomBarItems(): List<BottomBarItem> {
         BottomBarItem(
             route = AppScreen.HomeScreen.route,
             title = LEAR_TEXT,
-            selectedIcon = R.drawable.book_fechado,
-            unselectedIcon = R.drawable.book_open,
+            selectedIcon = R.drawable.icon_home,
+            unselectedIcon = R.drawable.icon_home,
         ), BottomBarItem(
             route = AppScreen.ChildrenProfileScreen.route,
             title = PROFILE_TEXT,
-            selectedIcon = R.drawable.girl,
-            unselectedIcon = R.drawable.children,
+            selectedIcon = R.drawable.icon_profile,
+            unselectedIcon = R.drawable.icon_profile,
+        ),
+        BottomBarItem(
+            route = AppScreen.SupportScreen.route,
+            title = SUPPORT_TEXT,
+            selectedIcon = R.drawable.icon_support,
+            unselectedIcon = R.drawable.icon_support,
         )
     )
 
-    /*
-    BottomBarItem(
-            route = AppScreen.PremiumScreen.route,
-            title = PREMIUM_TEXT,
-            selectedIcon = R.drawable.workspace_premium,
-            unselectedIcon = R.drawable.workspace_premium,
-        )
-     */
 }

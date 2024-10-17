@@ -56,6 +56,9 @@ fun SupportScreen(
                     onClickNotification = { navController.navigate(AppScreen.NotificationScreen.route) },
                     onclickProfile = { navController.navigate(AppScreen.ChildrenProfileScreen.route) })
             }
+        },
+        bottomBar = {
+            ShowBottomBar(navController = navController)
         }
     ) { paddingValues ->
         Box(

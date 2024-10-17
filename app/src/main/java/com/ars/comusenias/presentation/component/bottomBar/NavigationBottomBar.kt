@@ -24,7 +24,9 @@ import com.ars.comusenias.presentation.ui.theme.EMPTY_STRING
 import com.ars.comusenias.presentation.ui.theme.SIZE24
 import com.ars.comusenias.presentation.ui.theme.SIZE30
 import com.ars.comusenias.presentation.ui.theme.SIZE50
+import com.ars.comusenias.presentation.ui.theme.primaryBlackColorApp
 import com.ars.comusenias.presentation.ui.theme.primaryColorApp
+import com.ars.comusenias.presentation.ui.theme.secondaryColorApp
 
 @Composable
 fun ShowBottomBar(navController: NavController) {
@@ -50,7 +52,7 @@ fun ShowBottomBar(navController: NavController) {
                         contentDescription = item.route,
                         modifier = if (currentRoute == item.route) Modifier.size(SIZE30.dp)
                         else Modifier.size(SIZE24.dp),
-                        tint = if (currentRoute == item.route) primaryColorApp else Color.Black
+                        tint = if (currentRoute == item.route) primaryBlackColorApp else primaryColorApp
                     )
                 },
                 onClick = {
