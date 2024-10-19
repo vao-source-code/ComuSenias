@@ -4,6 +4,10 @@ import androidx.compose.ui.graphics.Color
 val primaryColorApp = Color(0xFF7584F2)
 val primaryBlackColorApp = Color(0xFF8164FF)
 val secondaryColorApp = Color(0xFFB0B9F8)
+val lightBlueBackground = Color(0xFFB3C5FF)  // Azul claro para fondo
+val mediumBlueAccent = Color(0xFF91A1FF)     // Azul medio para acento
+val softBlueHighlight = Color(0xFF9EA9F9)    // Azul suave para destacar
+val  backgroundPrimaryColor = Color(0xFFCBA8FF)
 val greenColorApp =  Color(0xFF58C573)
 val cardColorCheckPoint = Color(0xB2F2D05C)
 val backgroundColorApp = Color(0xFFFFFFFF)

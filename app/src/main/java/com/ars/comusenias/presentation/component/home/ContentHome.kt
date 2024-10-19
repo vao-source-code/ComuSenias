@@ -49,7 +49,7 @@ fun ContentHome(
         }
 
         is Response.Success -> {
-            ShowLazyColumn(getAllLevels(), navController)
+            ShowLazyColumn(getAllLevels(), navController , childrenModel)
         }
 
         else -> {
@@ -61,7 +61,8 @@ fun ContentHome(
 @Composable
 private fun ShowLazyColumn(
     levels: List<LevelModel>,
-    navController: NavController
+    navController: NavController,
+    childrenModel: ChildrenProfileViewModel = getChildrenProfileViewModel
 ) {
     LazyColumn(
         modifier = Modifier
@@ -69,13 +70,12 @@ private fun ShowLazyColumn(
             .padding(
                 start = SIZE14.dp,
                 end = SIZE14.dp,
-            )
-            .background(White),
+            ),
         verticalArrangement = spacedBy(SIZE1.dp)
     ) {
         item {
             Spacer(modifier = Modifier.height(SIZE5.dp))
-            ContentProgressBar(levels = getAllLevels(), getAllSubLevels())
+            TopHomeContent(levels = getAllLevels(), getAllSubLevels() , childrenModel )
         }
         items(
             items = levels,

@@ -88,7 +88,6 @@ fun ContentCardGame(
         modifier = Modifier
             .fillMaxWidth()
             .blur(radius = blurAnimate.value)
-            .background(White)
             .testTag(TAG_CONTENT_CARD_GAME + status.name)
     ) {
         CardGame(

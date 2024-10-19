@@ -47,6 +47,7 @@ import com.ars.comusenias.util.PlayVideo
 import com.ars.comusenias.presentation.activities.MainActivity.Companion.getLevelViewModel
 import com.ars.comusenias.presentation.ui.theme.DISCULPA
 import com.ars.comusenias.presentation.ui.theme.PERMISO
+import com.ars.comusenias.presentation.ui.theme.backgroundColorTextField
 
 @OptIn(UnstableApi::class)
 @Composable
@@ -60,7 +61,7 @@ fun TopSectionGameAction(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.White),
+            .background(backgroundColorTextField),
         verticalArrangement = Arrangement.spacedBy(SIZE20.dp)
     ) {
         CloseAndProgressBar(currentStep = currentStep, navController = navController)
@@ -80,7 +81,7 @@ fun CloseAndProgressBar(currentStep: Int = 0, navController: NavHostController) 
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.White),
+            .background(backgroundColorTextField),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(SIZE50.dp)
     ) {
@@ -124,7 +125,7 @@ fun ContentImageGame(
                 shape = RoundedCornerShape(size = SIZE12.dp)
             )
             .background(
-                color = Color.White,
+                color = backgroundColorTextField,
                 shape = RoundedCornerShape(size = SIZE12.dp)
             ),
     ) {

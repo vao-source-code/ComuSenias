@@ -33,6 +33,7 @@ const val SIZE50: Int = 50
 const val SIZE55: Int = 55
 const val SIZE60: Int = 60
 const val SIZE64: Int = 64
+const val SIZE70: Int = 70
 const val SIZE95: Int = 95
 const val SIZE90: Int = 90
 const val SIZE100: Int = 100

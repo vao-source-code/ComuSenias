@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Alignment.Companion.Start
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight.Companion.SemiBold
@@ -30,8 +31,7 @@ fun ContentLevel(level: LevelModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = SIZE20.dp, bottom = SIZE12.dp)
-            .background(White),
+            .padding(top = SIZE20.dp, bottom = SIZE12.dp),
         verticalArrangement = spacedBy(SIZE2.dp, CenterVertically),
         horizontalAlignment = Start,
     ) {
@@ -40,7 +40,8 @@ fun ContentLevel(level: LevelModel) {
             style = TextStyle(
                 fontSize = SIZE24.sp,
                 fontWeight = SemiBold,
-                color = blackColorApp
+                color = Color.White
+
             )
         )
         Text(
@@ -52,7 +53,7 @@ fun ContentLevel(level: LevelModel) {
             style = TextStyle(
                 fontSize = SIZE13.sp,
                 fontWeight = SemiBold,
-                color = blackColorApp
+                color = Color.White
             )
         )
     }

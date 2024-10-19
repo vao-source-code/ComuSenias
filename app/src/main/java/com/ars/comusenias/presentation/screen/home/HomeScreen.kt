@@ -1,5 +1,6 @@
 package com.ars.comusenias.presentation.screen.home
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -7,9 +8,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.ars.comusenias.R
 import com.ars.comusenias.presentation.component.bottomBar.ShowBottomBar
 import com.ars.comusenias.presentation.component.home.ContentHome
 import com.ars.comusenias.presentation.component.home.TopBarHome
@@ -31,6 +35,7 @@ fun HomeScreen(
     childrenModel: ChildrenProfileViewModel = hiltViewModel()
 ) {
     Scaffold(
+        /*
         topBar = {
             Surface(shadowElevation = SIZE3.dp) {
                 TopBarHome(
@@ -42,6 +47,8 @@ fun HomeScreen(
                 )
             }
         },
+
+         */
         bottomBar = {
             ShowBottomBar(navController = navController)
         }
@@ -51,6 +58,13 @@ fun HomeScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
+
+            Image(
+                painter = painterResource(id = R.drawable.background_home), // Reemplaza con tu VectorDrawable
+                contentDescription = null, // Descripción accesible opcional
+                modifier = Modifier.fillMaxSize(), // Ajusta el modificador según tu necesidad
+                contentScale = ContentScale.Crop // Ajusta el escalado para adaptarse al fondo
+            )
             ContentHome(
                 navController = navController,
                 levelViewModel = levelViewModel,

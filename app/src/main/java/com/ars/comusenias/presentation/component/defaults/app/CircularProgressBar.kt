@@ -8,6 +8,7 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -29,7 +30,7 @@ fun CircularProgressBar() {
                 .padding(SIZE16.dp)
                 .testTag("CircularProgressIndicator")
                 .semantics { contentDescription = "CircularProgressBar" },
-            color = primaryColorApp,
+            color = Color.White ,
             strokeWidth = SIZE3.dp
         )
     }

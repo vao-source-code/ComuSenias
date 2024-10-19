@@ -12,6 +12,9 @@ import androidx.compose.ui.unit.dp
 import com.ars.comusenias.presentation.ui.theme.SIZE16
 import com.ars.comusenias.presentation.ui.theme.greenColorApp
 import com.ars.comusenias.presentation.ui.theme.SIZE15
+import com.ars.comusenias.presentation.ui.theme.backgroundColorTextField
+import com.ars.comusenias.presentation.ui.theme.borderColorTextFieldUnfocused
+import com.ars.comusenias.presentation.ui.theme.lightBlueBackground
 
 @Composable
 fun ProgressBar(progress: Float ) {
@@ -22,7 +25,7 @@ fun ProgressBar(progress: Float ) {
             .height(SIZE15.dp)
             .clip(RoundedCornerShape(SIZE16.dp)),
         progress = progress,
-        backgroundColor = Color.LightGray,
+        backgroundColor = backgroundColorTextField,
         color = greenColorApp
     )
 }
