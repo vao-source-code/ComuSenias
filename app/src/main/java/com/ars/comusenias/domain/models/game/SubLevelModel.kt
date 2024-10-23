@@ -13,6 +13,8 @@ data class SubLevelModel(
     var randomLetter: String = EMPTY_STRING,
     var randomImage: String = EMPTY_STRING,
     var randomImageOnly: String = EMPTY_STRING,
+    var randomImageClean: String = EMPTY_STRING,
+    var imageClean: String = EMPTY_STRING,
     var isCompleted: StatusGame = StatusGame.BLOCKED,
     var esVideo: Boolean = false,
     var failures: Int = 0,
@@ -25,14 +27,16 @@ data class SubLevelModel(
             name,
             image = if (image != EMPTY_STRING) LibraryString.encodeURL(image) else EMPTY_STRING,
             imageOnly = if (imageOnly != EMPTY_STRING) LibraryString.encodeURL(imageOnly) else EMPTY_STRING,
-            randomLetter,
-            randomImage,
-            randomImageOnly,
-            isCompleted,
-            esVideo,
-            failures,
-            successes,
-            isFirst
+            randomLetter =randomLetter,
+            randomImage = randomImage,
+            randomImageOnly =  randomImageOnly,
+            isCompleted =isCompleted,
+            esVideo = esVideo,
+            failures = failures,
+            successes = successes,
+            isFirst = isFirst,
+            imageClean = if (imageClean != EMPTY_STRING) LibraryString.encodeURL(imageClean) else EMPTY_STRING,
+            randomImageClean = if (randomImageClean != EMPTY_STRING) LibraryString.encodeURL(randomImageClean) else EMPTY_STRING,
         )
     )
 

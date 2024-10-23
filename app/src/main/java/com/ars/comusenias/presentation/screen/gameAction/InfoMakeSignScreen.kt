@@ -1,5 +1,6 @@
 package com.ars.comusenias.presentation.screen.gameAction
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement.Center
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,6 +13,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight.Companion.SemiBold
 import androidx.compose.ui.text.style.TextAlign
@@ -22,6 +25,7 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants.IterateForever
 import com.airbnb.lottie.compose.rememberLottieComposition
+import com.ars.comusenias.R
 import com.ars.comusenias.R.raw.loading
 import com.ars.comusenias.presentation.activities.MainActivity.Companion.getLevelViewModel
 import com.ars.comusenias.presentation.navigation.AppScreen
@@ -33,6 +37,13 @@ import kotlinx.coroutines.delay
 @Composable
 fun InfoMakeSignScreen(navController: NavController) {
     val loadingImage by rememberLottieComposition(LottieCompositionSpec.RawRes(loading))
+
+    Image(
+        painter = painterResource(id = R.drawable.background_game), // Reemplaza con tu VectorDrawable
+        contentDescription = null, // Descripción accesible opcional
+        modifier = Modifier.fillMaxSize(), // Ajusta el modificador según tu necesidad
+        contentScale = ContentScale.Crop // Ajusta el escalado para adaptarse al fondo
+    )
 
     LaunchedEffect(Unit) {
         delay(6000)

@@ -11,6 +11,8 @@ import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.TIRAMISU
 import android.widget.Toast
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Snackbar
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -20,10 +22,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.ars.comusenias.R
 import com.ars.comusenias.domain.models.game.SubLevelModel
 import com.ars.comusenias.domain.models.response.Response
 import com.ars.comusenias.presentation.activities.MainActivity.Companion.getLevelViewModel
@@ -119,6 +125,14 @@ private fun ShowChoseTheSign(
             showSetting = false
         }
     }
+
+
+    Image(
+        painter = painterResource(id = R.drawable.background_game), // Reemplaza con tu VectorDrawable
+        contentDescription = null, // Descripción accesible opcional
+        modifier = Modifier.fillMaxSize(), // Ajusta el modificador según tu necesidad
+        contentScale = ContentScale.Crop // Ajusta el escalado para adaptarse al fondo
+    )
 
     subLevel?.let {
         //TODO en caso de ser video se podria usar las imagenes mejor y que decida

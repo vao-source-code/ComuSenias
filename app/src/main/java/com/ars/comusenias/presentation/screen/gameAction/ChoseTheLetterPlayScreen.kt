@@ -1,10 +1,16 @@
 package com.ars.comusenias.presentation.screen.gameAction
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavHostController
+import com.ars.comusenias.R
 import com.ars.comusenias.domain.models.response.Response
 import com.ars.comusenias.domain.models.game.SubLevelModel
 import com.ars.comusenias.presentation.activities.MainActivity.Companion.getLevelViewModel
@@ -34,6 +40,15 @@ fun ChoseTheLetterPlayScreen(
     val onMatchResult: (Boolean) -> Unit = {
         isButtonEnabled.value = it
     }
+
+
+
+    Image(
+        painter = painterResource(id = R.drawable.background_game), // Reemplaza con tu VectorDrawable
+        contentDescription = null, // Descripción accesible opcional
+        modifier = Modifier.fillMaxSize(), // Ajusta el modificador según tu necesidad
+        contentScale = ContentScale.Crop // Ajusta el escalado para adaptarse al fondo
+    )
 
     when (levelViewModel.levelsResponse) {
         is Response.Loading -> {

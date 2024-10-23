@@ -60,8 +60,7 @@ fun TopSectionGameAction(
 ) {
     Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .background(backgroundColorTextField),
+            .fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(SIZE20.dp)
     ) {
         CloseAndProgressBar(currentStep = currentStep, navController = navController)
@@ -80,8 +79,7 @@ fun CloseAndProgressBar(currentStep: Int = 0, navController: NavHostController) 
 
     Row(
         modifier = Modifier
-            .fillMaxWidth()
-            .background(backgroundColorTextField),
+            .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(SIZE50.dp)
     ) {

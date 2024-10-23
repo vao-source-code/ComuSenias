@@ -2,6 +2,7 @@ package com.ars.comusenias.presentation.screen.gameAction
 
 import android.app.Activity
 import android.content.Intent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,10 +11,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.ars.comusenias.R
 import com.ars.comusenias.constants.TestTag
 import com.ars.comusenias.presentation.activities.MainActivity
 import com.ars.comusenias.presentation.activities.MainActivity.Companion.getChildrenProfileViewModel
@@ -29,6 +33,14 @@ import com.ars.comusenias.presentation.ui.theme.SIZE30
 
 @Composable
 fun CongratsPlayScreen(navController: NavHostController, modifier: Modifier) {
+
+    Image(
+        painter = painterResource(id = R.drawable.background_game), // Reemplaza con tu VectorDrawable
+        contentDescription = null, // Descripción accesible opcional
+        modifier = Modifier.fillMaxSize(), // Ajusta el modificador según tu necesidad
+        contentScale = ContentScale.Crop // Ajusta el escalado para adaptarse al fondo
+    )
+
     CongratsPlayView(navController = navController, modifier)
 }
 

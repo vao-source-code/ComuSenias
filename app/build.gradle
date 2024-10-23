@@ -73,6 +73,8 @@ android {
         checkReleaseBuilds false
         abortOnError false
     }
+
+
 }
 apply from: 'download_task.gradle'
 // Define extra properties outside the dependencies block
@@ -206,6 +208,9 @@ dependencies {
 
     implementation 'com.intuit.sdp:sdp-android:1.1.0'
     implementation 'com.intuit.ssp:ssp-android:1.1.0'
+
+    implementation 'com.google.mediapipe:tasks-vision:0.1.0' // Verifica la versión correcta
+
 }
 kapt {
     correctErrorTypes true

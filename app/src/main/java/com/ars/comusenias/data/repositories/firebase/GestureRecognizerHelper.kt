@@ -18,7 +18,7 @@ import com.ars.comusenias.presentation.ui.theme.DELEGATE_GPU
 import com.ars.comusenias.presentation.ui.theme.ERROR_NOT_RECOGNIZE_VIDEO_FILE
 import com.ars.comusenias.presentation.ui.theme.ERROR_NOT_RESPONSE_VIDEO
 import com.ars.comusenias.presentation.ui.theme.ERROR_NOT_USING_RUNNING_MODE_IMAGE
-import com.ars.comusenias.presentation.ui.theme.MP_RECOGNIZER_HAND
+import com.ars.comusenias.presentation.ui.theme.TASK_ALPHABET
 import com.ars.comusenias.presentation.ui.theme.OTHER_ERROR
 import com.ars.comusenias.presentation.ui.theme.UNKNOWN_ERROR
 import com.ars.comusenias.presentation.ui.theme.UNRECOGNIZED_DELEGATE
@@ -70,6 +70,7 @@ class GestureRecognizerHelper(
      * @throws IllegalStateException si hay un problema al crear el GestureRecognizer o si currentDelegate no es ni DELEGATE_CPU ni DELEGATE_GPU.
      */
     fun setupGestureRecognizer() {
+
         try {
             val baseOptions = BaseOptions.builder()
                 .setDelegate(
@@ -79,7 +80,7 @@ class GestureRecognizerHelper(
                         else -> throw IllegalStateException(UNRECOGNIZED_DELEGATE + currentDelegate)
                     }
                 )
-                .setModelAssetPath(MP_RECOGNIZER_HAND)
+                .setModelAssetPath(TASK_ALPHABET)
                 .build()
 
             val optionsBuilder = GestureRecognizer.GestureRecognizerOptions.builder()
@@ -97,7 +98,7 @@ class GestureRecognizerHelper(
             }
 
             gestureRecognizer = GestureRecognizer.createFromOptions(context, optionsBuilder.build())
-        } catch (e: IllegalStateException) {
+        } catch (e: Exception) {
             Response.Error(e)
         }
     }
