@@ -20,6 +20,14 @@ import com.ars.comusenias.presentation.ui.theme.ERROR_NOT_RESPONSE_VIDEO
 import com.ars.comusenias.presentation.ui.theme.ERROR_NOT_USING_RUNNING_MODE_IMAGE
 import com.ars.comusenias.presentation.ui.theme.TASK_ALPHABET
 import com.ars.comusenias.presentation.ui.theme.OTHER_ERROR
+import com.ars.comusenias.presentation.ui.theme.TASK_COLORS
+import com.ars.comusenias.presentation.ui.theme.TASK_DAYS_OF_WEEKS
+import com.ars.comusenias.presentation.ui.theme.TASK_FAMILY
+import com.ars.comusenias.presentation.ui.theme.TASK_MONTH
+import com.ars.comusenias.presentation.ui.theme.TASK_OPPOSITES
+import com.ars.comusenias.presentation.ui.theme.TASK_WORDS_OF_CORTESY_ONE
+import com.ars.comusenias.presentation.ui.theme.TASK_WORDS_OF_CORTESY_TWO
+import com.ars.comusenias.presentation.ui.theme.TASK_ZODIACS_SIGN
 import com.ars.comusenias.presentation.ui.theme.UNKNOWN_ERROR
 import com.ars.comusenias.presentation.ui.theme.UNRECOGNIZED_DELEGATE
 import com.google.mediapipe.framework.image.BitmapImageBuilder
@@ -69,9 +77,23 @@ class GestureRecognizerHelper(
      *
      * @throws IllegalStateException si hay un problema al crear el GestureRecognizer o si currentDelegate no es ni DELEGATE_CPU ni DELEGATE_GPU.
      */
-    fun setupGestureRecognizer() {
+    fun setupGestureRecognizer(level:String?=null) {
 
         try {
+            // Selecciona el modelo según el nombre de la tarea
+            val modelPath = when (level) {
+                "1" -> TASK_ALPHABET
+                "2" -> TASK_COLORS
+                "3" -> TASK_DAYS_OF_WEEKS
+                "4" -> TASK_MONTH
+                "5" -> TASK_ZODIACS_SIGN
+                "6" -> TASK_OPPOSITES
+                "7" -> TASK_FAMILY
+                "8" -> TASK_WORDS_OF_CORTESY_ONE
+                "9" -> TASK_WORDS_OF_CORTESY_TWO
+                else -> throw IllegalArgumentException("Nivel desconocida: $level")
+            }
+
             val baseOptions = BaseOptions.builder()
                 .setDelegate(
                     when (currentDelegate) {
@@ -80,7 +102,7 @@ class GestureRecognizerHelper(
                         else -> throw IllegalStateException(UNRECOGNIZED_DELEGATE + currentDelegate)
                     }
                 )
-                .setModelAssetPath(TASK_ALPHABET)
+                .setModelAssetPath(modelPath)
                 .build()
 
             val optionsBuilder = GestureRecognizer.GestureRecognizerOptions.builder()

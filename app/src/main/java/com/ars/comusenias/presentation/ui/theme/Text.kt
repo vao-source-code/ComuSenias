@@ -145,7 +145,21 @@ const val ERROR_NOT_RESPONSE_VIDEO: String =
 const val ERROR_NOT_USING_RUNNING_MODE_IMAGE: String =
     "Attempting to call detectImage while not using RunningMode.IMAGE"
 const val UNKNOWN_ERROR: String = "An unknown error has occurred"
+
+/*-------------------TASK MODEL-------------------*/
 const val TASK_ALPHABET = "alphabet.task"
+const val TASK_DAYS_OF_WEEKS = "daysOfWeeks.task"
+const val TASK_MONTH = "month.task"
+const val TASK_FAMILY = "family.task"
+const val TASK_COLORS = "colors.task"
+const val TASK_OPPOSITES = "opposites.task"
+const val TASK_ZODIACS_SIGN = "zodiacsigns.task"
+const val TASK_WORDS_OF_CORTESY_ONE = "wordsOfCourtesyPtOne.task"
+const val TASK_WORDS_OF_CORTESY_TWO = "wordsOfCourtesyPtTwo.task"
+
+
+
+
 const val MP_RECOGNIZER_FACE = "face_landmarker.task"
 const val MP_RECOGNIZER_POSE = "pose_landmarker_heavy.task"
 const val MP_RECOGNIZER_WORDS_TASK = "gesture_recognizer_three.task"

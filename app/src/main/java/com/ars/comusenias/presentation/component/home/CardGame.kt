@@ -110,7 +110,7 @@ private fun navigateToLearSign(
 ) {
     val gesture = GestureRecognizerHelper(context = context)
     //TODO pasarle (ojo con la resposabilidad) el level y el sublevel para que decida que tasks debe usar
-
-    gesture.setupGestureRecognizer()
+    gesture.setupGestureRecognizer(subLevel.idLevel)
     navController.navigate(AppScreen.LearnSignScreen.createRoute(level, subLevel.name))
+
 }
