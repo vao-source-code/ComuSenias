@@ -53,7 +53,7 @@ fun RegisterForm(
     val specilaistFormScreen = AuthScreen.SpecialistFormScreen.route
     var route by remember { mutableStateOf(childFormScreen) }
     val currentRoute = remember { mutableStateOf(route) }
-    var boolean = true
+    var boolean = false
     val openLink =
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {}
 
